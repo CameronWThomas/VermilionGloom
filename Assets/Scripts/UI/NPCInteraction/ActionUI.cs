@@ -17,5 +17,13 @@ public class ActionUI : MonoBehaviour
 
         var rectTransform = GetComponent<RectTransform>();
         rectTransform.anchoredPosition = new Vector2(xPos, rectTransform.anchoredPosition.y);
+        UpdateInteractable(false);
     }
+
+    public void Activate() => UpdateInteractable(true);
+
+    public void Deactivate() => UpdateInteractable(false);
+
+    private void UpdateInteractable(bool interactable) =>
+        GetComponent<Button>().interactable = interactable;
 }

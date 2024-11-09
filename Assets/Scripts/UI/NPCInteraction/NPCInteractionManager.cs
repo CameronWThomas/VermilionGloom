@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +15,9 @@ public class NPCInteractionManager : MonoBehaviour
     [SerializeField] KnowledgeBaseUI _knowledgeBaseUI;
     [SerializeField] ActionsUI _actionsUI;
 
-    public NPCCharacterInfo TargetNPC; //TODO this eventually will be set dynamically
+    public NPCCharacterInfo StartingTargetNPC; //TODO this eventually will be set dynamically
+
+    private NPCCharacterInfo _targetNPC; //TODO this eventually will be set dynamically
 
     NPCInteractionContext _currentContext = NPCInteractionContext.MainScreen;
     bool _initialized = false;
@@ -23,21 +26,25 @@ public class NPCInteractionManager : MonoBehaviour
     {
         if (!_initialized)
         {
-            Initialize();
+            Initialize(StartingTargetNPC);
             _initialized = true;
         }
     }
 
-    private void Initialize()
+    private void Initialize(NPCCharacterInfo newCharacterInfo)
     {
-        _playerImageObject.color = TargetNPC.NPCColor;
-        _playerNameText.text = TargetNPC.Name;
+        _targetNPC = newCharacterInfo;
 
-        var knowledgeBase = TargetNPC.KnowledgeBase;
-        foreach (var information in knowledgeBase.Knowledge)
+        _playerImageObject.color = _targetNPC.NPCColor;
+        _playerNameText.text = _targetNPC.Name;
+
+        var knowledgeBase = _targetNPC.KnowledgeBase;
+        foreach (var information in knowledgeBase.Knowledge.Where(x => x.PrivacyLevel <= _targetNPC.UnlockedPrivacyLevel))
         {
             _knowledgeBaseUI.AddInformation(information);
         }
+
+        _actionsUI.Initialize();
 
         OnNewContext();
     }
@@ -53,9 +60,6 @@ public class NPCInteractionManager : MonoBehaviour
             _ => new ActionType[] { }
         };
 
-        foreach (var actionType in actionTypes)
-        {
-            _actionsUI.AddAction(actionType);
-        }
+        _actionsUI.ActivateActions(actionTypes);
     }
 }

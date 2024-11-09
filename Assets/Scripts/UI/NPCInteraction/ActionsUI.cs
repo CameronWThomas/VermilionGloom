@@ -2,7 +2,9 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public enum ActionType
@@ -26,7 +28,7 @@ public class ActionsUI : MonoBehaviour
         public Texture2D Texture;
     }
 
-    private int _xPos = 55;
+    private const int STARTING_X_POS = 55;
     private List<ActionUI> _actions = new List<ActionUI>();
 
     public void Reset()
@@ -39,16 +41,28 @@ public class ActionsUI : MonoBehaviour
         _actions.Clear();
     }
 
-    public void AddAction(ActionType actionType)
+    public void Initialize()
     {
-        if (_actions.Any(x => x.ActionType == actionType))
-            return;
+        var xPos = STARTING_X_POS;
+        foreach (var actionTypeInfo in _actionTypeImages)
+        {
+            var actionUI = Instantiate(_actionPrefab, transform).GetComponent<ActionUI>();
+            actionUI.Initialize(xPos, actionTypeInfo.ActionType, actionTypeInfo.Texture);
+            _actions.Add(actionUI);
 
-        var texture = _actionTypeImages.First(x => x.ActionType == actionType).Texture;
+            xPos += ActionUI.WIDTH_INTERVAL;
+        }
+    }
 
-        var actionUI = Instantiate(_actionPrefab, transform).GetComponent<ActionUI>();
-        actionUI.Initialize(_xPos, actionType, texture);
+    public void ActivateActions(ActionType[] actionTypes)
+    {
+        var actionUIActivating = _actions.Where(x => actionTypes.Contains(x.ActionType)).ToList();
+        var actionUIDeactivating = _actions.Where(x => !actionTypes.Contains(x.ActionType)).ToList();
 
-        _xPos += ActionUI.WIDTH_INTERVAL;
+        foreach (var actionUI in actionUIActivating)
+            actionUI.Activate();
+
+        foreach (var actionUI in actionUIDeactivating)
+            actionUI.Deactivate();
     }
 }

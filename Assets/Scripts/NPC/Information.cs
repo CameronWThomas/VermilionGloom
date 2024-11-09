@@ -1,5 +1,20 @@
+public enum PrivacyLevel
+{
+    Public = 0,
+    Private = 1,
+    Secret = 2,
+}
+
 public abstract class Information
 {
+    protected PrivacyLevel _privacyLevel;
+    protected Information(PrivacyLevel privacyLevel)
+    {
+        _privacyLevel = privacyLevel;
+    }
+
+    public PrivacyLevel PrivacyLevel => _privacyLevel;
+
     public override abstract string ToString();
 }
 
@@ -14,7 +29,11 @@ public class RelationshipInformation : Information
     private string _targetCharacterName;
     private RelationshipType _relationshipType;
 
-    public RelationshipInformation(string subjectCharacterName, string targetCharacterName, RelationshipType relationshipType)
+    public RelationshipInformation(string subjectCharacterName,
+        string targetCharacterName,
+        RelationshipType relationshipType,
+        PrivacyLevel privacyLevel)
+        : base(privacyLevel)
     {
         _subjectCharacterName = subjectCharacterName;
         _targetCharacterName = targetCharacterName;
@@ -29,7 +48,9 @@ public class RelationshipInformation : Information
 
 public class FactualInformation : Information
 {
-    public FactualInformation() { }
+    public FactualInformation(PrivacyLevel privacyLevel)
+        : base(privacyLevel)
+    { }
 
     public override string ToString()
     {

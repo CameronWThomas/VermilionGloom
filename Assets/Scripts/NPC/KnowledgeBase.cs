@@ -12,8 +12,8 @@ public class KnowledgeBase : MonoBehaviour
     {
         Knowledge.Clear();
 
-        Knowledge.Add(new RelationshipInformation("I", "Mark", RelationshipInformation.RelationshipType.Hate));
-        Knowledge.Add(new RelationshipInformation("Billy", "Me", RelationshipInformation.RelationshipType.Like));
-        Knowledge.Add(new RelationshipInformation("I", "Clair", RelationshipInformation.RelationshipType.Killed));
+        Knowledge.Add(new RelationshipInformation("I", "Mark", RelationshipInformation.RelationshipType.Hate, PrivacyLevel.Public));
+        Knowledge.Add(new RelationshipInformation("Billy", "Me", RelationshipInformation.RelationshipType.Like, PrivacyLevel.Private));
+        Knowledge.Add(new RelationshipInformation("I", "Clair", RelationshipInformation.RelationshipType.Killed, PrivacyLevel.Secret));
     }
 }
