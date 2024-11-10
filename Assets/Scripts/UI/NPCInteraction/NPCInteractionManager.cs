@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.UI;
 
 public class NPCInteractionManager : MonoBehaviour
 {
-    private enum NPCInteractionContext
+    enum NPCInteractionContext
     {
         MainScreen, InformationSelectScreen
     }
@@ -15,38 +16,74 @@ public class NPCInteractionManager : MonoBehaviour
     [SerializeField] KnowledgeBaseUI _knowledgeBaseUI;
     [SerializeField] ActionsUI _actionsUI;
 
-    public NPCCharacterInfo StartingTargetNPC; //TODO this eventually will be set dynamically
+    [SerializeField] GameObject _lock;
 
-    private NPCCharacterInfo _targetNPC; //TODO this eventually will be set dynamically
+    public event Action<ActionType> OnAction;
+
+    NPCCharacterInfo _targetNPC;
+    ActionType? _currentActionType = null;
+
 
     NPCInteractionContext _currentContext = NPCInteractionContext.MainScreen;
-    bool _initialized = false;
 
-    private void Update()
-    {
-        if (!_initialized)
-        {
-            Initialize(StartingTargetNPC);
-            _initialized = true;
-        }
-    }
+    bool IsLocked => _lock.activeInHierarchy;
 
-    private void Initialize(NPCCharacterInfo newCharacterInfo)
+    private void Start()
     {
+        _actionsUI.OnAction += OnActionPerformed;
+    }    
+
+    public void Initialize(NPCCharacterInfo newCharacterInfo)
+    {
+        Unlock();
+
         _targetNPC = newCharacterInfo;
 
         _playerImageObject.color = _targetNPC.NPCColor;
         _playerNameText.text = _targetNPC.Name;
+
+        UpdateKnowledgeBaseUI();
+
+        _actionsUI.Initialize();
+
+        OnNewContext();
+    }
+
+    public void Lock() => UpdateLock(true);
+    public void Unlock() => UpdateLock(false);
+
+    public void UpdateActionState(bool successful)
+    {
+        var requireKnowledgeBaseUpdate = true;
+        if (!successful)
+            requireKnowledgeBaseUpdate = false;
+        else if (_currentActionType is ActionType.Investigate)
+            _targetNPC.IncreasePrivacyLevel();
+        else
+            requireKnowledgeBaseUpdate = false;
+
+        if (requireKnowledgeBaseUpdate)
+        {
+            UpdateKnowledgeBaseUI();
+        }
+
+        _currentActionType = null;
+    }
+
+    private void UpdateKnowledgeBaseUI()
+    {
+        _knowledgeBaseUI.ResetKnowledge();
 
         var knowledgeBase = _targetNPC.KnowledgeBase;
         foreach (var information in knowledgeBase.Knowledge.Where(x => x.PrivacyLevel <= _targetNPC.UnlockedPrivacyLevel))
         {
             _knowledgeBaseUI.AddInformation(information);
         }
+    }
 
-        _actionsUI.Initialize();
-
-        OnNewContext();
+    private void UpdateLock(bool isLocked)
+    {
+        _lock.SetActive(isLocked);
     }
 
     private void OnNewContext()
@@ -61,5 +98,11 @@ public class NPCInteractionManager : MonoBehaviour
         };
 
         _actionsUI.ActivateActions(actionTypes);
+    }
+
+    private void OnActionPerformed(ActionType actionType)
+    {
+        _currentActionType = actionType;
+        OnAction?.Invoke(actionType);
     }
 }

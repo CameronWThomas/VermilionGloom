@@ -1,3 +1,4 @@
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityPlayerPrefs;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,6 +6,8 @@ using UnityEngine.UI;
 public class ActionUI : MonoBehaviour
 {
     public const int WIDTH_INTERVAL = 110;
+
+    public event Action<ActionType> OnAction;
 
     private ActionType _actionType;
 
@@ -21,8 +24,12 @@ public class ActionUI : MonoBehaviour
     }
 
     public void Activate() => UpdateInteractable(true);
-
     public void Deactivate() => UpdateInteractable(false);
+
+    public void PerformAction()
+    {
+        OnAction?.Invoke(ActionType);
+    }
 
     private void UpdateInteractable(bool interactable) =>
         GetComponent<Button>().interactable = interactable;

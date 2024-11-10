@@ -28,6 +28,8 @@ public class ActionsUI : MonoBehaviour
         public Texture2D Texture;
     }
 
+    public event Action<ActionType> OnAction;
+
     private const int STARTING_X_POS = 55;
     private List<ActionUI> _actions = new List<ActionUI>();
 
@@ -48,6 +50,8 @@ public class ActionsUI : MonoBehaviour
         {
             var actionUI = Instantiate(_actionPrefab, transform).GetComponent<ActionUI>();
             actionUI.Initialize(xPos, actionTypeInfo.ActionType, actionTypeInfo.Texture);
+            actionUI.OnAction += OnActionPerformed;
+
             _actions.Add(actionUI);
 
             xPos += ActionUI.WIDTH_INTERVAL;
@@ -64,5 +68,10 @@ public class ActionsUI : MonoBehaviour
 
         foreach (var actionUI in actionUIDeactivating)
             actionUI.Deactivate();
+    }
+
+    private void OnActionPerformed(ActionType actionType)
+    {
+        OnAction?.Invoke(actionType);
     }
 }

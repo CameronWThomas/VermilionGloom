@@ -12,4 +12,10 @@ public class NPCCharacterInfo : MonoBehaviour
     public Color NPCColor => _npcColor;
     public PrivacyLevel UnlockedPrivacyLevel => _unlockedPrivacyLevel;
     public KnowledgeBase KnowledgeBase => GetComponent<KnowledgeBase>();
+
+    public void IncreasePrivacyLevel()
+    {
+        if (_unlockedPrivacyLevel is not PrivacyLevel.Secret)
+            _unlockedPrivacyLevel++;
+    }
 }

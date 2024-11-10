@@ -6,10 +6,24 @@ using UnityEngine.UI;
 
 public class KnowledgeBaseUI : MonoBehaviour
 {
+    private const int STARTING_Y_POS = -35;
+
     [SerializeField] GameObject _informationUIPrefab;
 
-    private int _yPos = -35;
-    private List<InformationUI> _informations = new();
+    private int _yPos = STARTING_Y_POS;
+    private List<InformationUI> _knowledge = new();
+
+
+    public void ResetKnowledge()
+    {
+        _yPos = STARTING_Y_POS;
+        foreach (var information in _knowledge)
+        {
+            Destroy(information.gameObject);
+        }
+
+        _knowledge.Clear();
+    }
 
     public void AddInformation(Information information)
     {

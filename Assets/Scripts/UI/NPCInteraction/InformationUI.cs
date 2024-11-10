@@ -11,7 +11,15 @@ public class InformationUI : MonoBehaviour
     public void Initialize(Information information, int yPos)
     {
         _information = information;
-        GetComponentInChildren<TMP_Text>().text = information.ToString();
+        
+        var tMPText = GetComponentInChildren<TMP_Text>();
+        tMPText.text = information.ToString();
+        tMPText.color = information.PrivacyLevel switch
+        {
+            PrivacyLevel.Private => Color.yellow,
+            PrivacyLevel.Secret => Color.red,
+            _ => Color.white,
+        };
 
         var rectTransform = GetComponent<RectTransform>();
         rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, yPos);
