@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,6 +14,8 @@ public class MvmntController : MonoBehaviour
     [Header("Debug")]
     public bool debug = false;
     public Vector3 AttemptedTarget;
+
+    private Action _postDestinationArrivalAction = null;
 
 
     private void Awake()
@@ -31,6 +34,10 @@ public class MvmntController : MonoBehaviour
         else
         {
             agent.isStopped = true;
+
+            var action = _postDestinationArrivalAction;
+            _postDestinationArrivalAction = null;
+            action?.Invoke();
         }
     }
 
@@ -38,7 +45,7 @@ public class MvmntController : MonoBehaviour
     {
         return distanceToTarget <= reachedTargetThreshold;
     }
-    public void SetTarget(Vector3 targetPos)
+    public void SetTarget(Vector3 targetPos, Action postDestinationArrivalAction = null)
     {
         AttemptedTarget = targetPos;
         if (!CanReachTarget(targetPos))
@@ -47,6 +54,9 @@ public class MvmntController : MonoBehaviour
             return;
         }
         Debug.Log("Setting target to: " + targetPos);
+
+        _postDestinationArrivalAction = postDestinationArrivalAction;
+
         this.targetPos = targetPos;
         agent.SetDestination(targetPos);
         distanceToTarget = Vector3.Distance(transform.position, targetPos);
