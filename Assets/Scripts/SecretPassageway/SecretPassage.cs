@@ -1,11 +1,14 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
+
+//TODO these should probably utilize a navmesh link eventually if want the NPCs to be able to utilize secret passages
 
 public class SecretPassage : MonoBehaviour
 {
     [SerializeField] private bool _reverseDirection = false;
-    [SerializeField, Range(0f, 10f)] private float _destinationDistance = 1f;
+    [SerializeField, Range(0f, 10f)] private float _destinationDistance = 1f;    
 
     public Vector3 DestinationPoint => GetDestinationPoint();   
 
@@ -21,7 +24,7 @@ public class SecretPassage : MonoBehaviour
 
     private IEnumerator Transport(Transform transportedTransform)
     {
-        MouseReceiver.Instance.Deactivate();
+        DeactivateNavigation(transportedTransform);
 
         try
         {
@@ -30,8 +33,32 @@ public class SecretPassage : MonoBehaviour
         }
         finally
         {
-            MouseReceiver.Instance.Activate();
+            ReactivateNavigation(transportedTransform);
         }
+    }
+
+    private void DeactivateNavigation(Transform transportedTransform)
+    {
+        if (transportedTransform.CompareTag(GlobalConstants.PLAYER_TAG_NAME))
+            MouseReceiver.Instance.Deactivate();
+
+        //TODO I don't like activating and reactivating other gameobject components here, but for now...
+        if (transportedTransform.TryGetComponent<MvmntController>(out var mvmntController))
+            mvmntController.enabled = false;
+        if (transportedTransform.TryGetComponent<NavMeshAgent>(out var navMeshAgent))
+            navMeshAgent.enabled = false;
+
+    }
+
+    private void ReactivateNavigation(Transform transportedTransform)
+    {
+        if (transportedTransform.CompareTag(GlobalConstants.PLAYER_TAG_NAME))
+            MouseReceiver.Instance.Activate();
+
+        if (transportedTransform.TryGetComponent<MvmntController>(out var mvmntController))
+            mvmntController.enabled = true;
+        if (transportedTransform.TryGetComponent<NavMeshAgent>(out var navMeshAgent))
+            navMeshAgent.enabled = true;
     }
 
     private static IEnumerator UsePassage(SecretPassage passage, Transform transportedTransform, bool isEntering)
@@ -43,7 +70,7 @@ public class SecretPassage : MonoBehaviour
         Vector3 startingPosition, endingPosition;
         if (isEntering)
         {
-            startingPosition = doorAtTransformHeight + destinationFromPassage;
+            startingPosition = transportedTransform.position;
             endingPosition = doorAtTransformHeight - destinationFromPassage;
         }
         else
@@ -60,9 +87,10 @@ public class SecretPassage : MonoBehaviour
         var changePerStep = distance / totalSteps;
         var direction = (endingPosition - startingPosition).normalized;
 
-        for (var step = 0; step < totalSteps; step++)
+        for (var step = 0f; step < totalSteps; step++)
         {
-            transportedTransform.position += direction * changePerStep;
+            transportedTransform.position = Vector3.Lerp(startingPosition, endingPosition, step / totalSteps);
+
             yield return new WaitForSeconds(stepTime);
         }
     }
