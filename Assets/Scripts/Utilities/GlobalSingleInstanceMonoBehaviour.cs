@@ -19,6 +19,9 @@ public abstract class GlobalSingleInstanceMonoBehaviour<T> : MonoBehaviour where
 
     protected virtual void Start()
     {
+        // make sure we have an instance created
+        var instance = Instance;
+
         this.EnsureGlobalSingleInstance();
     }
 }

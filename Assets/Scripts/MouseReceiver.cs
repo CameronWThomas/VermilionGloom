@@ -56,13 +56,18 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
     {
         if (hit.transform.TryGetComponent<SecretPassage>(out var secretPassage))
             HandleInteractableClick(secretPassage);
-
+        else if (hit.transform.TryGetComponent<NpcBrain>(out var brain))
+            HandleInteractableClick(brain);
     }
 
     private void HandleInteractableClick(SecretPassage secretPassage)
     {
-
         playerMvmnt.SetTarget(secretPassage.DestinationPoint, () => secretPassage.UsePassage(playerMvmnt.transform));
+    }
 
+    private void HandleInteractableClick(NpcBrain brain)
+    {
+        //TODO move to them too
+        MenuController.Instance.TalkToNPC(brain);
     }
 }

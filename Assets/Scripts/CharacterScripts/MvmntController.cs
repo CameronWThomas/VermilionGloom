@@ -26,7 +26,8 @@ public class MvmntController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        distanceToTarget = Vector3.Distance(transform.position, targetPos + transform.position.y * Vector3.up);
+        var correctedTargetPos = new Vector3(targetPos.x, transform.position.y, targetPos.z);
+        distanceToTarget = Vector3.Distance(transform.position, correctedTargetPos);
         if(!IsAtDestination())
         {
             agent.isStopped = false;
