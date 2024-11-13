@@ -20,6 +20,8 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
         if (Input.GetMouseButtonDown(0))
         {
             MouseInteraction();
+
+
         }
     }
 
