@@ -1,2 +1,14 @@
 fileFormatVersion: 2
 guid: f133af925517eb046822f0f53926dc9a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _talkingMenuGameObject: {instanceID: 0}
+  - _othersSecretContent: {instanceID: 0}
+  - _otherCharacterUIPrefab: {fileID: 1676339851326912131, guid: 3fc764db0e068874d8cea959f6390669, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,15 +1,20 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterInfo))]
 public class NpcBrain : MonoBehaviour
 {
     private List<Secret> _personalSecrets = new();
-    private List<CharacterReputation> _characterReputations = new();
+    private List<OthersSecrets> _othersSecretsCollection = new();
 
     //TODO remove later
     private bool _reputationInitialized = false;
+
+    public List<Secret> Secrets => _personalSecrets;
+    public List<OthersSecrets> OthersSecretsCollection => _othersSecretsCollection;
+    public bool IsAnySecretRevealed => Secrets.Any(x => x.IsRevealed);
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -39,11 +44,13 @@ public class NpcBrain : MonoBehaviour
                 if (characterInfo == GetComponent<CharacterInfo>())
                     continue;
 
-                var secrets = new List<Secret>();
-                secrets.Add(new GenericSecret());
-                secrets.Add(new GenericSecret());
+                var secrets = new List<Secret>
+                {
+                    new GenericSecret(),
+                    new GenericSecret()
+                };
 
-                _characterReputations.Add(new CharacterReputation(characterInfo, secrets));
+                _othersSecretsCollection.Add(new OthersSecrets(characterInfo, secrets));
             }
         }
     }
