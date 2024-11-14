@@ -4,7 +4,7 @@ public class OthersSecretsControllerUI : MonoBehaviour, IRevealableUI
 {
     [SerializeField] private GameObject _revealBlocker;
 
-    private OthersSecrets _othersSecrets;
+    private SecretCollection _othersSecrets;
 
     public void Reveal()
     {
@@ -15,7 +15,7 @@ public class OthersSecretsControllerUI : MonoBehaviour, IRevealableUI
         _revealBlocker.SetActive(false);
     }
 
-    public void Initialize(OthersSecrets othersSecrets)
+    public void Initialize(SecretCollection othersSecrets)
     {
         _othersSecrets = othersSecrets;
 

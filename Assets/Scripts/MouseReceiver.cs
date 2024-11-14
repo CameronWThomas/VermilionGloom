@@ -68,6 +68,6 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
     private void HandleInteractableClick(NpcBrain brain)
     {
         //TODO move to them too
-        MenuController.Instance.TalkToNPC(brain);
+        UI_MenuController.Instance.TalkToNPC(brain);
     }
 }

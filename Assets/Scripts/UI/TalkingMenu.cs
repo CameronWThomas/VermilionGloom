@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class TalkingMenu : MonoBehaviour
+public class TalkingMenu_OLD : MonoBehaviour
 {
     private const float WIDTH_BUFFER = 10f;
 
@@ -25,7 +25,7 @@ public class TalkingMenu : MonoBehaviour
     public void Open()
     {
         var totalWidth = 0f;
-        foreach (var othersSecrets in _npcBrain.OthersSecretsCollection)
+        foreach (var othersSecrets in _npcBrain.OthersSecretCollections)
         {
             var otherSecretInstance = Instantiate(_otherCharacterUIPrefab, _othersSecretContent);
             

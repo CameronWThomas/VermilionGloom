@@ -3,18 +3,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class OthersSecrets
+public class SecretCollection
 {
     private CharacterInfo _characterInfo;
     private List<Secret> _secrets = new();
 
-    public OthersSecrets(CharacterInfo characterInfo, List<Secret> secrets)
+    private SecretCollection(CharacterInfo characterInfo, List<Secret> secrets)
     {
         _characterInfo = characterInfo;
         _secrets = secrets;
     }
 
+    public static SecretCollection Create(CharacterInfo characterInfo, List<Secret> secrets)
+        => new SecretCollection(characterInfo, secrets);
+
+    public static SecretCollection CreatePersonal(List<Secret> secrets)
+        => new SecretCollection(null, secrets);
+
+    public CharacterInfo Character => _characterInfo;
     public IReadOnlyList<Secret> Secrets => _secrets;
+    public bool IsPersonalSecrets => Character == null;
     public bool IsAnySecretsRevealed => _secrets.Any(x => x.IsRevealed);
 
     public void RevealSecret()

@@ -1,31 +1,34 @@
 using System;
 
-public class MenuController : GlobalSingleInstanceMonoBehaviour<MenuController>
+public class UI_MenuController : GlobalSingleInstanceMonoBehaviour<UI_MenuController>
 {
     private enum MenuState
     {
         Off,
-        TalkingMenuOpen
+        CharactersSecret
     }
 
     private MenuState _state = MenuState.Off;
-    private TalkingMenu _talkingMenu;
+    private NpcBrain _targetNPC;
+
+    private UI_CharacterSecretsMenu _charactersSecretMenu;
 
     protected override void Start()
     {
         base.Start();
 
-        _talkingMenu = GetComponent<TalkingMenu>();
+        _charactersSecretMenu = GetComponent<UI_CharacterSecretsMenu>();
 
         OnStateChange();
     }
 
+
     public void TalkToNPC(NpcBrain brain)
     {
-        if (!TryChangeState(MenuState.TalkingMenuOpen))
+        if (!TryChangeState(MenuState.CharactersSecret))
             return;
 
-        _talkingMenu.SetNpc(brain);
+        _targetNPC = brain;
         OnStateChange();
     }
 
@@ -49,13 +52,13 @@ public class MenuController : GlobalSingleInstanceMonoBehaviour<MenuController>
         switch (_state)
         {
             case MenuState.Off:
-                _talkingMenu.Close();
+                _charactersSecretMenu.Close();
                 MouseReceiver.Instance.Activate();
                 break;
 
-            case MenuState.TalkingMenuOpen:
+            case MenuState.CharactersSecret:
                 MouseReceiver.Instance.Deactivate();
-                _talkingMenu.Open();
+                _charactersSecretMenu.Open(_targetNPC);
                 break;
         }
     }    

@@ -6,30 +6,31 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterInfo))]
 public class NpcBrain : MonoBehaviour
 {
-    private List<Secret> _personalSecrets = new();
-    private List<OthersSecrets> _othersSecretsCollection = new();
+    private SecretCollection _personalSecrets;
+        private List<SecretCollection> _othersSecretsCollection = new();
 
     //TODO remove later
     private bool _reputationInitialized = false;
 
-    public List<Secret> Secrets => _personalSecrets;
-    public List<OthersSecrets> OthersSecretsCollection => _othersSecretsCollection;
-    public bool IsAnySecretRevealed => Secrets.Any(x => x.IsRevealed);
+    public SecretCollection PersonalSecrets => _personalSecrets;
+    public List<SecretCollection> OthersSecretCollections => _othersSecretsCollection;
+    public bool IsAnySecretRevealed => PersonalSecrets.IsAnySecretsRevealed;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _personalSecrets.Clear();
-
         // TODO all the same secrets for now. Will be randomly populated and this will be done somewhere else
+        var secrets = new List<Secret>
+        {
+            new GenericSecret(),
+            new GenericSecret(),
+            new GenericSecret(),
+            new RoomSecret("Back left room connected to foyer", SecretLevel.Private),
+            MurderSecret.PersonalMurder(SecretLevel.Confidential),
+            new VampireSecret()
+        };
 
-        _personalSecrets.Add(new GenericSecret());
-        _personalSecrets.Add(new GenericSecret());
-        _personalSecrets.Add(new GenericSecret());
-        _personalSecrets.Add(new GenericSecret());
-        _personalSecrets.Add(new RoomSecret("Back left room connected to foyer", SecretLevel.Private));
-        _personalSecrets.Add(MurderSecret.PersonalMurder(SecretLevel.Confidential));
-        _personalSecrets.Add(new VampireSecret());
+        _personalSecrets = SecretCollection.CreatePersonal(secrets);
     }
 
     // Update is called once per frame
@@ -47,10 +48,11 @@ public class NpcBrain : MonoBehaviour
                 var secrets = new List<Secret>
                 {
                     new GenericSecret(),
+                    new GenericSecret(),
                     new GenericSecret()
                 };
 
-                _othersSecretsCollection.Add(new OthersSecrets(characterInfo, secrets));
+                _othersSecretsCollection.Add(SecretCollection.Create(characterInfo, secrets));
             }
         }
     }
