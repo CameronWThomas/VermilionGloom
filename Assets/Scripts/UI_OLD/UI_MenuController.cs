@@ -11,13 +11,13 @@ public class UI_MenuController : GlobalSingleInstanceMonoBehaviour<UI_MenuContro
     private MenuState _state = MenuState.Off;
     private NpcBrain _targetNPC;
 
-    private UI_CharacterSecretsMenu _charactersSecretMenu;
+    private UICharacterInteraction _uICharacterInteraction;
 
     protected override void Start()
     {
         base.Start();
 
-        _charactersSecretMenu = GetComponent<UI_CharacterSecretsMenu>();
+        _uICharacterInteraction = GetComponentInChildren<UICharacterInteraction>(true);
 
         OnStateChange();
     }
@@ -52,13 +52,13 @@ public class UI_MenuController : GlobalSingleInstanceMonoBehaviour<UI_MenuContro
         switch (_state)
         {
             case MenuState.Off:
-                _charactersSecretMenu.Close();
+                _uICharacterInteraction.Close();
                 MouseReceiver.Instance.Activate();
                 break;
 
             case MenuState.CharactersSecret:
                 MouseReceiver.Instance.Deactivate();
-                _charactersSecretMenu.Open(_targetNPC);
+                _uICharacterInteraction.Open(_targetNPC);
                 break;
         }
     }    
