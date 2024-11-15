@@ -37,6 +37,8 @@ public class MurderSecret : Secret
     public override string Description
         => $"{GetMurdererName()} killed {GetVictimName()}";
 
+    public override bool InvolvesMulitpleCharacters => !UnknownVictim;
+
     public bool UnknownVictim => _victim == null;
 
     private string GetMurdererName() => _murderer == null ? "I" : _murderer.Name;

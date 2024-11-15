@@ -5,4 +5,6 @@ public class VampireSecret : Secret
     public override SecretIconIdentifier Identifier => SecretIconIdentifier.VampireKnowledge;
 
     public override string Description => "Knows theres a vampire here";
+
+    public override bool InvolvesCharacters => false;
 }

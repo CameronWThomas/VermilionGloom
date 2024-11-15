@@ -18,4 +18,6 @@ public class RoomSecret : Secret
 
     public override string Description => $"There is something secret in {_roomDescription}";
 
+    public override bool InvolvesCharacters => false;
+
 }

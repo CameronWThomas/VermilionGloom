@@ -8,6 +8,9 @@ public abstract class Secret
     public abstract SecretIconIdentifier Identifier { get; }
     public abstract string Description { get; }
 
+    public virtual bool InvolvesCharacters => true;
+    public virtual bool InvolvesMulitpleCharacters => false;
+
     public bool IsRevealed => _isRevealed;
     public Texture2D IconTexture => SecretResources.Instance.GetTexture(Identifier);
 
