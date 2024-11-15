@@ -36,7 +36,7 @@ public class UI_MenuManager : GlobalSingleInstanceMonoBehaviour<UI_MenuManager>
         _activeMenuController.Activate();
     }
 
-    public void TalkToNPC(CharacterSecrets characterSecrets)
+    public void TalkToNPC(SecretKnowledge characterSecrets)
     {
         var characterInteractionController = MenuControllers.OfType<UI_CharacterInteractionMenuController>().First();
         characterInteractionController.SetCharacterSecrets(characterSecrets);

@@ -1,5 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
+using Unity.VisualScripting;
+using UnityEngine;
 
 /// <summary>
 /// Secret with nothing of value
@@ -19,13 +23,31 @@ public class GenericSecret : Secret
 
     public GenericSecret()
     {
-        var random = new Random((uint)System.DateTime.UtcNow.Ticks);
+        Func<bool> random = () => UnityEngine.Random.Range(0f, 1f) > .5f;
 
-        _level = random.NextBool() ? SecretLevel.Public : SecretLevel.Private;
+        _level = random() ? SecretLevel.Public : SecretLevel.Private;
         
         var secretCount = _secretDescriptions.Count;
-        _description = _secretDescriptions[random.NextInt(0, secretCount - 1)];
+        UnityEngine.Random.Range(0, secretCount);
+        _description = _secretDescriptions[UnityEngine.Random.Range(0, secretCount)];
 
+    }
+
+    public static List<GenericSecret> CreateUnique(int count)
+    {
+        var secrets = new List<GenericSecret>();
+
+        var max = Mathf.Min(count, _secretDescriptions.Count);
+        while (secrets.Count < max)
+        {
+            var newSecret = new GenericSecret();
+            if (secrets.Any(x => x.Description == newSecret.Description))
+                continue;
+
+            secrets.Add(newSecret);
+        }
+
+        return secrets;
     }
 
     public override SecretLevel Level => _level;

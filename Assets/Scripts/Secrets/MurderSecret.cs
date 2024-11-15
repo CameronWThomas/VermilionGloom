@@ -46,7 +46,7 @@ public class MurderSecret : Secret
     private string GetVictimName()
     {
         if (UnknownVictim)
-            return "someone";
+            return "someone long ago...";
         
         return _victim.Name;
     }

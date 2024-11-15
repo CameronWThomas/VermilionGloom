@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class UI_CharacterInteractionMenuController : UI_MenuController
 {
-    private CharacterSecrets _characterSecrets;
+    private SecretKnowledge _characterSecrets;
 
-    public void SetCharacterSecrets(CharacterSecrets characterSecrets)
+    public void SetCharacterSecrets(SecretKnowledge characterSecrets)
     {
         _characterSecrets = characterSecrets;
     }
@@ -16,10 +16,10 @@ public class UI_CharacterInteractionMenuController : UI_MenuController
         _characterInteractionScreen.gameObject.SetActive(true);
 
         _secrets.ResetSecrets();
-        _secrets.AddSecrets(_characterSecrets.PersonalSecrets);
-        foreach (var secrets in _characterSecrets.Rumours)
+        _secrets.AddSecrets(_characterSecrets.Secrets);
+        foreach (var rumour in _characterSecrets.Rumours)
         {
-            _secrets.AddSecrets(secrets);
+            _secrets.AddRumour(rumour);
         }
     }
 }

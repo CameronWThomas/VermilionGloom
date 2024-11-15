@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,20 +19,26 @@ public class UI_Secrets : MonoBehaviour
         _secrets.Clear();
     }
 
-    public void AddSecrets(Secrets secrets)
+    public void AddSecrets(SecretCollection secrets)
     {
         var content = ScrollRect.content;
 
         // TODO only show revealed secrets
-        foreach (var secret in secrets.SecretCollection)
+        foreach (var secret in secrets.Secrets)
         {
-            if (secret is GenericSecret)
-                continue;
+            //if (secret is GenericSecret)
+            //    continue;
 
             var uISecret = Instantiate(_secretPrefab, content).GetComponent<UI_Secret>();
             _secrets.Add(uISecret);
 
             uISecret.Initialize(secret);
         }
-            }
+    }
+
+    public void AddRumour(Rumour rumour)
+    {
+        // TODO more will be involved later
+        AddSecrets(rumour.Secrets);
+    }
 }
