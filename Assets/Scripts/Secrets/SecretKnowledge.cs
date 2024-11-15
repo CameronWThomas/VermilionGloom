@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -31,6 +32,19 @@ public class SecretKnowledge : MonoBehaviour
         }    
 
         _rumours.Add(rumour);
+    }
+
+    public void UnlockInitialSecrets()
+    {
+        Secrets.RevealSecret();
+    }
+
+    public void RevealSecret()
+    {
+        var allSecrets = Secrets.Secrets.Concat(_rumours.SelectMany(x => x.Secrets.Secrets))
+            .Where(x => !x.IsRevealed);
+
+
     }
 
     //void Start()

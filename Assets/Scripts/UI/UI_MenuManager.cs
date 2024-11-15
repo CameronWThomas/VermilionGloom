@@ -9,6 +9,7 @@ public class UI_MenuManager : GlobalSingleInstanceMonoBehaviour<UI_MenuManager>
     [SerializeField] private RectTransform _bottomBar;
     [SerializeField] private RectTransform _characterInteractionScreen;
     [SerializeField] private UI_Secrets _secrets;
+    [SerializeField] private UI_CharacterInfo _interactingCharacterInfo;
 
     private List<UI_MenuController> _menuControllers;
     private UI_MenuController _activeMenuController;
@@ -19,12 +20,18 @@ public class UI_MenuManager : GlobalSingleInstanceMonoBehaviour<UI_MenuManager>
     protected override void Start()
     {
         base.Start();
-        
-        foreach (var menuController in MenuControllers)
-            menuController.Initialize(_bottomBar, _characterInteractionScreen, _secrets);
 
-        _activeMenuController = DefaultMenuController;
-        _activeMenuController.Activate();
+        foreach (var menuController in MenuControllers)
+        {
+            menuController.Initialize(_bottomBar,
+                _characterInteractionScreen,
+                _secrets,
+                _interactingCharacterInfo);
+            menuController.Deactivate();
+        }
+
+        ActivateNewMenuController(DefaultMenuController);
+        
     }
 
     public void DeactivateCurrentMenuController()
@@ -32,8 +39,7 @@ public class UI_MenuManager : GlobalSingleInstanceMonoBehaviour<UI_MenuManager>
         if (_activeMenuController == DefaultMenuController)
             return;
 
-        _activeMenuController = DefaultMenuController;
-        _activeMenuController.Activate();
+        ActivateNewMenuController(DefaultMenuController);
     }
 
     public void TalkToNPC(SecretKnowledge characterSecrets)
@@ -41,7 +47,13 @@ public class UI_MenuManager : GlobalSingleInstanceMonoBehaviour<UI_MenuManager>
         var characterInteractionController = MenuControllers.OfType<UI_CharacterInteractionMenuController>().First();
         characterInteractionController.SetCharacterSecrets(characterSecrets);
 
-        _activeMenuController = characterInteractionController;
+        ActivateNewMenuController(characterInteractionController);
+    }
+
+    private void ActivateNewMenuController(UI_MenuController newMenuController)
+    {
+        _activeMenuController?.Deactivate();
+        _activeMenuController = newMenuController;
         _activeMenuController.Activate();
     }
 }
