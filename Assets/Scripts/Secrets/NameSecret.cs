@@ -12,6 +12,8 @@ public class NameSecret : Secret
         _level = level;
     }
 
+    public override Secret Copy() => new NameSecret(_name, _level);
+
     public override SecretLevel Level => _level;
 
     public override SecretIconIdentifier Identifier => SecretIconIdentifier.Name;

@@ -12,12 +12,14 @@ public class RoomSecret : Secret
         _level = level;
     }
 
+    public override Secret Copy() =>new RoomSecret(_roomDescription, _level);
+
     public override SecretLevel Level => _level;
 
     public override SecretIconIdentifier Identifier => SecretIconIdentifier.Room;
 
     public override string Description => $"There is something secret in {_roomDescription}";
 
-    public override bool InvolvesCharacters => false;
+    public override bool HasTarget => false;
 
 }

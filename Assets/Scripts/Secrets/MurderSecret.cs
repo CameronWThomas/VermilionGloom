@@ -30,6 +30,8 @@ public class MurderSecret : Secret
         return new MurderSecret(level, murderer, victim);
     }
 
+    public override Secret Copy() => new MurderSecret(_level, _murderer, _victim);
+
     public override SecretLevel Level => _level;
 
     public override SecretIconIdentifier Identifier => SecretIconIdentifier.Murder;
@@ -37,7 +39,7 @@ public class MurderSecret : Secret
     public override string Description
         => $"{GetMurdererName()} killed {GetVictimName()}";
 
-    public override bool InvolvesMulitpleCharacters => !UnknownVictim;
+    public override CharacterInfo TargetCharacter => _victim;
 
     public bool UnknownVictim => _victim == null;
 

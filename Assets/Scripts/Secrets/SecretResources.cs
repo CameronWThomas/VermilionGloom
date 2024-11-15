@@ -1,18 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SecretLevel
-{
-    /// <summary>
-    /// Always succeed in looking for public secrets. Other levels are chance based or depend on v-bucks
-    /// </summary>
-    Public,
-
-    Private,
-    Confidential,
-    Vampiric
-}
-
 public enum SecretIconIdentifier
 {
     Generic,

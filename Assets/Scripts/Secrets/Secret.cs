@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class Secret
@@ -8,8 +9,8 @@ public abstract class Secret
     public abstract SecretIconIdentifier Identifier { get; }
     public abstract string Description { get; }
 
-    public virtual bool InvolvesCharacters => true;
-    public virtual bool InvolvesMulitpleCharacters => false;
+    public virtual bool HasTarget => TargetCharacter != null;
+    public virtual CharacterInfo TargetCharacter => null;
 
     public bool IsRevealed => _isRevealed;
     public Texture2D IconTexture => SecretResources.Instance.GetTexture(Identifier);
@@ -18,6 +19,8 @@ public abstract class Secret
     {
         _isRevealed = true;
     }
+
+    public abstract Secret Copy();
 
     //TODO eventually add method to try and reveal where it is random and based on a modifier.
 }

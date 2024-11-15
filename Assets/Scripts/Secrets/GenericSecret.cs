@@ -33,6 +33,12 @@ public class GenericSecret : Secret
 
     }
 
+    private GenericSecret(SecretLevel level, string description)
+    {
+        _level = level;
+        _description = description;
+    }
+
     public static List<GenericSecret> CreateUnique(int count)
     {
         var secrets = new List<GenericSecret>();
@@ -49,6 +55,8 @@ public class GenericSecret : Secret
 
         return secrets;
     }
+
+    public override Secret Copy() => new GenericSecret(_level, _description);
 
     public override SecretLevel Level => _level;
 

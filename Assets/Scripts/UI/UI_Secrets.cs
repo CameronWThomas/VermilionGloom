@@ -21,6 +21,17 @@ public class UI_Secrets : MonoBehaviour
 
     public void AddSecrets(SecretCollection secrets)
     {
+        AddSecrets(secrets, false);
+    }
+
+    public void AddRumour(Rumour rumour)
+    {
+        // TODO more will be involved later
+        AddSecrets(rumour.Secrets, true);
+    }
+
+    private void AddSecrets(SecretCollection secrets, bool isRumour)
+    {
         var content = ScrollRect.content;
 
         // TODO only show revealed secrets
@@ -32,13 +43,7 @@ public class UI_Secrets : MonoBehaviour
             var uISecret = Instantiate(_secretPrefab, content).GetComponent<UI_Secret>();
             _secrets.Add(uISecret);
 
-            uISecret.Initialize(secret);
+            uISecret.Initialize(secret, isRumour);
         }
-    }
-
-    public void AddRumour(Rumour rumour)
-    {
-        // TODO more will be involved later
-        AddSecrets(rumour.Secrets);
     }
 }

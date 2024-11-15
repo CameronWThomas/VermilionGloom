@@ -7687,7 +7687,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 960323534}
   m_HandleRect: {fileID: 960323533}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -28247,6 +28247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1394910483}
   - component: {fileID: 1394910486}
+  - component: {fileID: 1394910487}
   - component: {fileID: 1394910485}
   - component: {fileID: 1394910484}
   m_Layer: 5
@@ -28346,6 +28347,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1394910482}
   m_CullTransparentMesh: 1
+--- !u!114 &1394910487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394910482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding: {x: 0, y: 0, z: 0, w: 0}
+  m_Softness: {x: 0, y: 0}
 --- !u!43 &1406775332
 Mesh:
   m_ObjectHideFlags: 0
@@ -33114,7 +33129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1484760731477229880, guid: 5db74e132c44826498702e41f62dbdb7, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1484760731477229880, guid: 5db74e132c44826498702e41f62dbdb7, type: 3}
       propertyPath: m_AnchorMin.x
@@ -33122,11 +33137,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1484760731477229880, guid: 5db74e132c44826498702e41f62dbdb7, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1484760731477229880, guid: 5db74e132c44826498702e41f62dbdb7, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 262.4214
       objectReference: {fileID: 0}
     - target: {fileID: 1484760731477229880, guid: 5db74e132c44826498702e41f62dbdb7, type: 3}
       propertyPath: m_SizeDelta.y
@@ -33166,7 +33181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1484760731477229880, guid: 5db74e132c44826498702e41f62dbdb7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -176.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1484760731477229880, guid: 5db74e132c44826498702e41f62dbdb7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -33998,7 +34013,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 817555510}
   m_HandleRect: {fileID: 817555509}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -39593,6 +39608,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2035702940}
   - component: {fileID: 2035702943}
+  - component: {fileID: 2035702946}
   - component: {fileID: 2035702942}
   - component: {fileID: 2035702941}
   - component: {fileID: 2035702944}
@@ -39727,6 +39743,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _secretPrefab: {fileID: 8164582786789416410, guid: 04f33f05b85c7ee418b2894fc6a0ad16, type: 3}
+--- !u!114 &2035702946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035702939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding: {x: 0, y: 0, z: 0, w: 0}
+  m_Softness: {x: 0, y: 0}
 --- !u!1 &2042240500
 GameObject:
   m_ObjectHideFlags: 0
@@ -42844,7 +42874,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initialNPCCount: 4
-  _initialMurderLikliehood: 0.25
+  _initialMurderChance: 0.25
+  _randomNameChance: 0.1
 --- !u!1001 &6134542309651776998
 PrefabInstance:
   m_ObjectHideFlags: 0

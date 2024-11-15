@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 public class UI_Secret : MonoBehaviour
 {
-    [SerializeField] public GameObject _singleCharacter;
-    [SerializeField] public GameObject _multiCharacter;
+    [SerializeField] public GameObject _rumourCharacter;
+    [SerializeField] public GameObject _targetOfSecret;
     [SerializeField] public TMP_Text _descriptionText;
     [SerializeField] public RawImage _tileImage;
 
-    public void Initialize(Secret secret)
+    public void Initialize(Secret secret, bool isRumour)
     {
         SetupTileTexture(secret);
-        SetupRelevantCharacters(secret);
+        SetupRelevantCharacters(secret, isRumour);
         SetupDescription(secret);
     }    
 
@@ -22,23 +22,16 @@ public class UI_Secret : MonoBehaviour
         _tileImage.texture = secret.IconTexture;
     }
 
-    private void SetupRelevantCharacters(Secret secret)
+    private void SetupRelevantCharacters(Secret secret, bool isRumour)
     {
-        if (!secret.InvolvesCharacters)
-        {
-            _singleCharacter.SetActive(false);
-            _multiCharacter.SetActive(false);
-        }
-        else if (secret.InvolvesMulitpleCharacters)
-        {
-            _singleCharacter.SetActive(true);
-            _multiCharacter.SetActive(false);
-        }
-        else
-        {
-            _singleCharacter.SetActive(false);
-            _multiCharacter.SetActive(true);
-        }
+        _rumourCharacter.SetActive(false);
+        _targetOfSecret.SetActive(false);
+
+        if (isRumour)
+            _rumourCharacter.SetActive(true);
+        
+        if (secret.HasTarget)
+            _targetOfSecret.SetActive(true);
     }
 
     private void SetupDescription(Secret secret)
