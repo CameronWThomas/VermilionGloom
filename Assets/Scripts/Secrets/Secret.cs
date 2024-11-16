@@ -1,26 +1,36 @@
-using System;
 using UnityEngine;
 
 public abstract class Secret
 {
-    private bool _isRevealed = false;
+    private string _description = null;
 
-    public abstract SecretLevel Level { get; }
-    public abstract SecretIconIdentifier Identifier { get; }
-    public abstract string Description { get; }
-
-    public virtual bool HasTarget => TargetCharacter != null;
-    public virtual CharacterInfo TargetCharacter => null;
-
-    public bool IsRevealed => _isRevealed;
-    public Texture2D IconTexture => SecretResources.Instance.GetTexture(Identifier);
-
-    public void ForceRevealSecret()
+    protected Secret(SecretLevel level, CharacterID secretOwner, CharacterID additionalCharacter = null)
     {
-        _isRevealed = true;
+        Level = level;
+        SecretOwner = secretOwner ?? throw new System.Exception($"{nameof(secretOwner)} must be assigned");
+        AdditionalCharacter = additionalCharacter;
     }
 
+    protected Secret(Secret secret)
+    {
+        Level = secret.Level;
+        SecretOwner = secret.SecretOwner;
+        AdditionalCharacter = secret.AdditionalCharacter;
+    }
+
+    public abstract SecretIconIdentifier Identifier { get; }
+
+    public CharacterID SecretOwner { get; }
+    public CharacterID AdditionalCharacter { get; }
+    public SecretLevel Level { get; }
+    public bool IsRevealed { get; private set; }
+
+    public string Description => _description ??= CreateDescription();
+    public bool HasAdditionalCharacter => AdditionalCharacter != null;
+    public Texture2D IconTexture => SecretResources.Instance.GetTexture(Identifier);
+        
+    public abstract string CreateDescription();
     public abstract Secret Copy();
 
-    //TODO eventually add method to try and reveal where it is random and based on a modifier.
+    public void ForceRevealSecret() => IsRevealed = true;
 }

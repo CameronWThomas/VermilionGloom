@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Jorge
+  _characterType: 0
 --- !u!114 &4354136838270782247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,7 +62,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 333403558869792158}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbcfbba9ee88e6c4982d2710e0396108, type: 3}
+  m_Script: {fileID: 11500000, guid: 824e1354034125c4595c2866d7f94f7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!33 &3715456985273095497

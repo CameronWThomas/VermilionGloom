@@ -1,8 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -18,49 +14,43 @@ public class GenericSecret : Secret
         "Is only here in the hopes of being murdered"
     };
 
-    private SecretLevel _level;
-    private string _description;
+    private readonly int _secretDescriptionIndex = 0;
 
-    public GenericSecret()
+    private GenericSecret(int secretDescriptionIndex, SecretLevel level, CharacterID secretOwner)
+        : base(level, secretOwner)
     {
-        Func<bool> random = () => UnityEngine.Random.Range(0f, 1f) > .5f;
-
-        _level = random() ? SecretLevel.Public : SecretLevel.Private;
-        
-        var secretCount = _secretDescriptions.Count;
-        UnityEngine.Random.Range(0, secretCount);
-        _description = _secretDescriptions[UnityEngine.Random.Range(0, secretCount)];
-
+        _secretDescriptionIndex = secretDescriptionIndex;
     }
 
-    private GenericSecret(SecretLevel level, string description)
+    private GenericSecret(GenericSecret secret) : base(secret)
     {
-        _level = level;
-        _description = description;
+        _secretDescriptionIndex = secret._secretDescriptionIndex;
     }
 
-    public static List<GenericSecret> CreateUnique(int count)
+    public static List<GenericSecret> CreateUnique(int count, CharacterID secretOwner)
     {
         var secrets = new List<GenericSecret>();
 
+        var usedIndexes = new List<int>();
         var max = Mathf.Min(count, _secretDescriptions.Count);
         while (secrets.Count < max)
         {
-            var newSecret = new GenericSecret();
-            if (secrets.Any(x => x.Description == newSecret.Description))
+            var secretIndex = UnityEngine.Random.Range(0, _secretDescriptions.Count);
+            if (usedIndexes.Contains(secretIndex))
                 continue;
+            usedIndexes.Add(secretIndex);
 
-            secrets.Add(newSecret);
+            var level = UnityEngine.Random.Range(0f, 1f) >= .5f ? SecretLevel.Public : SecretLevel.Private;
+
+            secrets.Add(new GenericSecret(secretIndex, level, secretOwner));
         }
 
         return secrets;
     }
 
-    public override Secret Copy() => new GenericSecret(_level, _description);
-
-    public override SecretLevel Level => _level;
-
     public override SecretIconIdentifier Identifier => SecretIconIdentifier.Generic;
 
-    public override string Description => _description;
+    public override Secret Copy() => new GenericSecret(this);
+
+    public override string CreateDescription() => _secretDescriptions[_secretDescriptionIndex];
 }

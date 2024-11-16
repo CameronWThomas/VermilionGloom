@@ -30,7 +30,7 @@ public class UI_Secret : MonoBehaviour
         if (isRumour)
             _rumourCharacter.SetActive(true);
         
-        if (secret.HasTarget)
+        if (secret.HasAdditionalCharacter)
             _targetOfSecret.SetActive(true);
     }
 

@@ -3,23 +3,21 @@ public class RoomSecret : Secret
     private SecretLevel _level;
     private string _roomDescription;
 
-    public RoomSecret(string roomDescription) : this(roomDescription, SecretLevel.Public)
-    { }
-
-    public RoomSecret(string roomDescription, SecretLevel level)
-    {
+    public RoomSecret(string roomDescription, SecretLevel level, CharacterID secretOwner)
+        : base(level, secretOwner)
+    { 
         _roomDescription = roomDescription;
-        _level = level;
     }
 
-    public override Secret Copy() =>new RoomSecret(_roomDescription, _level);
-
-    public override SecretLevel Level => _level;
+    private RoomSecret(RoomSecret secret) : base(secret)
+    {
+        _roomDescription = secret._roomDescription;
+    }
 
     public override SecretIconIdentifier Identifier => SecretIconIdentifier.Room;
 
-    public override string Description => $"There is something secret in {_roomDescription}";
+    public override Secret Copy() => new RoomSecret(this);
 
-    public override bool HasTarget => false;
+    public override string CreateDescription() => $"{SecretOwner.Name} knows about something secret in {_roomDescription}";
 
 }

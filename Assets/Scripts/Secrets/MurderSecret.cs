@@ -1,55 +1,22 @@
-using System;
-
 public class MurderSecret : Secret
 {
-    private SecretLevel _level;
-    private CharacterInfo _murderer = null;
-    private CharacterInfo _victim = null;
+    public MurderSecret(SecretLevel level, CharacterID murderer, CharacterID victim = null)
+        : base(level, murderer, victim)
+    { }
 
-    //Need to also communicate some identifier of a person who commited and is a victim of the murderer.
-    private MurderSecret(SecretLevel level, CharacterInfo murderer, CharacterInfo victim)
-    {
-        _level = level;
-        _murderer = murderer;
-        _victim = victim;
-    }
-
-    /// <summary>
-    /// For when the character themself murdered someone. If <paramref name="victim"/> is null, the victim will be treated like it is unknown or irrelevant.
-    /// </summary>
-    public static MurderSecret PersonalMurder(SecretLevel level, CharacterInfo victim = null)
-    {
-        return new MurderSecret(level, null, victim);
-    }
-
-    /// <summary>
-    /// For knowing someone else murdered someone. If <paramref name="victim"/> is null, the victim will be treated like it is unknown or irrelevant.
-    /// </summary>
-    public static MurderSecret OtherMurder(SecretLevel level, CharacterInfo murderer, CharacterInfo victim = null)
-    {
-        return new MurderSecret(level, murderer, victim);
-    }
-
-    public override Secret Copy() => new MurderSecret(_level, _murderer, _victim);
-
-    public override SecretLevel Level => _level;
+    private MurderSecret(MurderSecret secret) : base(secret) { }
 
     public override SecretIconIdentifier Identifier => SecretIconIdentifier.Murder;
 
-    public override string Description
-        => $"{GetMurdererName()} killed {GetVictimName()}";
+    public override Secret Copy() => new MurderSecret(this);
 
-    public override CharacterInfo TargetCharacter => _victim;
-
-    public bool UnknownVictim => _victim == null;
-
-    private string GetMurdererName() => _murderer == null ? "I" : _murderer.Name;
+    public override string CreateDescription() => $"{SecretOwner.Name} killed {GetVictimName()}";
 
     private string GetVictimName()
     {
-        if (UnknownVictim)
+        if (!HasAdditionalCharacter)
             return "someone long ago...";
-        
-        return _victim.Name;
+
+        return AdditionalCharacter.Name;
     }
 }

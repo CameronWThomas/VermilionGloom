@@ -27,4 +27,11 @@ public static class SecretLevelExtensions
 
     public static float Chance(this SecretLevel secretLevel)
         => _chanceDictionary[secretLevel];
+
+    public static bool RandomChance(this SecretLevel secretLevel)
+    {
+        var chance = _chanceDictionary[secretLevel];
+        var value = UnityEngine.Random.Range(0f, 1f);
+        return value <= chance;
+    }
 }

@@ -56,7 +56,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
     {
         if (hit.transform.TryGetComponent<SecretPassage>(out var secretPassage))
             HandleInteractableClick(secretPassage);
-        else if (hit.transform.TryGetComponent<SecretKnowledge>(out var characterSecrets))
+        else if (hit.transform.TryGetComponent<CharacterSecretKnowledge>(out var characterSecrets))
             HandleInteractableClick(characterSecrets);
     }
 
@@ -65,9 +65,9 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
         playerMvmnt.SetTarget(secretPassage.DestinationPoint, () => secretPassage.UsePassage(playerMvmnt.transform));
     }
 
-    private void HandleInteractableClick(SecretKnowledge characterSecrets)
+    private void HandleInteractableClick(CharacterSecretKnowledge characterSecrets)
     {
         //TODO move to them too
-        UI_MenuManager.Instance.TalkToNPC(characterSecrets);
+        //UI_MenuManager.Instance.TalkToNPC(characterSecrets);
     }
 }
