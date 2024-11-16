@@ -36,7 +36,10 @@ public class MoveToRandomPos : Action
         lingerCounter = 0;
         restartCounter = 0;
 
-        SetRandomPositionInRadius();
+        if (mvmntController.enabled)
+        {
+            SetRandomPositionInRadius();
+        }
     }
 
     public override TaskStatus OnUpdate()

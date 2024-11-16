@@ -11,6 +11,7 @@ public class MvmntController : MonoBehaviour
     public float distanceToTarget;
     public float reachedTargetThreshold = 0.1f;
 
+    [Header("States")]
     [SerializeField]
     private bool dead;
     [SerializeField]
@@ -91,10 +92,10 @@ public class MvmntController : MonoBehaviour
         AttemptedTarget = targetPos;
         if (!CanReachTarget(targetPos))
         {
-            Debug.Log("Cannot reach target");
+            //Debug.Log("Cannot reach target");
             return;
         }
-        Debug.Log("Setting target to: " + targetPos);
+        //Debug.Log("Setting target to: " + targetPos);
 
         _postDestinationArrivalAction = postDestinationArrivalAction;
 
@@ -106,7 +107,16 @@ public class MvmntController : MonoBehaviour
 
     public bool CanReachTarget(Vector3 targetPos)
     {
+
         NavMeshPath path = new NavMeshPath();
+        if(agent == null)
+        {
+            return false;
+        }
+        if (!agent.enabled)
+        {
+            return false;
+        }
         agent.CalculatePath(targetPos, path);
         return path.status == NavMeshPathStatus.PathComplete;
     }
@@ -144,6 +154,15 @@ public class MvmntController : MonoBehaviour
     public void SetCombat(bool combat)
     {
         inCombat = combat;
+    }
+
+    public void FaceTarget(Vector3 target)
+    {
+        Vector3 lookPos = target - transform.position;
+        lookPos.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(lookPos);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1.5f * Time.deltaTime);
+
     }
     private void OnDrawGizmos()
     {
