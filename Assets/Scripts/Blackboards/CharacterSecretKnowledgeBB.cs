@@ -28,6 +28,7 @@ public class CharacterSecretKnowledgeBB : GlobalSingleInstanceMonoBehaviour<Char
         if (!_initializedInitialSecrets && _allInitialNPCsRegistered && _secretKnowledgeDict.Count == CharacterInfoBB.Instance.CharacterCount)
         {
             _initializedInitialSecrets = true;
+            CharacterInfoBB.Instance.Initialize();
             InitializeSecretsAndRumours();
         }
     }

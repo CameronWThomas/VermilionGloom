@@ -1,7 +1,9 @@
 using BehaviorDesigner.Runtime;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(CharacterInfo))]
 public class NpcBrain : MonoBehaviour
 {
     MvmntController mvmntController;
@@ -27,6 +29,11 @@ public class NpcBrain : MonoBehaviour
         behaviorTree = GetComponent<BehaviorTree>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+
+        // lazy solution (:
+        if (!TryGetComponent<CharacterSecretKnowledge>(out _))
+            transform.AddComponent<CharacterSecretKnowledge>();
+
     }
 
     // Update is called once per frame
@@ -52,6 +59,8 @@ public class NpcBrain : MonoBehaviour
         animator.SetBool("conversing", true);
         convoTarget = target;
         ReEvaluateTree();
+
+        UI_CharacterInteractionMenu.Instance.Activate(GetComponent<CharacterInfo>().ID);
     }
     public void ExitConversation()
     {

@@ -19,7 +19,7 @@ public static class SecretBuilder
         {
             CharacterType.VanHelsing => new NameSecret("Van Helsing", SecretLevel.Confidential, helper.ID),
             _ => RandomChance(MurderChance)
-                ? new NameSecret(Guid.NewGuid().ToString(), RandomSecretLevel(MurderChance, SecretLevel.Private, SecretLevel.Public), helper.ID)
+                ? new NameSecret(NameHelper.GetRandomName(), RandomSecretLevel(MurderChance, SecretLevel.Private, SecretLevel.Public), helper.ID)
                 : null
         };
 

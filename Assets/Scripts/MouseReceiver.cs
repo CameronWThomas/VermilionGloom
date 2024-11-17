@@ -13,10 +13,12 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
     public bool IsActivated => _deactivatedCounter == 0;
 
     //public LayerMask movementLayerMask;
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         playerController = playerMvmnt.GetComponent<PlayerController>();
     }
+
     private void Update()
     {
         if (!IsActivated)
@@ -78,8 +80,6 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
     {
         if (hit.transform.TryGetComponent<SecretPassage>(out var secretPassage))
             HandleInteractableClick(secretPassage);
-        else if (hit.transform.TryGetComponent<CharacterInfo>(out var characterInfo))
-            HandleInteractableClick(characterInfo.ID);
     }
 
     private void HandleInteractableClick(SecretPassage secretPassage)
@@ -108,5 +108,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
             playerMvmnt.SetTarget(hit.point);
             conversationTarget = brain;
         }
+
+
     }
 }

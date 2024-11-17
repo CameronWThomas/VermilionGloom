@@ -7,8 +7,9 @@ public class CharacterInfo : MonoBehaviour
 {
     public const int MAX_DETECTIVE_POINTS = 10;
 
-    [SerializeField] private string _name = "Unassigned";
-    [SerializeField] private CharacterType _characterType = global::CharacterType.Generic;
+    [SerializeField] private bool _isOwner = false;
+
+    private bool _isInitialized = false;
 
     private void Start()
     {
@@ -16,6 +17,23 @@ public class CharacterInfo : MonoBehaviour
         CharacterInfoBB.Instance.Register(this);
 
         CharacterPortraitContentBB.Instance.Register(ID);
+    }
+
+    public void Initialize(bool isVanHelsing)
+    {
+        if (_isInitialized) return;
+
+        _isInitialized = true;
+
+        Name = NameHelper.GetRandomName();
+
+        if (_isOwner)
+            CharacterType = CharacterType.Owner;
+        else if (isVanHelsing)
+            CharacterType = CharacterType.VanHelsing;
+        else
+            CharacterType = CharacterType.Generic;
+            
     }
 
     public bool TryUseDetectivePoint(int points = 1)
@@ -39,8 +57,9 @@ public class CharacterInfo : MonoBehaviour
 
 
     public CharacterID ID { get; } = new CharacterID();
-    public string Name => _name;
-    public CharacterType CharacterType => _characterType;
+    public string Name { get; private set; }
+    public CharacterType CharacterType { get; private set; } = CharacterType.Generic;
     public int RemainingDetectivePoints { get; private set; }
     public int PendingDetectivePoints { get; private set; }
+    public bool IsOwner => _isOwner;
 }
