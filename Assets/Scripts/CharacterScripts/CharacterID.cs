@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class CharacterID : IEquatable<CharacterID>
 {
@@ -10,6 +11,8 @@ public class CharacterID : IEquatable<CharacterID>
     }
 
     public string Name => CharacterInfoBB.Instance.GetCharacterInfo(this)?.Name;
+    public Texture2D PortraitContent => CharacterPortraitContentBB.Instance.GetPortrait(this);
+    public Color PortraitColor => CharacterPortraitContentBB.Instance.GetPortraitColor(this);
 
     public bool Equals(CharacterID other) => other == this;
     public override bool Equals(object obj) => (obj as CharacterID) == this;

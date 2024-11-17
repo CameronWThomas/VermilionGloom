@@ -15,6 +15,12 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
     [SerializeField] private TMP_Text _selectedSecretText;
     [SerializeField] private GameObject _singlePartySelectedSecret;
     [SerializeField] private GameObject _multiPartySelectedSecret;
+    [SerializeField] private TMP_Text _characterName;
+
+    [SerializeField] private UI_Portrait _selectedCharacterPortrait;
+    [SerializeField] private UI_Portrait _singlePartyPortrait;
+    [SerializeField] private UI_Portrait _multiPartyPortrait1;
+    [SerializeField] private UI_Portrait _multiPartyPortrait2;
 
     private CharacterID _characterId;
 
@@ -34,6 +40,10 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         _detectivePowerBar.gameObject.SetActive(true);
 
         var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(characterID);
+        _characterName.text = characterID.Name;
+        //_selectedCharacterPortrait.SetContent(characterID.PortraitContent);
+        _selectedCharacterPortrait.SetContent(characterID.PortraitColor);
+
 
         _detectivePowerBar.Initialize(10);
 
@@ -69,11 +79,20 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         {
             _multiPartySelectedSecret.SetActive(true);
             _singlePartySelectedSecret.SetActive(false);
+
+            //_multiPartyPortrait1.SetContent(secret.SecretOwner.PortraitContent);
+            _multiPartyPortrait1.SetContent(secret.SecretOwner.PortraitColor);
+
+            //_multiPartyPortrait2.SetContent(secret.AdditionalCharacter.PortraitContent);
+            _multiPartyPortrait2.SetContent(secret.AdditionalCharacter.PortraitColor);
         }
         else
         {
             _multiPartySelectedSecret.SetActive(false);
             _singlePartySelectedSecret.SetActive(true);
+
+            //_singlePartyPortrait.SetContent(secret.SecretOwner.PortraitContent);
+            _singlePartyPortrait.SetContent(secret.SecretOwner.PortraitColor);
         }
 
         _selectedSecretText.text = secret.Description;

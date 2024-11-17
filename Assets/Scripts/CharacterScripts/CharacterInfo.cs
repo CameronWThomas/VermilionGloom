@@ -14,6 +14,8 @@ public class CharacterInfo : MonoBehaviour
     {
         RemainingDetectivePoints = MAX_DETECTIVE_POINTS;
         CharacterInfoBB.Instance.Register(this);
+
+        CharacterPortraitContentBB.Instance.Register(ID);
     }
 
     public bool UseDetectivePoint(int points = 1)
