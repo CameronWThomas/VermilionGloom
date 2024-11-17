@@ -32,9 +32,11 @@ public class NpcBrain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if dead and not being dragged, do nothing
         if (dead && !dragged)
             return;
 
+        //if being dragged or strangled update position
         if(
             (mvmntLatchTarget != null && !dead)
             || 
@@ -51,6 +53,7 @@ public class NpcBrain : MonoBehaviour
         }
     }
 
+    // CONVERSATIONS
     public void EnterConversation(Transform target)
     {
         animator.SetBool("conversing", true);
@@ -61,37 +64,38 @@ public class NpcBrain : MonoBehaviour
     {
         convoTarget = null;
         animator.SetBool("conversing", false);
-        //ReEvaluateTree();
+        ReEvaluateTree();
     }
-
-    public void BeStrangled(GameObject killer)
+    // MOVEMENT LATCHING
+    private void SetMvmntLatchTarget(GameObject target, string animParam)
     {
-
-        mvmntLatchTarget = killer;
-        if(killer != null)
+        mvmntLatchTarget = target;
+        if (target != null)
         {
-            mvmntController.enabled = false;
-            //capsuleCollider.enabled = false;
+            // TODO: instead of disabling movement stuff,
+            // maybe handle latching in mvmnt controller. 
 
-            //remove navmeshagent
-            //Destroy(navMeshAgent);
+            mvmntController.enabled = false;
             navMeshAgent.enabled = false;
 
-            animator.SetBool("choked", true);
+            if(!string.IsNullOrEmpty(animParam))
+                animator.SetBool(animParam, true);
 
         }
         else
         {
-            animator.SetBool("choked", false);
+            if (!string.IsNullOrEmpty(animParam))
+                animator.SetBool(animParam, false);
             navMeshAgent.enabled = true;
-            //if (navMeshAgent == null)
-            //{
-            //    navMeshAgent = gameObject.AddComponent<NavMeshAgent>();
-            //}
-            //mvmntController.agent = navMeshAgent;
             mvmntController.enabled = true;
 
         }
+    }
+
+    // STRANGLE
+    public void BeStrangled(GameObject killer)
+    {
+        SetMvmntLatchTarget(killer, "choked");
         ReEvaluateTree();
     }
     public void StopBeingStrangled()
@@ -107,40 +111,22 @@ public class NpcBrain : MonoBehaviour
         Die(false);
     }
 
+    // DRAG
     public void BeDraged(GameObject dragger) 
-    { 
-        mvmntLatchTarget = dragger;
-        if (dragger != null)
-        {
-            mvmntController.enabled = false;
+    {
 
-            //remove navmeshagent
-            //Destroy(navMeshAgent);
-            navMeshAgent.enabled = false;
-
-            animator.SetBool("dragged", true);
-            dragged = true;
-
-        }
-        else
-        {
-            animator.SetBool("dragged", false);
-            navMeshAgent.enabled = true;
-            //if (navMeshAgent == null)
-            //{
-            //    navMeshAgent = gameObject.AddComponent<NavMeshAgent>();
-            //}
-            //mvmntController.agent = navMeshAgent;
-            mvmntController.enabled = true;
-            dragged = false;
-
-        }
+        SetMvmntLatchTarget(dragger, "dragged");
+        dragged = dragger != null;
         ReEvaluateTree();
     }
     public void StopBeingDragged()
     {
         BeDraged(null);
     }
+
+    // DEATH
+    //      setAnimParam can be called after death to trigger the death animation after a cool animation.
+    //      see the DieOnExitAnim script, used in the choke kill animation
     public void Die(bool setAnimParam = true)
     {
         if (setAnimParam)
@@ -149,17 +135,15 @@ public class NpcBrain : MonoBehaviour
         if (!dead)
         {
             dead = true;
-
-            //this should be handled in an animation.
-            //cuz right now they die too quick
             mvmntController.enabled = false;
-            //other stuff for the dyin
             ReEvaluateTree();
         }
 
     }
 
-
+    // Triggers a re-calculation of current behaviour tree. 
+    // Nice for when you expect some conditionals to change
+    //      This could probably be written better, but it works.
     public void ReEvaluateTree()
     {
         behaviorTree.StopAllCoroutines();

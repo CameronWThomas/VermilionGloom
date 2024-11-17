@@ -84,6 +84,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
         }
 
 
+        // End dragging if clicking on player or the drag target
 
         if(hit.transform.CompareTag(GlobalConstants.PLAYER_TAG_NAME) && playerController.dragging)
         {
@@ -124,6 +125,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
         }
         else
         {
+            //Drag, strangle, or talk
             if (brain.dead)
             {
                 //drag that mofo
@@ -131,7 +133,6 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
             }
             else if (hostile)
             {
-                //brain.BeStrangled(playerMvmnt.gameObject);
                 playerController.InitiateStrangling(brain.gameObject);
             }
             else
