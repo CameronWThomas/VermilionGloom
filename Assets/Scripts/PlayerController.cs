@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     MouseReceiver mouseReceiver;
 
-    [Header("StrangleStuff")]
+    [Header("Strangle Stuff")]
     public GameObject strangleTarget;
     [SerializeField]
     float strangleDist = 1f;
@@ -25,6 +25,10 @@ public class PlayerController : MonoBehaviour
     float strangleTime = 5f;
     [SerializeField]
     float strangleCounter = 0f;
+
+    [Header("Drag Stuff")]
+    public GameObject dragTarget;
+    public bool dragging = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
@@ -65,8 +69,64 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         StrangleUpdate();
+
+        DraggingUpdate();
+    }
+    public void InitiateDragging(GameObject target)
+    {
+        Debug.Log("Dragging initiated");
+        dragTarget = target;
+    }
+    public void EndDragging()
+    {
+        dragging = false;
+        animator.SetBool("dragging", false);
+
+        NpcBrain targetBrain = dragTarget.GetComponent<NpcBrain>();
+        if (targetBrain == null)
+        {
+            return;
+        }
+        targetBrain.StopBeingDragged();
+        dragTarget = null;
+    }
+    public void DraggingUpdate()
+    {
+        if (dragTarget != null && !dragging)
+        {
+            mvmntController.SetTarget(dragTarget.transform.position);
+            if (mvmntController.distanceToTarget <= strangleDist)
+            {
+                DragSetup();
+            }
+        }
+    }
+    private void DragSetup()
+    {
+        Debug.Log("Started the dragging process");
+        if (dragTarget == null)
+        {
+            return;
+        }
+        else
+        {
+            NpcBrain targetBrain = dragTarget.GetComponent<NpcBrain>();
+            if (targetBrain == null)
+            {
+                return;
+            }
+            //strangleCounter = 0f;
+            dragging = true;
+            animator.SetBool("dragging", true);
+            targetBrain.BeDraged(gameObject);
+            mvmntController.SetTarget(transform.position);
+        }
     }
 
+    public void InitiateStrangling(GameObject target)
+    {
+        strangleTarget = target;
+    }
     private void StrangleUpdate()
     {
         if (strangleTarget != null && !strangling)
@@ -74,7 +134,7 @@ public class PlayerController : MonoBehaviour
             mvmntController.SetTarget(strangleTarget.transform.position);
             if (mvmntController.distanceToTarget <= strangleDist)
             {
-                StartStrangle();
+                StrangleSetup();
             }
         }
         if (strangling)
@@ -90,7 +150,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void StartStrangle()
+
+    private void StrangleSetup()
     {
         Debug.Log("Started the strangling process");
         if(strangleTarget == null)
@@ -121,8 +182,20 @@ public class PlayerController : MonoBehaviour
         }
         animator.SetTrigger("chokeKill");
         animator.SetBool("choking", false);
-
-
+        strangleTarget = null;
+        strangling = false;
+    }
+    private void StrangleInterupt()
+    {
+        //todo
+        NpcBrain targetBrain = strangleTarget.GetComponent<NpcBrain>();
+        if (targetBrain != null)
+        {
+            targetBrain.StopBeingStrangled();
+        }
+        animator.SetBool("choking", false);
+        strangleTarget = null;
+        strangling = false;
     }
     // Event handler for the crouch action
     private void CrouchPerformed(InputAction.CallbackContext context)

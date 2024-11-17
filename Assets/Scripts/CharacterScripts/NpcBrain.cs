@@ -32,8 +32,7 @@ public class NpcBrain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (dead)
+        if (dead && !dragged)
             return;
 
         if(
@@ -43,7 +42,12 @@ public class NpcBrain : MonoBehaviour
             )
         {
             transform.forward = mvmntLatchTarget.transform.forward;
-            transform.position = mvmntLatchTarget.transform.position + mvmntLatchTarget.transform.forward;
+            Vector3 placementMod = mvmntLatchTarget.transform.forward;
+            if(dragged)
+            {
+                placementMod = placementMod * -1;
+            }
+            transform.position = mvmntLatchTarget.transform.position + placementMod;
         }
     }
 
@@ -67,7 +71,7 @@ public class NpcBrain : MonoBehaviour
         if(killer != null)
         {
             mvmntController.enabled = false;
-            capsuleCollider.enabled = false;
+            //capsuleCollider.enabled = false;
 
             //remove navmeshagent
             //Destroy(navMeshAgent);
@@ -90,25 +94,69 @@ public class NpcBrain : MonoBehaviour
         }
         ReEvaluateTree();
     }
+    public void StopBeingStrangled()
+    {
+        BeStrangled(null);
+    }
     public void StrangleDie()
     {
         animator.SetTrigger("chokeKill");
         animator.SetBool("choked", false);
-        Die();
+
+        mvmntLatchTarget = null;
+        Die(false);
     }
 
-    public void Die()
-    {
-        dead = true;
-        mvmntLatchTarget = null;
-        
-        //this should be handled in an animation.
-        //cuz right now they die too quick
-        animator.SetBool("dead", true);
+    public void BeDraged(GameObject dragger) 
+    { 
+        mvmntLatchTarget = dragger;
+        if (dragger != null)
+        {
+            mvmntController.enabled = false;
 
-        mvmntController.enabled = false;
-        //other stuff for the dyin
+            //remove navmeshagent
+            //Destroy(navMeshAgent);
+            navMeshAgent.enabled = false;
+
+            animator.SetBool("dragged", true);
+            dragged = true;
+
+        }
+        else
+        {
+            animator.SetBool("dragged", false);
+            navMeshAgent.enabled = true;
+            //if (navMeshAgent == null)
+            //{
+            //    navMeshAgent = gameObject.AddComponent<NavMeshAgent>();
+            //}
+            //mvmntController.agent = navMeshAgent;
+            mvmntController.enabled = true;
+            dragged = false;
+
+        }
         ReEvaluateTree();
+    }
+    public void StopBeingDragged()
+    {
+        BeDraged(null);
+    }
+    public void Die(bool setAnimParam = true)
+    {
+        if (setAnimParam)
+            animator.SetBool("dead", true);
+
+        if (!dead)
+        {
+            dead = true;
+
+            //this should be handled in an animation.
+            //cuz right now they die too quick
+            mvmntController.enabled = false;
+            //other stuff for the dyin
+            ReEvaluateTree();
+        }
+
     }
 
 

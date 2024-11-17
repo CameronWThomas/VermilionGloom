@@ -11,6 +11,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
     private int _deactivatedCounter = 0;
     public bool IsActivated => _deactivatedCounter == 0;
 
+
     //public LayerMask movementLayerMask;
     private void Start()
     {
@@ -49,14 +50,10 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
         //Debug.Log("     Transform Name: " + hit.transform.name);
         //Debug.Log("     Point: " + hit.point);
 
-        //TODO: reassess this when we implement an interaction screen for npcs
-        if (hit.transform != null && conversationTarget != null) 
+        // if this returns true, dont do anything else on this click
+        if(ClickCancelActions(hit))
         {
-            if (hit.transform.name != conversationTarget.name)
-            {
-                conversationTarget.ExitConversation();
-                conversationTarget = null;
-            }
+            return;
         }
 
         if(hit.transform.CompareTag(GlobalConstants.WALKABLE_TAG_NAME))
@@ -73,6 +70,36 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
         }
     }
 
+    private bool ClickCancelActions(RaycastHit hit)
+    {
+        // Exit any ongoing conversation if clicking elsewhere
+        //TODO: reassess this when we implement an interaction screen for npcs
+        if (hit.transform != null && conversationTarget != null)
+        {
+            if (hit.transform.name != conversationTarget.name)
+            {
+                conversationTarget.ExitConversation();
+                conversationTarget = null;
+            }
+        }
+
+
+
+        if(hit.transform.CompareTag(GlobalConstants.PLAYER_TAG_NAME) && playerController.dragging)
+        {
+            playerController.EndDragging();
+            return true;
+        }
+        if (playerController.dragTarget != null)
+        {
+            if (hit.transform == playerController.dragTarget.transform)
+            {
+                playerController.EndDragging();
+                return true;
+            }
+        }
+        return false;
+    }
     private void HandleInteractableClick(RaycastHit hit)
     {
         if (hit.transform.TryGetComponent<SecretPassage>(out var secretPassage))
@@ -95,17 +122,25 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
             Debug.LogError("NpcBrain not found on " + hit.transform.name);
             return;
         }
-        else if (hostile)
-        {
-            //brain.BeStrangled(playerMvmnt.gameObject);
-            playerController.strangleTarget = brain.gameObject;
-        }
         else
         {
-            
-            brain.EnterConversation(playerMvmnt.transform);
-            playerMvmnt.SetTarget(hit.point);
-            conversationTarget = brain;
+            if (brain.dead)
+            {
+                //drag that mofo
+                playerController.InitiateDragging(brain.gameObject);
+            }
+            else if (hostile)
+            {
+                //brain.BeStrangled(playerMvmnt.gameObject);
+                playerController.InitiateStrangling(brain.gameObject);
+            }
+            else
+            {
+
+                brain.EnterConversation(playerMvmnt.transform);
+                playerMvmnt.SetTarget(hit.point);
+                conversationTarget = brain;
+            }
         }
     }
 }
