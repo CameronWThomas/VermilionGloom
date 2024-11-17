@@ -49,6 +49,18 @@ public class CharacterSecretKnowledgeBB : GlobalSingleInstanceMonoBehaviour<Char
     public void UnlockSecret(CharacterID characterId, SecretLevel level)
     {
         var secretKnowledge = _secretKnowledgeDict[characterId];
+
+        // If we are revealing a secret for the owner, the first needs to be the room secret no matter what
+        if (characterId.CharacterInfo.CharacterType is CharacterType.Owner)
+        {
+            var roomSecret = secretKnowledge.Secrets.OfType<RoomSecret>().First();
+            if (!roomSecret.IsRevealed)
+            {
+                roomSecret.Reveal();
+                return;
+            }
+        }
+
         var unlockedSecret = secretKnowledge.Secrets
             .Where(x => x.Level == level)
             .Randomize()
