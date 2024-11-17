@@ -6,11 +6,11 @@ public enum SecretLevel
     /// <summary>
     /// Always succeed in looking for public secrets. Other levels are chance based or depend on v-bucks
     /// </summary>
-    Public,
+    Public = 0,
 
-    Private,
-    Confidential,
-    Vampiric
+    Private = 1,
+    Confidential = 2,
+    Vampiric = 3
 }
 
 public static class SecretLevelExtensions

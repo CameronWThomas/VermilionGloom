@@ -17,6 +17,10 @@ public class UI_PowerUnit : MonoBehaviour
         OnStateChange();
     }
 
+    public bool IsPending => _state == PowerUnitState.PendingUse;
+    public bool IsUnused => _state == PowerUnitState.Unused;
+    public bool IsUsed => _state == PowerUnitState.Used;
+
     public void SetUnused() => UpdateState(PowerUnitState.Unused);
     public void SetPendingUse() => UpdateState(PowerUnitState.PendingUse);
     public void SetUsed() => UpdateState(PowerUnitState.Used);

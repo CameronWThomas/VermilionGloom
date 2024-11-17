@@ -22,6 +22,12 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
     [SerializeField] private UI_Portrait _multiPartyPortrait1;
     [SerializeField] private UI_Portrait _multiPartyPortrait2;
 
+    [SerializeField] private List<GameObject> _hideObjectsDuringAction = new();
+    [SerializeField] private UI_SecretRevealScreen _secretRevealScreen;
+
+    private enum ScreenState { Off, Normal, RevealingSecrets }
+    private ScreenState _screenState = ScreenState.Off;
+
     private CharacterID _characterId;
 
     private Secret _selectedSecret = null;
@@ -37,9 +43,14 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
     {
         _characterId = characterID;
 
+        _screenState = ScreenState.Normal;
+
         MouseReceiver.Instance.Deactivate();
+
         gameObject.SetActive(true);
         _detectivePowerBar.gameObject.SetActive(true);
+        _hideObjectsDuringAction.ForEach(x => x.SetActive(true));
+        _secretRevealScreen.gameObject.SetActive(false);
 
         var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(characterID);
         _characterName.text = characterID.Name;
@@ -54,12 +65,34 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
 
     public void Deactivate()
     {
+        _screenState = ScreenState.Off;
+
         MouseReceiver.Instance.Activate();
         gameObject.SetActive(false);
         _detectivePowerBar.gameObject.SetActive(false);
 
         _secretsTileList.ForEach(x => Destroy(x.gameObject));
         _secretsTileList.Clear();
+    }
+
+    public void OnRevealSecretsPressed()
+    {
+        if (_screenState != ScreenState.Normal)
+            return;
+
+        _screenState = ScreenState.RevealingSecrets;
+
+        _hideObjectsDuringAction.ForEach(x => x.SetActive(false));
+        _secretRevealScreen.gameObject.SetActive(true);
+        _secretRevealScreen.Initialize(_characterId);
+    }
+
+    public void OnActionComplete()
+    {
+        _screenState = ScreenState.Normal;
+
+        _hideObjectsDuringAction.ForEach(x => x.SetActive(true));
+        _secretRevealScreen.gameObject.SetActive(false);
     }
 
     private void AddSecrets(IEnumerable<Secret> secrets)
