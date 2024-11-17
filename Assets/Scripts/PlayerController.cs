@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour
     MvmntController mvmntController;
     Animator animator;
     MouseReceiver mouseReceiver;
+    NavMeshAgent agent;
 
     [Header("Strangle Stuff")]
     public GameObject strangleTarget;
@@ -38,6 +40,7 @@ public class PlayerController : MonoBehaviour
         mvmntController = GetComponent<MvmntController>();
         animator = GetComponent<Animator>();
         mouseReceiver = MouseReceiver.Instance;
+        agent = GetComponent<NavMeshAgent>();
     }
     void Start()
     {
@@ -214,6 +217,13 @@ public class PlayerController : MonoBehaviour
         strangleTarget = null;
         strangling = false;
     }
+    public void CancelStrangling()
+    {
+        animator.SetBool("choking", false);
+        strangleTarget = null;
+        strangling = false;
+        strangleCounter = 0f;
+    }
 
 
     // Event handler for the crouch action
@@ -253,6 +263,29 @@ public class PlayerController : MonoBehaviour
         {
             brain.ReceiveBroadcast(bcType, gameObject, extraObj);
         }
+    }
+    public void Die()
+    {
+        animator.SetBool("dead", true);
+        mvmntController.SetTarget(transform.position);
+        mvmntController.enabled = false;
+        if(strangleTarget != null)
+        {
+            NpcBrain targetBrain = strangleTarget.GetComponent<NpcBrain>();
+            if(targetBrain != null)
+            {
+                targetBrain.StopBeingStrangled();
+            }
+        }
+        if(dragTarget != null)
+        {
+            NpcBrain targetBrain = dragTarget.GetComponent<NpcBrain>();
+            if(targetBrain != null)
+            {
+                targetBrain.StopBeingDragged();
+            }
+        }
+        agent.enabled = false;
     }
     private void OnDestroy()
     {

@@ -20,7 +20,12 @@ public class NpcBrain : MonoBehaviour
     public bool strangled = false;
 
     public GameObject mvmntLatchTarget = null;
-    
+
+
+    [Header("Interpersonal")]
+    public GameObject combatTarget;
+    public float crunchDistance = 2.0f;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -173,6 +178,27 @@ public class NpcBrain : MonoBehaviour
         }
     }
 
+    private void ParseCombatTarget(GameObject attacker, GameObject attacked)
+    {
+        if (attacker == null && attacked == null)
+        {
+            return;
+        }
+        if (attacker != null)
+        {
+            combatTarget = attacker;
+        }
+        if (attacked != null)
+        {
+            NpcBrain strBrain = attacked.GetComponent<NpcBrain>();
+
+            attacker = strBrain.mvmntLatchTarget;
+            if (attacker != null)
+            {
+                combatTarget = attacker;
+            }
+        }
+    }
     public void SawCorpseDragging(GameObject attacker, GameObject corpse = null)
     {
         if (corpse != null)
@@ -181,15 +207,23 @@ public class NpcBrain : MonoBehaviour
             Debug.Log(gameObject.name + " saw " + corpse + " being dragged");
         else
             Debug.Log(gameObject.name + " saw someone dragging someone");
+        ParseCombatTarget(attacker, corpse);
+
+
+        ReEvaluateTree();
     }
     public void SawStrangling(GameObject attacker, GameObject strangled =null)
     {
-        if(strangled != null)
+        if(strangled != null && attacker.name != null)
             Debug.Log(gameObject.name + " saw " + attacker.name + " strangling " + strangled.name);
         else if( attacker == null)
             Debug.Log(gameObject.name + " saw " + strangled + " being strangled");
         else 
             Debug.Log(gameObject.name + " saw someone strangling someone");
+
+        ParseCombatTarget(attacker, strangled);
+
+        ReEvaluateTree();
     }
     public void SawCorpse(GameObject corpse)
     {
@@ -197,8 +231,42 @@ public class NpcBrain : MonoBehaviour
             Debug.Log(gameObject.name + " saw " + corpse.name + " dead");
         else
             Debug.Log(gameObject.name + " saw a dead body");
+
+
+        ReEvaluateTree();
     }
 
+    public void Crunch()
+    {
+        animator.SetTrigger("crunch");
+        // a little tolerance for the player moving away further
+        if(mvmntController.distanceToTarget <= crunchDistance + .3f)
+        {
+            if(combatTarget == null)
+            {
+                ReEvaluateTree();
+                return;
+            }
+            // if player 
+            PlayerController pc = combatTarget.GetComponent<PlayerController>();
+            if(pc != null)
+            {
+                pc.Die();
+                combatTarget = null;
+                ReEvaluateTree();
+                return;
+            }    
+            // if npc
+            NpcBrain targetBrain = combatTarget.GetComponent<NpcBrain>();
+            if(targetBrain != null)
+            {
+                targetBrain.Die(true);
+                combatTarget = null;
+                ReEvaluateTree();
+                return;
+            }
+        }
+    }
     // Triggers a re-calculation of current behaviour tree. 
     // Nice for when you expect some conditionals to change
     //      This could probably be written better, but it works.

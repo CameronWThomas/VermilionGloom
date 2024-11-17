@@ -58,6 +58,15 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 
         if(hit.transform.CompareTag(GlobalConstants.WALKABLE_TAG_NAME))
         {
+            if(playerController.strangleTarget != null)
+            {
+                NpcBrain brain = playerController.strangleTarget.GetComponent<NpcBrain>();
+                if(brain != null)
+                    brain.StopBeingStrangled();
+
+                playerController.CancelStrangling();
+
+            }
             playerMvmnt.SetTarget(hit.point);
         }
         else if (hit.transform.CompareTag(GlobalConstants.INTERACTABLE_TAG_NAME))
