@@ -24,6 +24,8 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
 
     private CharacterID _characterId;
 
+    private Secret _selectedSecret = null;
+
     private List<UI_SelectableSecretTile> _secretsTileList = new();
 
     private void Awake()
@@ -65,16 +67,27 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         foreach (var secret in secrets)
         {
             var selectableTile = Instantiate(_selectableSecretTilePrefab, _secretsGrid).GetComponent<UI_SelectableSecretTile>();
-            selectableTile.Initialize(secret, OnSecretSelected);
+            selectableTile.Initialize(secret, OnSecretSelected, OnSecretRevealed);
             _secretsTileList.Add(selectableTile);
         }
 
         _secretsTileList.First().SelectInitial();
-    }
+    }    
 
     private void OnSecretSelected(Secret secret)
     {
+        _selectedSecret = secret;
+
         _selectedSecretImage.texture = secret.IconTexture;
+        if (!secret.IsRevealed)
+        {
+            _multiPartySelectedSecret.SetActive(false);
+            _singlePartySelectedSecret.SetActive(false);
+
+            _selectedSecretText.text = "???";
+            return;
+        }
+
         if (secret.HasAdditionalCharacter)
         {
             _multiPartySelectedSecret.SetActive(true);
@@ -96,5 +109,14 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         }
 
         _selectedSecretText.text = secret.Description;
+    }
+
+    private void OnSecretRevealed(Secret secret)
+    {
+        if (_selectedSecret != secret)
+            return;
+
+        // Reselect to we can update the active secret screen
+        OnSecretSelected(secret);
     }
 }

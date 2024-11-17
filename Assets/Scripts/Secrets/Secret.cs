@@ -27,7 +27,7 @@ public abstract class Secret
 
     public string Description => _description ??= CreateDescription();
     public bool HasAdditionalCharacter => AdditionalCharacter != null;
-    public Texture2D IconTexture => SecretResources.Instance.GetTexture(Identifier);
+    public Texture2D IconTexture => IsRevealed ? SecretResources.Instance.GetTexture(Identifier) : SecretResources.Instance.UnrevealedIconTexture;
         
     public abstract string CreateDescription();
     public abstract Secret Copy();

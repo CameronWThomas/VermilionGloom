@@ -17,6 +17,7 @@ public class SecretResources : GlobalSingleInstanceMonoBehaviour<SecretResources
     [SerializeField] private Texture2D _vampireKnowledgeIconTexture;
     [SerializeField] private Texture2D _murderIconTexture;
     [SerializeField] private Texture2D _roomIconTexture;
+    [SerializeField] private Texture2D _unrevealedIconTexture;
 
     private readonly Dictionary<SecretIconIdentifier, Texture2D> _secretIconTextures = new();
 
@@ -39,4 +40,6 @@ public class SecretResources : GlobalSingleInstanceMonoBehaviour<SecretResources
         Debug.LogError($"Missing texture for {identifier}");
         return new Texture2D(512, 512);
     }
+
+    public Texture2D UnrevealedIconTexture => _unrevealedIconTexture;
 }
