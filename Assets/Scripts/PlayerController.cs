@@ -174,6 +174,7 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("dragging", true);
             targetBrain.BeDraged(gameObject);
             mvmntController.SetTarget(transform.position);
+            Broadcast(BroadcastType.Drag, dragTarget);
         }
     }
     private void StrangleSetup()
@@ -195,6 +196,7 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("choking", true);
             targetBrain.BeStrangled(gameObject);
             mvmntController.SetTarget(transform.position);
+            Broadcast(BroadcastType.Strangle, strangleTarget);
         }
     }
 
@@ -239,6 +241,19 @@ public class PlayerController : MonoBehaviour
         mvmntController.SetRunning(!mvmntController.IsRunning());
     }
     // Disable input actions when the script is destroyed
+    public enum BroadcastType
+    {
+        Drag,
+        Strangle
+    }
+    private void Broadcast(BroadcastType bcType, GameObject extraObj = null)
+    {
+        NpcBrain[] brains = GameObject.FindObjectsByType<NpcBrain>(sortMode: FindObjectsSortMode.None);
+        foreach(NpcBrain brain in brains)
+        {
+            brain.ReceiveBroadcast(bcType, gameObject, extraObj);
+        }
+    }
     private void OnDestroy()
     {
         inputActions.Disable();

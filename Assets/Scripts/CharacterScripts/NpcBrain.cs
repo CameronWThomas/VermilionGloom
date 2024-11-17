@@ -1,6 +1,7 @@
 using BehaviorDesigner.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
+using static PlayerController;
 
 public class NpcBrain : MonoBehaviour
 {
@@ -9,12 +10,14 @@ public class NpcBrain : MonoBehaviour
     BehaviorTree behaviorTree;
     CapsuleCollider capsuleCollider;
     NavMeshAgent navMeshAgent;
+    Looker looker;
 
     public Transform convoTarget = null;
     //private Vector3 killPosOffset = new Vector3(0, 0, 0);
 
     public bool dead = false;
     public bool dragged = false;
+    public bool strangled = false;
 
     public GameObject mvmntLatchTarget = null;
     
@@ -27,6 +30,7 @@ public class NpcBrain : MonoBehaviour
         behaviorTree = GetComponent<BehaviorTree>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        looker = GetComponentInChildren<Looker>();
     }
 
     // Update is called once per frame
@@ -96,6 +100,7 @@ public class NpcBrain : MonoBehaviour
     public void BeStrangled(GameObject killer)
     {
         SetMvmntLatchTarget(killer, "choked");
+        strangled = killer != null;
         ReEvaluateTree();
     }
     public void StopBeingStrangled()
@@ -108,6 +113,7 @@ public class NpcBrain : MonoBehaviour
         animator.SetBool("choked", false);
 
         mvmntLatchTarget = null;
+        strangled = false;
         Die(false);
     }
 
@@ -135,10 +141,62 @@ public class NpcBrain : MonoBehaviour
         if (!dead)
         {
             dead = true;
+            strangled = false;
             mvmntController.enabled = false;
             ReEvaluateTree();
         }
 
+    }
+
+    public void ReceiveBroadcast(BroadcastType type, GameObject shouldSee, GameObject extraObject )
+    {
+        if (
+            (looker.CanSeeTarget(shouldSee) || looker.CanSeeTarget(extraObject))
+            && !dead && !strangled)
+        {
+
+            switch (type)
+            {
+                case BroadcastType.Drag:
+                    // Handle drag broadcast
+                    //Debug.Log(gameObject.name + " saw " + shouldSee.name + " dragging someone");
+                    SawCorpseDragging(shouldSee, extraObject);
+                    break;
+                case BroadcastType.Strangle:
+                    // Handle strangle broadcast
+                    SawStrangling(shouldSee, extraObject);
+                    break;
+                default:
+                    // Handle other types of broadcasts
+                    break;
+            }
+        }
+    }
+
+    public void SawCorpseDragging(GameObject attacker, GameObject corpse = null)
+    {
+        if (corpse != null)
+            Debug.Log(gameObject.name + " saw " + attacker.name + " dragging " + corpse.name);
+        else if (attacker == null)
+            Debug.Log(gameObject.name + " saw " + corpse + " being dragged");
+        else
+            Debug.Log(gameObject.name + " saw someone dragging someone");
+    }
+    public void SawStrangling(GameObject attacker, GameObject strangled =null)
+    {
+        if(strangled != null)
+            Debug.Log(gameObject.name + " saw " + attacker.name + " strangling " + strangled.name);
+        else if( attacker == null)
+            Debug.Log(gameObject.name + " saw " + strangled + " being strangled");
+        else 
+            Debug.Log(gameObject.name + " saw someone strangling someone");
+    }
+    public void SawCorpse(GameObject corpse)
+    {
+        if (corpse != null)
+            Debug.Log(gameObject.name + " saw " + corpse.name + " dead");
+        else
+            Debug.Log(gameObject.name + " saw a dead body");
     }
 
     // Triggers a re-calculation of current behaviour tree. 

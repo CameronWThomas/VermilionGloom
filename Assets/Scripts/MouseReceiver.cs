@@ -12,7 +12,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
     public bool IsActivated => _deactivatedCounter == 0;
 
 
-    //public LayerMask movementLayerMask;
+    public LayerMask clickLayerMask;
     private void Start()
     {
         playerController = playerMvmnt.GetComponent<PlayerController>();
@@ -43,7 +43,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
         // Debug draw the ray
         //Debug.DrawRay(ray.origin, ray.direction, Color.red);
 
-        if (!Physics.Raycast(ray, out var hit, Mathf.Infinity))
+        if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, clickLayerMask))
             return;
 
         //Debug.Log("Mouse Hit:");
