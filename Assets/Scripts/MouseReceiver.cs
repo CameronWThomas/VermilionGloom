@@ -51,7 +51,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
         //Debug.Log("     Point: " + hit.point);
 
         // if this returns true, dont do anything else on this click
-        if(ClickCancelActions(hit))
+        if (ClickCancelActions(hit))
         {
             return;
         }

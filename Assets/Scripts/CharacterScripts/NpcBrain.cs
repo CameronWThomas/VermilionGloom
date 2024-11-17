@@ -1,4 +1,5 @@
 using BehaviorDesigner.Runtime;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using static PlayerController;
@@ -26,6 +27,9 @@ public class NpcBrain : MonoBehaviour
     public GameObject combatTarget;
     public float crunchDistance = 2.0f;
 
+    public Room activeRoom;
+    public Room[] allRooms; // all possible rooms, sorted by social score
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,6 +40,25 @@ public class NpcBrain : MonoBehaviour
         capsuleCollider = GetComponent<CapsuleCollider>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         looker = GetComponentInChildren<Looker>();
+
+        allRooms = GameObject.FindObjectsByType<Room>(FindObjectsSortMode.None);
+        allRooms = allRooms.OrderBy(r => r.socialScore).Reverse().ToArray();
+
+        // set active room to the room the npc is in
+        foreach(Room room in allRooms)
+        {
+            if(room.PointIsInRoom(transform.position))
+            {
+                activeRoom = room;
+                break;
+            }
+        }
+        if(activeRoom == null)
+        {
+            activeRoom = allRooms[0];
+        }
+
+
     }
 
     // Update is called once per frame

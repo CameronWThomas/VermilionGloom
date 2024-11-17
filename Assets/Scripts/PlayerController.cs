@@ -99,6 +99,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         targetBrain.StopBeingDragged();
+        mvmntController.SetDragging(false);
         dragTarget = null;
     }
 
@@ -177,7 +178,9 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("dragging", true);
             targetBrain.BeDraged(gameObject);
             mvmntController.SetTarget(transform.position);
+            mvmntController.SetDragging(true);
             Broadcast(BroadcastType.Drag, dragTarget);
+
         }
     }
     private void StrangleSetup()
