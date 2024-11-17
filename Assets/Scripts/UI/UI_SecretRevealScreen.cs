@@ -1,12 +1,16 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UI_SecretRevealScreen : MonoBehaviour
 {
     [SerializeField] private GameObject _miniGameZoneArea;
-    [SerializeField] private GameObject _miniGameIndicator;
+    [SerializeField] private RectTransform _miniGameIndicator;
+    [SerializeField, Range(0f, 1f)] private float _timeForIndicatorToCrossBar = 1f;
+    [SerializeField, Range(0f, 1f)] private float _delayAfterGame = 1f;
 
     private int _usedVPoints = 0;
 
@@ -15,12 +19,33 @@ public class UI_SecretRevealScreen : MonoBehaviour
     private List<Secret> _unrevealedSecrets = new();
     private SecretLevel _allowableSecretLevel = SecretLevel.Public;
     private bool _allowVampiricSecrets = false;
+    
+    private bool _miniGamePlaying = false;
+    private bool _playerEndedMiniGame = false;
 
-    public void Initialize(CharacterID characterID)
+    private Action<SecretLevel?, bool> _onFinish;
+
+    private void Update()
     {
+        if (_miniGamePlaying && Input.GetKeyDown(KeyCode.Space))
+        {
+            _playerEndedMiniGame = true;
+        }
+    }
+
+    public void Initialize(CharacterID characterID, Action<SecretLevel?, bool> onFinish)
+    {
+        _onFinish = onFinish;
+
         _zones ??= InitializeMiniGameZoneDict();
 
-        ResetScreen();
+        _usedVPoints = 0;
+        _allowVampiricSecrets = false;
+        _allowableSecretLevel = SecretLevel.Public;
+        _unrevealedSecrets.Clear();
+        _miniGamePlaying = false;
+        _playerEndedMiniGame = false;
+        _miniGameIndicator.gameObject.SetActive(false);
 
         var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(characterID);
         _unrevealedSecrets = secrets.Where(x => !x.IsRevealed).ToList();
@@ -30,6 +55,9 @@ public class UI_SecretRevealScreen : MonoBehaviour
 
     public void IncreaseAllowedSecretLevel()
     {
+        if (_miniGamePlaying)
+            return;
+
         if (_allowableSecretLevel == SecretLevel.Confidential || !TryUpdateUsedVPoints(1))
             return;
 
@@ -39,6 +67,9 @@ public class UI_SecretRevealScreen : MonoBehaviour
 
     public void DecreaseAllowedSecretLevel()
     {
+        if (_miniGamePlaying)
+            return;
+
         if (_allowableSecretLevel == SecretLevel.Public || !TryUpdateUsedVPoints(-1))
             return;
 
@@ -48,6 +79,9 @@ public class UI_SecretRevealScreen : MonoBehaviour
 
     public void ToggleAllowVampiricSecrets()
     {
+        if (_miniGamePlaying)
+            return;
+
         if (!_unrevealedSecrets.Any(x => x.Level == SecretLevel.Vampiric))
             return;
 
@@ -57,6 +91,75 @@ public class UI_SecretRevealScreen : MonoBehaviour
 
         _allowVampiricSecrets = !_allowVampiricSecrets;
         UpdateAllowableSecretLevel();
+    }
+
+    public void PlayMiniGame()
+    {
+        if (_miniGamePlaying)
+        {
+            _playerEndedMiniGame = true;
+            return;
+        }
+
+        _miniGamePlaying = true;
+        StartCoroutine(MoveIndicator());
+    }
+
+    public void CloseScreen()
+    {
+        StopAllCoroutines();
+        PlayerStats.Instance.TrySetPendingVampirePoints(0);
+        _onFinish(null, false);
+    }
+
+    private IEnumerator MoveIndicator()
+    {
+
+        var indicatorWidth = _miniGameIndicator.rect.width;
+        var indicatorParentWidth = _miniGameIndicator.parent.GetComponent<RectTransform>().rect.width;
+
+        var anchoredPositionStart = new Vector2(indicatorWidth / 2f, 0f);
+        var anchoredPositionEnd = new Vector2(indicatorParentWidth - indicatorWidth / 2f, 0f);
+
+        _miniGameIndicator.gameObject.SetActive(true);
+
+        var timeDelta = Time.deltaTime;
+
+        var t = 0f;
+        var timeCount = Time.time;
+        while (true)
+        {
+            if (_playerEndedMiniGame)
+                break;
+
+            if (t > 1f)
+            {
+                timeCount = Time.time;
+                var startTemp = anchoredPositionStart;
+                anchoredPositionStart = anchoredPositionEnd;
+                anchoredPositionEnd = startTemp;
+            }
+
+            t = (Time.time - timeCount) / _timeForIndicatorToCrossBar;
+            _miniGameIndicator.anchoredPosition = Vector2.Lerp(anchoredPositionStart, anchoredPositionEnd, t);
+
+            yield return new WaitForSeconds(timeDelta);
+        }
+
+        SecretLevel? unlockedSecretLevel = null;
+        foreach (var zone in _zones.Values.SelectMany(x => x))
+        {
+            if (!zone.IsEmpty && zone.IsPointInZone(_miniGameIndicator.anchoredPosition.x))
+            {
+                unlockedSecretLevel = zone.Level;
+                break;
+            }
+        }
+
+        yield return new WaitForSeconds(_delayAfterGame);
+
+        PlayerStats.Instance.TryUseVampirePoints(_usedVPoints);
+        _onFinish(unlockedSecretLevel, true);
     }
 
     private bool TryUpdateUsedVPoints(int diff)
@@ -75,14 +178,6 @@ public class UI_SecretRevealScreen : MonoBehaviour
             .Where(x => !x.IsEmpty)
             .GroupBy(x => x.Level)
             .ToDictionary(x => x.Key, x => x.ToList());
-    }
-
-    private void ResetScreen()
-    {
-        _usedVPoints = 0;
-        _allowVampiricSecrets = false;
-        _allowableSecretLevel = SecretLevel.Public;
-        _unrevealedSecrets.Clear();
     }
 
     private void UpdateAllowableSecretLevel()

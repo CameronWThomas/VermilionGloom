@@ -18,12 +18,22 @@ public class CharacterInfo : MonoBehaviour
         CharacterPortraitContentBB.Instance.Register(ID);
     }
 
-    public bool UseDetectivePoint(int points = 1)
+    public bool TryUseDetectivePoint(int points = 1)
     {
         if (points < 0 || RemainingDetectivePoints < points)
             return false;
 
+        PendingDetectivePoints = 0;
         RemainingDetectivePoints -= points;
+        return true;
+    }
+
+    public bool TrySetPendingDetectivePoints(int pendingPoints)
+    {
+        if (pendingPoints > RemainingDetectivePoints)
+            return false;
+
+        PendingDetectivePoints = pendingPoints;
         return true;
     }
 
@@ -32,4 +42,5 @@ public class CharacterInfo : MonoBehaviour
     public string Name => _name;
     public CharacterType CharacterType => _characterType;
     public int RemainingDetectivePoints { get; private set; }
+    public int PendingDetectivePoints { get; private set; }
 }

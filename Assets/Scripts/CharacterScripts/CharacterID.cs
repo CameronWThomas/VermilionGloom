@@ -10,9 +10,14 @@ public class CharacterID : IEquatable<CharacterID>
         _id = Guid.NewGuid();
     }
 
-    public string Name => CharacterInfoBB.Instance.GetCharacterInfo(this)?.Name;
+    public string Name => CharacterInfo.Name;
     public Texture2D PortraitContent => CharacterPortraitContentBB.Instance.GetPortrait(this);
     public Color PortraitColor => CharacterPortraitContentBB.Instance.GetPortraitColor(this);
+
+    public int PendingDetectivePoints => CharacterInfo.PendingDetectivePoints;
+    public int CurrentDetectivePoints => CharacterInfo.RemainingDetectivePoints;
+
+    public CharacterInfo CharacterInfo => CharacterInfoBB.Instance.GetCharacterInfo(this);
 
     public bool Equals(CharacterID other) => other == this;
     public override bool Equals(object obj) => (obj as CharacterID) == this;

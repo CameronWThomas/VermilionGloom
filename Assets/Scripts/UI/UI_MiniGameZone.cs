@@ -39,10 +39,19 @@ public class UI_MiniGameZone : MonoBehaviour
         SetColor(color);
     }
 
+    public bool IsPointInZone(float x)
+    {
+        var rectTransform = GetComponent<RectTransform>();
+        var rect = rectTransform.rect;
+
+        return Mathf.Abs(rectTransform.anchoredPosition.x - x) <= rect.width / 2f;
+    }
+
     private void SetColor(Color color)
     {
         GetComponentInChildren<Image>(true).color = color;
     }
+    
 
     [Serializable]
     private class SecretLevelZoneColor

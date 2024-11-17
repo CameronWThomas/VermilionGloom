@@ -19,13 +19,24 @@ public class UI_PowerBar : MonoBehaviour
     private List<UI_PowerUnit> _orderedPowerUnits = new();
     private List<GameObject> _dividers = new();
 
+    private CharacterID _characterID;
+
     private void Update()
     {
         if (_powerBarType is PowerBarType.Vampire)
             CheckAndPerformVampirePointUpdate();
+        else if (_powerBarType is PowerBarType.Detective)
+            CheckAndPerformDetectivePointUpdate();
+    }    
+
+    public void Initialize(CharacterID characterID)
+    {
+        _characterID = characterID;
+        Initialize(CharacterInfo.MAX_DETECTIVE_POINTS);
+        CheckAndPerformDetectivePointUpdate();
     }
 
-    public void Initialize(int maxUnits)
+    private void Initialize(int maxUnits)
     {
         ResetPowerUnitsAndDividers();
 
@@ -56,27 +67,54 @@ public class UI_PowerBar : MonoBehaviour
 
     private void CheckAndPerformVampirePointUpdate()
     {
-        var actualMaxVampirePoints = PlayerStats.Instance.MaxVampirePoints;
-        var actualPending = PlayerStats.Instance.PendingUseVampirePoints;
-        var actualUnused = PlayerStats.Instance.CurrentVampirePoints;
-        var actualUsed = actualMaxVampirePoints - actualUnused;
+        CheckAndPerformPointUpdate(
+            PlayerStats.Instance.MaxVampirePoints,
+            PlayerStats.Instance.PendingUseVampirePoints,
+            PlayerStats.Instance.CurrentVampirePoints);
+        
+        //var currentMaxVampirePoints = _orderedPowerUnits.Count;
+        //if (currentMaxVampirePoints != actualMaxVampirePoints)
+        //    Initialize(PlayerStats.Instance.MaxVampirePoints);
 
+        //var actualPending = PlayerStats.Instance.PendingUseVampirePoints;
+        //var actualUnused = PlayerStats.Instance.CurrentVampirePoints;
+        //var actualUsed = actualMaxVampirePoints - actualUnused;
+
+        //for (var i = 0; i < _orderedPowerUnits.Count; i++)
+        //{
+        //    if (i < actualUnused - actualPending)
+        //        _orderedPowerUnits[i].SetUnused();
+        //    else if (i < actualUnused)
+        //        _orderedPowerUnits[i].SetPendingUse();
+        //    else
+        //        _orderedPowerUnits[i].SetUsed();
+        //}
+    }
+
+    private void CheckAndPerformDetectivePointUpdate()
+    {
+        CheckAndPerformPointUpdate(CharacterInfo.MAX_DETECTIVE_POINTS,
+            _characterID.PendingDetectivePoints,
+            _characterID.CurrentDetectivePoints);
+    }
+
+    private void CheckAndPerformPointUpdate(int max, int pending, int unused)
+    {
         var currentMaxVampirePoints = _orderedPowerUnits.Count;
-        var currentPending = _orderedPowerUnits.Count(x => x.IsPending);
-        var currentUnused = _orderedPowerUnits.Count(x => x.IsUnused);
-        var currentUsed = _orderedPowerUnits.Count(x => x.IsUsed);
-
-        if (currentMaxVampirePoints != actualMaxVampirePoints)
+        if (currentMaxVampirePoints != max)
             Initialize(PlayerStats.Instance.MaxVampirePoints);
+        
+        var used = max - unused;
 
-        if (currentUsed != actualUsed)
-            UpdateUsedUnits(actualUsed);
-
-        if (currentUnused != actualUnused - actualPending)
-            UpdateUnusedUnits(actualUnused);
-
-        if (currentPending != actualPending)
-            UpdatePendingUnits(actualPending);        
+        for (var i = 0; i < _orderedPowerUnits.Count; i++)
+        {
+            if (i < unused - pending)
+                _orderedPowerUnits[i].SetUnused();
+            else if (i < unused)
+                _orderedPowerUnits[i].SetPendingUse();
+            else
+                _orderedPowerUnits[i].SetUsed();
+        }
     }
 
     private void UpdateUsedUnits(int actualUsed)

@@ -34,11 +34,6 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
 
     private List<UI_SelectableSecretTile> _secretsTileList = new();
 
-    private void Awake()
-    {
-        Deactivate();
-    }
-
     public void Activate(CharacterID characterID)
     {
         _characterId = characterID;
@@ -58,13 +53,19 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         _selectedCharacterPortrait.SetContent(characterID.PortraitColor);
 
 
-        _detectivePowerBar.Initialize(10);
+        _detectivePowerBar.Initialize(characterID);
 
         AddSecrets(secrets);
     }    
 
     public void Deactivate()
     {
+        if (_screenState == ScreenState.RevealingSecrets)
+        {
+            OnRevealScreenFinish(null, false);
+            PlayerStats.Instance.TrySetPendingVampirePoints(0);
+        }
+
         _screenState = ScreenState.Off;
 
         MouseReceiver.Instance.Activate();
@@ -80,12 +81,16 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         if (_screenState != ScreenState.Normal)
             return;
 
+        if (!_characterId.CharacterInfo.TrySetPendingDetectivePoints(1))
+            return;
+
         _screenState = ScreenState.RevealingSecrets;
 
         _hideObjectsDuringAction.ForEach(x => x.SetActive(false));
         _secretRevealScreen.gameObject.SetActive(true);
-        _secretRevealScreen.Initialize(_characterId);
-    }
+        _secretRevealScreen.Initialize(_characterId, OnRevealScreenFinish);
+        
+    }    
 
     public void OnActionComplete()
     {
@@ -97,7 +102,7 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
 
     private void AddSecrets(IEnumerable<Secret> secrets)
     {
-        foreach (var secret in secrets)
+        foreach (var secret in secrets.OrderBy(x => !x.IsRevealed))
         {
             var selectableTile = Instantiate(_selectableSecretTilePrefab, _secretsGrid).GetComponent<UI_SelectableSecretTile>();
             selectableTile.Initialize(secret, OnSecretSelected, OnSecretRevealed);
@@ -151,5 +156,20 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
 
         // Reselect to we can update the active secret screen
         OnSecretSelected(secret);
+    }
+
+    private void OnRevealScreenFinish(SecretLevel? level, bool gamePlayed)
+    {
+        if (gamePlayed)
+        {
+            _characterId.CharacterInfo.TryUseDetectivePoint(1);
+
+            if (level.HasValue)
+                CharacterSecretKnowledgeBB.Instance.UnlockSecret(_characterId, level.Value);
+        }
+        else
+            _characterId.CharacterInfo.TrySetPendingDetectivePoints(0);
+
+        OnActionComplete();
     }
 }

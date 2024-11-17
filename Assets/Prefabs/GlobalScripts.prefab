@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2399926208339585065
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7358607298778120144}
+  - component: {fileID: 1646189131240597721}
+  - component: {fileID: 2163851358100889079}
+  m_Layer: 0
+  m_Name: GlobalScripts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7358607298778120144
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399926208339585065}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3348620795184690882}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1646189131240597721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399926208339585065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6bf506ec099dc04eaf3e77c8508b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enterSecretPassageTime: 2
+  _forcedConnections:
+  - Passage1: {fileID: 0}
+    Passage2: {fileID: 0}
+  _blacklistedConnections:
+  - Passage1: {fileID: 0}
+    Passage2: {fileID: 0}
+  - Passage1: {fileID: 0}
+    Passage2: {fileID: 0}
+--- !u!114 &2163851358100889079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399926208339585065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf146537ea6d70c42bf8bbaa54ab0b79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _genericIconTexture: {fileID: 2800000, guid: 9be6b8e59d52e644794ae7d1306f3c21, type: 3}
+  _nameIconTexture: {fileID: 2800000, guid: bad011ffbc963d0419be90a69a5cd4c5, type: 3}
+  _vampireKnowledgeIconTexture: {fileID: 2800000, guid: e87a920a5c573094eba6b93f59687912, type: 3}
+  _murderIconTexture: {fileID: 2800000, guid: 27d2f125b948c364fa3d8be1a40802f6, type: 3}
+  _roomIconTexture: {fileID: 2800000, guid: 0f3012e355d80ad49ae44a0a642bb0b1, type: 3}
+  _unrevealedIconTexture: {fileID: 2800000, guid: 9568c3606e81d6048aad2da565915f9d, type: 3}
+--- !u!1 &3447189813391239004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3348620795184690882}
+  - component: {fileID: 49817816118593287}
+  - component: {fileID: 6532954733294801926}
+  - component: {fileID: 315728985159141986}
+  m_Layer: 0
+  m_Name: Blackboards
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3348620795184690882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3447189813391239004}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7358607298778120144}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &49817816118593287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3447189813391239004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99b58b577f0f9374aba485b1174a06c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initialNPCCount: 4
+  _initialMurderChance: 0.25
+  _randomNameChance: 0.1
+--- !u!114 &6532954733294801926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3447189813391239004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cf9a9edc17a72342bf95c598e79d232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &315728985159141986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3447189813391239004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3749c0e77f0d64c45b4b1c5e26eb5562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

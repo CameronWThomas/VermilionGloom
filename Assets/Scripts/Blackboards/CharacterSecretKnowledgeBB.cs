@@ -42,6 +42,20 @@ public class CharacterSecretKnowledgeBB : GlobalSingleInstanceMonoBehaviour<Char
 
     public IReadOnlyList<Secret> GetSecrets(CharacterID characterId) => _secretKnowledgeDict[characterId].Secrets.ToList();
 
+    /// <summary>
+    /// Chooses a random secret for <paramref name="characterId"/> of level <paramref name="level"/> to reveal
+    /// </summary>
+    public void UnlockSecret(CharacterID characterId, SecretLevel level)
+    {
+        var secretKnowledge = _secretKnowledgeDict[characterId];
+        var unlockedSecret = secretKnowledge.Secrets
+            .Where(x => x.Level == level)
+            .Randomize()
+            .FirstOrDefault();
+
+        unlockedSecret?.Reveal();
+    }
+
     private void InitializeSecretsAndRumours()
     {
         // Create personal secrets (as in secrets where the character is the owner)

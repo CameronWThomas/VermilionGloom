@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class Secret
@@ -32,5 +33,5 @@ public abstract class Secret
     public abstract string CreateDescription();
     public abstract Secret Copy();
 
-    public void ForceRevealSecret() => IsRevealed = true;
+    public void Reveal() => IsRevealed = true;
 }
