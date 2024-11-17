@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 {
@@ -56,8 +57,8 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
     {
         if (hit.transform.TryGetComponent<SecretPassage>(out var secretPassage))
             HandleInteractableClick(secretPassage);
-        else if (hit.transform.TryGetComponent<CharacterSecretKnowledge>(out var characterSecrets))
-            HandleInteractableClick(characterSecrets);
+        else if (hit.transform.TryGetComponent<CharacterInfo>(out var characterInfo))
+            HandleInteractableClick(characterInfo.ID);
     }
 
     private void HandleInteractableClick(SecretPassage secretPassage)
@@ -65,9 +66,9 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
         playerMvmnt.SetTarget(secretPassage.DestinationPoint, () => secretPassage.UsePassage(playerMvmnt.transform));
     }
 
-    private void HandleInteractableClick(CharacterSecretKnowledge characterSecrets)
+    private void HandleInteractableClick(CharacterID characterID)
     {
         //TODO move to them too
-        //UI_MenuManager.Instance.TalkToNPC(characterSecrets);
+        UI_CharacterInteractionMenu.Instance.Activate(characterID);
     }
 }

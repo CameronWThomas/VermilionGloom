@@ -1,10 +1,11 @@
 fileFormatVersion: 2
-guid: 9bc38811f3349ed4b9ca230a29613061
+guid: 08341db238ef16f48a4fd49ecda063dd
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - _secretPrefab: {fileID: 8164582786789416410, guid: 04f33f05b85c7ee418b2894fc6a0ad16, type: 3}
+  - _detectivePowerBar: {instanceID: 0}
+  - _selectableSecretTilePrefab: {fileID: 4170089577482854676, guid: 4421b66976a536447b203649d697740b, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: e3a10e6be9158a24497dfe450c3661e6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _powerBarIconTexture: {instanceID: 0}
+  - _powerBarContent: {instanceID: 0}
+  - _powerBarIcon: {instanceID: 0}
+  - _powerUnitPrefab: {fileID: 6115490955487106150, guid: 86238d0e67a4fae4e9d35ad5271f568a, type: 3}
+  - _powerUnitDividerPrefab: {fileID: 8957775691534032296, guid: d2e6eefb16daf1143919afdfc1a5e5b6, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

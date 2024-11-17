@@ -9,7 +9,7 @@ public abstract class GlobalSingleInstanceMonoBehaviour<T> : MonoBehaviour where
         get
         {
             if (_instance == null || !_instance.isActiveAndEnabled)
-                _instance = FindFirstObjectByType<T>();
+                _instance = FindFirstObjectByType<T>(FindObjectsInactive.Include);
 
             return _instance;
         }

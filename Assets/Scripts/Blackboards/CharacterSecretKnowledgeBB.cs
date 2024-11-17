@@ -36,10 +36,11 @@ public class CharacterSecretKnowledgeBB : GlobalSingleInstanceMonoBehaviour<Char
     {
         _secretKnowledgeDict.Add(characterID, secretKnowledge);
 
-        // TODO only after both this and the characterInfoBB are done registering
         if (_secretKnowledgeDict.Count >= _initialNPCCount)
             _allInitialNPCsRegistered = true;
     }
+
+    public IReadOnlyList<Secret> GetSecrets(CharacterID characterId) => _secretKnowledgeDict[characterId].Secrets.ToList();
 
     private void InitializeSecretsAndRumours()
     {
