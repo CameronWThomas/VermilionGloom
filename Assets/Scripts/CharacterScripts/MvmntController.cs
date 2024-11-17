@@ -6,14 +6,35 @@ public class MvmntController : MonoBehaviour
 {
     // Variables for movement speed and direction
     NavMeshAgent agent;
+    Animator anim;
     public Vector3 targetPos;
     public float distanceToTarget;
     public float reachedTargetThreshold = 0.1f;
 
+    [Header("States")]
+    [SerializeField]
+    private bool dead;
+    [SerializeField]
+    private bool isRunning = false;
+    [SerializeField]
+    private bool isCrouching = false;
+    [SerializeField]
+    private bool isDragging = false;
+    [SerializeField]
+    private bool inCombat = false;
+
+    private bool speedLimiter => isCrouching || isDragging;
+
+
+    [Header("Configurations")]
+    public float runSpeed = 3.5f;
+    public float walkSpeed = 1.75f;
 
     [Header("Debug")]
     public bool debug = false;
     public Vector3 AttemptedTarget;
+    public Vector3 agentVelocity;
+    public float agentVelMagnitude;
 
     private Action _postDestinationArrivalAction = null;
 
@@ -21,13 +42,15 @@ public class MvmntController : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
+        SetRunning(isRunning);
     }
 
     // Update is called once per frame
     void Update()
     {
-        var correctedTargetPos = new Vector3(targetPos.x, transform.position.y, targetPos.z);
-        distanceToTarget = Vector3.Distance(transform.position, correctedTargetPos);
+        //handle whether agent should move
+        distanceToTarget = Vector3.Distance(transform.position, targetPos + transform.position.y * Vector3.up);
         if(!IsAtDestination())
         {
             agent.isStopped = false;
@@ -40,6 +63,24 @@ public class MvmntController : MonoBehaviour
             _postDestinationArrivalAction = null;
             action?.Invoke();
         }
+
+        
+        // limit speed in selected states
+
+        if (speedLimiter && anim.speed != walkSpeed)
+        {
+            agent.speed = walkSpeed;
+        }
+        else if(isRunning && anim.speed != runSpeed)
+        {
+            agent.speed = runSpeed;
+        }
+
+        //animator calls
+        if (anim != null)
+        {
+            anim.SetFloat("speedPercent", agent.velocity.magnitude / runSpeed);
+        }
     }
 
     public bool IsAtDestination()
@@ -51,10 +92,10 @@ public class MvmntController : MonoBehaviour
         AttemptedTarget = targetPos;
         if (!CanReachTarget(targetPos))
         {
-            Debug.Log("Cannot reach target");
+            //Debug.Log("Cannot reach target");
             return;
         }
-        Debug.Log("Setting target to: " + targetPos);
+        //Debug.Log("Setting target to: " + targetPos);
 
         _postDestinationArrivalAction = postDestinationArrivalAction;
 
@@ -66,11 +107,63 @@ public class MvmntController : MonoBehaviour
 
     public bool CanReachTarget(Vector3 targetPos)
     {
+
         NavMeshPath path = new NavMeshPath();
+        if(agent == null)
+        {
+            return false;
+        }
+        if (!agent.enabled)
+        {
+            return false;
+        }
         agent.CalculatePath(targetPos, path);
         return path.status == NavMeshPathStatus.PathComplete;
     }
 
+    public bool IsRunning()
+    {
+        return isRunning;
+    }
+    public void SetRunning(bool run)
+    {
+        isRunning = run;
+        agent.speed = isRunning ? runSpeed : walkSpeed;
+    }
+
+    public bool IsCrouching()
+    {
+        return isCrouching;
+    }
+    public void SetCrouching(bool crouch)
+    {
+        isCrouching = crouch;
+    }
+    public bool IsDragging()
+    {
+        return isDragging;
+    }
+    public void SetDragging(bool drag)
+    {
+        isDragging = drag;
+    }
+    public bool InCombat()
+    {
+        return inCombat;
+    }
+    public void SetCombat(bool combat)
+    {
+        inCombat = combat;
+    }
+
+    public void FaceTarget(Vector3 target)
+    {
+        Vector3 lookPos = target - transform.position;
+        lookPos.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(lookPos);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1.5f * Time.deltaTime);
+
+    }
     private void OnDrawGizmos()
     {
         if (debug)
