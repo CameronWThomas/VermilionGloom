@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5112445377270234063}
   - component: {fileID: 4181661891060895239}
   m_Layer: 5
-  m_Name: VerticalSectionDivider
+  m_Name: SectionDivider_V
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,7 +53,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 5
+  m_PreferredHeight: 2
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1

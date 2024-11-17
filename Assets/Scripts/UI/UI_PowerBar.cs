@@ -5,10 +5,7 @@ using UnityEngine.UI;
 
 public class UI_PowerBar : MonoBehaviour
 {
-    [SerializeField] private Texture2D _powerBarIconTexture;
     [SerializeField] private Transform _powerBarContent;
-    [SerializeField] private RawImage _powerBarIcon;
-
 
     //TODO I would like to go to a global prefab class or something for this
     [SerializeField] private GameObject _powerUnitPrefab;
@@ -17,23 +14,17 @@ public class UI_PowerBar : MonoBehaviour
     private List<UI_PowerUnit> _orderedPowernUnit = new();
     private List<GameObject> _dividers = new();
 
-    private void Start()
-    {
-        _powerBarIcon.texture = _powerBarIconTexture;
-    }
-
     public void Initialize(int maxUnits)
     {
         ResetPowerUnitsAndDividers();
-
-        AddDivider();
 
         for (var i = 0; i < maxUnits; i++)
         {
             var powerUnit = Instantiate(_powerUnitPrefab, _powerBarContent).GetComponent<UI_PowerUnit>();
             _orderedPowernUnit.Add(powerUnit);
 
-            AddDivider();
+            if (i + 1 != maxUnits)
+                AddDivider();
         }
     }
 

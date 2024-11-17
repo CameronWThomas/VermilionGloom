@@ -21,5 +21,9 @@ public class UI_SelectableSecretTile : MonoBehaviour
         _onSecretSelected(_secret);
     }
 
-    public void SelectInitial() => GetComponent<Button>().Select();
+    public void SelectInitial()
+    {
+        GetComponent<Button>().Select();
+        Select();
+    }
 }
