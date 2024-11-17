@@ -110,7 +110,8 @@ public class CharacterSecretKnowledgeBB : GlobalSingleInstanceMonoBehaviour<Char
             {
                 if (secret.Level.RandomChance())
                 {
-                    yield return secret;
+                    var secretCopy = secret.Copy();
+                    yield return secretCopy;
                     returnCount++;
                 }
 

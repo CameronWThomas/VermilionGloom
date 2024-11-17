@@ -15,6 +15,8 @@ public class VampireSecret : Secret
 
     public override SecretIconIdentifier Identifier => SecretIconIdentifier.VampireKnowledge;
 
+    public override bool NoCharactersInvolved => true;
+
     public override Secret Copy() => new VampireSecret(this);
 
     public override string CreateDescription() => $"{SecretOwner.Name} knows there is a vampire in the manor";

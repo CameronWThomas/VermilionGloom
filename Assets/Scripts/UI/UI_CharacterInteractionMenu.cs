@@ -126,7 +126,12 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
             return;
         }
 
-        if (secret.HasAdditionalCharacter)
+        if (secret.NoCharactersInvolved)
+        {
+            _multiPartySelectedSecret.SetActive(false);
+            _singlePartySelectedSecret.SetActive(false);
+        }
+        else if (secret.HasAdditionalCharacter)
         {
             _multiPartySelectedSecret.SetActive(true);
             _singlePartySelectedSecret.SetActive(false);
