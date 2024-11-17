@@ -12,7 +12,8 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
     private int _deactivatedCounter = 0;
     public bool IsActivated => _deactivatedCounter == 0;
 
-    //public LayerMask movementLayerMask;
+
+    public LayerMask clickLayerMask;
     protected override void Start()
     {
         base.Start();
@@ -45,25 +46,30 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
         // Debug draw the ray
         //Debug.DrawRay(ray.origin, ray.direction, Color.red);
 
-        if (!Physics.Raycast(ray, out var hit, Mathf.Infinity))
+        if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, clickLayerMask))
             return;
 
         //Debug.Log("Mouse Hit:");
         //Debug.Log("     Transform Name: " + hit.transform.name);
         //Debug.Log("     Point: " + hit.point);
 
-        //TODO: reassess this when we implement an interaction screen for npcs
-        if (hit.transform != null && conversationTarget != null) 
+        // if this returns true, dont do anything else on this click
+        if(ClickCancelActions(hit))
         {
-            if (hit.transform.name != conversationTarget.name)
-            {
-                conversationTarget.ExitConversation();
-                conversationTarget = null;
-            }
+            return;
         }
 
         if(hit.transform.CompareTag(GlobalConstants.WALKABLE_TAG_NAME))
         {
+            if(playerController.strangleTarget != null)
+            {
+                NpcBrain brain = playerController.strangleTarget.GetComponent<NpcBrain>();
+                if(brain != null)
+                    brain.StopBeingStrangled();
+
+                playerController.CancelStrangling();
+
+            }
             playerMvmnt.SetTarget(hit.point);
         }
         else if (hit.transform.CompareTag(GlobalConstants.INTERACTABLE_TAG_NAME))
@@ -76,6 +82,37 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
         }
     }
 
+    private bool ClickCancelActions(RaycastHit hit)
+    {
+        // Exit any ongoing conversation if clicking elsewhere
+        //TODO: reassess this when we implement an interaction screen for npcs
+        if (hit.transform != null && conversationTarget != null)
+        {
+            if (hit.transform.name != conversationTarget.name)
+            {
+                conversationTarget.ExitConversation();
+                conversationTarget = null;
+            }
+        }
+
+
+        // End dragging if clicking on player or the drag target
+
+        if(hit.transform.CompareTag(GlobalConstants.PLAYER_TAG_NAME) && playerController.dragging)
+        {
+            playerController.EndDragging();
+            return true;
+        }
+        if (playerController.dragTarget != null)
+        {
+            if (hit.transform == playerController.dragTarget.transform)
+            {
+                playerController.EndDragging();
+                return true;
+            }
+        }
+        return false;
+    }
     private void HandleInteractableClick(RaycastHit hit)
     {
         if (hit.transform.TryGetComponent<SecretPassage>(out var secretPassage))
@@ -96,19 +133,25 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
             Debug.LogError("NpcBrain not found on " + hit.transform.name);
             return;
         }
-        else if (hostile)
-        {
-            //brain.BeStrangled(playerMvmnt.gameObject);
-            playerController.strangleTarget = brain.gameObject;
-        }
         else
         {
-            
-            brain.EnterConversation(playerMvmnt.transform);
-            playerMvmnt.SetTarget(hit.point);
-            conversationTarget = brain;
+            //Drag, strangle, or talk
+            if (brain.dead)
+            {
+                //drag that mofo
+                playerController.InitiateDragging(brain.gameObject);
+            }
+            else if (hostile)
+            {
+                playerController.InitiateStrangling(brain.gameObject);
+            }
+            else
+            {
+
+                brain.EnterConversation(playerMvmnt.transform);
+                playerMvmnt.SetTarget(hit.point);
+                conversationTarget = brain;
+            }
         }
-
-
     }
 }

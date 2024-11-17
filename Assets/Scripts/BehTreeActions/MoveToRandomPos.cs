@@ -16,13 +16,15 @@ public class MoveToRandomPos : Action
     MvmntController mvmntController;
     public override void OnStart()
     {
-        mvmntController = GetComponent<MvmntController>(); 
+        mvmntController = GetComponent<MvmntController>();
+
+        mvmntController.SetRunning(false);
         //if(mvmntController == null)
         //{
         //    return;
         //}
 
-        if(posRadius == null)
+        if (posRadius == null)
         {
             posRadius = 5;
         }

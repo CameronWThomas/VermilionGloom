@@ -3,7 +3,7 @@ using BehaviorDesigner.Runtime.Tasks;
 using UnityEngine;
 
 [TaskCategory("Custom")]
-public class HaveConversation : Action
+public class CrunchCombatTarget : Action
 {
     NpcBrain npcBrain;
     MvmntController mvmntController;
@@ -11,29 +11,31 @@ public class HaveConversation : Action
     {
         npcBrain = GetComponent<NpcBrain>();
         mvmntController = GetComponent<MvmntController>();
-
-        mvmntController.SetRunning(false);
+        mvmntController.SetRunning(true);
 
     }
 
     public override TaskStatus OnUpdate()
     {
-        if(npcBrain.convoTarget != null)
+        if (npcBrain.combatTarget != null)
         {
             //could maybe make them wait for you to approach instead?
             //think i might do this ^^^
             //uncomment this line to change it
-            //mvmntController.SetTarget(npcBrain.convoTarget.transform.position);
-            //if(mvmntController.IsAtDestination())
-            //{
-                mvmntController.FaceTarget(npcBrain.convoTarget.transform.position);
-            //}
+            mvmntController.SetTarget(npcBrain.combatTarget.transform.position);
+            if(mvmntController.distanceToTarget <= npcBrain.crunchDistance)
+            {
+                npcBrain.Crunch();
+            }
             return TaskStatus.Running;
         }
         else
         {
+            mvmntController.SetRunning(false);
             return TaskStatus.Failure;
         }
     }
+
+    
 
 }

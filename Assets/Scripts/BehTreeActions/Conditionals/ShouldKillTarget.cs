@@ -2,7 +2,7 @@ using BehaviorDesigner.Runtime.Tasks;
 using UnityEngine;
 
 [TaskCategory("Custom")]
-public class InConversation : Conditional
+public class ShouldKillTarget : Conditional
 {
     NpcBrain npcBrain;
     public override void OnStart()
@@ -12,7 +12,7 @@ public class InConversation : Conditional
 
     public override TaskStatus OnUpdate()
     {
-        if(npcBrain.convoTarget != null)
+        if (npcBrain.combatTarget != null)
         {
             return TaskStatus.Success;
         }

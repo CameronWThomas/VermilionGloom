@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -14,8 +15,9 @@ public class PlayerController : MonoBehaviour
     MvmntController mvmntController;
     Animator animator;
     MouseReceiver mouseReceiver;
+    NavMeshAgent agent;
 
-    [Header("StrangleStuff")]
+    [Header("Strangle Stuff")]
     public GameObject strangleTarget;
     [SerializeField]
     float strangleDist = 1f;
@@ -26,6 +28,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float strangleCounter = 0f;
 
+    [Header("Drag Stuff")]
+    public GameObject dragTarget;
+    public bool dragging = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -34,6 +40,7 @@ public class PlayerController : MonoBehaviour
         mvmntController = GetComponent<MvmntController>();
         animator = GetComponent<Animator>();
         mouseReceiver = MouseReceiver.Instance;
+        agent = GetComponent<NavMeshAgent>();
     }
     void Start()
     {
@@ -65,8 +72,64 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         StrangleUpdate();
+
+        DraggingUpdate();
     }
 
+    // Initiate dragging & stringling are called from the MouseReceiver
+    public void InitiateDragging(GameObject target)
+    {
+        Debug.Log("Dragging initiated");
+        dragTarget = target;
+    }
+    public void InitiateStrangling(GameObject target)
+    {
+        strangleTarget = target;
+    }
+
+    // End Dragging is called from the MouseReceiver when player or npc is clicked on again
+    public void EndDragging()
+    {
+        dragging = false;
+        animator.SetBool("dragging", false);
+
+        NpcBrain targetBrain = dragTarget.GetComponent<NpcBrain>();
+        if (targetBrain == null)
+        {
+            return;
+        }
+        targetBrain.StopBeingDragged();
+        dragTarget = null;
+    }
+
+    // NOT IMPLEMENTED
+    // StrangleInterupt would either be called by the MouseReceiver
+    // or when the player is hit by an NPC mid strangle
+    private void StrangleInterupt()
+    {
+        //todo
+        NpcBrain targetBrain = strangleTarget.GetComponent<NpcBrain>();
+        if (targetBrain != null)
+        {
+            targetBrain.StopBeingStrangled();
+        }
+        animator.SetBool("choking", false);
+        strangleTarget = null;
+        strangling = false;
+    }
+
+    // DraggingUpdate and StrangleUpdate are called from the Update function
+    private void DraggingUpdate()
+    {
+        if (dragTarget != null && !dragging)
+        {
+            mvmntController.SetTarget(dragTarget.transform.position);
+            if (mvmntController.distanceToTarget <= strangleDist)
+            {
+                DragSetup();
+            }
+        }
+    }
     private void StrangleUpdate()
     {
         if (strangleTarget != null && !strangling)
@@ -74,7 +137,7 @@ public class PlayerController : MonoBehaviour
             mvmntController.SetTarget(strangleTarget.transform.position);
             if (mvmntController.distanceToTarget <= strangleDist)
             {
-                StartStrangle();
+                StrangleSetup();
             }
         }
         if (strangling)
@@ -89,8 +152,35 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-
-    private void StartStrangle()
+    // Drag & Strangle Setup functions are called from the Update functions
+    //
+    //      They are seperate from initate because they are first primed by clicking on the NPC,
+    //      then the player must move into position before the setup may occur
+    //      
+    //      PS: seeing this now, im unsure if the player clicking elsewhere would cancel this. Might be worth testing
+    private void DragSetup()
+    {
+        Debug.Log("Started the dragging process");
+        if (dragTarget == null)
+        {
+            return;
+        }
+        else
+        {
+            NpcBrain targetBrain = dragTarget.GetComponent<NpcBrain>();
+            if (targetBrain == null)
+            {
+                return;
+            }
+            //strangleCounter = 0f;
+            dragging = true;
+            animator.SetBool("dragging", true);
+            targetBrain.BeDraged(gameObject);
+            mvmntController.SetTarget(transform.position);
+            Broadcast(BroadcastType.Drag, dragTarget);
+        }
+    }
+    private void StrangleSetup()
     {
         Debug.Log("Started the strangling process");
         if(strangleTarget == null)
@@ -109,8 +199,11 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("choking", true);
             targetBrain.BeStrangled(gameObject);
             mvmntController.SetTarget(transform.position);
+            Broadcast(BroadcastType.Strangle, strangleTarget);
         }
     }
+
+    // Strangle kill is called when the strangleCounter reaches the strangleTime
     private void StrangleKill()
     {
         //todo
@@ -121,9 +214,18 @@ public class PlayerController : MonoBehaviour
         }
         animator.SetTrigger("chokeKill");
         animator.SetBool("choking", false);
-
-
+        strangleTarget = null;
+        strangling = false;
     }
+    public void CancelStrangling()
+    {
+        animator.SetBool("choking", false);
+        strangleTarget = null;
+        strangling = false;
+        strangleCounter = 0f;
+    }
+
+
     // Event handler for the crouch action
     private void CrouchPerformed(InputAction.CallbackContext context)
     {
@@ -149,6 +251,42 @@ public class PlayerController : MonoBehaviour
         mvmntController.SetRunning(!mvmntController.IsRunning());
     }
     // Disable input actions when the script is destroyed
+    public enum BroadcastType
+    {
+        Drag,
+        Strangle
+    }
+    private void Broadcast(BroadcastType bcType, GameObject extraObj = null)
+    {
+        NpcBrain[] brains = GameObject.FindObjectsByType<NpcBrain>(sortMode: FindObjectsSortMode.None);
+        foreach(NpcBrain brain in brains)
+        {
+            brain.ReceiveBroadcast(bcType, gameObject, extraObj);
+        }
+    }
+    public void Die()
+    {
+        animator.SetBool("dead", true);
+        mvmntController.SetTarget(transform.position);
+        mvmntController.enabled = false;
+        if(strangleTarget != null)
+        {
+            NpcBrain targetBrain = strangleTarget.GetComponent<NpcBrain>();
+            if(targetBrain != null)
+            {
+                targetBrain.StopBeingStrangled();
+            }
+        }
+        if(dragTarget != null)
+        {
+            NpcBrain targetBrain = dragTarget.GetComponent<NpcBrain>();
+            if(targetBrain != null)
+            {
+                targetBrain.StopBeingDragged();
+            }
+        }
+        agent.enabled = false;
+    }
     private void OnDestroy()
     {
         inputActions.Disable();
