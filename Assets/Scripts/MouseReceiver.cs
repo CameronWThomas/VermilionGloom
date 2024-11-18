@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 {
@@ -13,10 +14,12 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 
 
     public LayerMask clickLayerMask;
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         playerController = playerMvmnt.GetComponent<PlayerController>();
     }
+
     private void Update()
     {
         if (!IsActivated)
@@ -114,12 +117,10 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
     {
         if (hit.transform.TryGetComponent<SecretPassage>(out var secretPassage))
             HandleInteractableClick(secretPassage);
-
     }
 
     private void HandleInteractableClick(SecretPassage secretPassage)
     {
-
         playerMvmnt.SetTarget(secretPassage.DestinationPoint, () => secretPassage.UsePassage(playerMvmnt.transform));
     }
 

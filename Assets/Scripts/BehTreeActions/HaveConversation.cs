@@ -13,6 +13,7 @@ public class HaveConversation : Action
         mvmntController = GetComponent<MvmntController>();
 
         mvmntController.SetRunning(false);
+        mvmntController.SetTarget(transform.position);
 
     }
 
