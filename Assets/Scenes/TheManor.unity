@@ -6365,8 +6365,8 @@ GameObject:
   - component: {fileID: 159496547}
   - component: {fileID: 159496546}
   - component: {fileID: 159496545}
-  m_Layer: 0
-  m_Name: Foyer
+  m_Layer: 9
+  m_Name: FoyerRm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6416,8 +6416,8 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
@@ -12767,8 +12767,8 @@ GameObject:
   - component: {fileID: 415420941}
   - component: {fileID: 415420940}
   - component: {fileID: 415420939}
-  m_Layer: 0
-  m_Name: LivingRoom
+  m_Layer: 9
+  m_Name: LivingRm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12818,8 +12818,8 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
@@ -17683,7 +17683,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 599286494}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rooms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21438,8 +21438,8 @@ GameObject:
   - component: {fileID: 821105036}
   - component: {fileID: 821105035}
   - component: {fileID: 821105034}
-  m_Layer: 0
-  m_Name: StorageRoom
+  m_Layer: 9
+  m_Name: StorageRm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21489,8 +21489,8 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
@@ -26924,8 +26924,8 @@ GameObject:
   - component: {fileID: 944293960}
   - component: {fileID: 944293959}
   - component: {fileID: 944293958}
-  m_Layer: 0
-  m_Name: Kitchen
+  m_Layer: 9
+  m_Name: KitchenRm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26975,8 +26975,8 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
@@ -30909,10 +30909,10 @@ GameObject:
   - component: {fileID: 1052588261}
   - component: {fileID: 1052588265}
   - component: {fileID: 1052588264}
-  - component: {fileID: 1052588263}
   - component: {fileID: 1052588262}
-  m_Layer: 0
-  m_Name: Library
+  - component: {fileID: 1052588266}
+  m_Layer: 9
+  m_Name: LibraryRm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30947,27 +30947,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hidden: 0
   socialScore: 1
---- !u!65 &1052588263
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052588260}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1052588264
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -31021,6 +31000,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1052588260}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &1052588266
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052588260}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.99999994, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.000000013038516, z: 0}
 --- !u!43 &1055528771
 Mesh:
   m_ObjectHideFlags: 0
@@ -35512,8 +35512,8 @@ GameObject:
   - component: {fileID: 1341109233}
   - component: {fileID: 1341109232}
   - component: {fileID: 1341109231}
-  m_Layer: 0
-  m_Name: Den
+  m_Layer: 9
+  m_Name: DenRm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35563,8 +35563,8 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
@@ -43557,8 +43557,8 @@ GameObject:
   - component: {fileID: 1584597864}
   - component: {fileID: 1584597863}
   - component: {fileID: 1584597862}
-  m_Layer: 0
-  m_Name: DiningRoom
+  m_Layer: 9
+  m_Name: DiningRm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43608,8 +43608,8 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
@@ -47683,8 +47683,8 @@ GameObject:
   - component: {fileID: 1723219063}
   - component: {fileID: 1723219062}
   - component: {fileID: 1723219061}
-  m_Layer: 0
-  m_Name: SunRoom
+  m_Layer: 9
+  m_Name: SunRm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47734,8 +47734,8 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}

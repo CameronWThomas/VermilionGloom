@@ -10,11 +10,15 @@ public class Room : MonoBehaviour
     MeshRenderer meshRenderer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private void Awake()
+    {
+
+        boxCollider = GetComponent<BoxCollider>();
+    }
     void Start()
     {
         meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
-        boxCollider = GetComponent<BoxCollider>();
     }
 
     // Update is called once per frame
@@ -24,6 +28,7 @@ public class Room : MonoBehaviour
     }
     public bool PointIsInRoom(Vector3 point)
     {
+
         return boxCollider.bounds.Contains(point);
     }
     // Returns a random point in the room
