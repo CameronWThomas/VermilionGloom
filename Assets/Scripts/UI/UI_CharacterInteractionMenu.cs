@@ -28,13 +28,13 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
     private enum ScreenState { Off, Normal, RevealingSecrets }
     private ScreenState _screenState = ScreenState.Off;
 
-    private CharacterID _characterId;
+    private NPCHumanCharacterID _characterId;
 
     private Secret _selectedSecret = null;
 
     private List<UI_SelectableSecretTile> _secretsTileList = new();
 
-    public void Activate(CharacterID characterID)
+    public void Activate(NPCHumanCharacterID characterID)
     {
         _characterId = characterID;
 

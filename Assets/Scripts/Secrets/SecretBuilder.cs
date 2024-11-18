@@ -9,7 +9,7 @@ public static class SecretBuilder
     private static float MurderChance => CharacterSecretKnowledgeBB.Instance._initialMurderChance;
     private static float NameChance => CharacterSecretKnowledgeBB.Instance._randomNameChance;
 
-    public static SecretBuilderHelper Initialize(this CharacterInfo secretOwner) => new(secretOwner);
+    public static SecretBuilderHelper Initialize(this NPCHumanCharacterInfo secretOwner) => new(secretOwner);
 
     public static List<Secret> BuildSecretList(this SecretBuilderHelper secretBuilderHelper) => secretBuilderHelper.Secrets.ToList();
 
@@ -74,7 +74,7 @@ public static class SecretBuilder
 
     public class SecretBuilderHelper
     {
-        public SecretBuilderHelper(CharacterInfo secretOwner)
+        public SecretBuilderHelper(NPCHumanCharacterInfo secretOwner)
         {
             SecretOwner = secretOwner;
         }

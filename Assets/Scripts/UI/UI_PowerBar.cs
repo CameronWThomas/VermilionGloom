@@ -19,7 +19,7 @@ public class UI_PowerBar : MonoBehaviour
     private List<UI_PowerUnit> _orderedPowerUnits = new();
     private List<GameObject> _dividers = new();
 
-    private CharacterID _characterID;
+    private NPCHumanCharacterID _characterID;
 
     private void Update()
     {
@@ -29,10 +29,10 @@ public class UI_PowerBar : MonoBehaviour
             CheckAndPerformDetectivePointUpdate();
     }    
 
-    public void Initialize(CharacterID characterID)
+    public void Initialize(NPCHumanCharacterID characterID)
     {
         _characterID = characterID;
-        Initialize(CharacterInfo.MAX_DETECTIVE_POINTS);
+        Initialize(NPCHumanCharacterInfo.MAX_DETECTIVE_POINTS);
         CheckAndPerformDetectivePointUpdate();
     }
 
@@ -93,7 +93,7 @@ public class UI_PowerBar : MonoBehaviour
 
     private void CheckAndPerformDetectivePointUpdate()
     {
-        CheckAndPerformPointUpdate(CharacterInfo.MAX_DETECTIVE_POINTS,
+        CheckAndPerformPointUpdate(NPCHumanCharacterInfo.MAX_DETECTIVE_POINTS,
             _characterID.PendingDetectivePoints,
             _characterID.CurrentDetectivePoints);
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using static PlayerController;
 
-[RequireComponent(typeof(CharacterInfo))]
+[RequireComponent(typeof(NPCHumanCharacterInfo))]
 public class NpcBrain : MonoBehaviour
 {
     MvmntController mvmntController;
@@ -99,7 +99,7 @@ public class NpcBrain : MonoBehaviour
         convoTarget = target;
         ReEvaluateTree();
 
-        UI_CharacterInteractionMenu.Instance.Activate(GetComponent<CharacterInfo>().ID);
+        UI_CharacterInteractionMenu.Instance.Activate(GetComponent<NPCHumanCharacterInfo>().NPCHumanCharacterID);
     }
     public void ExitConversation()
     {

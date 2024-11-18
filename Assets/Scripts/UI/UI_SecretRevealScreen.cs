@@ -33,7 +33,7 @@ public class UI_SecretRevealScreen : MonoBehaviour
         }
     }
 
-    public void Initialize(CharacterID characterID, Action<SecretLevel?, bool> onFinish)
+    public void Initialize(NPCHumanCharacterID characterID, Action<SecretLevel?, bool> onFinish)
     {
         _onFinish = onFinish;
 

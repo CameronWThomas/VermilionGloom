@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterInfo))]
+[RequireComponent(typeof(NPCHumanCharacterInfo))]
 public class CharacterSecretKnowledge : MonoBehaviour
 {
     private List<Secret> _secrets = new();
@@ -18,7 +18,7 @@ public class CharacterSecretKnowledge : MonoBehaviour
         
     }
 
-    public CharacterID ID => GetComponent<CharacterInfo>().ID;
+    public NPCHumanCharacterID ID => GetComponent<NPCHumanCharacterInfo>().NPCHumanCharacterID;
     public IReadOnlyList<Secret> Secrets => _secrets.ToList();
 
     public void AddSecrets(IEnumerable<Secret> secrets) => _secrets.AddRange(secrets);

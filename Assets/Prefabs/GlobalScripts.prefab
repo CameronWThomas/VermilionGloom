@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7358607298778120144}
   - component: {fileID: 1646189131240597721}
   - component: {fileID: 2163851358100889079}
+  - component: {fileID: 2199456676119783336}
+  - component: {fileID: 2895106601631318768}
   m_Layer: 0
   m_Name: GlobalScripts
   m_TagString: Untagged
@@ -73,6 +75,32 @@ MonoBehaviour:
   _murderIconTexture: {fileID: 2800000, guid: 27d2f125b948c364fa3d8be1a40802f6, type: 3}
   _roomIconTexture: {fileID: 2800000, guid: 0f3012e355d80ad49ae44a0a642bb0b1, type: 3}
   _unrevealedIconTexture: {fileID: 2800000, guid: 9568c3606e81d6048aad2da565915f9d, type: 3}
+--- !u!114 &2199456676119783336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399926208339585065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21f54a4a23a2d8b458064b3c18ffb5c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _humanCharacterPrefab: {fileID: 0}
+--- !u!114 &2895106601631318768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399926208339585065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c67593f3384dd8643a208b548b597ec7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _npcHumanCharacterCount: 10
 --- !u!1 &3447189813391239004
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,7 +147,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99b58b577f0f9374aba485b1174a06c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialNPCCount: 4
   _initialMurderChance: 0.25
   _randomNameChance: 0.1
 --- !u!114 &6532954733294801926
