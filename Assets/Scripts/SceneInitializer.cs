@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(NPCCharacterCreator))]
 public class SceneInitializer : GlobalSingleInstanceMonoBehaviour<SceneInitializer>
 {
-    [SerializeField, Range(1, 50)] private int _npcHumanCharacterCount = 10;
+    [SerializeField, Range(1, 500)] private int _npcHumanCharacterCount = 10;
 
     protected override void Start()
     {
@@ -17,14 +17,5 @@ public class SceneInitializer : GlobalSingleInstanceMonoBehaviour<SceneInitializ
         var characterCreator = GetComponent<NPCCharacterCreator>();
 
         var characterInfos = characterCreator.CreateCharacters(_npcHumanCharacterCount);
-    }
-
-
-    private class NPCHumanCreatorTool
-    {
-        public NPCHumanCreatorTool(int npcHumanCharacterCount)
-        {
-
-        }
     }
 }

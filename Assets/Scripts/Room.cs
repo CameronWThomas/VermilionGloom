@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Room : MonoBehaviour
 {
@@ -35,11 +36,11 @@ public class Room : MonoBehaviour
     public Vector3 GetRandomPointInRoom()
     {
         // Use box collider to get random point in room
-        Vector3 randomPoint = new Vector3(
+        var randomPoint = new Vector3(
             Random.Range(boxCollider.bounds.min.x, boxCollider.bounds.max.x),
-            Random.Range(boxCollider.bounds.min.y, boxCollider.bounds.max.y),
-            Random.Range(boxCollider.bounds.min.z, boxCollider.bounds.max.z)
-                );
+            0f,
+            Random.Range(boxCollider.bounds.min.z, boxCollider.bounds.max.z));
+
         return randomPoint;
     }
 

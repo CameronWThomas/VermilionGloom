@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class NPCCharacterCreator : MonoBehaviour
 {
@@ -111,7 +112,16 @@ public class NPCCharacterCreator : MonoBehaviour
 
         public CharacterCreatorTool PlaceCharacters()
         {
-            //TODO
+            var allRooms = FindObjectsByType<Room>(FindObjectsSortMode.None);
+
+            foreach (var characterTransform in GetCharacterComponent<Transform>())
+            {
+                var randomRoom = allRooms.Randomize().First();
+                var randomPoint = randomRoom.GetRandomPointInRoom();
+                var agent = characterTransform.GetComponent<NavMeshAgent>();
+                agent.Warp(randomPoint);
+            }
+
             return this;
         }
 
@@ -129,7 +139,7 @@ public class NPCCharacterCreator : MonoBehaviour
             .Select(x => x.Value)
             .ToList();
 
-        private List<TComponent> GetCharacterComponent<TComponent>() where TComponent : MonoBehaviour
+        private List<TComponent> GetCharacterComponent<TComponent>() where TComponent : UnityEngine.Object
             => _characterInstanceDict
             .Select(x => x.Value.GetComponent<TComponent>())
             .Where(x => x != null)
