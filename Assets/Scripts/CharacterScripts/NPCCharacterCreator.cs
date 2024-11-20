@@ -24,6 +24,7 @@ public class NPCCharacterCreator : MonoBehaviour
             .InitializeRelationships()
             .PlaceCharacters()
             .RegisterCharacters()
+            .UpdateNames()
             .Build();
     }
 
@@ -128,6 +129,14 @@ public class NPCCharacterCreator : MonoBehaviour
         public CharacterCreatorTool RegisterCharacters()
         {
             //TODO
+            return this;
+        }
+
+        public CharacterCreatorTool UpdateNames()
+        {
+            foreach (var characterInfo in GetCharacterComponent<CharacterInfo>())
+                characterInfo.gameObject.name = $"Human-{characterInfo.Name}";
+
             return this;
         }
 

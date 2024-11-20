@@ -5,8 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using static PlayerController;
 
-[RequireComponent(typeof(NPCHumanCharacterInfo))]
-public partial class NpcBrain : MonoBehaviour
+public partial class NpcBrain
 {
     MvmntController mvmntController;
     Animator animator;
@@ -285,16 +284,5 @@ public partial class NpcBrain : MonoBehaviour
             }
         }
     }
-    // Triggers a re-calculation of current behaviour tree. 
-    // Nice for when you expect some conditionals to change
-    //      This could probably be written better, but it works.
-    public void ReEvaluateTree()
-    {
-        behaviorTree.StopAllCoroutines();
-        behaviorTree.StopAllTaskCoroutines();
-        behaviorTree.ExternalBehavior = behaviorTree.ExternalBehavior;
-        behaviorTree.enabled = false;
-        behaviorTree.enabled = true;
-        behaviorTree.Start();
-    }
+   
 }

@@ -943,7 +943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616d019dd280ac1409acd92e3cae4f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPos: {x: 0, y: 0, z: 0}
+  _checkDestinationInterval: 0.25
   distanceToTarget: 0
   reachedTargetThreshold: 0.1
   _approachRadius: 2
@@ -967,11 +967,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7893928265322881967}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 839f5855c52c0034086df88ab4a3f6ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 151e190ee241ea44dba402d7e12d55de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _conversationSearchTime: 2
-  convoTarget: {fileID: 0}
+  ConvoTarget: {fileID: 0}
+  State: 0
   dead: 0
   dragged: 0
   strangled: 0
@@ -1116,7 +1116,7 @@ MonoBehaviour:
       parentIndex: 
       startIndex: 
       variableStartIndex: 
-      JSONSerialization: 
+      JSONSerialization: '{"Variables":[{"Type":"SharedConversationTarget","Name":"ConvoTarget","IsShared":true,"ConversationTargetmValue":{"BooleanHasArrivedAtTarget":false}}]}'
       fieldSerializationData:
         typeName: []
         fieldNameHash: 
@@ -1125,7 +1125,7 @@ MonoBehaviour:
         unityObjects: []
         byteData: 
         byteDataArray: 
-      Version: 
+      Version: 1.7.11
   gizmoViewMode: 2
   showBehaviorDesignerGizmo: 1
 --- !u!54 &7738491898982084907

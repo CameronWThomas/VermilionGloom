@@ -59,7 +59,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
             return;
         }
 
-        if(hit.transform.CompareTag(GlobalConstants.WALKABLE_TAG_NAME))
+        if(hit.transform.IsWalkable())
         {
             if(playerController.strangleTarget != null)
             {
@@ -72,11 +72,11 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
             }
             playerMvmnt.GoToTarget(hit.point);
         }
-        else if (hit.transform.CompareTag(GlobalConstants.INTERACTABLE_TAG_NAME))
+        else if (hit.transform.IsInteractable())
         {
             HandleInteractableClick(hit);
         }
-        else if(hit.transform.CompareTag(GlobalConstants.NPC_TAG_NAME))
+        else if(hit.transform.IsNpc())
         {
             HandleNpcClick(hit);
         }
@@ -90,7 +90,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
         {
             if (hit.transform.name != conversationTarget.name)
             {
-                conversationTarget.ExitConversation();
+                //conversationTarget.ExitConversation(PlayerStats.Instance.transform);
                 conversationTarget = null;
             }
         }
@@ -98,7 +98,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 
         // End dragging if clicking on player or the drag target
 
-        if(hit.transform.CompareTag(GlobalConstants.PLAYER_TAG_NAME) && playerController.dragging)
+        if(hit.transform.IsPlayer() && playerController.dragging)
         {
             playerController.EndDragging();
             return true;
@@ -148,8 +148,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
             else
             {
 
-                brain.EnterConversationWithPlayer();
-                playerMvmnt.GoToTarget(brain.transform, () => brain.StartConversation());
+                //playerMvmnt.GoToTarget(brain.transform, () => brain.EnterConversationWithPlayer());
                 conversationTarget = brain;
             }
         }

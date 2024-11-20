@@ -39,7 +39,7 @@ public class SecretPassage : MonoBehaviour
 
     private void DeactivateNavigation(Transform transportedTransform)
     {
-        if (transportedTransform.CompareTag(GlobalConstants.PLAYER_TAG_NAME))
+        if (transportedTransform.IsPlayer())
             MouseReceiver.Instance.Deactivate();
 
         //TODO I don't like activating and reactivating other gameobject components here, but for now...
@@ -52,7 +52,7 @@ public class SecretPassage : MonoBehaviour
 
     private void ReactivateNavigation(Transform transportedTransform)
     {
-        if (transportedTransform.CompareTag(GlobalConstants.PLAYER_TAG_NAME))
+        if (transportedTransform.IsPlayer())
             MouseReceiver.Instance.Activate();
 
         if (transportedTransform.TryGetComponent<MvmntController>(out var mvmntController))
