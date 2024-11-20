@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b23f08d2ae4cba14087c1ed36193d82b, type: 3}
+  m_Name: NPCHumanTree
+  m_EditorClassIdentifier: 
+  mBehaviorSource:
+    behaviorName: Behavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(127.500061,-90.25002)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(1.89924145,133.218109)"},"ID":1,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(-639.4448,251.111084)"},"ID":2,"Name":"Have
+        Conversation","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-290.555573,140.375366)"},"ID":3,"Name":"Continue
+        Conversation","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"IsInConversation","NodeData":{"Offset":"(-80,106.486488)"},"ID":4,"Name":"Is
+        In Conversation","Instant":true},{"Type":"HaveConversation","NodeData":{"Offset":"(70,106.486488)"},"ID":5,"Name":"Have
+        Conversation","Instant":true}]},{"Type":"BehaviorDesigner.Runtime.Tasks.RandomProbability","NodeData":{"Offset":"(-116.111115,138.888977)"},"ID":6,"Name":"No
+        Conversation Chance","Instant":true,"SharedFloatsuccessProbability":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0.1},"SharedIntseed":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBooluseSeed":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(133.888885,143.888885)"},"ID":7,"Name":"Start
+        New Conversation","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"FindConversationTarget","NodeData":{"Offset":"(-190,106.666687)"},"ID":8,"Name":"Find
+        Conversation Target","Instant":true},{"Type":"GoToConversationTarget","NodeData":{"Offset":"(-100,200.555573)"},"ID":9,"Name":"Go
+        To Conversation Target","Instant":true},{"Type":"HaveConversation","NodeData":{"Offset":"(0,294.444458)"},"ID":10,"Name":"Have
+        Conversation","Instant":true}]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(263.739624,202.970856)"},"ID":11,"Name":"Wander","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.RandomProbability","NodeData":{"Offset":"(-157.500153,147.805573)"},"ID":12,"Name":"Random
+        Probability","Instant":true,"SharedFloatsuccessProbability":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0.5},"SharedIntseed":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBooluseSeed":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.RandomSelector","NodeData":{"Offset":"(-0.621246338,149.79892)"},"ID":13,"Name":"Random
+        Selector","Instant":true,"Int32seed":0,"BooleanuseSeed":false,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-123.679718,154.636749)"},"ID":14,"Name":"WanderToNewRoom","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"Assets.Scripts.BehTreeActions.SetActiveRoomToRandomRoom","NodeData":{"Offset":"(-114.898972,121.8182)"},"ID":15,"Name":"Set
+        Active Room To Random Room","Instant":true},{"Type":"GoToRandomPointInRoom","NodeData":{"Offset":"(105.411194,123.954895)"},"ID":16,"Name":"Go
+        To Random Point In Room","Instant":true,"SharedFloatposRadius":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":5},"SharedVector2lingerTimeRange":{"Type":"BehaviorDesigner.Runtime.SharedVector2","Name":null,"Vector2mValue":"(5,20)"},"SinglelingerTime":0,"SinglelingerCounter":0,"SinglerestartAnywayTime":20,"SinglerestartCounter":0}]},{"Type":"GoToRandomPointInRoom","NodeData":{"Offset":"(102.272751,154.999878)"},"ID":17,"Name":"Go
+        To Random Point In Room","Instant":true,"SharedFloatposRadius":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":5},"SharedVector2lingerTimeRange":{"Type":"BehaviorDesigner.Runtime.SharedVector2","Name":null,"Vector2mValue":"(5,20)"},"SinglelingerTime":0,"SinglelingerCounter":0,"SinglerestartAnywayTime":20,"SinglerestartCounter":0}]}]}]}}'
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects: []
+        byteData: 
+        byteDataArray: 
+      Version: 1.7.11

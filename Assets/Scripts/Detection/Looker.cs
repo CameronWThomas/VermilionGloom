@@ -1,3 +1,6 @@
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Looker : MonoBehaviour
@@ -18,6 +21,9 @@ public class Looker : MonoBehaviour
     private float debugCounter = 10f;
     private bool debug_sawTarget = false;
 
+    private float _lastColliderCollectionResetTime = -1f;
+    private List<Collider> _collidersInTrigger = new();
+
     void Start()
     {
         myBrain = GetComponentInParent<NpcBrain>();
@@ -37,6 +43,25 @@ public class Looker : MonoBehaviour
             debug_sawTarget = false;
         }
     }
+
+    public bool TryFindNPC(out NpcBrain npcBrain)
+    {
+        npcBrain = _collidersInTrigger
+            .Select(x => x.transform.GetComponent<NpcBrain>())
+            .FirstOrDefault(x => x != null && x != myBrain);
+
+        return npcBrain != null;
+    }
+
+    
+    private void OnTriggerStay(Collider other)
+    {
+        if (Time.time - _lastColliderCollectionResetTime > Time.deltaTime)
+            _collidersInTrigger.Clear();
+
+        _collidersInTrigger.Add(other);
+    }
+
     public bool CanSeeTarget(GameObject target)
     {
         //Boxcast using child BoxColliders as position and size reference

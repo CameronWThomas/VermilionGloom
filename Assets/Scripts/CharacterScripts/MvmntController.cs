@@ -1,15 +1,27 @@
 using System;
+using System.Collections;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class MvmntController : MonoBehaviour
 {
+    [SerializeField, Range(0f, 2f)] private float _checkDestinationInterval = .25f;
+
+
+    private IEnumerator _movementAction = null;
+
     // Variables for movement speed and direction
     NavMeshAgent agent;
     Animator anim;
-    public Vector3 targetPos;
     public float distanceToTarget;
     public float reachedTargetThreshold = 0.1f;
+
+    
+    [SerializeField, Range(0f, 5f), Tooltip("Radius to go to when approaching this")]
+    private float _approachRadius = 2f;
+    public float ApproachRadius => _approachRadius;
 
     [Header("States")]
     [SerializeField]
@@ -36,7 +48,7 @@ public class MvmntController : MonoBehaviour
     public Vector3 agentVelocity;
     public float agentVelMagnitude;
 
-    private Action _postDestinationArrivalAction = null;
+    public bool IsAtDestination => _movementAction == null && agent.isStopped;
 
 
     private void Awake()
@@ -48,23 +60,7 @@ public class MvmntController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        //handle whether agent should move
-        distanceToTarget = Vector3.Distance(transform.position, targetPos + transform.position.y * Vector3.up);
-        if(!IsAtDestination())
-        {
-            agent.isStopped = false;
-        }
-        else
-        {
-            agent.isStopped = true;
-
-            var action = _postDestinationArrivalAction;
-            _postDestinationArrivalAction = null;
-            action?.Invoke();
-        }
-
-        
+    {        
         // limit speed in selected states
 
         if (speedLimiter && anim.speed != walkSpeed)
@@ -83,41 +79,126 @@ public class MvmntController : MonoBehaviour
         }
     }
 
-    public bool IsAtDestination()
+    public void GoToTarget(Vector3 targetPos, Action postDestinationArrivalAction = null)
     {
-        return distanceToTarget <= reachedTargetThreshold;
-    }
-    public void SetTarget(Vector3 targetPos, Action postDestinationArrivalAction = null)
-    {
-        AttemptedTarget = targetPos;
         if (!CanReachTarget(targetPos))
+            return;
+
+        StartNewMovementAction(GoToTargetPositionCoroutine(targetPos, postDestinationArrivalAction));
+    }
+
+    public void GoToTarget(Transform otherTransform, Action postDestinationArrivalAction = null)
+    {
+        if (!otherTransform.TryGetComponent<MvmntController>(out var mvmntController))
         {
-            //Debug.Log("Cannot reach target");
+            GoToTarget(otherTransform.position, postDestinationArrivalAction);
             return;
         }
-        //Debug.Log("Setting target to: " + targetPos);
 
-        _postDestinationArrivalAction = postDestinationArrivalAction;
+        if (!CanReachTarget(otherTransform.position))
+            return;
 
-        this.targetPos = targetPos;
+        StartNewMovementAction(GoToMvmntControllerCoroutine(mvmntController, postDestinationArrivalAction));
+    }
+
+    private void StartNewMovementAction(IEnumerator newMovementAction)
+    {
+        if (_movementAction != null)
+        {
+            var oldMovementAction = _movementAction;
+            _movementAction = null;
+            StopCoroutine(oldMovementAction);
+        }
+
+        _movementAction = newMovementAction;
+        StartCoroutine(_movementAction);
+    }
+
+    private IEnumerator GoToTargetPositionCoroutine(Vector3 targetPos, Action postDestinationArrivalAction)
+    {
+        AttemptedTarget = targetPos;
+        targetPos.y = 0f;
+
         agent.SetDestination(targetPos);
-        distanceToTarget = Vector3.Distance(transform.position, targetPos);
         agent.isStopped = false;
+
+        while (true)
+        {
+            if (IsAtTargetPosition(targetPos))
+                break;
+
+            yield return new WaitForSeconds(_checkDestinationInterval);
+        }
+
+        agent.isStopped = true;
+        postDestinationArrivalAction?.Invoke();
+    }
+
+    private IEnumerator GoToMvmntControllerCoroutine(MvmntController other, Action postDestinationArrivalAction)
+    {
+        Vector3 getDestination(MvmntController other)
+        {
+            var othersPosition = other.transform.position;
+            othersPosition.y = 0f;
+
+            var path = new NavMeshPath();
+            agent.CalculatePath(othersPosition, path);
+
+            var penulitimateCorner = path.corners.Count() >= 2 
+                ? path.corners.TakeLast(2).First() 
+                : transform.position;
+            penulitimateCorner.y = othersPosition.y;
+
+            var othersToPenulitimateCorner = penulitimateCorner - othersPosition;
+
+            var magnitude = Mathf.Min(othersToPenulitimateCorner.magnitude, other.ApproachRadius);
+            var destination = othersPosition + othersToPenulitimateCorner.normalized * magnitude;
+
+            return destination;
+        }
+
+        var destination = getDestination(other);
+        agent.SetDestination(destination);
+        AttemptedTarget = destination;
+
+        var lastOtherPosition = other.transform.position;
+
+        while (true)
+        {
+            if ((lastOtherPosition - other.transform.position).magnitude > .1f)
+            {
+                lastOtherPosition = other.transform.position;
+
+                destination = getDestination(other);
+                agent.SetDestination(destination);
+                AttemptedTarget = destination;
+            }
+
+            if (IsAtTargetPosition(destination))
+                break;
+
+            yield return new WaitForSeconds(_checkDestinationInterval);
+        }
+
+        agent.isStopped = true;
+        postDestinationArrivalAction?.Invoke();
+    }
+
+    private bool IsAtTargetPosition(Vector3 targetPosition)
+    {
+        targetPosition.y = transform.position.y;
+        var distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+        return distanceToTarget <= reachedTargetThreshold;
     }
 
     public bool CanReachTarget(Vector3 targetPos)
     {
+        if (agent == null || !agent.enabled)
+            return false;
 
-        NavMeshPath path = new NavMeshPath();
-        if(agent == null)
-        {
-            return false;
-        }
-        if (!agent.enabled)
-        {
-            return false;
-        }
+        var path = new NavMeshPath();
         agent.CalculatePath(targetPos, path);
+
         return path.status == NavMeshPathStatus.PathComplete;
     }
 
@@ -166,26 +247,32 @@ public class MvmntController : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        if (debug)
+        if (!debug)
+            return;
+
+
+        // draw agent path
+        if (agent != null)
         {
-            // draw agent path
-            if (agent != null)
+            if (agent.path != null)
             {
-                if (agent.path != null)
+                Vector3[] corners = agent.path.corners;
+                for (int i = 0; i < corners.Length - 1; i++)
                 {
-                    Vector3[] corners = agent.path.corners;
-                    for (int i = 0; i < corners.Length - 1; i++)
-                    {
-                        Debug.DrawLine(corners[i], corners[i + 1], Color.red);
-                    }
+                    Debug.DrawLine(corners[i], corners[i + 1], Color.red);
                 }
             }
-
-            // draw attempted target
-            Gizmos.color = Color.red;
-            Gizmos.DrawSphere(AttemptedTarget, 0.1f);
-
         }
 
+        // draw attempted target
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(AttemptedTarget, 0.1f);
+
+
+        // Draw _approachDistance
+        Handles.color = Color.magenta;
+        var center = transform.position;
+        center.y = 0f;
+        Handles.DrawWireArc(center, Vector3.up, Vector3.right, 360f, _approachRadius);
     }
 }

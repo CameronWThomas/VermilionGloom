@@ -2,8 +2,8 @@ using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 using UnityEngine;
 
-[TaskCategory("Custom")]
-public class HaveConversation : Action
+[TaskCategory("Conversation")]
+public class HaveConversation_Old : Action
 {
     NpcBrain npcBrain;
     MvmntController mvmntController;
@@ -13,13 +13,13 @@ public class HaveConversation : Action
         mvmntController = GetComponent<MvmntController>();
 
         mvmntController.SetRunning(false);
-        mvmntController.SetTarget(transform.position);
+        mvmntController.GoToTarget(transform.position);
 
     }
 
     public override TaskStatus OnUpdate()
     {
-        if(npcBrain.convoTarget != null)
+        if(npcBrain.ConvoTarget != null)
         {
             //could maybe make them wait for you to approach instead?
             //think i might do this ^^^
@@ -27,7 +27,7 @@ public class HaveConversation : Action
             //mvmntController.SetTarget(npcBrain.convoTarget.transform.position);
             //if(mvmntController.IsAtDestination())
             //{
-                mvmntController.FaceTarget(npcBrain.convoTarget.transform.position);
+                mvmntController.FaceTarget(npcBrain.ConvoTarget.transform.position);
             //}
             return TaskStatus.Running;
         }

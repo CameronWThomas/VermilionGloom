@@ -4,15 +4,16 @@ using UnityEngine;
 [TaskCategory("Custom")]
 public class IsInConversation : Conditional
 {
-    NpcBrain npcBrain;
+    NpcBrain _npcBrain;
+
     public override void OnStart()
     {
-        npcBrain = GetComponent<NpcBrain>();
+        _npcBrain = GetComponent<NpcBrain>();
     }
 
     public override TaskStatus OnUpdate()
     {
-        if(npcBrain.convoTarget != null)
+        if(_npcBrain.IsInConversation || _npcBrain.IsWaitingForConversationTarget)
         {
             return TaskStatus.Success;
         }

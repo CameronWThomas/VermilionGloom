@@ -46,7 +46,7 @@ public class MoveToRandomPos : Action
 
     public override TaskStatus OnUpdate()
     {
-        if (mvmntController.IsAtDestination())
+        if (mvmntController.IsAtDestination)
         {
             lingerCounter += Time.deltaTime;
             if(lingerCounter >= lingerTime)
@@ -74,7 +74,7 @@ public class MoveToRandomPos : Action
 
         if(mvmntController.CanReachTarget(randomPos))
         {
-            mvmntController.SetTarget(randomPos);
+            mvmntController.GoToTarget(randomPos);
         }
         else
         {

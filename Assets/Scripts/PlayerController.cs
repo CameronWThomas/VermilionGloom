@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
     {
         if (dragTarget != null && !dragging)
         {
-            mvmntController.SetTarget(dragTarget.transform.position);
+            mvmntController.GoToTarget(dragTarget.transform.position);
             if (mvmntController.distanceToTarget <= strangleDist)
             {
                 DragSetup();
@@ -135,7 +135,7 @@ public class PlayerController : MonoBehaviour
     {
         if (strangleTarget != null && !strangling)
         {
-            mvmntController.SetTarget(strangleTarget.transform.position);
+            mvmntController.GoToTarget(strangleTarget.transform.position);
             if (mvmntController.distanceToTarget <= strangleDist)
             {
                 StrangleSetup();
@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour
             dragging = true;
             animator.SetBool("dragging", true);
             targetBrain.BeDraged(gameObject);
-            mvmntController.SetTarget(transform.position);
+            mvmntController.GoToTarget(transform.position);
             mvmntController.SetDragging(true);
             Broadcast(BroadcastType.Drag, dragTarget);
 
@@ -201,7 +201,7 @@ public class PlayerController : MonoBehaviour
             strangling = true;
             animator.SetBool("choking", true);
             targetBrain.BeStrangled(gameObject);
-            mvmntController.SetTarget(transform.position);
+            mvmntController.GoToTarget(transform.position);
             Broadcast(BroadcastType.Strangle, strangleTarget);
         }
     }
@@ -270,7 +270,7 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         animator.SetBool("dead", true);
-        mvmntController.SetTarget(transform.position);
+        mvmntController.GoToTarget(transform.position);
         mvmntController.enabled = false;
         if(strangleTarget != null)
         {

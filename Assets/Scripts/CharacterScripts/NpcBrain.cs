@@ -6,7 +6,7 @@ using UnityEngine.AI;
 using static PlayerController;
 
 [RequireComponent(typeof(NPCHumanCharacterInfo))]
-public class NpcBrain : MonoBehaviour
+public partial class NpcBrain : MonoBehaviour
 {
     MvmntController mvmntController;
     Animator animator;
@@ -15,7 +15,6 @@ public class NpcBrain : MonoBehaviour
     NavMeshAgent navMeshAgent;
     Looker looker;
 
-    public Transform convoTarget = null;
     //private Vector3 killPosOffset = new Vector3(0, 0, 0);
 
     public bool dead = false;
@@ -31,6 +30,7 @@ public class NpcBrain : MonoBehaviour
 
     public Room activeRoom;
     public Room[] allRooms; // all possible rooms, sorted by social score
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -92,21 +92,7 @@ public class NpcBrain : MonoBehaviour
         }
     }
 
-    // CONVERSATIONS
-    public void EnterConversation(Transform target)
-    {
-        animator.SetBool("conversing", true);
-        convoTarget = target;
-        ReEvaluateTree();
-
-        UI_CharacterInteractionMenu.Instance.Activate(GetComponent<NPCHumanCharacterInfo>().NPCHumanCharacterID);
-    }
-    public void ExitConversation()
-    {
-        convoTarget = null;
-        animator.SetBool("conversing", false);
-        ReEvaluateTree();
-    }
+    
     // MOVEMENT LATCHING
     private void SetMvmntLatchTarget(GameObject target, string animParam)
     {

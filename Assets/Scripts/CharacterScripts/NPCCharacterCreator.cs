@@ -163,6 +163,9 @@ public class NPCCharacterCreator : MonoBehaviour
 
             var returnCount = 0;
             var returnMax = Mathf.Min(otherCharactersSecretsPerCharacter, secretKnowledges.Count);
+            
+            if (returnMax <= 0)
+                yield break;
 
             // Keep looping through the secrets selecting by chance
             while (true)

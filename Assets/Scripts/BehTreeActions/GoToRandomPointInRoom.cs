@@ -60,7 +60,7 @@ public class GoToRandomPointInRoom : Action
         
 
 
-        if (mvmntController.IsAtDestination())
+        if (mvmntController.IsAtDestination)
         {
             lingerCounter += Time.deltaTime;
             if (lingerCounter >= lingerTime)
@@ -92,7 +92,7 @@ public class GoToRandomPointInRoom : Action
 
         if (mvmntController.CanReachTarget(targetPosition))
         {
-            mvmntController.SetTarget(targetPosition);
+            mvmntController.GoToTarget(targetPosition);
         }
         else
         {

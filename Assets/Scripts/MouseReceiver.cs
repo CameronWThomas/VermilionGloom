@@ -70,7 +70,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
                 playerController.CancelStrangling();
 
             }
-            playerMvmnt.SetTarget(hit.point);
+            playerMvmnt.GoToTarget(hit.point);
         }
         else if (hit.transform.CompareTag(GlobalConstants.INTERACTABLE_TAG_NAME))
         {
@@ -121,7 +121,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 
     private void HandleInteractableClick(SecretPassage secretPassage)
     {
-        playerMvmnt.SetTarget(secretPassage.DestinationPoint, () => secretPassage.UsePassage(playerMvmnt.transform));
+        playerMvmnt.GoToTarget(secretPassage.DestinationPoint, () => secretPassage.UsePassage(playerMvmnt.transform));
     }
 
     private void HandleNpcClick(RaycastHit hit)
@@ -148,8 +148,8 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
             else
             {
 
-                brain.EnterConversation(playerMvmnt.transform);
-                playerMvmnt.SetTarget(hit.point);
+                brain.EnterConversationWithPlayer();
+                playerMvmnt.GoToTarget(brain.transform, () => brain.StartConversation());
                 conversationTarget = brain;
             }
         }

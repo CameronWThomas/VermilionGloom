@@ -946,6 +946,7 @@ MonoBehaviour:
   targetPos: {x: 0, y: 0, z: 0}
   distanceToTarget: 0
   reachedTargetThreshold: 0.1
+  _approachRadius: 2
   dead: 0
   isRunning: 0
   isCrouching: 0
@@ -953,7 +954,7 @@ MonoBehaviour:
   inCombat: 0
   runSpeed: 3.5
   walkSpeed: 1.75
-  debug: 0
+  debug: 1
   AttemptedTarget: {x: 0, y: 0, z: 0}
   agentVelocity: {x: 0, y: 0, z: 0}
   agentVelMagnitude: 0
@@ -969,6 +970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 839f5855c52c0034086df88ab4a3f6ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _conversationSearchTime: 2
   convoTarget: {fileID: 0}
   dead: 0
   dragged: 0
@@ -1105,7 +1107,7 @@ MonoBehaviour:
   logTaskChanges: 0
   group: 0
   resetValuesOnRestart: 0
-  externalBehavior: {fileID: 11400000, guid: 1da257ebfee590f4e8d9410df5abf8d9, type: 2}
+  externalBehavior: {fileID: 11400000, guid: af7eed5393dfc5242878963695878549, type: 2}
   mBehaviorSource:
     behaviorName: Behavior
     behaviorDescription: 

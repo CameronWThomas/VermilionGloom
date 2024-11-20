@@ -22,7 +22,7 @@ public class CrunchCombatTarget : Action
             //could maybe make them wait for you to approach instead?
             //think i might do this ^^^
             //uncomment this line to change it
-            mvmntController.SetTarget(npcBrain.combatTarget.transform.position);
+            mvmntController.GoToTarget(npcBrain.combatTarget.transform.position);
             if(mvmntController.distanceToTarget <= npcBrain.crunchDistance)
             {
                 npcBrain.Crunch();
