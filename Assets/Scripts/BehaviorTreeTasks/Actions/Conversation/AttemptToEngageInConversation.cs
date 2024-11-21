@@ -9,13 +9,12 @@ public class AttemptToEngageInConversation : Action
 
     public override TaskStatus OnUpdate()
     {
-        var targetBehaviorTree = ConversationAttemptTarget.Value.GetComponent<BehaviorTree>();
-        if (targetBehaviorTree == null || targetBehaviorTree.IsInConversation())
-            return TaskStatus.Failure;
+        var ourId = GetComponent<CharacterInfo>().ID;
+        var theirId = ConversationAttemptTarget.Value.GetComponent<CharacterInfo>().ID;
+        
+        if (NpcCharacterAIStateBB.Instance.TryStartingConversation(ourId, theirId))
+            return TaskStatus.Success;
 
-        Owner.ConversationTarget(targetBehaviorTree.transform);
-        targetBehaviorTree.ConversationTarget(transform);
-
-        return TaskStatus.Success;
+        return TaskStatus.Failure;
     }
 }

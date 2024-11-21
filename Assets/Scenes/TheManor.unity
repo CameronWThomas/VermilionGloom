@@ -14221,7 +14221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2895106601631318768, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
       propertyPath: _npcHumanCharacterCount
-      value: 3
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7358607298778120144, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
       propertyPath: m_LocalPosition.x
@@ -32783,7 +32783,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1563751528}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41bd27c6a839c26458eeba6b29d8593e, type: 3}
+  m_Script: {fileID: 11500000, guid: 8af9b0c8d2bbf9f4d916313f69ed643d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1574198377

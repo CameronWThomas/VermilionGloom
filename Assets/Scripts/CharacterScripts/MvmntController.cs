@@ -101,6 +101,18 @@ public class MvmntController : MonoBehaviour
         StartNewMovementAction(GoToMvmntControllerCoroutine(mvmntController, postDestinationArrivalAction));
     }
 
+    public void CancelMovementAction()
+    {
+        agent.isStopped = true;
+        agent.ResetPath();
+
+        if (_movementAction != null)
+        {
+            StopCoroutine(_movementAction);
+            _movementAction = null;
+        }
+    }
+
     private void StartNewMovementAction(IEnumerator newMovementAction)
     {
         if (_movementAction != null)
@@ -156,6 +168,8 @@ public class MvmntController : MonoBehaviour
 
             return destination;
         }
+
+        agent.isStopped = false;
 
         var destination = getDestination(other);
         agent.SetDestination(destination);

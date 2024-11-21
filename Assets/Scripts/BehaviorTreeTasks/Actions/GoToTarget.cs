@@ -15,4 +15,9 @@ public class GoToTarget : Action
     }
 
     public override TaskStatus OnUpdate() => _hasReachedTarget ? TaskStatus.Success : TaskStatus.Running;
+
+    public override void OnConditionalAbort()
+    {
+        GetComponent<MvmntController>().CancelMovementAction();
+    }
 }
