@@ -12,7 +12,7 @@ public class AttemptToEngageInConversation : Action
         var ourId = GetComponent<CharacterInfo>().ID;
         var theirId = ConversationAttemptTarget.Value.GetComponent<CharacterInfo>().ID;
         
-        if (NpcCharacterAIStateBB.Instance.TryStartingConversation(ourId, theirId))
+        if (NpcBehaviorBB.Instance.TryStartingConversation(ourId, theirId))
             return TaskStatus.Success;
 
         return TaskStatus.Failure;

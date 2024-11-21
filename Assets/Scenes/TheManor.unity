@@ -4795,6 +4795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759ce1ce1031654591478d36e858aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 1
   hidden: 0
   socialScore: 0.6
 --- !u!65 &159496546
@@ -10002,6 +10003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759ce1ce1031654591478d36e858aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 3
   hidden: 0
   socialScore: 0.5
 --- !u!65 &415420940
@@ -14211,17 +14213,13 @@ PrefabInstance:
       propertyPath: _blacklistedConnections.Array.data[1].Passage2
       value: 
       objectReference: {fileID: 290553582}
-    - target: {fileID: 2199456676119783336, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
-      propertyPath: _humanCharacterPrefab
-      value: 
-      objectReference: {fileID: 7893928265322881967, guid: a80badf4b8f541e46813c945f0e0c081, type: 3}
     - target: {fileID: 2399926208339585065, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
       propertyPath: m_Name
       value: GlobalScripts
       objectReference: {fileID: 0}
     - target: {fileID: 2895106601631318768, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
       propertyPath: _npcHumanCharacterCount
-      value: 2
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7358607298778120144, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14266,10 +14264,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3447189813391239004, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1563751533}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
 --- !u!1 &636359239
 GameObject:
@@ -16799,6 +16794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759ce1ce1031654591478d36e858aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 8
   hidden: 0
   socialScore: 0.1
 --- !u!65 &821105035
@@ -19243,6 +19239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759ce1ce1031654591478d36e858aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 7
   hidden: 0
   socialScore: 0.3
 --- !u!65 &944293959
@@ -22059,8 +22056,8 @@ GameObject:
   - component: {fileID: 1052588261}
   - component: {fileID: 1052588265}
   - component: {fileID: 1052588264}
-  - component: {fileID: 1052588262}
   - component: {fileID: 1052588266}
+  - component: {fileID: 1052588262}
   m_Layer: 9
   m_Name: LibraryRm
   m_TagString: Untagged
@@ -22095,6 +22092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759ce1ce1031654591478d36e858aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 6
   hidden: 0
   socialScore: 1
 --- !u!23 &1052588264
@@ -26060,6 +26058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759ce1ce1031654591478d36e858aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 2
   hidden: 0
   socialScore: 0.8
 --- !u!65 &1341109232
@@ -32769,23 +32768,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!1 &1563751528 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3447189813391239004, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
-  m_PrefabInstance: {fileID: 630190743}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1563751533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563751528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8af9b0c8d2bbf9f4d916313f69ed643d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1574198377
 GameObject:
   m_ObjectHideFlags: 0
@@ -32910,6 +32892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759ce1ce1031654591478d36e858aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 5
   hidden: 0
   socialScore: 0.8
 --- !u!65 &1584597863
@@ -35169,6 +35152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759ce1ce1031654591478d36e858aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 4
   hidden: 0
   socialScore: 0.4
 --- !u!65 &1723219062

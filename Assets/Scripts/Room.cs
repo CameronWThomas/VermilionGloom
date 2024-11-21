@@ -1,11 +1,27 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum RoomID
+{
+    Unknown,
+    Foyer,
+    Den,
+    Living,
+    Sun,
+    Dining,
+    Library,
+    Kitchen,
+    Storage
+}
+
 public class Room : MonoBehaviour
 {
+    public RoomID ID;
+
     public bool hidden = false;
     [Range(0, 1)]
     public float socialScore;  // score from 0 to 1 of how much of a "hang" the room is. Storage closet: 0, living room: 1
+
 
     BoxCollider boxCollider;
     MeshRenderer meshRenderer;
@@ -18,21 +34,21 @@ public class Room : MonoBehaviour
     }
     void Start()
     {
+        RoomBB.Instance.Register(this);
+
         meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
     public bool PointIsInRoom(Vector3 point)
     {
 
         return boxCollider.bounds.Contains(point);
-    }
-    // Returns a random point in the room
+    }    
+
+    /// <summary>
+    /// Returns a random point in the room
+    /// </summary>
     public Vector3 GetRandomPointInRoom()
     {
         // Use box collider to get random point in room
@@ -48,5 +64,11 @@ public class Room : MonoBehaviour
     public Vector3 GetRandomPoiInRoom()
     {
         return GetRandomPointInRoom();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.TryGetComponent<CharacterInfo>(out var characterInfo))
+            RoomBB.Instance.UpdateCharacterLocation(characterInfo.ID, ID);
     }
 }

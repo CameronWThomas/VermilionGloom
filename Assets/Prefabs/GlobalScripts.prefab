@@ -87,7 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21f54a4a23a2d8b458064b3c18ffb5c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _humanCharacterPrefab: {fileID: 0}
+  _humanCharacterPrefab: {fileID: 7893928265322881967, guid: a80badf4b8f541e46813c945f0e0c081, type: 3}
 --- !u!114 &2895106601631318768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c67593f3384dd8643a208b548b597ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _npcHumanCharacterCount: 10
+  _npcHumanCharacterCount: 2
 --- !u!1 &3447189813391239004
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,6 +113,8 @@ GameObject:
   - component: {fileID: 49817816118593287}
   - component: {fileID: 6532954733294801926}
   - component: {fileID: 315728985159141986}
+  - component: {fileID: 2272714448878719067}
+  - component: {fileID: 2181996935769986628}
   m_Layer: 0
   m_Name: Blackboards
   m_TagString: Untagged
@@ -171,5 +173,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3749c0e77f0d64c45b4b1c5e26eb5562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2272714448878719067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3447189813391239004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bc4eb66397579c4cab7ef3df1a50146, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2181996935769986628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3447189813391239004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a72f9b905faaf64790b22baba9120aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

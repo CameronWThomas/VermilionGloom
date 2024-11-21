@@ -1,12 +1,18 @@
-using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 
 [TaskCategory("Custom/Conversation")]
 public class FaceConversationTarget : Action
 {
-    public override void OnStart()
+    public override TaskStatus OnUpdate()
     {
-        var targetTransform = NpcCharacterAIStateBB.Instance.GetInConversationTransform(GetComponent<CharacterInfo>().ID);
+        var ourBehaviourInfo = NpcBehaviorBB.Instance.GetBehaviorInfo(transform.GetCharacterID());
+
+        if (ourBehaviourInfo.ConversationTarget == null)
+            return TaskStatus.Failure;
+
+        var targetTransform = ourBehaviourInfo.ConversationTarget.transform;
         GetComponent<MvmntController>().FaceTarget(targetTransform.position);
+
+        return TaskStatus.Success;
     }
 }

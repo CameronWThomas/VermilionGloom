@@ -20,7 +20,7 @@ public class NPCHumanCharacterInfo : CharacterInfo
     {
         RemainingDetectivePoints = MAX_DETECTIVE_POINTS;
 
-        NpcCharacterAIStateBB.Instance.Register(NPCHumanCharacterID, this);
+        NpcBehaviorBB.Instance.Register(NPCHumanCharacterID, this);
 
         base.Start();
     }

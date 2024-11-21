@@ -6,18 +6,19 @@ public class GoToTarget : Action
 {
     public SharedTransform Target;
 
-    bool _hasReachedTarget;
+    TaskStatus _taskStatus = TaskStatus.Running;
 
     public override void OnStart()
     {
-        _hasReachedTarget = false;
-        GetComponent<MvmntController>().GoToTarget(Target.Value, () => _hasReachedTarget = true);
+        _taskStatus = TaskStatus.Running;
+        GetComponent<MvmntController>().GoToTarget(Target.Value, () => _taskStatus = TaskStatus.Success, () => _taskStatus = TaskStatus.Failure);
     }
 
-    public override TaskStatus OnUpdate() => _hasReachedTarget ? TaskStatus.Success : TaskStatus.Running;
+    public override TaskStatus OnUpdate() => _taskStatus;
 
     public override void OnConditionalAbort()
     {
         GetComponent<MvmntController>().CancelMovementAction();
     }
+
 }

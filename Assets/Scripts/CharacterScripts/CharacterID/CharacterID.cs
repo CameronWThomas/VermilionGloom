@@ -22,13 +22,15 @@ public abstract class CharacterID : IEquatable<CharacterID>
 
     public static bool operator==(CharacterID left, CharacterID right)
     {
+        if (left is null && right is null) return true;
         if (left is null || right is null) return false;
         return left._id == right._id;
     }
 
     public static bool operator !=(CharacterID left, CharacterID right)
     {
-        if (left is null || right is null) return false;
+        if (left is null && right is null) return false;
+        if (left is null || right is null) return true;
         return left._id != right._id;
     }
 }

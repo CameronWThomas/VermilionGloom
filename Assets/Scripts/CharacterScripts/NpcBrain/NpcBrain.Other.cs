@@ -7,13 +7,6 @@ using static PlayerController;
 
 public partial class NpcBrain
 {
-    MvmntController mvmntController;
-    Animator animator;
-    BehaviorTree behaviorTree;
-    CapsuleCollider capsuleCollider;
-    NavMeshAgent navMeshAgent;
-    Looker looker;
-
     //private Vector3 killPosOffset = new Vector3(0, 0, 0);
 
     public bool dead = false;
@@ -26,46 +19,6 @@ public partial class NpcBrain
     [Header("Interpersonal")]
     public GameObject combatTarget;
     public float crunchDistance = 2.0f;
-
-    public Room activeRoom;
-    public Room[] allRooms; // all possible rooms, sorted by social score
-
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        animator = GetComponent<Animator>();
-        mvmntController = GetComponent<MvmntController>();
-        behaviorTree = GetComponent<BehaviorTree>();
-        capsuleCollider = GetComponent<CapsuleCollider>();
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        looker = GetComponentInChildren<Looker>();
-
-        allRooms = GameObject.FindObjectsByType<Room>(FindObjectsSortMode.None);
-        allRooms = allRooms.OrderBy(r => r.socialScore).Reverse().ToArray();
-
-        // set active room to the room the npc is in
-        foreach(Room room in allRooms)
-        {
-            if(room.PointIsInRoom(transform.position))
-            {
-                activeRoom = room;
-                break;
-            }
-        }
-        if(activeRoom == null)
-        {
-            activeRoom = allRooms[0];
-        }
-
-
-
-        // lazy solution (:
-        if (!TryGetComponent<CharacterSecretKnowledge>(out _))
-            transform.AddComponent<CharacterSecretKnowledge>();
-
-    }
 
     // Update is called once per frame
     void Update()

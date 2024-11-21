@@ -1,29 +1,35 @@
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
-using System.Collections.Generic;
 using System.Linq;
 
 [TaskCategory("Custom/Conversation")]
-[TaskDescription("Indefinitely runs until it finds another NPC Human in the room that this NPC can talk to")]
 public class FindConversationTarget : Action
 {
     public SharedTransform OutConversationTarget;
 
-    NpcBrain _ourBrain;
-    NPCHumanCharacterID _ourId;
+    NPCHumanCharacterID _conversationTargetID = null;
 
     public override void OnStart()
     {
-        _ourBrain = GetComponent<NpcBrain>();
+        var charactersInRoom = RoomBB.Instance.GetCharactersInMyRoom(transform.GetCharacterID()).ToList();
+        var npcCharactersInRoom = charactersInRoom.OfType<NPCHumanCharacterID>().ToList();
+        var notInConvo = npcCharactersInRoom.Where(x => !NpcBehaviorBB.Instance.IsInConversation(x)).ToList();
 
-        _ourId = GetComponent<NPCHumanCharacterInfo>().NPCHumanCharacterID;
+        _conversationTargetID = notInConvo.Randomize().FirstOrDefault();
+
+        //_conversationTargetID = RoomBB.Instance.GetCharactersInMyRoom(transform.GetCharacterID())
+        //    .OfType<NPCHumanCharacterID>()
+        //    .Where(x => !NpcBehaviorBB.Instance.IsInConversation(x))
+        //    .Randomize()
+        //    .FirstOrDefault();
     }
 
     public override TaskStatus OnUpdate()
     {
-        if (NpcCharacterAIStateBB.Instance.TryFindCharacterInOurRoomNotInConversation(_ourId, out var characterTransform))
+        if (_conversationTargetID != null)
         {
-            OutConversationTarget.Value = characterTransform;
+            var behaviourInfo = NpcBehaviorBB.Instance.GetBehaviorInfo(_conversationTargetID);
+            OutConversationTarget.Value = behaviourInfo.transform;
             return TaskStatus.Success;
         }
 

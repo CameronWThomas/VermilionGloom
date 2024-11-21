@@ -121,8 +121,10 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 
     private void HandleInteractableClick(SecretPassage secretPassage)
     {
-        playerMvmnt.GoToTarget(secretPassage.DestinationPoint, () => secretPassage.UsePassage(playerMvmnt.transform));
+        playerMvmnt.GoToTarget(secretPassage.DestinationPoint);
     }
+
+    
 
     private void HandleNpcClick(RaycastHit hit)
     {

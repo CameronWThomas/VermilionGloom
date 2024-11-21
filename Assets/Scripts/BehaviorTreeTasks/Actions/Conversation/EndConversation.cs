@@ -7,7 +7,7 @@ public class EndConversation : Action
     {
         var ourId = GetComponent<CharacterInfo>().ID;
 
-        NpcCharacterAIStateBB.Instance.EndConversation(ourId);
+        NpcBehaviorBB.Instance.EndConversation(ourId);
         return TaskStatus.Success;
     }
 }

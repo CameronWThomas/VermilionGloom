@@ -10,7 +10,6 @@ public class MvmntController : MonoBehaviour
     [SerializeField, Range(0f, 2f)] private float _checkDestinationInterval = .25f;
 
 
-    private IEnumerator _movementAction = null;
 
     // Variables for movement speed and direction
     NavMeshAgent agent;
@@ -48,8 +47,12 @@ public class MvmntController : MonoBehaviour
     public Vector3 agentVelocity;
     public float agentVelMagnitude;
 
+    private CoroutineContainer _movementAction = null;
+
     public bool IsAtDestination => _movementAction == null && agent.isStopped;
 
+
+    private Action<bool> _onMovementEndResult;
 
     private void Awake()
     {
@@ -79,54 +82,58 @@ public class MvmntController : MonoBehaviour
         }
     }
 
-    public void GoToTarget(Vector3 targetPos, Action postDestinationArrivalAction = null)
+    public void GoToTarget(Vector3 targetPos, Action onSuccess = null, Action onFailure = null)
     {
         if (!CanReachTarget(targetPos))
             return;
 
-        StartNewMovementAction(GoToTargetPositionCoroutine(targetPos, postDestinationArrivalAction));
+        var coroutine = new CoroutineContainer(this, () => GoToTargetPositionCoroutine(targetPos), onSuccess, onFailure);
+        StartNewMovementAction(coroutine);
     }
 
-    public void GoToTarget(Transform otherTransform, Action postDestinationArrivalAction = null)
+    public void GoToTarget(Transform otherTransform, Action onSuccess = null, Action onFailure = null)
     {
         if (!otherTransform.TryGetComponent<MvmntController>(out var mvmntController))
         {
-            GoToTarget(otherTransform.position, postDestinationArrivalAction);
+            GoToTarget(otherTransform.position, onSuccess, onFailure);
             return;
         }
 
         if (!CanReachTarget(otherTransform.position))
             return;
 
-        StartNewMovementAction(GoToMvmntControllerCoroutine(mvmntController, postDestinationArrivalAction));
+        var coroutine = new CoroutineContainer(this, () => GoToMvmntControllerCoroutine(mvmntController), onSuccess, onFailure);
+        StartNewMovementAction(coroutine);
     }
 
     public void CancelMovementAction()
     {
+        CancelMovementActionCoroutine();
+
         agent.isStopped = true;
         agent.ResetPath();
+    }    
 
-        if (_movementAction != null)
-        {
-            StopCoroutine(_movementAction);
-            _movementAction = null;
-        }
-    }
-
-    private void StartNewMovementAction(IEnumerator newMovementAction)
+    private void StartNewMovementAction(CoroutineContainer newMovementAction)
     {
-        if (_movementAction != null)
-        {
-            var oldMovementAction = _movementAction;
-            _movementAction = null;
-            StopCoroutine(oldMovementAction);
-        }
+        CancelMovementActionCoroutine();
 
         _movementAction = newMovementAction;
-        StartCoroutine(_movementAction);
+        _movementAction.Start();
     }
 
-    private IEnumerator GoToTargetPositionCoroutine(Vector3 targetPos, Action postDestinationArrivalAction)
+    private void CancelMovementActionCoroutine()
+    {
+        if (_movementAction == null)
+            return;
+
+        if (!_movementAction.HasEnded)
+            _movementAction.Stop();
+
+        _movementAction = null;
+    }
+
+    private IEnumerator GoToTargetPositionCoroutine(Vector3 targetPos)
     {
         AttemptedTarget = targetPos;
         targetPos.y = 0f;
@@ -143,10 +150,9 @@ public class MvmntController : MonoBehaviour
         }
 
         agent.isStopped = true;
-        postDestinationArrivalAction?.Invoke();
     }
 
-    private IEnumerator GoToMvmntControllerCoroutine(MvmntController other, Action postDestinationArrivalAction)
+    private IEnumerator GoToMvmntControllerCoroutine(MvmntController other)
     {
         Vector3 getDestination(MvmntController other)
         {
@@ -195,7 +201,6 @@ public class MvmntController : MonoBehaviour
         }
 
         agent.isStopped = true;
-        postDestinationArrivalAction?.Invoke();
     }
 
     private bool IsAtTargetPosition(Vector3 targetPosition)
@@ -256,7 +261,10 @@ public class MvmntController : MonoBehaviour
         Vector3 lookPos = target - transform.position;
         lookPos.y = 0;
         Quaternion rotation = Quaternion.LookRotation(lookPos);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1.5f * Time.deltaTime);
+        
+        // TODO setup as coroutine later and use this
+        //transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1.5f * Time.deltaTime);
+        transform.rotation = rotation;
 
     }
     private void OnDrawGizmos()
