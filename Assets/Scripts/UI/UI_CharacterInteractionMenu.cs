@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_CharacterInteractionMenu>
@@ -38,6 +39,8 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
     {
         _characterId = characterID;
 
+        NpcBehaviorBB.Instance.EnterConversationWithPlayer(_characterId);
+
         _screenState = ScreenState.Normal;
 
         MouseReceiver.Instance.Deactivate();
@@ -60,6 +63,8 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
 
     public void Deactivate()
     {
+        NpcBehaviorBB.Instance.EndConversationWithPlayer();
+
         if (_screenState == ScreenState.RevealingSecrets)
         {
             OnRevealScreenFinish(null, false);

@@ -114,16 +114,38 @@ public class NPCCharacterCreator : MonoBehaviour
         public CharacterCreatorTool PlaceCharacters()
         {
             var allRooms = FindObjectsByType<Room>(FindObjectsSortMode.None);
+            var roomsByQuantity = allRooms.ToDictionary(x => x, x => 0);
 
             foreach (var characterTransform in GetCharacterComponent<Transform>())
             {
-                var randomRoom = allRooms.Randomize().First();
-                var randomPoint = randomRoom.GetRandomPointInRoom();
+                var room = GetRandomRoom(roomsByQuantity);
+
+                var randomPoint = room.GetRandomPointInRoom();
                 var agent = characterTransform.GetComponent<NavMeshAgent>();
                 agent.Warp(randomPoint);
             }
 
             return this;
+        }
+
+        private Room GetRandomRoom(Dictionary<Room, int> roomsByQuantity)
+        {
+            var roomsBelowMaxOccupancy = roomsByQuantity
+                    .Where(x => x.Key.MaxOccupancy > x.Value)
+                    .Select(x => x.Key)
+                    .Randomize()
+                    .ToList();
+
+            for (var i = 0; i < roomsBelowMaxOccupancy.Count() * 2; i++)
+            {
+                foreach (var room in roomsBelowMaxOccupancy)
+                {
+                    if (room.RandomRoomChance())
+                        return room;
+                }
+            }
+
+            return roomsByQuantity.First().Key;
         }
 
         public CharacterCreatorTool RegisterCharacters()

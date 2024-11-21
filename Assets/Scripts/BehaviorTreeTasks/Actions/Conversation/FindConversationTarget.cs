@@ -29,7 +29,7 @@ public class FindConversationTarget : Action
         if (_conversationTargetID != null)
         {
             var behaviourInfo = NpcBehaviorBB.Instance.GetBehaviorInfo(_conversationTargetID);
-            OutConversationTarget.Value = behaviourInfo.transform;
+            OutConversationTarget.Value = behaviourInfo.Transform;
             return TaskStatus.Success;
         }
 

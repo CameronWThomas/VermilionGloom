@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class RoomBB : GlobalSingleInstanceMonoBehaviour<RoomBB>
 {
@@ -44,6 +45,24 @@ public class RoomBB : GlobalSingleInstanceMonoBehaviour<RoomBB>
     public Room GetRandomOtherRoom(CharacterID characterID)
     {
         var currentRoomID = GetCharacterRoomID(characterID);
-        return _existingRooms.Where(x => x.ID != currentRoomID).Randomize().First();
+
+        var otherRoomsRandomize = _existingRooms.Where(x => x.ID != currentRoomID).Randomize();
+
+        if (!otherRoomsRandomize.Any())
+            return null;
+
+        var maxLoops = 10;
+        for (var i = 0; i < maxLoops; i++)
+        {
+            foreach (var room in otherRoomsRandomize)
+            {
+                var roomOccupancy = _characterLocation.Count(x => x.Value == room.ID);
+                if (room.RandomRoomChance(roomOccupancy))
+                    return room;
+            }
+        }
+
+        Debug.LogWarning("Random chance to find a room never succeeded. Maybe social score should be higher?");
+        return null;
     }
 }

@@ -16,9 +16,5 @@ public class GoToTarget : Action
 
     public override TaskStatus OnUpdate() => _taskStatus;
 
-    public override void OnConditionalAbort()
-    {
-        GetComponent<MvmntController>().CancelMovementAction();
-    }
-
+    public override void OnConditionalAbort() => GetComponent<MvmntController>().CancelMovementAction();
 }

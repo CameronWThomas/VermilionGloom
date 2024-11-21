@@ -8,5 +8,6 @@ public static class CharacterHelper
         return characterID != null;
     }
 
+    public static NPCHumanCharacterID GetNPCHumanCharacterID(this Component component) => component.GetCharacterID() as NPCHumanCharacterID;
     public static CharacterID GetCharacterID(this Component component) => component.GetComponent<CharacterInfo>().ID;
 }

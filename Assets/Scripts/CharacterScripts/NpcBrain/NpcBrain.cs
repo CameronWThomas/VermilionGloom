@@ -36,7 +36,7 @@ public partial class NpcBrain : MonoBehaviour
     /// Nice for when you expect some conditionals to change
     /// This could probably be written better, but it works.
     /// </summary>
-    private void ReEvaluateTree()
+    public void ReEvaluateTree()
     {
         behaviorTree.StopAllCoroutines();
         behaviorTree.StopAllTaskCoroutines();

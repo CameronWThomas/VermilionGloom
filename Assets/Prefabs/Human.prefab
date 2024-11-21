@@ -970,16 +970,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 151e190ee241ea44dba402d7e12d55de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConvoTarget: {fileID: 0}
-  State: 0
   dead: 0
   dragged: 0
   strangled: 0
   mvmntLatchTarget: {fileID: 0}
   combatTarget: {fileID: 0}
   crunchDistance: 2
-  activeRoom: {fileID: 0}
-  allRooms: []
 --- !u!114 &8693017651451769672
 MonoBehaviour:
   m_ObjectHideFlags: 0

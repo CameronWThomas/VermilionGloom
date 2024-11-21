@@ -149,10 +149,15 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
             }
             else
             {
-
-                //playerMvmnt.GoToTarget(brain.transform, () => brain.EnterConversationWithPlayer());
+                playerMvmnt.GoToTarget(brain.transform, () => EnterConversationWithNpc(brain));
                 conversationTarget = brain;
             }
         }
+    }
+
+    private void EnterConversationWithNpc(NpcBrain brain)
+    {
+        playerMvmnt.FaceTarget(brain.transform.position);
+        UI_CharacterInteractionMenu.Instance.Activate(brain.GetNPCHumanCharacterID());
     }
 }
