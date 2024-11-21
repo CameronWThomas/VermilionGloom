@@ -10,5 +10,5 @@ public class IsInConversation : Conditional
             : TaskStatus.Failure; ;
     }
 
-    public override float GetPriority() => 1f;
+    public override float GetPriority() => PriorityTier.Tier1.Priority();
 }

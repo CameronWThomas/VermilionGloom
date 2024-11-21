@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public interface INpcCharacterBehaviorHelper : ICharacterBehaviorHelperEnhanced
+public interface INpcCharacterBehaviorInfo : ICharacterBehaviorInfoEnhanced
 {
     public NpcBrain NpcBrain { get; }
 }
 
-public interface ICharacterBehaviorHelper
+public interface ICharacterBehaviorInfo
 {
     Transform Transform { get; }
     CharacterID CharacterID { get; }
@@ -14,9 +14,13 @@ public interface ICharacterBehaviorHelper
     CharacterInfo ConversationTarget { get; }
     RoomID CurrentRoom { get; }
     CharacterInfo CharacterInfo { get; }
+
+    bool IsDead { get; }
+    bool IsBeingDragged { get; }
+    bool IsBeingStranged { get; }
 }
 
-public interface ICharacterBehaviorHelperEnhanced : ICharacterBehaviorHelper
+public interface ICharacterBehaviorInfoEnhanced : ICharacterBehaviorInfo
 {
     void UpdateConversationTarget(CharacterInfo conversationTarget);
     void EndConversation();
@@ -25,7 +29,7 @@ public interface ICharacterBehaviorHelperEnhanced : ICharacterBehaviorHelper
 /// <summary>
 /// Collection of state information that will be used by the behavior trees. Only act on with the interfaces.
 /// </summary>
-public class CharacterBehaviorInfo : MonoBehaviour, INpcCharacterBehaviorHelper
+public class NpcCharacterBehaviorInfo : MonoBehaviour, INpcCharacterBehaviorInfo
 {
     [Header("Character Info")]
     [SerializeField] CharacterID _characterID;
@@ -37,12 +41,21 @@ public class CharacterBehaviorInfo : MonoBehaviour, INpcCharacterBehaviorHelper
     [Header("Location")]
     [SerializeField] RoomID _currentRoom;
 
+    [Header("Dead Info")]
+    [SerializeField] bool _isDead = false;
+    [SerializeField] bool _isBeingDragged = false;
+    [SerializeField] bool _isBeingStranged = false;
+
 
     public Transform Transform => transform;
     public CharacterID CharacterID => _characterID;
     public CharacterInfo ConversationTarget => _conversationTarget;
     public bool IsInConversation => _isInConversation;
     public RoomID CurrentRoom => _currentRoom;
+
+    public bool IsDead => _isDead;
+    public bool IsBeingDragged => _isBeingDragged;
+    public bool IsBeingStranged => _isBeingStranged;
 
     public CharacterID ConversationTargetID => IsInConversation && ConversationTarget != null ? ConversationTarget.ID : null;
     public CharacterInfo CharacterInfo => GetComponent<CharacterInfo>();

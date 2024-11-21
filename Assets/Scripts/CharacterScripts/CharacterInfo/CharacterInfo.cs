@@ -4,12 +4,16 @@ public enum CharacterType { Generic, VanHelsing, Owner, Player }
 
 public abstract class CharacterInfo : MonoBehaviour
 {
+    [SerializeField] private bool _isDead;
+
     private CharacterID _id = null;
 
     public CharacterID ID => _id ??= CreateCharacterID();    
 
     public virtual CharacterType CharacterType { get; }
     public string Name { get; private set; }
+    public bool IsDead => _isDead;
+
 
 
     protected virtual void Start()

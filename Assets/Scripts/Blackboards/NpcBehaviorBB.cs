@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
 {
-    private Dictionary<CharacterID, INpcCharacterBehaviorHelper> _npcBehaviourInfoDict = new();
+    private Dictionary<CharacterID, INpcCharacterBehaviorInfo> _npcBehaviourInfoDict = new();
     private PlayerCharacterBehaviorInfo _playerCharacterInfo = new();
 
     public void Register(NPCHumanCharacterID nPCHumanCharacterID, NPCHumanCharacterInfo characterInfo)
     {
-        var behaviorInfo = characterInfo.gameObject.AddComponent<CharacterBehaviorInfo>();
+        var behaviorInfo = characterInfo.gameObject.AddComponent<NpcCharacterBehaviorInfo>();
         _npcBehaviourInfoDict.Add(nPCHumanCharacterID, behaviorInfo);
     }
 
-    public ICharacterBehaviorHelper GetBehaviorInfo(CharacterID characterID) => GetBehaviorInfoInternal(characterID);    
+    public ICharacterBehaviorInfo GetBehaviorInfo(CharacterID characterID) => GetBehaviorInfoInternal(characterID);
+
+    public bool IsDead(CharacterID characterID) => GetBehaviorInfoInternal(characterID).IsDead;
 
     public bool TryStartingConversation(CharacterID id1, CharacterID id2)
     {
@@ -41,7 +43,7 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
             var conversationTargetId = character.ConversationTargetID;
             EndConversation(characterID);
 
-            if (GetBehaviorInfoInternal(conversationTargetId) is INpcCharacterBehaviorHelper conversationCharacter)
+            if (GetBehaviorInfoInternal(conversationTargetId) is INpcCharacterBehaviorInfo conversationCharacter)
                 conversationCharacter.NpcBrain.ReEvaluateTree();
             character.NpcBrain.ReEvaluateTree();
         }
@@ -70,7 +72,7 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
         EndConversation(conversationCharacterId, allowEndPlayerConversation);
     }
 
-    private ICharacterBehaviorHelperEnhanced GetBehaviorInfoInternal(CharacterID characterID)
+    private ICharacterBehaviorInfoEnhanced GetBehaviorInfoInternal(CharacterID characterID)
     {
         if (characterID is PlayerCharacterID)
             return _playerCharacterInfo;
@@ -78,9 +80,9 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
         return GetNpcBehaviorInfo(characterID);
     }
 
-    private INpcCharacterBehaviorHelper GetNpcBehaviorInfo(CharacterID characterID) => _npcBehaviourInfoDict[characterID];
+    private INpcCharacterBehaviorInfo GetNpcBehaviorInfo(CharacterID characterID) => _npcBehaviourInfoDict[characterID];
 
-    private class PlayerCharacterBehaviorInfo : ICharacterBehaviorHelperEnhanced
+    private class PlayerCharacterBehaviorInfo : ICharacterBehaviorInfoEnhanced
     {
         public CharacterID CharacterID => Transform.GetCharacterID();
 
@@ -95,6 +97,12 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
         public Transform Transform => PlayerStats.Instance.transform;
 
         public CharacterInfo CharacterInfo => Transform.GetComponent<CharacterInfo>();
+
+        public bool IsDead => Transform.GetComponent<PlayerCharacterInfo>().IsDead;
+
+        public bool IsBeingDragged => false;
+
+        public bool IsBeingStranged => false;
 
         public void UpdateConversationTarget(CharacterInfo conversationTarget)
         {
