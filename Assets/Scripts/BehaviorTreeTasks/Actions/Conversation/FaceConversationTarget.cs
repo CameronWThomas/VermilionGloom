@@ -5,13 +5,10 @@ public class FaceConversationTarget : Action
 {
     public override TaskStatus OnUpdate()
     {
-        var ourBehaviourInfo = NpcBehaviorBB.Instance.GetBehaviorInfo(transform.GetCharacterID());
-
-        if (ourBehaviourInfo.ConversationTarget == null)
+        if (!NpcBehaviorBB.Instance.IsInConversation(transform.GetCharacterID(), out var target))
             return TaskStatus.Failure;
-
-        var targetTransform = ourBehaviourInfo.ConversationTarget.transform;
-        GetComponent<MvmntController>().FaceTarget(targetTransform.position);
+        
+        GetComponent<MvmntController>().FaceTarget(target.position);
 
         return TaskStatus.Success;
     }

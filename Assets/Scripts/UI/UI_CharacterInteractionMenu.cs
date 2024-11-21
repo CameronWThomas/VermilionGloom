@@ -63,7 +63,7 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
 
     public void Deactivate()
     {
-        NpcBehaviorBB.Instance.EndConversationWithPlayer();
+        NpcBehaviorBB.Instance.EndConversationWithPlayer(_characterId);
 
         if (_screenState == ScreenState.RevealingSecrets)
         {

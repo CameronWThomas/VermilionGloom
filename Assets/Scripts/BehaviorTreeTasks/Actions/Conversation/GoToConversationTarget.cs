@@ -15,7 +15,7 @@ public class GoToConversationTarget : GoToTarget
 
     public override TaskStatus OnUpdate()
     {
-        if (NpcBehaviorBB.Instance.IsInConversation(_conversationTargetID))
+        if (NpcBehaviorBB.Instance.IsInConversation(_conversationTargetID, out _))
         {
             GetComponent<MvmntController>().CancelMovementAction();
             return TaskStatus.Failure;

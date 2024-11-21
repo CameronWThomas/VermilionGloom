@@ -21,7 +21,7 @@ public partial class NpcBrain
     public float crunchDistance = 2.0f;
 
     // Update is called once per frame
-    void Update()
+    void OtherUpdate()
     {
         //if dead and not being dragged, do nothing
         if (dead && !dragged)

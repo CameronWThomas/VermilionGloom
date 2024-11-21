@@ -1,119 +1,82 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
 {
-    private Dictionary<CharacterID, INpcCharacterBehaviorInfo> _npcBehaviourInfoDict = new();
-    private PlayerCharacterBehaviorInfo _playerCharacterInfo = new();
+    private Dictionary<NPCHumanCharacterID, NpcBrain> _npcBrains = new();
 
-    public void Register(NPCHumanCharacterID nPCHumanCharacterID, NPCHumanCharacterInfo characterInfo)
+    public void Register(NpcBrain brain)
     {
-        var behaviorInfo = characterInfo.gameObject.AddComponent<NpcCharacterBehaviorInfo>();
-        _npcBehaviourInfoDict.Add(nPCHumanCharacterID, behaviorInfo);
+        _npcBrains.Add(brain.ID, brain);
     }
 
-    public ICharacterBehaviorInfo GetBehaviorInfo(CharacterID characterID) => GetBehaviorInfoInternal(characterID);
-
-    public bool IsDead(CharacterID characterID) => GetBehaviorInfoInternal(characterID).IsDead;
+    public bool IsDead(CharacterID characterID) => GetBrain(characterID).IsDead;
 
     public bool TryStartingConversation(CharacterID id1, CharacterID id2)
     {
-        var behaviourInfo1 = GetBehaviorInfoInternal(id1);
-        var behaviourInfo2 = GetBehaviorInfoInternal(id2);
+        var brain1 = GetBrain(id1);
+        var brain2 = GetBrain(id2);
 
-        if (behaviourInfo1.IsInConversation || behaviourInfo2.IsInConversation)
+        // If either is conversing, we can't start a conversation
+        if (brain1.IsInConversation || brain1.IsInConversation)
             return false;
 
-        behaviourInfo1.UpdateConversationTarget(behaviourInfo2.CharacterInfo);
-        behaviourInfo2.UpdateConversationTarget(behaviourInfo1.CharacterInfo);
+        brain1.ConversationTarget = brain2.transform;
+        brain2.ConversationTarget = brain1.transform;
         
         return true;
     }
 
-    public void EndConversation(CharacterID id) => EndConversation(id, false);
+    public void EndConversation(CharacterID id)
+    {
+        var brain = GetBrain(id);
+        if (!brain.IsInConversation || brain.IsInConversationWithPlayer)
+            return;
 
-    public bool IsInConversation(CharacterID id) => _npcBehaviourInfoDict[id].IsInConversation;
+        var conversationTarget = brain.ConversationTarget;        
+        brain.ConversationTarget = null;
+
+        EndConversation(conversationTarget.GetCharacterID());
+    }
+
+    public bool IsInConversation(CharacterID id, out Transform conversationTarget)
+    {
+        var brain = GetBrain(id);
+        conversationTarget = brain.ConversationTarget;
+        return brain.IsInConversation;            
+    }
 
     public void EnterConversationWithPlayer(NPCHumanCharacterID characterID)
     {
-        var character = GetNpcBehaviorInfo(characterID);
-        if (character.IsInConversation)
+        var brain = GetBrain(characterID);
+        if (brain.IsInConversationWithPlayer)
+            return;
+        
+        if (brain.IsInConversationWithNpc)
         {
-            var conversationTargetId = character.ConversationTargetID;
             EndConversation(characterID);
 
-            if (GetBehaviorInfoInternal(conversationTargetId) is INpcCharacterBehaviorInfo conversationCharacter)
-                conversationCharacter.NpcBrain.ReEvaluateTree();
-            character.NpcBrain.ReEvaluateTree();
+            // This brain doesnt get IsInConversation reevaluated, so we need to reevaluate the tree
+            brain.ReEvaluateTree();
         }
 
 
-        var npcInfo = GetBehaviorInfoInternal(characterID);
-        var playerInfo = _playerCharacterInfo;
-
-        npcInfo.UpdateConversationTarget(playerInfo.CharacterInfo);
-        playerInfo.UpdateConversationTarget(npcInfo.CharacterInfo);
+        brain.ConversationTarget = PlayerStats.Instance.transform;
     }
 
-    public void EndConversationWithPlayer() => EndConversation(_playerCharacterInfo.CharacterID, true);
-
-    private void EndConversation(CharacterID id, bool allowEndPlayerConversation)
+    public void EndConversationWithPlayer(NPCHumanCharacterID characterID)
     {
-        var behaviourInfo = GetBehaviorInfoInternal(id);
+        var brain = GetBrain(characterID);
 
-        var playerCondition = allowEndPlayerConversation || (behaviourInfo != _playerCharacterInfo && behaviourInfo.ConversationTargetID != _playerCharacterInfo.CharacterID);
-        if (!behaviourInfo.IsInConversation || !playerCondition)
-            return;
-
-        var conversationCharacterId = behaviourInfo.ConversationTargetID;
-        behaviourInfo.EndConversation();
-
-        EndConversation(conversationCharacterId, allowEndPlayerConversation);
+        if (brain.IsInConversationWithPlayer)
+            brain.ConversationTarget = null;
     }
 
-    private ICharacterBehaviorInfoEnhanced GetBehaviorInfoInternal(CharacterID characterID)
+    private NpcBrain GetBrain(CharacterID characterID)
     {
-        if (characterID is PlayerCharacterID)
-            return _playerCharacterInfo;
+        if (characterID is NPCHumanCharacterID npcId)
+            return _npcBrains[npcId];
 
-        return GetNpcBehaviorInfo(characterID);
-    }
-
-    private INpcCharacterBehaviorInfo GetNpcBehaviorInfo(CharacterID characterID) => _npcBehaviourInfoDict[characterID];
-
-    private class PlayerCharacterBehaviorInfo : ICharacterBehaviorInfoEnhanced
-    {
-        public CharacterID CharacterID => Transform.GetCharacterID();
-
-        public bool IsInConversation { get; private set; }
-
-        public CharacterInfo ConversationTarget { get; private set; }
-
-        public CharacterID ConversationTargetID => IsInConversation && ConversationTarget != null ? ConversationTarget.ID : null;
-
-        public RoomID CurrentRoom => RoomBB.Instance.GetCharacterRoomID(CharacterID);
-
-        public Transform Transform => PlayerStats.Instance.transform;
-
-        public CharacterInfo CharacterInfo => Transform.GetComponent<CharacterInfo>();
-
-        public bool IsDead => Transform.GetComponent<PlayerCharacterInfo>().IsDead;
-
-        public bool IsBeingDragged => false;
-
-        public bool IsBeingStranged => false;
-
-        public void UpdateConversationTarget(CharacterInfo conversationTarget)
-        {
-            ConversationTarget = conversationTarget;
-            IsInConversation = true;
-        }
-
-        public void EndConversation()
-        {
-            IsInConversation = false;
-            ConversationTarget = null;
-        }
+        return null;
     }
 }

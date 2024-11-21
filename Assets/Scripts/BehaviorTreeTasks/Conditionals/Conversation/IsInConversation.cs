@@ -5,7 +5,7 @@ public class IsInConversation : Conditional
 {
     public override TaskStatus OnUpdate()
     {
-        return NpcBehaviorBB.Instance.IsInConversation(GetComponent<CharacterInfo>().ID)
+        return NpcBehaviorBB.Instance.IsInConversation(GetComponent<CharacterInfo>().ID, out _)
             ? TaskStatus.Success
             : TaskStatus.Failure; ;
     }

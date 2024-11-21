@@ -4,9 +4,49 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 [RequireComponent(typeof(NPCHumanCharacterInfo))]
 public partial class NpcBrain : MonoBehaviour
 {
+    [SerializeField] Transform _conversationTarget = null;
+    [SerializeField] RoomID _currentRoom;
+
+    public bool IsDead => GetComponent<CharacterInfo>().IsDead;
+    public bool IsInConversation => GetIsInConversation();
+    public bool IsInConversationWithPlayer => ConversationTarget != null && ConversationTarget.IsPlayer();
+    public bool IsInConversationWithNpc => ConversationTarget != null && ConversationTarget.IsNpc();
+    public Transform ConversationTarget { get => _conversationTarget; set => _conversationTarget = value; }
+
+    public NPCHumanCharacterID ID => GetComponent<NPCHumanCharacterInfo>().NPCHumanCharacterID;
+
+
+    void Update()
+    {
+        OtherUpdate();
+
+        _currentRoom = RoomBB.Instance.GetCharacterRoomID(GetComponent<CharacterInfo>().ID);
+    }
+
+
+    private bool GetIsInConversation()
+    {
+        if (ConversationTarget == null)
+            return false;
+
+        if (IsInConversationWithPlayer)
+            return true;
+
+        if (IsInConversationWithNpc)
+        {
+            // Make sure the other NPC agrees that we are in a conversation
+            var npcBrain = ConversationTarget.GetComponent<NpcBrain>();
+            return npcBrain.ConversationTarget == transform;
+        }
+
+        return false;
+    }
+
+
     MvmntController mvmntController;
     Animator animator;
     BehaviorTree behaviorTree;
@@ -16,6 +56,8 @@ public partial class NpcBrain : MonoBehaviour
 
     private void Start()
     {
+        NpcBehaviorBB.Instance.Register(this);
+
         animator = GetComponent<Animator>();
         mvmntController = GetComponent<MvmntController>();
         behaviorTree = GetComponent<BehaviorTree>();

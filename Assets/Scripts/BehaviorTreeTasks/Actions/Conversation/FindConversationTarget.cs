@@ -1,35 +1,39 @@
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 using System.Linq;
+using UnityEngine;
 
 [TaskCategory("Custom/Conversation")]
 public class FindConversationTarget : Action
 {
     public SharedTransform OutConversationTarget;
 
-    NPCHumanCharacterID _conversationTargetID = null;
+    Transform _conversationTargetTransform = null;
 
     public override void OnStart()
     {
-        var charactersInRoom = RoomBB.Instance.GetCharactersInMyRoom(transform.GetCharacterID()).ToList();
-        var npcCharactersInRoom = charactersInRoom.OfType<NPCHumanCharacterID>().ToList();
-        var notInConvo = npcCharactersInRoom.Where(x => !NpcBehaviorBB.Instance.IsInConversation(x)).ToList();
+        _conversationTargetTransform = null;
 
-        _conversationTargetID = notInConvo.Randomize().FirstOrDefault();
+        var possibleConversationTargets = RoomBB.Instance.GetCharactersInMyRoom(transform.GetCharacterID())
+            .OfType<NPCHumanCharacterID>()
+            .Randomize()
+            .ToList();
 
-        //_conversationTargetID = RoomBB.Instance.GetCharactersInMyRoom(transform.GetCharacterID())
-        //    .OfType<NPCHumanCharacterID>()
-        //    .Where(x => !NpcBehaviorBB.Instance.IsInConversation(x))
-        //    .Randomize()
-        //    .FirstOrDefault();
+        foreach (var characterId in possibleConversationTargets)
+        {
+            if (!NpcBehaviorBB.Instance.IsInConversation(characterId, out var _))
+            {
+                _conversationTargetTransform = CharacterInfoBB.Instance.GetCharacterInfo(characterId).transform;
+                break;
+            }
+        }
     }
 
     public override TaskStatus OnUpdate()
     {
-        if (_conversationTargetID != null)
+        if (_conversationTargetTransform != null)
         {
-            var behaviourInfo = NpcBehaviorBB.Instance.GetBehaviorInfo(_conversationTargetID);
-            OutConversationTarget.Value = behaviourInfo.Transform;
+            OutConversationTarget.Value = _conversationTargetTransform;
             return TaskStatus.Success;
         }
 
