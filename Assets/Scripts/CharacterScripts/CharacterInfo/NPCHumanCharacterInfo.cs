@@ -1,3 +1,4 @@
+using BehaviorDesigner.Runtime;
 using System;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ public class NPCHumanCharacterInfo : CharacterInfo
     protected override void Start()
     {
         RemainingDetectivePoints = MAX_DETECTIVE_POINTS;
+
+        NpcBehaviorBB.Instance.Register(NPCHumanCharacterID, GetComponent<BehaviorTree>());
 
         base.Start();
     }
