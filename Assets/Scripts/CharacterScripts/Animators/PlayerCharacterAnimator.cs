@@ -16,29 +16,20 @@ public class PlayerCharacterAnimator : CharacterAnimator
 
         HandleChoking();
     }
-
-    protected override void OnSyncOccured(SyncEventType syncEventType)
-    {
-        if (syncEventType is SyncEventType.Strangle)
-            Animator.SetBool("choking", true);
-    }
-
     private void HandleChoking()
     {
+        Animator.SetBool("choking", PC.IsStrangling);
+
         if (!PC.IsStrangling)
         {
             if (_lastStrangleTarget != null && _lastStrangleTarget.IsStrangled)
                 Animator.SetTrigger("chokeKill");
 
             _lastStrangleTarget = null;
-            Animator.SetBool("choking", false);
-            return;
         }
-
-        if (_lastStrangleTarget == null)
+        else if (_lastStrangleTarget == null)
         {
             _lastStrangleTarget = PC.StrangleTarget;
-            WaitForAnimationSync(_lastStrangleTarget.GetComponent<CharacterAnimator>(), SyncEventType.Strangle);
         }
     }
 }

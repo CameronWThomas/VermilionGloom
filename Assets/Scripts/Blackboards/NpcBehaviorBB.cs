@@ -14,7 +14,6 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
     public bool IsDead(CharacterID characterID) => GetBrain(characterID).IsDead;
     public bool IsBeingStrangled(CharacterID characterID) => GetBrain(characterID).IsBeingStrangled;
     public bool IsStrangled(CharacterID characterID) => GetBrain(characterID).IsStrangled;
-
     public bool IsDragged(CharacterID characterID) => GetBrain(characterID).IsBeingDragged;
 
 
@@ -31,14 +30,14 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
         var brain2 = GetBrain(id2);
 
         // If either is conversing, we can't start a conversation
-        if (brain1.IsInConversation || brain1.IsInConversation)
+        if (!IsAllowedToConverse(brain1) || !IsAllowedToConverse(brain2))
             return false;
 
         brain1.ConversationTarget = brain2.transform;
         brain2.ConversationTarget = brain1.transform;
         
         return true;
-    }
+    }    
 
     public void EndConversation(CharacterID id)
     {
@@ -97,5 +96,10 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
             return _npcBrains[npcId];
 
         return null;
-    }    
+    }
+
+    private bool IsAllowedToConverse(NpcBrain brain)
+    {
+        return !brain.IsInConversation && !brain.IsDead && !brain.IsBeingStrangled && !brain.IsStrangled;
+    }
 }
