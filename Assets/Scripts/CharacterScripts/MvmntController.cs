@@ -161,29 +161,17 @@ public class MvmntController : MonoBehaviour
         }
 
         agent.isStopped = true;
+        agent.ResetPath();
     }
 
     private IEnumerator GoToMvmntControllerCoroutine(MvmntController other)
     {
         Vector3 getDestination(MvmntController other)
         {
-            var othersPosition = other.transform.position;
-            othersPosition.y = 0f;
+            var otherPosition = other.transform.position;
+            otherPosition.y = 0f;
 
-            var path = new NavMeshPath();
-            agent.CalculatePath(othersPosition, path);
-
-            var penulitimateCorner = path.corners.Count() >= 2 
-                ? path.corners.TakeLast(2).First() 
-                : transform.position;
-            penulitimateCorner.y = othersPosition.y;
-
-            var othersToPenulitimateCorner = penulitimateCorner - othersPosition;
-
-            var magnitude = Mathf.Min(othersToPenulitimateCorner.magnitude, other.ApproachRadius);
-            var destination = othersPosition + othersToPenulitimateCorner.normalized * magnitude;
-
-            return destination;
+            return otherPosition;
         }
 
         agent.isStopped = false;
@@ -205,20 +193,21 @@ public class MvmntController : MonoBehaviour
                 AttemptedTarget = destination;
             }
 
-            if (IsAtTargetPosition(destination))
+            if (IsAtTargetPosition(destination, other.ApproachRadius))
                 break;
 
             yield return new WaitForSeconds(_checkDestinationInterval);
         }
 
         agent.isStopped = true;
+        agent.ResetPath();
     }
 
-    private bool IsAtTargetPosition(Vector3 targetPosition)
+    private bool IsAtTargetPosition(Vector3 targetPosition, float buffer = 0f)
     {
         targetPosition.y = transform.position.y;
         var distanceToTarget = Vector3.Distance(transform.position, targetPosition);
-        return distanceToTarget <= reachedTargetThreshold;
+        return distanceToTarget <= reachedTargetThreshold + buffer;
     }
 
     public bool CanReachTarget(Vector3 targetPos)

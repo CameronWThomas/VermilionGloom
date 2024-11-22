@@ -59,6 +59,12 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
         return brain.IsInConversation;            
     }
 
+    public bool IsInConversationWithPlayer(CharacterID id)
+    {
+        var brain = GetBrain(id);
+        return brain.IsInConversationWithPlayer;
+    }
+
     public void EnterConversationWithPlayer(NPCHumanCharacterID characterID)
     {
         var brain = GetBrain(characterID);
@@ -69,8 +75,8 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
         {
             EndConversation(characterID);
 
-            // This brain doesnt get IsInConversation reevaluated, so we need to reevaluate the tree
-            brain.ReEvaluateTree();
+            // This brain doesnt get IsInConversation reevaluated, so we need to reevaluate the tree. This is bad, we should not do this...
+            //brain.ReEvaluateTree();
         }
 
 

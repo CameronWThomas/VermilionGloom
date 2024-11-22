@@ -12,23 +12,33 @@ public class PlayerCharacterAnimator : CharacterAnimator
 
         Animator.SetBool("sneaking", PC.sneaking);
         Animator.SetBool("combat", PC.hostile);
-        Animator.SetBool("choking", PC.IsStrangling);
         Animator.SetBool("dragging", PC.IsDragging);
 
-        HandleStrangleKillEvent();
+        HandleChoking();
     }
 
-    private void HandleStrangleKillEvent()
+    protected override void OnSyncOccured(SyncEventType syncEventType)
     {
-        if (PC.IsStrangling && _lastStrangleTarget == null)
+        if (syncEventType is SyncEventType.Strangle)
+            Animator.SetBool("choking", true);
+    }
+
+    private void HandleChoking()
+    {
+        if (!PC.IsStrangling)
+        {
+            if (_lastStrangleTarget != null && _lastStrangleTarget.IsStrangled)
+                Animator.SetTrigger("chokeKill");
+
+            _lastStrangleTarget = null;
+            Animator.SetBool("choking", false);
+            return;
+        }
+
+        if (_lastStrangleTarget == null)
         {
             _lastStrangleTarget = PC.StrangleTarget;
-        }
-        else if (!PC.IsStrangling && _lastStrangleTarget != null)
-        {
-            if (_lastStrangleTarget.IsStrangled)
-                Animator.SetTrigger("chokeKill");
-            _lastStrangleTarget = null;
+            WaitForAnimationSync(_lastStrangleTarget.GetComponent<CharacterAnimator>(), SyncEventType.Strangle);
         }
     }
 }
