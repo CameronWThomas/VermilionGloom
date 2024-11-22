@@ -12,17 +12,26 @@ public partial class NpcBrain : MonoBehaviour
     [SerializeField] RoomID _currentRoom;
 
     public bool IsDead => GetComponent<CharacterInfo>().IsDead;
+    public GameObject Dragger { get; private set; } = null;
+    public bool IsBeingDragged => Dragger != null;
+
+    public GameObject Strangler { get; private set; } = null;
+    public bool IsBeingStrangled => Strangler != null;
+    public bool IsStrangled { get; set; } = false;
+
+
     public bool IsInConversation => GetIsInConversation();
     public bool IsInConversationWithPlayer => ConversationTarget != null && ConversationTarget.IsPlayer();
     public bool IsInConversationWithNpc => ConversationTarget != null && ConversationTarget.IsNpc();
     public Transform ConversationTarget { get => _conversationTarget; set => _conversationTarget = value; }
+
 
     public NPCHumanCharacterID ID => GetComponent<NPCHumanCharacterInfo>().NPCHumanCharacterID;
 
 
     void Update()
     {
-        OtherUpdate();
+        //OtherUpdate();
 
         _currentRoom = RoomBB.Instance.GetCharacterRoomID(GetComponent<CharacterInfo>().ID);
     }

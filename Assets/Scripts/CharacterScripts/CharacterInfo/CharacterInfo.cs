@@ -27,5 +27,10 @@ public abstract class CharacterInfo : MonoBehaviour
         Name = NameHelper.GetRandomName();
     }
 
+    public void Die()
+    {
+        _isDead = true;
+    }
+
     protected abstract CharacterID CreateCharacterID();
 }

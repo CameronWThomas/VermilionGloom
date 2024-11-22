@@ -61,15 +61,15 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 
         if(hit.transform.IsWalkable())
         {
-            if(playerController.strangleTarget != null)
-            {
-                NpcBrain brain = playerController.strangleTarget.GetComponent<NpcBrain>();
-                if(brain != null)
-                    brain.StopBeingStrangled();
+            //if(playerController._strangleTarget != null)
+            //{
+            //    NpcBrain brain = playerController._strangleTarget.GetComponent<NpcBrain>();
+            //    if(brain != null)
+            //        brain.StopBeingStrangled();
 
-                playerController.CancelStrangling();
+            //    playerController.CancelStrangling();
 
-            }
+            //}
             playerMvmnt.GoToTarget(hit.point);
         }
         else if (hit.transform.IsInteractable())
@@ -98,18 +98,15 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 
         // End dragging if clicking on player or the drag target
 
-        if(hit.transform.IsPlayer() && playerController.dragging)
+        if(hit.transform.IsPlayer() && playerController.IsDragging)
         {
-            playerController.EndDragging();
+            playerController.StopDragging();
             return true;
         }
-        if (playerController.dragTarget != null)
+        if (playerController.IsDragging && hit.transform == playerController.DragTarget.transform)
         {
-            if (hit.transform == playerController.dragTarget.transform)
-            {
-                playerController.EndDragging();
-                return true;
-            }
+            playerController.StopDragging();
+            return true;
         }
         return false;
     }
@@ -121,7 +118,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 
     private void HandleInteractableClick(SecretPassage secretPassage)
     {
-        playerMvmnt.GoToTarget(secretPassage.DestinationPoint);
+        playerMvmnt.GoToTarget(secretPassage.DestinationPoint, () => secretPassage.UsePassage(PlayerStats.Instance.transform));
     }
 
     
@@ -138,14 +135,14 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
         else
         {
             //Drag, strangle, or talk
-            if (brain.dead)
+            if (brain.IsDead)
             {
                 //drag that mofo
-                playerController.InitiateDragging(brain.gameObject);
+                playerController.Drag(brain);
             }
             else if (hostile)
             {
-                playerController.InitiateStrangling(brain.gameObject);
+                playerController.Strangle(brain);
             }
             else
             {

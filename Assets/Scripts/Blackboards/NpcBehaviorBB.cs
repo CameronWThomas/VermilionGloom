@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,18 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
     }
 
     public bool IsDead(CharacterID characterID) => GetBrain(characterID).IsDead;
+    public bool IsBeingStrangled(CharacterID characterID) => GetBrain(characterID).IsBeingStrangled;
+    public bool IsStrangled(CharacterID characterID) => GetBrain(characterID).IsStrangled;
+
+    public bool IsDragged(CharacterID characterID) => GetBrain(characterID).IsBeingDragged;
+
+
+    public void StrangleDie(NPCHumanCharacterID characterId)
+    {
+        var brain = GetBrain(characterId);
+        brain.GetComponent<NPCHumanCharacterInfo>().Die();
+        brain.StopBeingStrangled();
+    }
 
     public bool TryStartingConversation(CharacterID id1, CharacterID id2)
     {
@@ -78,5 +91,5 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
             return _npcBrains[npcId];
 
         return null;
-    }
+    }    
 }

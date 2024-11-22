@@ -137,33 +137,33 @@ public class Looker : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        NpcBrain brain = other.GetComponent<NpcBrain>();
-        if(brain != null)
-        {
-            //Debug.Log("I see you: " + other.name);
-            if (brain.dragged)
-            {
-                // saw someone dragging a body
-                if (CanSeeTarget(brain.gameObject))
-                    myBrain.SawCorpseDragging(brain.gameObject);
-            }
-            else if (brain.dead)
-            {
-                // saw a dead body
-                if (CanSeeTarget(brain.gameObject))
-                    myBrain.SawCorpse(brain.gameObject);
-                //Debug.Log(myBrain.name + " saw " + brain.name + " dead");
-            }
-            else if (brain.strangled)
-            {
-                // saw someone being strangled.
-                if (CanSeeTarget(brain.gameObject))
-                    myBrain.SawStrangling(brain.gameObject);
-                    //Debug.Log(myBrain.name + " saw " + brain.name + " being strangled");
-            }
+        //NpcBrain brain = other.GetComponent<NpcBrain>();
+        //if(brain != null)
+        //{
+        //    //Debug.Log("I see you: " + other.name);
+        //    if (brain.dragged)
+        //    {
+        //        // saw someone dragging a body
+        //        if (CanSeeTarget(brain.gameObject))
+        //            myBrain.SawCorpseDragging(brain.gameObject);
+        //    }
+        //    else if (brain.dead)
+        //    {
+        //        // saw a dead body
+        //        if (CanSeeTarget(brain.gameObject))
+        //            myBrain.SawCorpse(brain.gameObject);
+        //        //Debug.Log(myBrain.name + " saw " + brain.name + " dead");
+        //    }
+        //    else if (brain.strangled)
+        //    {
+        //        // saw someone being strangled.
+        //        if (CanSeeTarget(brain.gameObject))
+        //            myBrain.SawStrangling(brain.gameObject);
+        //            //Debug.Log(myBrain.name + " saw " + brain.name + " being strangled");
+        //    }
 
 
-        }
+        //}
     }
     private void OnDrawGizmos()
     {

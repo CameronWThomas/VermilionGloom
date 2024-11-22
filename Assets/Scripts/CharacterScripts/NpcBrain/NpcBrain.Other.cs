@@ -1,18 +1,10 @@
-using BehaviorDesigner.Runtime;
-using Unity.VisualScripting;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.AI;
 using static PlayerController;
 
 public partial class NpcBrain
 {
     //private Vector3 killPosOffset = new Vector3(0, 0, 0);
-
-    public bool dead = false;
-    public bool dragged = false;
-    public bool strangled = false;
-
+    
     public GameObject mvmntLatchTarget = null;
 
 
@@ -21,28 +13,28 @@ public partial class NpcBrain
     public float crunchDistance = 2.0f;
 
     // Update is called once per frame
-    void OtherUpdate()
-    {
-        //if dead and not being dragged, do nothing
-        if (dead && !dragged)
-            return;
+    //void OtherUpdate()
+    //{
+    //    //if dead and not being dragged, do nothing
+    //    if (dead && !dragged)
+    //        return;
 
-        //if being dragged or strangled update position
-        if(
-            (mvmntLatchTarget != null && !dead)
-            || 
-            dragged
-            )
-        {
-            transform.forward = mvmntLatchTarget.transform.forward;
-            Vector3 placementMod = mvmntLatchTarget.transform.forward;
-            if(dragged)
-            {
-                placementMod = placementMod * -1;
-            }
-            transform.position = mvmntLatchTarget.transform.position + placementMod;
-        }
-    }
+    //    //if being dragged or strangled update position
+    //    if(
+    //        (mvmntLatchTarget != null && !dead)
+    //        || 
+    //        dragged
+    //        )
+    //    {
+    //        transform.forward = mvmntLatchTarget.transform.forward;
+    //        Vector3 placementMod = mvmntLatchTarget.transform.forward;
+    //        if(dragged)
+    //        {
+    //            placementMod = placementMod * -1;
+    //        }
+    //        transform.position = mvmntLatchTarget.transform.position + placementMod;
+    //    }
+    //}
 
     
     // MOVEMENT LATCHING
@@ -74,32 +66,20 @@ public partial class NpcBrain
     // STRANGLE
     public void BeStrangled(GameObject killer)
     {
-        SetMvmntLatchTarget(killer, "choked");
-        strangled = killer != null;
-        ReEvaluateTree();
+        Strangler = killer;
     }
+
     public void StopBeingStrangled()
     {
         BeStrangled(null);
-    }
-    public void StrangleDie()
-    {
-        animator.SetTrigger("chokeKill");
-        animator.SetBool("choked", false);
-
-        mvmntLatchTarget = null;
-        strangled = false;
-        Die(false);
     }
 
     // DRAG
     public void BeDraged(GameObject dragger) 
     {
-
-        SetMvmntLatchTarget(dragger, "dragged");
-        dragged = dragger != null;
-        ReEvaluateTree();
+        Dragger = dragger;
     }
+
     public void StopBeingDragged()
     {
         BeDraged(null);
@@ -113,39 +93,39 @@ public partial class NpcBrain
         if (setAnimParam)
             animator.SetBool("dead", true);
 
-        if (!dead)
-        {
-            dead = true;
-            strangled = false;
-            mvmntController.enabled = false;
-            ReEvaluateTree();
-        }
+        //if (!dead)
+        //{
+        //    dead = true;
+        //    strangled = false;
+        //    mvmntController.enabled = false;
+        //    ReEvaluateTree();
+        //}
 
     }
 
     public void ReceiveBroadcast(BroadcastType type, GameObject shouldSee, GameObject extraObject )
     {
-        if (
-            (looker.CanSeeTarget(shouldSee) || looker.CanSeeTarget(extraObject))
-            && !dead && !strangled)
-        {
+        //if (
+        //    (looker.CanSeeTarget(shouldSee) || looker.CanSeeTarget(extraObject))
+        //    && !dead && !strangled)
+        //{
 
-            switch (type)
-            {
-                case BroadcastType.Drag:
-                    // Handle drag broadcast
-                    //Debug.Log(gameObject.name + " saw " + shouldSee.name + " dragging someone");
-                    SawCorpseDragging(shouldSee, extraObject);
-                    break;
-                case BroadcastType.Strangle:
-                    // Handle strangle broadcast
-                    SawStrangling(shouldSee, extraObject);
-                    break;
-                default:
-                    // Handle other types of broadcasts
-                    break;
-            }
-        }
+        //    switch (type)
+        //    {
+        //        case BroadcastType.Drag:
+        //            // Handle drag broadcast
+        //            //Debug.Log(gameObject.name + " saw " + shouldSee.name + " dragging someone");
+        //            SawCorpseDragging(shouldSee, extraObject);
+        //            break;
+        //        case BroadcastType.Strangle:
+        //            // Handle strangle broadcast
+        //            SawStrangling(shouldSee, extraObject);
+        //            break;
+        //        default:
+        //            // Handle other types of broadcasts
+        //            break;
+        //    }
+        //}
     }
 
     private void ParseCombatTarget(GameObject attacker, GameObject attacked)

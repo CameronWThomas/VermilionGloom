@@ -4,7 +4,10 @@ using System;
 public enum AnimationVariable
 {
     Conversing,
-    Dead
+    Dead,
+    Chocked,
+    ChokeKill,
+    Dragged
 }
 
 public static class AnimationVariableHelper
@@ -15,6 +18,9 @@ public static class AnimationVariableHelper
         {
             AnimationVariable.Conversing => "conversing",
             AnimationVariable.Dead => "dead",
+            AnimationVariable.Chocked => "choked",
+            AnimationVariable.ChokeKill => "chokeKill",
+            AnimationVariable.Dragged => "dragged",
             _ => throw new NotImplementedException()
         };
     }

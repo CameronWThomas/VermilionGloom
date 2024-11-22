@@ -9,7 +9,7 @@ public class MvmntController : MonoBehaviour
 {
     [SerializeField, Range(0f, 2f)] private float _checkDestinationInterval = .25f;
 
-
+    public Transform LatchTarget = null;
 
     // Variables for movement speed and direction
     NavMeshAgent agent;
@@ -63,7 +63,21 @@ public class MvmntController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
+    {
+        if (LatchTarget != null)
+        {
+            agent.enabled = false;
+            CancelMovementActionCoroutine();
+            
+            transform.forward = LatchTarget.transform.forward;
+            var isDragging = TryGetComponent<NpcBrain>(out var brain) && brain.IsBeingDragged;
+
+            var modifier = isDragging ? -LatchTarget.forward : LatchTarget.forward;
+            transform.position = LatchTarget.transform.position + modifier;
+        }
+        else
+            agent.enabled = true;
+
         // limit speed in selected states
 
         if (speedLimiter && anim.speed != walkSpeed)
