@@ -1,4 +1,5 @@
 using BehaviorDesigner.Runtime;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -10,6 +11,8 @@ public partial class NpcBrain : MonoBehaviour
 {
     [SerializeField] Transform _conversationTarget = null;
     [SerializeField] RoomID _currentRoom;
+
+    private List<Relationship> _relationships = new();
 
     public bool IsDead => GetComponent<CharacterInfo>().IsDead;
     public GameObject Dragger { get; private set; } = null;
@@ -24,6 +27,8 @@ public partial class NpcBrain : MonoBehaviour
     public bool IsInConversationWithPlayer => ConversationTarget != null && ConversationTarget.IsPlayer();
     public bool IsInConversationWithNpc => ConversationTarget != null && ConversationTarget.IsNpc();
     public Transform ConversationTarget { get => _conversationTarget; set => _conversationTarget = value; }
+
+    public RoomID CurrentRoom => _currentRoom;
 
 
     public NPCHumanCharacterID ID => GetComponent<NPCHumanCharacterInfo>().NPCHumanCharacterID;
@@ -55,11 +60,8 @@ public partial class NpcBrain : MonoBehaviour
 
     void Update()
     {
-        //OtherUpdate();
-
         _currentRoom = RoomBB.Instance.GetCharacterRoomID(GetComponent<CharacterInfo>().ID);
     }
-
 
     private bool GetIsInConversation()
     {
@@ -78,9 +80,6 @@ public partial class NpcBrain : MonoBehaviour
 
         return false;
     }
-
-
-    
 
     /// <summary>
     /// NOTE: Do NOT actually use this method

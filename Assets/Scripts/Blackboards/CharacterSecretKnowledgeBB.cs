@@ -67,7 +67,7 @@ public class CharacterSecretKnowledgeBB : GlobalSingleInstanceMonoBehaviour<Char
             return false;
 
         var targetSecretKnowledge = _secretKnowledgeDict[target];
-        targetSecretKnowledge.AddSecret(secretToBeSpread);
+        targetSecretKnowledge.AddSecret(secretToBeSpread.CreateSpreadedCopy(target));
         return true;
     }
 

@@ -2,8 +2,7 @@ public class NameSecret : Secret
 {
     private readonly string _name;
 
-    public NameSecret(string name, SecretLevel level, CharacterID secretOwner)
-        : base(level, secretOwner)
+    private NameSecret(string name)
     {
         _name = name;
     }
@@ -15,8 +14,31 @@ public class NameSecret : Secret
 
     public override SecretIconIdentifier Identifier => SecretIconIdentifier.Name;
 
-    public override Secret Copy() => new NameSecret(this);
+    protected override Secret Copy() => new NameSecret(this);
 
-    public override string CreateDescription() => $"{SecretOwner.Name} has another name: {_name}";
+    public override string CreateDescription() => $"{SecretTarget.Name} has another name: {_name}";
+
+    public class Builder : SecretTypeBuilder<NameSecret>
+    {
+        private string _name = null;
+
+        public Builder(CharacterID secretOwner, SecretLevel secretLevel) : base(secretOwner, secretLevel) { }
+
+        public Builder SetName(string name)
+        {
+            _name = name;
+            return this;
+        }
+
+        public override NameSecret Build()
+        {
+            ValidateNotNull(_name, nameof(_name));
+
+            var nameSecret = new NameSecret(_name);
+            Init(nameSecret, target: _secretOwner);
+
+            return nameSecret;
+        }
+    }
 
 }

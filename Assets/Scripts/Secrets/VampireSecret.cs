@@ -1,24 +1,25 @@
-using System.Net.Sockets;
-using UnityEditor.SceneManagement;
-
 public class VampireSecret : Secret
 {
-    /// <summary>
-    /// Constructor
-    /// </summary>
-    /// <param name="currentCharacter">Should always be the new secret owner rather than the original</param>
-    public VampireSecret(CharacterID currentCharacter)
-        : base(SecretLevel.Vampiric, currentCharacter)
-    { }
-
+    private VampireSecret() { }
     private VampireSecret(VampireSecret secret) : base(secret) { }
 
     public override SecretIconIdentifier Identifier => SecretIconIdentifier.VampireKnowledge;
 
     public override bool NoCharactersInvolved => true;
 
-    public override Secret Copy() => new VampireSecret(this);
+    protected override Secret Copy() => new VampireSecret(this);
 
-    public override string CreateDescription() => $"{SecretOwner.Name} knows there is a vampire in the manor";
+    public override string CreateDescription() => $"{CurrentSecretOwner.Name} knows there is a vampire in the manor";
 
+    public class Builder : SecretTypeBuilder<VampireSecret>
+    {
+        public Builder(CharacterID secretOwner) : base(secretOwner, SecretLevel.Vampiric) { }
+
+        public override VampireSecret Build()
+        {
+            var vampireSecret = new VampireSecret();
+            Init(vampireSecret);
+            return vampireSecret;
+        }
+    }
 }

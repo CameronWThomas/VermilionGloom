@@ -188,7 +188,7 @@ public class NPCCharacterCreator : MonoBehaviour
                 .Where(x => x.Key != characterId)
                 .Select(x => x.Value.GetComponent<CharacterSecretKnowledge>())
                 .SelectMany(x => x.Secrets)
-                .Where(x => x.SecretOwner != characterId)
+                .Where(x => x.OriginalSecretOwner != characterId)
                 .Randomize()
                 .ToList();
 
@@ -204,7 +204,7 @@ public class NPCCharacterCreator : MonoBehaviour
                 {
                     if (secret.Level.RandomChance())
                     {
-                        var secretCopy = secret.Copy();
+                        var secretCopy = secret.CreateSpreadedCopy(characterId);
                         yield return secretCopy;
                         returnCount++;
                     }

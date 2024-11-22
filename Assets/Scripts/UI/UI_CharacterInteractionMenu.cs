@@ -131,29 +131,36 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
             return;
         }
 
+        //TODO need to do add something for this case
+        if (secret.IsASpreadSecret)
+        { }
+
         if (secret.NoCharactersInvolved)
         {
             _multiPartySelectedSecret.SetActive(false);
             _singlePartySelectedSecret.SetActive(false);
         }
-        else if (secret.HasAdditionalCharacter)
+        else 
         {
-            _multiPartySelectedSecret.SetActive(true);
-            _singlePartySelectedSecret.SetActive(false);
+            if (secret.HasAdditionalCharacter && secret.HasSecretTarget)
+            { 
+                _multiPartySelectedSecret.SetActive(true);
+                _singlePartySelectedSecret.SetActive(false);
 
-            //_multiPartyPortrait1.SetContent(secret.SecretOwner.PortraitContent);
-            _multiPartyPortrait1.SetContent(secret.SecretOwner.PortraitColor);
+                //_multiPartyPortrait1.SetContent(secret.SecretOwner.PortraitContent);
+                _multiPartyPortrait1.SetContent(secret.SecretTarget.PortraitColor);
 
-            //_multiPartyPortrait2.SetContent(secret.AdditionalCharacter.PortraitContent);
-            _multiPartyPortrait2.SetContent(secret.AdditionalCharacter.PortraitColor);
-        }
-        else
-        {
-            _multiPartySelectedSecret.SetActive(false);
-            _singlePartySelectedSecret.SetActive(true);
+                //_multiPartyPortrait2.SetContent(secret.AdditionalCharacter.PortraitContent);
+                _multiPartyPortrait2.SetContent(secret.AdditionalCharacter.PortraitColor);
+            }
+            else
+            {
+                _multiPartySelectedSecret.SetActive(false);
+                _singlePartySelectedSecret.SetActive(true);
 
-            //_singlePartyPortrait.SetContent(secret.SecretOwner.PortraitContent);
-            _singlePartyPortrait.SetContent(secret.SecretOwner.PortraitColor);
+                //_singlePartyPortrait.SetContent(secret.SecretOwner.PortraitContent);
+                _singlePartyPortrait.SetContent(secret.SecretTarget.PortraitColor);
+            }
         }
 
         _selectedSecretText.text = secret.Description;

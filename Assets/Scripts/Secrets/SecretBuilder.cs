@@ -1,5 +1,3 @@
-using JetBrains.Annotations;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -15,13 +13,20 @@ public static class SecretBuilder
 
     public static SecretBuilderHelper TryCreateNameSecrets(this SecretBuilderHelper helper)
     {
-        var nameSecret = helper.CharacterType switch
+        NameSecret nameSecret = null;
+        if (helper.CharacterType is CharacterType.VanHelsing)
         {
-            CharacterType.VanHelsing => new NameSecret("Van Helsing", SecretLevel.Confidential, helper.ID),
-            _ => RandomChance(MurderChance)
-                ? new NameSecret(NameHelper.GetRandomName(), RandomSecretLevel(MurderChance, SecretLevel.Private, SecretLevel.Public), helper.ID)
-                : null
-        };
+            nameSecret = new NameSecret.Builder(helper.ID, SecretLevel.Confidential)
+                .SetName("Van Helsing")
+                .Build();
+        }
+        else if (RandomChance(MurderChance))
+        {
+            var level = RandomSecretLevel(MurderChance, SecretLevel.Private, SecretLevel.Public);
+            nameSecret = new NameSecret.Builder(helper.ID, level)
+                .SetName(NameHelper.GetRandomName())
+                .Build();
+        }
 
         if (nameSecret != null)
             helper.Secrets.Add(nameSecret);
@@ -33,7 +38,7 @@ public static class SecretBuilder
     public static SecretBuilderHelper TryCreateVampreSecrets(this SecretBuilderHelper helper)
     {
         if (helper.CharacterType is CharacterType.VanHelsing)
-            helper.Secrets.Add(new VampireSecret(helper.ID));
+            helper.Secrets.Add(new VampireSecret.Builder(helper.ID).Build());
 
         return helper;
     }
@@ -44,7 +49,12 @@ public static class SecretBuilder
             return helper;
 
         var level = RandomSecretLevel(MurderChance, SecretLevel.Confidential, SecretLevel.Public);
-        helper.Secrets.Add(new MurderSecret(level, helper.ID));
+
+        helper.Secrets.Add(new MurderSecret.Builder(helper.ID, level)
+            .SetMurderer(helper.ID)
+            .IsJustified()
+            .WasSuccessfulMuder()
+            .Build());
 
         return helper;
     }    
@@ -52,14 +62,18 @@ public static class SecretBuilder
     public static SecretBuilderHelper TryCreateRoomSecrets(this SecretBuilderHelper helper)
     {
         if (helper.CharacterType is CharacterType.Owner)
-            helper.Secrets.Add(new RoomSecret("Back left room of the foyer", SecretLevel.Public, helper.ID));
+            helper.Secrets.Add(new RoomSecret.Builder(helper.ID, SecretLevel.Public)
+                .SetRoomId(RoomID.Den) //TODO will need to look somewhere for this info
+                .Build());
 
         return helper;
     }
 
     public static SecretBuilderHelper CreateGenericSecrets(this SecretBuilderHelper helper, int count)
     {
-        helper.Secrets.AddRange(GenericSecret.CreateUnique(count, helper.ID));
+        helper.Secrets.AddRange(new GenericSecret.Builder(helper.ID)
+            .BuildManyUnique(count));
+
         return helper;
     }
 

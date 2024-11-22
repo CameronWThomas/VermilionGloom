@@ -102,8 +102,11 @@ public class MvmntController : MonoBehaviour
     {
         CancelMovementActionCoroutine();
 
-        agent.isStopped = true;
-        agent.ResetPath();
+        if (agent.isActiveAndEnabled)
+        {
+            agent.isStopped = true;
+            agent.ResetPath();
+        }
     }
 
     private void SetupLatchTarget()
