@@ -119,9 +119,6 @@ public partial class NpcBrain
         else
             Debug.Log(gameObject.name + " saw someone dragging someone");
         ParseCombatTarget(attacker, corpse);
-
-
-        ReEvaluateTree();
     }
     public void SawStrangling(GameObject attacker, GameObject strangled =null)
     {
@@ -133,8 +130,6 @@ public partial class NpcBrain
             Debug.Log(gameObject.name + " saw someone strangling someone");
 
         ParseCombatTarget(attacker, strangled);
-
-        ReEvaluateTree();
     }
     public void SawCorpse(GameObject corpse)
     {
@@ -142,9 +137,6 @@ public partial class NpcBrain
             Debug.Log(gameObject.name + " saw " + corpse.name + " dead");
         else
             Debug.Log(gameObject.name + " saw a dead body");
-
-
-        ReEvaluateTree();
     }
 
     public void Crunch()
@@ -158,7 +150,6 @@ public partial class NpcBrain
         {
             if(combatTarget == null)
             {
-                ReEvaluateTree();
                 return;
             }
             // if player 
@@ -167,7 +158,6 @@ public partial class NpcBrain
             {
                 pc.Die();
                 combatTarget = null;
-                ReEvaluateTree();
                 return;
             }    
             // if npc
@@ -176,7 +166,6 @@ public partial class NpcBrain
             {
                 targetBrain.Die(true);
                 combatTarget = null;
-                ReEvaluateTree();
                 return;
             }
         }

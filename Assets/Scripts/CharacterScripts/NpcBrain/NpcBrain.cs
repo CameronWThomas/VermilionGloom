@@ -83,6 +83,8 @@ public partial class NpcBrain : MonoBehaviour
     
 
     /// <summary>
+    /// NOTE: Do NOT actually use this method
+    /// 
     /// Triggers a re-calculation of current behaviour tree. 
     /// Nice for when you expect some conditionals to change
     /// This could probably be written better, but it works.
