@@ -1,4 +1,5 @@
 using BehaviorDesigner.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -12,7 +13,7 @@ public partial class NpcBrain : MonoBehaviour
     [SerializeField] Transform _conversationTarget = null;
     [SerializeField] RoomID _currentRoom;
 
-    private List<Relationship> _relationships = new();
+    [SerializeField, Tooltip("pulbic for debugging purposes")] private List<Relationship> _relationships = new();
 
     public bool IsDead => GetComponent<CharacterInfo>().IsDead;
     public GameObject Dragger { get; private set; } = null;
@@ -38,6 +39,7 @@ public partial class NpcBrain : MonoBehaviour
     CapsuleCollider capsuleCollider;
     NavMeshAgent navMeshAgent;
     Looker looker;
+    CharacterSecretKnowledge characterSecretKnowledge;
 
     private void Start()
     {
@@ -55,6 +57,7 @@ public partial class NpcBrain : MonoBehaviour
         // lazy solution (:
         if (!TryGetComponent<CharacterSecretKnowledge>(out _))
             transform.AddComponent<CharacterSecretKnowledge>();
+        characterSecretKnowledge = GetComponent<CharacterSecretKnowledge>();
     }
 
 
@@ -79,6 +82,25 @@ public partial class NpcBrain : MonoBehaviour
         }
 
         return false;
+    }
+
+    private Relationship GetRelationship(CharacterID character)
+    {
+        if (!_relationships.Any(x => x.RelationshipTarget == character))
+            _relationships.Add(new Relationship(characterSecretKnowledge, character));
+
+        return _relationships.First(x => x.RelationshipTarget == character);
+    }
+
+    private void HandleSeeingCharacters(List<CharacterInfo> charactersInSight)
+    {
+        foreach (var character in charactersInSight)
+        {
+            if (character is not PlayerCharacterInfo playerCharacter)
+                continue;
+
+
+        }
     }
 
     /// <summary>

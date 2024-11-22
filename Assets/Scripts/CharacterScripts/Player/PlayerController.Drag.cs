@@ -10,6 +10,8 @@ public partial class PlayerController
 
     CoroutineContainer _draggingCoroutine;
 
+    private SecretEvent _dragSecretEvent = null;
+
 
     public void Drag(NpcBrain target)
     {
@@ -28,12 +30,17 @@ public partial class PlayerController
         DragTarget.StopBeingDragged();
         _isDragging = false;
         DragTarget = null;
+
+        NpcBehaviorBB.Instance.EndSecretEventBroadcast(_dragSecretEvent);
+        _dragSecretEvent = null;
     }
 
     private void BeginDraggingTarget()
     {
         _isDragging = true;
         DragTarget.BeDraged(gameObject);
-        Broadcast(BroadcastType.Drag, DragTarget.gameObject);
+
+        _dragSecretEvent = new SecretEvent(SecretEventType.DraggingABody, this.GetCharacterID(), DragTarget.GetCharacterID());
+        NpcBehaviorBB.Instance.BroadcastSecretEvent(_dragSecretEvent);
     }
 }

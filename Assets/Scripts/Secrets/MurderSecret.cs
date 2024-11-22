@@ -68,18 +68,11 @@ public class MurderSecret : Secret
         }
 
         public Builder IsJustified() => SetIsJustified(true);
-        public Builder IsNotJustified() => SetIsJustified(true);
+        public Builder IsNotJustified() => SetIsJustified(false);
 
         public Builder WasSuccessfulMuder() => SetIsAttempt(true);
         public Builder WasAttempt() => SetIsAttempt(false);
         
-        public Builder SetJustificationAndAttempt(bool isJusitified, bool isAttempt)
-        {
-            _isJustified = isJusitified;
-            _isAttempt = isAttempt;
-            return this;
-        }
-
         public override MurderSecret Build()
         {
             ValidateNotNull(_murderer, nameof(_murderer));

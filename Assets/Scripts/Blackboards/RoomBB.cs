@@ -24,6 +24,15 @@ public class RoomBB : GlobalSingleInstanceMonoBehaviour<RoomBB>
         _characterLocation[characterID] = roomID;
     }
 
+    public void CharacterLeftRoom(CharacterID characterID, RoomID roomID)
+    {
+        if (!_characterLocation.ContainsKey(characterID))
+            _characterLocation.Add(characterID, RoomID.Unknown);
+
+        if (_characterLocation[characterID] == roomID)
+            _characterLocation[characterID] = RoomID.Unknown;
+    }
+
     public RoomID GetCharacterRoomID(CharacterID characterID) => _characterLocation.ContainsKey(characterID) ? _characterLocation[characterID] : RoomID.Unknown;
 
     public IEnumerable<CharacterID> GetCharactersInMyRoom(CharacterID characterID)

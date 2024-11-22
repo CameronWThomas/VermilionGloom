@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[Serializable]
 public class Relationship
 {
     private readonly CharacterSecretKnowledge _secretKnowledge;
     private readonly CharacterID _relationshipTarget;
 
-    private readonly CharacterInfo _characterInfo;
+    [SerializeField] private CharacterInfo _characterInfo;
+
+    [SerializeField] private bool _isDead = false;
+    [SerializeField] private bool _isHostileTowards = false;
 
     public Relationship(CharacterSecretKnowledge ownerSecretKnowledge, CharacterID relationshipTarget)
     {
@@ -19,16 +23,23 @@ public class Relationship
         _characterInfo = CharacterInfoBB.Instance.GetCharacterInfo(_relationshipTarget);
     }
 
-    public bool IsHostile => GetIsHostile();
-    public bool IsDead => _characterInfo.IsDead;
+    public CharacterID RelationshipTarget => _relationshipTarget;
+    public bool IsHostileTowards => _isHostileTowards;
+    public bool IsDead => _isDead;
 
-    private IEnumerable<Secret> RelevantSecrets
-        => _secretKnowledge.Secrets.Where(IsRelevantSecret);
-    
-    private bool GetIsHostile()
+    public void Reevaluate()
+    {
+        _isDead = _characterInfo.IsDead;
+        _isHostileTowards = GetIsHostileTowards();
+    }
+
+    private List<Secret> RelevantSecrets
+        => _secretKnowledge.Secrets.Where(IsRelevantSecret).ToList();
+
+    private bool GetIsHostileTowards()
     {
         if (RelevantSecrets.OfType<MurderSecret>().Any(x => !x.IsJustified))
-            return false;
+            return true;
 
         return false;
     }

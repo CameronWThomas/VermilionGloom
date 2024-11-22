@@ -14,6 +14,8 @@ public partial class PlayerController
 
     CoroutineContainer _strangleCoroutine;
 
+    private SecretEvent _strangleSecretEvent = null;
+
     public void Strangle(NpcBrain target)
     {
         StrangleTarget = target;
@@ -39,7 +41,8 @@ public partial class PlayerController
         _isStrangling = true;
         StrangleTarget.BeStrangled(gameObject);
 
-        Broadcast(BroadcastType.Strangle, StrangleTarget.gameObject);
+        _strangleSecretEvent = new SecretEvent(SecretEventType.StranglingSomeone, this.GetCharacterID(), StrangleTarget.GetCharacterID());
+        NpcBehaviorBB.Instance.BroadcastSecretEvent(_strangleSecretEvent);
 
         var startStrangleTime = Time.time;
         while (Time.time - startStrangleTime <= _strangleTime)
@@ -53,6 +56,9 @@ public partial class PlayerController
         StrangleTarget.StopBeingStrangled();
         _isStrangling = false;
         StrangleTarget = null;
+
+        NpcBehaviorBB.Instance.EndSecretEventBroadcast(_strangleSecretEvent);
+        _strangleSecretEvent = null;
     }
 
     private void StrangleSuccessful()
@@ -61,5 +67,8 @@ public partial class PlayerController
         StrangleTarget.Die();
         _isStrangling = false;
         StrangleTarget = null;
+
+        NpcBehaviorBB.Instance.EndSecretEventBroadcast(_strangleSecretEvent);
+        _strangleSecretEvent = null;
     }
 }

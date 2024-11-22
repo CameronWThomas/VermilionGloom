@@ -64,31 +64,6 @@ public partial class NpcBrain
         GetComponent<CharacterInfo>().Die();
     }
 
-    public void ReceiveBroadcast(BroadcastType type, GameObject shouldSee, GameObject extraObject )
-    {
-        //if (
-        //    (looker.CanSeeTarget(shouldSee) || looker.CanSeeTarget(extraObject))
-        //    && !dead && !strangled)
-        //{
-
-        //    switch (type)
-        //    {
-        //        case BroadcastType.Drag:
-        //            // Handle drag broadcast
-        //            //Debug.Log(gameObject.name + " saw " + shouldSee.name + " dragging someone");
-        //            SawCorpseDragging(shouldSee, extraObject);
-        //            break;
-        //        case BroadcastType.Strangle:
-        //            // Handle strangle broadcast
-        //            SawStrangling(shouldSee, extraObject);
-        //            break;
-        //        default:
-        //            // Handle other types of broadcasts
-        //            break;
-        //    }
-        //}
-    }
-
     private void ParseCombatTarget(GameObject attacker, GameObject attacked)
     {
         if (attacker == null && attacked == null)

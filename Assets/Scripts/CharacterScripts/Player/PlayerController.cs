@@ -75,20 +75,7 @@ public partial class PlayerController : MonoBehaviour
         // Implement toggleRun logic here
         mvmntController.SetRunning(!mvmntController.IsRunning());
     }
-    // Disable input actions when the script is destroyed
-    public enum BroadcastType
-    {
-        Drag,
-        Strangle
-    }
-    private void Broadcast(BroadcastType bcType, GameObject extraObj = null)
-    {
-        NpcBrain[] brains = GameObject.FindObjectsByType<NpcBrain>(sortMode: FindObjectsSortMode.None);
-        foreach(NpcBrain brain in brains)
-        {
-            brain.ReceiveBroadcast(bcType, gameObject, extraObj);
-        }
-    }
+
     public void Die()
     {
         GetComponent<CharacterInfo>().Die();

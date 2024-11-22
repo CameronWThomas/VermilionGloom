@@ -93,4 +93,10 @@ public class Room : MonoBehaviour
         if (other.transform.TryGetComponent<CharacterInfo>(out var characterInfo))
             RoomBB.Instance.UpdateCharacterLocation(characterInfo.ID, ID);
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.TryGetComponent<CharacterInfo>(out var characterInfo))
+            RoomBB.Instance.CharacterLeftRoom(characterInfo.ID, ID);
+    }
 }

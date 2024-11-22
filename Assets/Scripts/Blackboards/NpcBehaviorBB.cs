@@ -1,10 +1,26 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
 {
     private Dictionary<NPCHumanCharacterID, NpcBrain> _npcBrains = new();
+
+    List<SecretEvent> _broadcastingSecretEvents = new();
+
+    private void Update()
+    {
+        if (!_broadcastingSecretEvents.Any())
+            return;
+
+        foreach (var brain in _npcBrains.Values)
+        {
+            brain.ReceiveBroadcast(_broadcastingSecretEvents);
+        }
+    }
 
     public void Register(NpcBrain brain)
     {
@@ -16,6 +32,18 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
     public bool IsStrangled(CharacterID characterID) => GetBrain(characterID).IsStrangled;
     public bool IsDragged(CharacterID characterID) => GetBrain(characterID).IsBeingDragged;
 
+    public void BroadcastSecretEvent(SecretEvent secretEvent)
+    {
+        if (_broadcastingSecretEvents.Contains(secretEvent)) return;
+
+        _broadcastingSecretEvents.Add(secretEvent);
+    }
+
+    public void EndSecretEventBroadcast(SecretEvent secretEvent)
+    {
+        if (_broadcastingSecretEvents.Contains(secretEvent))
+            _broadcastingSecretEvents.Remove(secretEvent);
+    }
 
     public void StrangleDie(NPCHumanCharacterID characterId)
     {
