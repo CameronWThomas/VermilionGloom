@@ -9,11 +9,8 @@ public class MvmntController : MonoBehaviour
 {
     [SerializeField, Range(0f, 2f)] private float _checkDestinationInterval = .25f;
 
-    public Transform LatchTarget = null;
-
     // Variables for movement speed and direction
     NavMeshAgent agent;
-    Animator anim;
     public float distanceToTarget;
     public float reachedTargetThreshold = 0.1f;
 
@@ -57,44 +54,25 @@ public class MvmntController : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        anim = GetComponent<Animator>();
         SetRunning(isRunning);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (LatchTarget != null)
-        {
-            agent.enabled = false;
-            CancelMovementActionCoroutine();
-            
-            transform.forward = LatchTarget.transform.forward;
-            var isDragging = TryGetComponent<NpcBrain>(out var brain) && brain.IsBeingDragged;
-
-            var modifier = isDragging ? -LatchTarget.forward : LatchTarget.forward;
-            transform.position = LatchTarget.transform.position + modifier;
-        }
-        else
-            agent.enabled = true;
+        SetupLatchTarget();
 
         // limit speed in selected states
 
-        if (speedLimiter && anim.speed != walkSpeed)
+        if (speedLimiter)
         {
             agent.speed = walkSpeed;
         }
-        else if(isRunning && anim.speed != runSpeed)
+        else if(isRunning)
         {
             agent.speed = runSpeed;
         }
-
-        //animator calls
-        if (anim != null)
-        {
-            anim.SetFloat("speedPercent", agent.velocity.magnitude / runSpeed);
-        }
-    }
+    }    
 
     public void GoToTarget(Vector3 targetPos, Action onSuccess = null, Action onFailure = null)
     {
@@ -126,7 +104,26 @@ public class MvmntController : MonoBehaviour
 
         agent.isStopped = true;
         agent.ResetPath();
-    }    
+    }
+
+    private void SetupLatchTarget()
+    {
+        // So far, only npc can be latched
+        if (!TryGetComponent<NpcBrain>(out var brain) || (!brain.IsBeingDragged && !brain.IsBeingStrangled))
+        {
+            agent.enabled = true;
+            return;
+        }
+
+        agent.enabled = false;
+        CancelMovementActionCoroutine();
+
+        var latchTarget = brain.IsBeingDragged ? brain.Dragger.transform : brain.Strangler.transform;
+        var modifier =  brain.IsBeingDragged ? -latchTarget.forward : latchTarget.forward;
+
+        transform.forward = latchTarget.transform.forward;
+        transform.position = latchTarget.transform.position + modifier;
+    }
 
     private void StartNewMovementAction(CoroutineContainer newMovementAction)
     {

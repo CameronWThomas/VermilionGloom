@@ -28,6 +28,30 @@ public partial class NpcBrain : MonoBehaviour
 
     public NPCHumanCharacterID ID => GetComponent<NPCHumanCharacterInfo>().NPCHumanCharacterID;
 
+    MvmntController mvmntController;
+    BehaviorTree behaviorTree;
+    CapsuleCollider capsuleCollider;
+    NavMeshAgent navMeshAgent;
+    Looker looker;
+
+    private void Start()
+    {
+        NpcBehaviorBB.Instance.Register(this);
+        
+        mvmntController = GetComponent<MvmntController>();
+        behaviorTree = GetComponent<BehaviorTree>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        looker = GetComponentInChildren<Looker>();
+
+        var roomID = GetInitialRoomID();
+        RoomBB.Instance.UpdateCharacterLocation(GetComponent<CharacterInfo>().ID, roomID);
+
+        // lazy solution (:
+        if (!TryGetComponent<CharacterSecretKnowledge>(out _))
+            transform.AddComponent<CharacterSecretKnowledge>();
+    }
+
 
     void Update()
     {
@@ -56,31 +80,7 @@ public partial class NpcBrain : MonoBehaviour
     }
 
 
-    MvmntController mvmntController;
-    Animator animator;
-    BehaviorTree behaviorTree;
-    CapsuleCollider capsuleCollider;
-    NavMeshAgent navMeshAgent;
-    Looker looker;
-
-    private void Start()
-    {
-        NpcBehaviorBB.Instance.Register(this);
-
-        animator = GetComponent<Animator>();
-        mvmntController = GetComponent<MvmntController>();
-        behaviorTree = GetComponent<BehaviorTree>();
-        capsuleCollider = GetComponent<CapsuleCollider>();
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        looker = GetComponentInChildren<Looker>();
-
-        var roomID = GetInitialRoomID();
-        RoomBB.Instance.UpdateCharacterLocation(GetComponent<CharacterInfo>().ID, roomID);
-
-        // lazy solution (:
-        if (!TryGetComponent<CharacterSecretKnowledge>(out _))
-            transform.AddComponent<CharacterSecretKnowledge>();
-    }
+    
 
     /// <summary>
     /// Triggers a re-calculation of current behaviour tree. 

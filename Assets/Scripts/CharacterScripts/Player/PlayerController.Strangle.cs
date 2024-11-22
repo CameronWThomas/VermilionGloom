@@ -6,10 +6,11 @@ public partial class PlayerController
 {
     [Header("Strangle Stuff")]
     public NpcBrain StrangleTarget;
-    [SerializeField]
-    float strangleDist = 1f;
-    [SerializeField]
-    float strangleTime = 5f;
+    [SerializeField] bool _isStrangling = false;
+    [SerializeField] float _strangleDist = 1f;
+    [SerializeField] float _strangleTime = 5f;
+
+    public bool IsStrangling => _isStrangling;
 
     CoroutineContainer _strangleCoroutine;
 
@@ -35,13 +36,13 @@ public partial class PlayerController
 
     private IEnumerator StrangleCoroutine()
     {
-        animator.SetBool("choking", true);
+        _isStrangling = true;
         StrangleTarget.BeStrangled(gameObject);
 
         Broadcast(BroadcastType.Strangle, StrangleTarget.gameObject);
 
         var startStrangleTime = Time.time;
-        while (Time.time - startStrangleTime <= strangleTime)
+        while (Time.time - startStrangleTime <= _strangleTime)
         {
             yield return new WaitForSeconds(Time.deltaTime);
         }        
@@ -50,34 +51,15 @@ public partial class PlayerController
     private void StrangleInterrupted()
     {
         StrangleTarget.StopBeingStrangled();
-        animator.SetBool("choking", false);
-
+        _isStrangling = false;
         StrangleTarget = null;
     }
 
     private void StrangleSuccessful()
     {
         StrangleTarget.IsStrangled = true;
-
-        animator.SetTrigger("chokeKill");
-        animator.SetBool("choking", false);
-
-        //_strangleTarget.GetComponent<CharacterInfo>().Die();
-
-        StrangleTarget = null;
-    }
-
-    // StrangleInterupt would either be called by the MouseReceiver
-    // or when the player is hit by an NPC mid strangle
-    private void StrangleInterupt()
-    {
-        //todo
-        NpcBrain targetBrain = StrangleTarget.GetComponent<NpcBrain>();
-        if (targetBrain != null)
-        {
-            targetBrain.StopBeingStrangled();
-        }
-        animator.SetBool("choking", false);
+        StrangleTarget.Die();
+        _isStrangling = false;
         StrangleTarget = null;
     }
 }

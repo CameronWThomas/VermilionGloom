@@ -808,6 +808,9 @@ PrefabInstance:
       addedObject: {fileID: 8693017651451769672}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 2047479262137669719}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 8943308718410859587}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       insertIndex: -1
@@ -931,6 +934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e837f8ce09a500a4095e45ea122b42d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isDead: 0
 --- !u!114 &3090967693701312830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -944,6 +948,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _checkDestinationInterval: 0.25
+  LatchTarget: {fileID: 0}
   distanceToTarget: 0
   reachedTargetThreshold: 0.1
   _approachRadius: 2
@@ -970,9 +975,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 151e190ee241ea44dba402d7e12d55de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dead: 0
-  dragged: 0
-  strangled: 0
+  _conversationTarget: {fileID: 0}
+  _currentRoom: 0
   mvmntLatchTarget: {fileID: 0}
   combatTarget: {fileID: 0}
   crunchDistance: 2
@@ -1039,6 +1043,18 @@ MonoBehaviour:
   _bootMats:
   - {fileID: 2100000, guid: 5fa6b4fb5f3d03f41bf5b21c99bed7cd, type: 2}
   - {fileID: 2100000, guid: bc1983af3f24dc74ca06b5cd35eefbbd, type: 2}
+--- !u!114 &2047479262137669719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7893928265322881967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae55718996d6f44aa006effd1d33454, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &8943308718410859587
 CapsuleCollider:
   m_ObjectHideFlags: 0

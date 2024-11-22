@@ -15,17 +15,14 @@ public partial class PlayerController : MonoBehaviour
     InputAction toggleRun;
 
     MvmntController mvmntController;
-    Animator animator;
     MouseReceiver mouseReceiver;
     NavMeshAgent agent;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
-
         inputActions = new InputSystem_Actions();
         mvmntController = GetComponent<MvmntController>();
-        animator = GetComponent<Animator>();
         mouseReceiver = MouseReceiver.Instance;
         agent = GetComponent<NavMeshAgent>();
     }
@@ -62,7 +59,6 @@ public partial class PlayerController : MonoBehaviour
         // Implement crouch logic here
         sneaking = !sneaking;
         mvmntController.SetCrouching(sneaking);
-        animator.SetBool("sneaking", sneaking);
     }
 
     // Event handler for the toggleHostile action
@@ -71,7 +67,6 @@ public partial class PlayerController : MonoBehaviour
         // Implement toggleHostile logic here
         hostile = !hostile;
         mvmntController.SetCombat(hostile);
-        animator.SetBool("combat", hostile);
         mouseReceiver.hostile = hostile;
     }
     private void ToggleRunPerformed(InputAction.CallbackContext context)
@@ -96,7 +91,8 @@ public partial class PlayerController : MonoBehaviour
     }
     public void Die()
     {
-        animator.SetBool("dead", true);
+        GetComponent<CharacterInfo>().Die();
+
         mvmntController.GoToTarget(transform.position);
         mvmntController.enabled = false;
         if(StrangleTarget != null)

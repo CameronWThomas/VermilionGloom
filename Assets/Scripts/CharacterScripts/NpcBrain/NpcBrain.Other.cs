@@ -36,33 +36,6 @@ public partial class NpcBrain
     //    }
     //}
 
-    
-    // MOVEMENT LATCHING
-    private void SetMvmntLatchTarget(GameObject target, string animParam)
-    {
-        mvmntLatchTarget = target;
-        if (target != null)
-        {
-            // TODO: instead of disabling movement stuff,
-            // maybe handle latching in mvmnt controller. 
-
-            mvmntController.enabled = false;
-            navMeshAgent.enabled = false;
-
-            if(!string.IsNullOrEmpty(animParam))
-                animator.SetBool(animParam, true);
-
-        }
-        else
-        {
-            if (!string.IsNullOrEmpty(animParam))
-                animator.SetBool(animParam, false);
-            navMeshAgent.enabled = true;
-            mvmntController.enabled = true;
-
-        }
-    }
-
     // STRANGLE
     public void BeStrangled(GameObject killer)
     {
@@ -85,22 +58,10 @@ public partial class NpcBrain
         BeDraged(null);
     }
 
-    // DEATH
-    //      setAnimParam can be called after death to trigger the death animation after a cool animation.
-    //      see the DieOnExitAnim script, used in the choke kill animation
     public void Die(bool setAnimParam = true)
     {
-        if (setAnimParam)
-            animator.SetBool("dead", true);
-
-        //if (!dead)
-        //{
-        //    dead = true;
-        //    strangled = false;
-        //    mvmntController.enabled = false;
-        //    ReEvaluateTree();
-        //}
-
+        StopBeingStrangled();
+        GetComponent<CharacterInfo>().Die();
     }
 
     public void ReceiveBroadcast(BroadcastType type, GameObject shouldSee, GameObject extraObject )
@@ -188,7 +149,10 @@ public partial class NpcBrain
 
     public void Crunch()
     {
-        animator.SetTrigger("crunch");
+        //TODO set once you can get crunched again
+        //animator.SetTrigger("crunch");
+
+
         // a little tolerance for the player moving away further
         if(mvmntController.distanceToTarget <= crunchDistance + .3f)
         {

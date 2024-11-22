@@ -1,13 +1,12 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public partial class PlayerController
 {
     [Header("Drag Stuff")]
     public NpcBrain DragTarget;
+    [SerializeField] private bool _isDragging;
 
-    public bool IsDragging => DragTarget != null;
+    public bool IsDragging => _isDragging;
 
     CoroutineContainer _draggingCoroutine;
 
@@ -26,16 +25,15 @@ public partial class PlayerController
         if (DragTarget == null)
             return;
 
-        animator.SetBool("dragging", false);
         DragTarget.StopBeingDragged();
-
+        _isDragging = false;
         DragTarget = null;
     }
 
     private void BeginDraggingTarget()
     {
+        _isDragging = true;
         DragTarget.BeDraged(gameObject);
-        animator.SetBool("dragging", true);
         Broadcast(BroadcastType.Drag, DragTarget.gameObject);
     }
 }
