@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class CharacterSecretKnowledgeBB : GlobalSingleInstanceMonoBehaviour<CharacterSecretKnowledgeBB>
 {
@@ -42,5 +43,38 @@ public class CharacterSecretKnowledgeBB : GlobalSingleInstanceMonoBehaviour<Char
             .FirstOrDefault();
 
         unlockedSecret?.Reveal();
+    }
+
+    public bool TrySpreadSecret(NPCHumanCharacterID spreader, NPCHumanCharacterID target)
+    {
+        var spreadersSecrets = GetSecrets(spreader);
+        var targetsSecrets = GetSecrets(target);
+
+        var secretsUniqueToSpreader = spreadersSecrets.Where(x => targetsSecrets.All(theirSecret => !theirSecret.IsSameSecret(x)));
+        var allowedToSpreadSecrets = secretsUniqueToSpreader.Where(SecretIsSpreadable);
+
+        Secret secretToBeSpread = null;
+        foreach (var secret in allowedToSpreadSecrets.Randomize())
+        {
+            if (secret.Level.RandomChance())
+            {
+                secretToBeSpread = secret;
+                break;
+            }
+        }
+
+        if (secretToBeSpread == null)
+            return false;
+
+        var targetSecretKnowledge = _secretKnowledgeDict[target];
+        targetSecretKnowledge.AddSecret(secretToBeSpread);
+        return true;
+    }
+
+    private bool SecretIsSpreadable(Secret secret)
+    {
+        // TODO this will be based on the progress in the game. Vampiric secrets won't spread until a certain point
+
+        return secret.Level is not SecretLevel.Vampiric;
     }
 }

@@ -4,9 +4,11 @@ using UnityEngine;
 public abstract class Secret
 {
     private string _description = null;
+    private readonly Guid _secretID;
 
     protected Secret(SecretLevel level, CharacterID secretOwner, CharacterID additionalCharacter = null)
     {
+        _secretID = Guid.NewGuid();
         Level = level;
         SecretOwner = secretOwner ?? throw new System.Exception($"{nameof(secretOwner)} must be assigned");
         AdditionalCharacter = additionalCharacter;
@@ -17,6 +19,7 @@ public abstract class Secret
         Level = secret.Level;
         SecretOwner = secret.SecretOwner;
         AdditionalCharacter = secret.AdditionalCharacter;
+        _secretID = secret._secretID;
     }
 
     public abstract SecretIconIdentifier Identifier { get; }
@@ -34,6 +37,11 @@ public abstract class Secret
 
     public abstract string CreateDescription();
     public abstract Secret Copy();
+
+    public bool IsSameSecret(Secret other)
+    {
+        return _secretID == other._secretID;
+    }
 
     public void Reveal() => IsRevealed = true;
 }
