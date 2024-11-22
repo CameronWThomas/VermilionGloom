@@ -38,7 +38,7 @@ public partial class NpcBrain
         //            break;
         //    }
         //}
-    }
+    }    
 
     private void HandleStranglingEvent(SecretEvent secretEvent)
     {
@@ -64,20 +64,30 @@ public partial class NpcBrain
     private bool CheckIfInvolvedCharactersInSight(SecretEvent secretEvent)
     {
         // Don't see anyone
-        if (!looker.TryGetCharactersInSight(out var characters))
+        if (!FindCharactersInSight(out var characters))
             return false;
 
         var involvedCharacters = characters.Select(x => x.ID).Where(x => x == secretEvent.Target || x == secretEvent.Originator);
 
-        // Don't see any characters involved
-        if (!involvedCharacters.Any())
+        return involvedCharacters.Any();
+    }
+
+    //TODO move to looker
+    private bool FindCharactersInSight(out List<CharacterInfo> characters)
+    {
+        // Don't see anyoneRoomCheck
+        if (!looker.TryGetCharactersInSight(out characters))
             return false;
 
-        // Make sure the characters our in our room
+        // Make sure they are in the same room with us
         // TODO may not always want this. May do that foot raycast thing
-        if (involvedCharacters.All(x => RoomBB.Instance.GetCharacterRoomID(x) != CurrentRoom))
-            return false;
+        characters = characters.Where(x => RoomCheck(RoomBB.Instance.GetCharacterRoomID(x.ID))).ToList();
 
-        return true;
+        return characters.Any();
+    }
+
+    private bool RoomCheck(RoomID otherRoom)
+    {
+        return otherRoom == CurrentRoom || otherRoom is RoomID.Unknown;
     }
 }

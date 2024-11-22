@@ -10,10 +10,12 @@ public class NpcCharacterAnimator : CharacterAnimator
     protected override void Update()
     {
         base.Update();
+
         Animator.SetBool("conversing", Brain.IsInConversation);
         Animator.SetBool("dragged", Brain.IsBeingDragged);
         Animator.SetBool("dead", Brain.IsDead);
         Animator.SetBool("choked", Brain.IsBeingStrangled);
+        Animator.SetBool("combat", Brain.IsHostile);
 
         if (Brain.IsStrangled && !_isStrangledTriggered)
         {
