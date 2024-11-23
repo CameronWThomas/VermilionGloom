@@ -45,7 +45,10 @@ public class GoToHostileTowardsTarget : Action
 
             // Will either erase our hostile towards target, or find a new person to be hostile towards
             if (!_ourBrain.SetHostileTowardsTarget())
+            {
+                GetComponent<MvmntController>().CancelMovementAction();
                 return TaskStatus.Failure;
+            }
         }
 
         return _taskStatus;

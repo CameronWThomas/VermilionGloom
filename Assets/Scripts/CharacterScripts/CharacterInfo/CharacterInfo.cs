@@ -49,6 +49,7 @@ public abstract class CharacterInfo : MonoBehaviour
         
         // will be updated next frame, but we need to force it now
         GetComponent<CharacterAnimator>().HasDied();
+        GetComponent<MvmntController>().CancelMovementAction();
     }
 
     /// <summary>
