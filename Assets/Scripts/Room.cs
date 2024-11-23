@@ -15,8 +15,13 @@ public class Room : MonoBehaviour
     MeshRenderer meshRenderer;
     public Material blackedOut;
 
-    public List<MeshRenderer> meshesToHide;
-    public List<MeshRenderer> meshesToShow;
+    public List<MeshRenderer> meshesToHide = new List<MeshRenderer>();
+    public List<MeshRenderer> meshesToShow = new List<MeshRenderer>();
+
+    public Camera mirrorCam;
+    public GameObject mirror;
+    public Vector3 mirrorCamPos = new Vector3(0, 0.00139999995f, 0.00591999991f);
+    public Vector3 mirrorCamRot = new Vector3(90, 0, 0);
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
@@ -24,7 +29,7 @@ public class Room : MonoBehaviour
 
         boxCollider = GetComponent<BoxCollider>();
     }
-    private void OnEnable()
+    private void Start()
     {
         meshRenderer = gameObject.GetComponent<MeshRenderer>();
         meshRenderer.material = blackedOut;
@@ -66,26 +71,45 @@ public class Room : MonoBehaviour
         isVisible = visible;
         if(isVisible)
         {
-            foreach(MeshRenderer wall in meshesToHide)
+            if (meshesToHide != null)
             {
-                wall.enabled = false;
+                foreach (MeshRenderer wall in meshesToHide)
+                {
+                    wall.enabled = false;
+                }
             }
-            foreach (MeshRenderer wall in meshesToShow)
+            if(meshesToShow != null)
             {
-                wall.enabled = true;
+                foreach (MeshRenderer wall in meshesToShow)
+                {
+                    wall.enabled = true;
+                }
             }
-
             meshRenderer.enabled = false;
+
+            // camera
+            if(mirror != null && mirrorCam != null)
+            {
+                mirrorCam.transform.parent = mirror.transform;
+                mirrorCam.transform.localPosition = mirrorCamPos;
+                mirrorCam.transform.localEulerAngles = mirrorCamRot;
+            }
         }
         else
         {
-            foreach (MeshRenderer wall in meshesToHide)
+            if(meshesToHide != null)
             {
-                wall.enabled = true;
+                foreach (MeshRenderer wall in meshesToHide)
+                {
+                    wall.enabled = true;
+                }
             }
-            foreach (MeshRenderer wall in meshesToShow)
+            if (meshesToShow != null)
             {
-                wall.enabled = false;
+                foreach (MeshRenderer wall in meshesToShow)
+                {
+                    wall.enabled = false;
+                }
             }
 
             meshRenderer.enabled = true;

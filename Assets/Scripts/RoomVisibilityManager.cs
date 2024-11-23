@@ -5,6 +5,7 @@ public class RoomVisibilityManager : GlobalSingleInstanceMonoBehaviour<RoomVisib
 {
 
     public Room[] rooms;
+    public Room lastVisibleRoom;
 
     private void Start()
     {
@@ -17,12 +18,14 @@ public class RoomVisibilityManager : GlobalSingleInstanceMonoBehaviour<RoomVisib
         {
             if(room == visibleRoom)
             {
-                room.SetVisible(true);
+                //room.SetVisible(true);
             }
             else
             {
                 room.SetVisible(false);
             }
         }
+        lastVisibleRoom = visibleRoom;
+        visibleRoom.SetVisible(true);
     }
 }
