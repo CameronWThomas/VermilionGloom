@@ -169,10 +169,12 @@ public class Room : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+
+        //Debug.Log(other.name + "... Entered room: " + ID);
         if (other.CompareTag("Player"))
         {
             //meshRenderer.enabled = true;
-            CamsPlayerController player = other.GetComponent<CamsPlayerController>();
+            PlayerController player = other.GetComponent<PlayerController>();
             if (player != null)
                 player.EnteredRoom(this);
         }

@@ -534,6 +534,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 784468681629049112}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6506784242774973121}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8743537671710902298}
   m_SourcePrefab: {fileID: 100100000, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
 --- !u!1 &4874024198439408335 stripped
 GameObject:
@@ -597,9 +603,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616d019dd280ac1409acd92e3cae4f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPos: {x: 0, y: 0, z: 0}
+  _checkDestinationInterval: 0.25
   distanceToTarget: 0
   reachedTargetThreshold: 0.1
+  _approachRadius: 2
   dead: 0
   isRunning: 0
   isCrouching: 0
@@ -625,13 +632,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hostile: 0
   sneaking: 0
-  strangleTarget: {fileID: 0}
-  strangleDist: 1
-  strangling: 0
-  strangleTime: 5
-  strangleCounter: 0
-  dragTarget: {fileID: 0}
-  dragging: 0
+  DragTarget: {fileID: 0}
+  _isDragging: 0
+  StrangleTarget: {fileID: 0}
+  _isStrangling: 0
+  _strangleTime: 5
 --- !u!54 &2924739279485712191
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -672,3 +677,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxVampirePoints: 10
+--- !u!114 &6506784242774973121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4874024198439408335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5ceabe6d91e7b419d1ffa3d824534a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8743537671710902298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4874024198439408335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad17a62e4e9681349a81302661e1f38e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDead: 0
+  _name: 
+  _maxHealth: 3
+  _healthCooldownSec: 5

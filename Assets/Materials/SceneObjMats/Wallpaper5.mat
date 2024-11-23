@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Wallpaper5
-  m_Shader: {fileID: -6465566751694194690, guid: 5385d80adb4cb3c419c92a8c4d018d62, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 9704bfaab0df59946b84979ae00fa166, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -70,6 +70,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Texture:
         m_Texture: {fileID: 2800000, guid: cf594ca9e0d432b4592006bab76d90a9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_3da7f32b639146f0ae7b72da7b0df502_Out_0_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 3fe618bfe277f884b95e17e3e71f0762, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2DAsset_72a7d8edc7e84b92a1a25125bb7fc0f9_Out_0_Texture2D:

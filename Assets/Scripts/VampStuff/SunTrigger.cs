@@ -48,7 +48,7 @@ public class SunTrigger : MonoBehaviour
             return;
         }
 
-        CamsPlayerController player = other.GetComponent<CamsPlayerController>();
+        PlayerController player = other.GetComponent<PlayerController>();
         if(player != null)
         {
             player.inSun = true;
@@ -56,7 +56,7 @@ public class SunTrigger : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        CamsPlayerController player = other.GetComponent<CamsPlayerController>();
+        PlayerController player = other.GetComponent<PlayerController>();
         if (player != null)
         {
             player.inSun = false;
