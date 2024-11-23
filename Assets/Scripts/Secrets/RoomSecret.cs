@@ -1,23 +1,44 @@
 public class RoomSecret : Secret
 {
     private SecretLevel _level;
-    private string _roomDescription;
+    private RoomID _roomID;
 
-    public RoomSecret(string roomDescription, SecretLevel level, CharacterID secretOwner)
-        : base(level, secretOwner)
-    { 
-        _roomDescription = roomDescription;
+    public RoomSecret(RoomID roomID)
+    {
+        _roomID = roomID;
     }
 
     private RoomSecret(RoomSecret secret) : base(secret)
     {
-        _roomDescription = secret._roomDescription;
+        _roomID = secret._roomID;
     }
 
     public override SecretIconIdentifier Identifier => SecretIconIdentifier.Room;
 
-    public override Secret Copy() => new RoomSecret(this);
+    protected override Secret Copy() => new RoomSecret(this);
 
-    public override string CreateDescription() => $"{SecretOwner.Name} knows about something secret in {_roomDescription}";
+    protected override string CreateDescription() => $"{CurrentSecretOwner.Name} knows about something secret in {_roomID.ToString()}";
+
+    public class Builder : SecretTypeBuilder<RoomSecret>
+    {
+        private RoomID? _roomId;
+
+        public Builder(CharacterID secretOwner, SecretLevel secretLevel) : base(secretOwner, secretLevel) { }
+
+        public Builder SetRoomId(RoomID roomID)
+        {
+            _roomId = roomID;
+            return this;
+        }
+
+        public override RoomSecret Build()
+        {
+            ValidateNotNull(_roomId, nameof(_roomId));
+
+            var roomSecret = new RoomSecret(_roomId.Value);
+            Init(roomSecret);
+            return roomSecret;
+        }
+    }
 
 }

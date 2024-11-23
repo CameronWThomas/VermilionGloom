@@ -5,8 +5,8 @@ using UnityEngine.TextCore.Text;
 public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 {
     public MvmntController playerMvmnt;
-    PlayerController playerController;
-    public NpcBrain conversationTarget;
+    CamsPlayerController playerController;
+    public CamsNpcBrain conversationTarget;
     public bool hostile = false;
 
     private int _deactivatedCounter = 0;
@@ -17,7 +17,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
     protected override void Start()
     {
         base.Start();
-        playerController = playerMvmnt.GetComponent<PlayerController>();
+        playerController = playerMvmnt.GetComponent<CamsPlayerController>();
     }
 
     private void Update()
@@ -70,7 +70,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
                 playerController.CancelStrangling();
 
             }
-            playerMvmnt.SetTarget(hit.point);
+            playerMvmnt.GoToTarget(hit.point);
         }
         else if (hit.transform.CompareTag(GlobalConstants.INTERACTABLE_TAG_NAME))
         {
@@ -121,14 +121,14 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 
     private void HandleInteractableClick(SecretPassage secretPassage)
     {
-        playerMvmnt.SetTarget(secretPassage.DestinationPoint, () => secretPassage.UsePassage(playerMvmnt.transform));
+        playerMvmnt.GoToTarget(secretPassage.DestinationPoint, () => secretPassage.UsePassage(playerMvmnt.transform));
     }
 
     private void HandleNpcClick(RaycastHit hit)
     {
         Debug.Log("Npc Clicked: " + hit.transform.name);
         
-        NpcBrain brain = hit.transform.GetComponent<NpcBrain>();
+        CamsNpcBrain brain = hit.transform.GetComponent<CamsNpcBrain>();
         if (brain == null) {
             Debug.LogError("NpcBrain not found on " + hit.transform.name);
             return;
@@ -151,7 +151,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
                 brain.EnterConversation(playerMvmnt.transform);
                 if (playerController.garlicRunTarget == null)
                 {
-                    playerMvmnt.SetTarget(hit.point);
+                    playerMvmnt.GoToTarget(hit.point);
                 }
                 conversationTarget = brain;
             }

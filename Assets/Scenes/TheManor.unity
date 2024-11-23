@@ -4795,8 +4795,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759ce1ce1031654591478d36e858aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 1
   hidden: 0
   socialScore: 0.6
+  occupancy: 1000
 --- !u!65 &159496546
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5582,7 +5584,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4889909812699652101, guid: 6b4e225689f68c248819151fbd6445e5, type: 3}
   m_PrefabInstance: {fileID: 4185842223853695220}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1213709573}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 616d019dd280ac1409acd92e3cae4f1b, type: 3}
@@ -7653,7 +7655,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 28
+  field of view: 19
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -7680,7 +7682,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.31453148, y: -0.38855296, z: 0.14307512, w: 0.8541816}
-  m_LocalPosition: {x: 21, y: 23.6, z: -15.3}
+  m_LocalPosition: {x: 21, y: 25.8, z: -15.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10002,8 +10004,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759ce1ce1031654591478d36e858aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 3
   hidden: 0
   socialScore: 0.5
+  occupancy: 16
 --- !u!65 &415420940
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12011,7 +12015,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3693034789244131386, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -847.2436
+      value: -848.2509
       objectReference: {fileID: 0}
     - target: {fileID: 5476941705730594965, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMax.y
@@ -14211,17 +14215,13 @@ PrefabInstance:
       propertyPath: _blacklistedConnections.Array.data[1].Passage2
       value: 
       objectReference: {fileID: 290553582}
-    - target: {fileID: 2199456676119783336, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
-      propertyPath: _humanCharacterPrefab
-      value: 
-      objectReference: {fileID: 7893928265322881967, guid: a80badf4b8f541e46813c945f0e0c081, type: 3}
     - target: {fileID: 2399926208339585065, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
       propertyPath: m_Name
       value: GlobalScripts
       objectReference: {fileID: 0}
     - target: {fileID: 2895106601631318768, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
       propertyPath: _npcHumanCharacterCount
-      value: 20
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7358607298778120144, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16796,8 +16796,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759ce1ce1031654591478d36e858aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 8
   hidden: 0
   socialScore: 0.1
+  occupancy: 2
 --- !u!65 &821105035
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19240,8 +19242,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759ce1ce1031654591478d36e858aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 7
   hidden: 0
   socialScore: 0.3
+  occupancy: 2
 --- !u!65 &944293959
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22056,8 +22060,8 @@ GameObject:
   - component: {fileID: 1052588261}
   - component: {fileID: 1052588265}
   - component: {fileID: 1052588264}
-  - component: {fileID: 1052588262}
   - component: {fileID: 1052588266}
+  - component: {fileID: 1052588262}
   m_Layer: 9
   m_Name: LibraryRm
   m_TagString: Untagged
@@ -22092,8 +22096,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759ce1ce1031654591478d36e858aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 6
   hidden: 0
-  socialScore: 1
+  socialScore: 0.9
+  occupancy: 1000
 --- !u!23 &1052588264
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -24497,6 +24503,39 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1213709573 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4874024198439408335, guid: 6b4e225689f68c248819151fbd6445e5, type: 3}
+  m_PrefabInstance: {fileID: 4185842223853695220}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1213709580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213709573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad17a62e4e9681349a81302661e1f38e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isDead: 0
+  _name: Det. J. R. McTaggart
+  _maxHealth: 3
+  _healthCooldownSec: 5
+--- !u!114 &1213709587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213709573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5ceabe6d91e7b419d1ffa3d824534a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1227627729
 Mesh:
   m_ObjectHideFlags: 0
@@ -26057,8 +26096,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759ce1ce1031654591478d36e858aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 2
   hidden: 0
   socialScore: 0.8
+  occupancy: 8
 --- !u!65 &1341109232
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32890,8 +32931,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759ce1ce1031654591478d36e858aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 5
   hidden: 0
   socialScore: 0.8
+  occupancy: 16
 --- !u!65 &1584597863
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35149,8 +35192,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759ce1ce1031654591478d36e858aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 4
   hidden: 0
   socialScore: 0.4
+  occupancy: 8
 --- !u!65 &1723219062
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -42638,10 +42683,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8946311948980914220, guid: 6b4e225689f68c248819151fbd6445e5, type: 3}
+      propertyPath: m_Speed
+      value: 3.7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4874024198439408335, guid: 6b4e225689f68c248819151fbd6445e5, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 1213709580}
+    - targetCorrespondingSourceObject: {fileID: 4874024198439408335, guid: 6b4e225689f68c248819151fbd6445e5, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 1213709587}
   m_SourcePrefab: {fileID: 100100000, guid: 6b4e225689f68c248819151fbd6445e5, type: 3}
 --- !u!23 &4504489684231599413
 MeshRenderer:

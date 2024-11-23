@@ -17,7 +17,7 @@ public class GarlicTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerController playerController = other.GetComponent<PlayerController>();
+        CamsPlayerController playerController = other.GetComponent<CamsPlayerController>();
         if (playerController != null)
         {
             playerController.SetGarlic(gameObject);
@@ -26,7 +26,7 @@ public class GarlicTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        PlayerController playerController = other.GetComponent<PlayerController>();
+        CamsPlayerController playerController = other.GetComponent<CamsPlayerController>();
         if (playerController != null)
         {
             playerController.SetGarlic(null);

@@ -23,4 +23,17 @@ public class CharacterSecretKnowledge : MonoBehaviour
 
     public void AddSecrets(IEnumerable<Secret> secrets) => _secrets.AddRange(secrets);
     public void AddSecret(Secret secret) => _secrets.Add(secret);
+
+    public bool TryGetMurderSecret(CharacterID murderer, CharacterID victim, out MurderSecret murderSecret)
+    {
+        murderSecret = Secrets.OfType<MurderSecret>().FirstOrDefault(x => x.SecretTarget == murderer && x.AdditionalCharacter == victim);
+        return murderSecret != null;
+    }
+
+    public List<Secret> GetSecrets(CharacterID target, CharacterID additionalCharacter)
+    {
+        return Secrets.Where(x => x.HasAdditionalCharacter && x.HasSecretTarget)
+            .Where(x => x.SecretTarget == target && x.AdditionalCharacter == additionalCharacter)
+            .ToList();
+    }
 }

@@ -17,9 +17,7 @@ public class DieOnExitAnim : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        NpcBrain npcBrain = animator.gameObject.GetComponent<NpcBrain>();
-        npcBrain.Die(true);
-        
+        animator.gameObject.GetComponent<CharacterInfo>().Die();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

@@ -24,6 +24,7 @@ public class NPCCharacterCreator : MonoBehaviour
             .InitializeRelationships()
             .PlaceCharacters()
             .RegisterCharacters()
+            .UpdateNames()
             .Build();
     }
 
@@ -113,11 +114,13 @@ public class NPCCharacterCreator : MonoBehaviour
         public CharacterCreatorTool PlaceCharacters()
         {
             var allRooms = FindObjectsByType<Room>(FindObjectsSortMode.None);
+            var roomsByQuantity = allRooms.ToDictionary(x => x, x => 0);
 
             foreach (var characterTransform in GetCharacterComponent<Transform>())
             {
-                var randomRoom = allRooms.Randomize().First();
-                var randomPoint = randomRoom.GetRandomPointInRoom();
+                var room = GetRandomRoom(roomsByQuantity);
+
+                var randomPoint = room.GetRandomPointInRoom();
                 var agent = characterTransform.GetComponent<NavMeshAgent>();
                 agent.Warp(randomPoint);
             }
@@ -125,9 +128,37 @@ public class NPCCharacterCreator : MonoBehaviour
             return this;
         }
 
+        private Room GetRandomRoom(Dictionary<Room, int> roomsByQuantity)
+        {
+            var roomsBelowMaxOccupancy = roomsByQuantity
+                    .Where(x => x.Key.MaxOccupancy > x.Value)
+                    .Select(x => x.Key)
+                    .Randomize()
+                    .ToList();
+
+            for (var i = 0; i < roomsBelowMaxOccupancy.Count() * 2; i++)
+            {
+                foreach (var room in roomsBelowMaxOccupancy)
+                {
+                    if (room.RandomRoomChance())
+                        return room;
+                }
+            }
+
+            return roomsByQuantity.First().Key;
+        }
+
         public CharacterCreatorTool RegisterCharacters()
         {
             //TODO
+            return this;
+        }
+
+        public CharacterCreatorTool UpdateNames()
+        {
+            foreach (var characterInfo in GetCharacterComponent<CharacterInfo>())
+                characterInfo.gameObject.name = $"Human-{characterInfo.Name}";
+
             return this;
         }
 
@@ -157,12 +188,15 @@ public class NPCCharacterCreator : MonoBehaviour
                 .Where(x => x.Key != characterId)
                 .Select(x => x.Value.GetComponent<CharacterSecretKnowledge>())
                 .SelectMany(x => x.Secrets)
-                .Where(x => x.SecretOwner != characterId)
+                .Where(x => x.OriginalSecretOwner != characterId)
                 .Randomize()
                 .ToList();
 
             var returnCount = 0;
             var returnMax = Mathf.Min(otherCharactersSecretsPerCharacter, secretKnowledges.Count);
+            
+            if (returnMax <= 0)
+                yield break;
 
             // Keep looping through the secrets selecting by chance
             while (true)
@@ -170,7 +204,7 @@ public class NPCCharacterCreator : MonoBehaviour
                 {
                     if (secret.Level.RandomChance())
                     {
-                        var secretCopy = secret.Copy();
+                        var secretCopy = secret.CreateSpreadedCopy(characterId);
                         yield return secretCopy;
                         returnCount++;
                     }
