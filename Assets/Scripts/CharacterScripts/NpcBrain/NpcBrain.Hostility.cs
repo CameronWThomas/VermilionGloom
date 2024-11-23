@@ -20,14 +20,18 @@ public partial class NpcBrain
     public bool IsCrunching => _isCrunching;
     public Transform HostileTowardsTarget => _hostileTowardsTarget;
 
-    public void GetHostile()
+    public void GetHostile(CharacterID hostileTarget = null)
     {
         if (!HasAnyHostileRelationships() && _isHostile)
         {
             EndHostility();
+            return;
         }
 
         _isHostile = true;
+
+        if (hostileTarget != null)
+            _hostileTowardsTarget = CharacterInfoBB.Instance.GetCharacterInfo(hostileTarget).transform;
     }
 
     public void EndHostility()
@@ -83,6 +87,13 @@ public partial class NpcBrain
         _onCrunchEnd = onCrunchEnd;
         _onCrunchInterrupted = onCrunchInterrupted;
         _isCrunching = true;
+
+        if (_hostileTowardsTarget != null)
+        {
+            // Let everyone whos sees you know that you are attacking someone
+            var secretEvent = new SecretEvent(SecretEventType.AttackingSomeone, this.GetCharacterID(), _hostileTowardsTarget.GetCharacterID(), SecretNoticability.Sight, SecretDuration.Instant);
+            NpcBehaviorBB.Instance.BroadcastSecretEvent(secretEvent);
+        }
     }
 
     public void OnCrunchDamagePoint()

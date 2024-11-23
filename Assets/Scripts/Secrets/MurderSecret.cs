@@ -85,8 +85,8 @@ public class MurderSecret : Secret
         public Builder IsJustified() => SetIsJustified(true);
         public Builder IsNotJustified() => SetIsJustified(false);
 
-        public Builder WasSuccessfulMuder() => SetIsAttempt(true);
-        public Builder WasAttempt() => SetIsAttempt(false);
+        public Builder WasSuccessfulMuder() => SetIsAttempt(false);
+        public Builder WasAttempt() => SetIsAttempt(true);
         
         public override MurderSecret Build()
         {

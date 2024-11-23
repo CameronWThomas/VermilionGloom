@@ -13,12 +13,13 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
         if (!_broadcastingSecretEvents.Any())
             return;
 
+        var secretEvents = _broadcastingSecretEvents.ToList();
         foreach (var brain in _npcBrains.Values)
         {
-            brain.ReceiveBroadcast(_broadcastingSecretEvents);
+            brain.ReceiveBroadcast(secretEvents);
         }
 
-        var instantSecretEvents = _broadcastingSecretEvents.Where(x => x.SecretDuration is SecretDuration.Instant).ToList();
+        var instantSecretEvents = secretEvents.Where(x => x.SecretDuration is SecretDuration.Instant).ToList();
         foreach (var instantSecretEvent in instantSecretEvents)
             _broadcastingSecretEvents.Remove(instantSecretEvent);
     }

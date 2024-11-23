@@ -64,6 +64,10 @@ public partial class NpcBrain : MonoBehaviour
     void Update()
     {
         _currentRoom = RoomBB.Instance.GetCharacterRoomID(GetComponent<CharacterInfo>().ID);
+
+        if (looker.TryGetCharactersInSight(out var characters))
+            AddSecretsForDeadCharacters(characters);
+
         HostilityUpdate();
     }
 

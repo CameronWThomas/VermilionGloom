@@ -5,7 +5,7 @@ public enum SecretEventType
     StranglingSomeone,
     KilledSomeone,
     DraggingABody,
-    Dead
+    AttackingSomeone,
 }
 
 public enum SecretNoticability
@@ -42,4 +42,11 @@ public class SecretEvent
 
     public SecretDuration SecretDuration { get; }
     public SecretNoticability SecretNoticability { get; }
+
+    public bool Compare(SecretEvent other)
+    {
+        return Originator == other.Originator &&
+            AdditionalCharacter == other.AdditionalCharacter &&
+            SecretEventType == other.SecretEventType;
+    }
 }

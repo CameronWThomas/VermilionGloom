@@ -64,7 +64,7 @@ public class Relationship
         var murderSecrets = RelevantSecrets.OfType<MurderSecret>().ToList();
         var dragSecrets = RelevantSecrets.OfType<DragSecret>().ToList();
 
-        if (murderSecrets.Any(x => !x.IsJustified) || dragSecrets.Any(x => x.SecretTarget == RelationshipTarget))
+        if (murderSecrets.Any(x => !x.IsJustified && x.SecretTarget == RelationshipTarget) || dragSecrets.Any(x => x.SecretTarget == RelationshipTarget))
             return true;
 
         return false;

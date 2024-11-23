@@ -1,14 +1,70 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.Rendering;
-using UnityEngine.TextCore.Text;
+using UnityEngine;
+
+public enum SecretEventResponse
+{
+    ThumbsUp,
+    Point,
+    NA
+}
 
 public partial class NpcBrain
 {
+    [Header("Secret Processing")]
+    [SerializeField] float _processedSecretCleanupTime = 5f;
+
+    public List<SecretEvent> NewSecretEvents { get; } = new();
+    public List<SecretEvent> ProcessedSecretEvents { get; } = new();
+
+    public Secret SecretFromLastProcessedSecretEvent { get; set; } = null;
+    public SecretEvent SecretEventToBroadcast { get; set; } = null;
+    public SecretEventResponse SecretEventResponse { get; set; } = SecretEventResponse.NA;
+
+
+    public bool AnyNewSecretEvents() => NewSecretEvents.Any();
+
+    
+    public void ProcessSecretEvent()
+    {
+        SecretFromLastProcessedSecretEvent = null;
+        SecretEventToBroadcast = null;
+        SecretEventResponse = SecretEventResponse.NA;
+
+        if (!NewSecretEvents.Any())
+            return;
+
+        var secretEvent = NewSecretEvents[0];
+        NewSecretEvents.Remove(secretEvent);
+
+        ProcessedSecretEvents.Add(secretEvent);
+
+        Func<SecretEvent, Secret> eventHandler = secretEvent.SecretEventType switch
+        {
+            SecretEventType.StranglingSomeone => x => AddOrUpdateMurderSecret(x, true),
+            SecretEventType.KilledSomeone => x => AddOrUpdateMurderSecret(x, false),
+            SecretEventType.AttackingSomeone => x => AddOrUpdateMurderSecret(x, true),
+
+            SecretEventType.DraggingABody => HandleDraggingABodyEvent,
+            _ => x => null
+        };
+
+        SecretFromLastProcessedSecretEvent = eventHandler(secretEvent);
+
+        if (secretEvent.SecretEventType == SecretEventType.StranglingSomeone && secretEvent.SecretNoticability == SecretNoticability.Sight)
+        {
+            SecretEventToBroadcast = new SecretEvent(SecretEventType.StranglingSomeone,
+                secretEvent.Originator,
+                secretEvent.AdditionalCharacter,
+                SecretNoticability.Room,
+                SecretDuration.Instant);
+        }
+    }
+
     public void ReceiveBroadcast(List<SecretEvent> secretEvents)
     {
-        if (GetComponent<CharacterInfo>().IsDead)
+        if (GetComponent<CharacterInfo>().IsDead || IsHostile)
             return;
 
         foreach (var secretEvent in secretEvents)
@@ -16,38 +72,9 @@ public partial class NpcBrain
             if (!IsSecretEventNoticable(secretEvent))
                 continue;
 
-            Action<SecretEvent> eventHandler = secretEvent.SecretEventType switch
-            {
-                SecretEventType.StranglingSomeone => HandleStranglingEvent,
-                SecretEventType.KilledSomeone => HandleKilledSomeoneEvent,
-                SecretEventType.DraggingABody => HandleDraggingABodyEvent,
-                _ => null
-            };
-
-            eventHandler?.Invoke(secretEvent);
+            if (NewSecretEvents.All(x => !x.Compare(secretEvent)) && ProcessedSecretEvents.All(x => !x.Compare(secretEvent)))
+                NewSecretEvents.Add(secretEvent);
         }
-
-        //if (
-        //    (looker.CanSeeTarget(shouldSee) || looker.CanSeeTarget(extraObject))
-        //    && !dead && !strangled)
-        //{
-
-        //    switch (type)
-        //    {
-        //        case BroadcastType.Drag:
-        //            // Handle drag broadcast
-        //            //Debug.Log(gameObject.name + " saw " + shouldSee.name + " dragging someone");
-        //            SawCorpseDragging(shouldSee, extraObject);
-        //            break;
-        //        case BroadcastType.Strangle:
-        //            // Handle strangle broadcast
-        //            SawStrangling(shouldSee, extraObject);
-        //            break;
-        //        default:
-        //            // Handle other types of broadcasts
-        //            break;
-        //    }
-        //}
     }    
 
     private bool IsSecretEventNoticable(SecretEvent secretEvent)
@@ -104,27 +131,37 @@ public partial class NpcBrain
             .Build();
     }
 
-    private void HandleStranglingEvent(SecretEvent secretEvent)
+    private void AddSecretsForDeadCharacters(List<CharacterInfo> characterInfos)
     {
-        if (!characterSecretKnowledge.TryGetMurderSecret(secretEvent.Originator, secretEvent.AdditionalCharacter, out var murderSecret))
+        foreach (var characterInfo in characterInfos)
         {
-            murderSecret = new MurderSecret.Builder(ID, SecretLevel.Public)
-                .SetMurderer(secretEvent.Originator)
-                .SetVictim(secretEvent.AdditionalCharacter)
-                .IsNotJustified()
-                .WasAttempt()
-                .Build();
+            if (!characterInfo.IsDead)
+                continue;
 
-            characterSecretKnowledge.AddSecret(murderSecret);
+            var existingMurderSecret = characterSecretKnowledge.Secrets.OfType<MurderSecret>().FirstOrDefault(x => x.AdditionalCharacter == characterInfo.ID);
+            if (existingMurderSecret != null)
+            {
+                if (!existingMurderSecret.IsAttempt)
+                    continue;
+
+                // Mark the murder as no longer an attempt, but successful
+                existingMurderSecret.UpdateJustificationOrAttempt(existingMurderSecret.IsJustified, false);
+            }
+            else
+            {
+                characterSecretKnowledge.AddSecret(new MurderSecret.Builder(ID, SecretLevel.Public)
+                    .SetVictim(characterInfo.ID)
+                    .IsNotJustified()
+                    .WasSuccessfulMuder()
+                    .Build());
+            }
+
+            var relationship = GetRelationship(characterInfo.ID);
+            relationship.Reevaluate();
         }
-
-        var relationshipWithStrangler = GetRelationship(secretEvent.Originator);
-        var relationshipWithStrangled = GetRelationship(secretEvent.AdditionalCharacter);
-        relationshipWithStrangler.Reevaluate();
-        relationshipWithStrangled.Reevaluate();
     }
 
-    private void HandleKilledSomeoneEvent(SecretEvent secretEvent)
+    private Secret AddOrUpdateMurderSecret(SecretEvent secretEvent, bool isAttempt)
     {
         var relationshipWithKiller = GetRelationship(secretEvent.Originator);
         var relationshipWithVictim = GetRelationship(secretEvent.AdditionalCharacter);
@@ -133,15 +170,18 @@ public partial class NpcBrain
 
         if (characterSecretKnowledge.TryGetMurderSecret(secretEvent.Originator, secretEvent.AdditionalCharacter, out var murderSecret))
         {
-            murderSecret.UpdateJustificationOrAttempt(isJustified, false);
-            murderSecret.UpdateSecretLevel(SecretLevel.Public);
+            murderSecret.UpdateJustificationOrAttempt(isJustified, isAttempt);
         }
         else
         {
             var murderSecretBuilder = new MurderSecret.Builder(secretEvent.Originator, SecretLevel.Public)
                 .SetMurderer(secretEvent.Originator)
-                .SetVictim(secretEvent.AdditionalCharacter)
-                .WasSuccessfulMuder();
+                .SetVictim(secretEvent.AdditionalCharacter);
+
+            if (isAttempt)
+                murderSecretBuilder.WasAttempt();
+            else
+                murderSecretBuilder.WasSuccessfulMuder();
 
             if (isJustified)
                 murderSecretBuilder.IsJustified();
@@ -154,9 +194,11 @@ public partial class NpcBrain
 
         relationshipWithKiller.Reevaluate();
         relationshipWithVictim.Reevaluate();
+
+        return murderSecret;
     }
 
-    private void HandleDraggingABodyEvent(SecretEvent secretEvent)
+    private Secret HandleDraggingABodyEvent(SecretEvent secretEvent)
     {
         var dragSecret = characterSecretKnowledge.GetSecrets(secretEvent.Originator, secretEvent.AdditionalCharacter)
             .OfType<DragSecret>()
@@ -176,5 +218,7 @@ public partial class NpcBrain
         var draggedRelationship = GetRelationship(secretEvent.AdditionalCharacter);
         draggerRelationship.Reevaluate();
         draggedRelationship.Reevaluate();
+
+        return dragSecret;
     }
 }
