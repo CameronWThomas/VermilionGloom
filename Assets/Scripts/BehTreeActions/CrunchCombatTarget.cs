@@ -25,7 +25,12 @@ public class CrunchCombatTarget : Action
             mvmntController.SetTarget(npcBrain.combatTarget.transform.position);
             if(mvmntController.distanceToTarget <= npcBrain.crunchDistance)
             {
-                npcBrain.Crunch();
+                bool crunched = npcBrain.Crunch();
+                if (crunched)
+                {
+                    return TaskStatus.Success;
+                }
+                
             }
             return TaskStatus.Running;
         }

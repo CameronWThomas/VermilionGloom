@@ -254,7 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookLayerMask:
     serializedVersion: 2
-    m_Bits: 247
+    m_Bits: 1271
   debug: 1
 --- !u!54 &566118983134556662
 Rigidbody:
@@ -443,6 +443,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: -4934762034713142828, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4904855976199033532, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -522,6 +526,10 @@ PrefabInstance:
     - target: {fileID: -892795040193920886, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -715661090404917385, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -608244908106320228, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       propertyPath: m_Layer
@@ -675,6 +683,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 4327356281549649282, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4377200322662197656, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -694,6 +706,10 @@ PrefabInstance:
     - target: {fileID: 4987159018144524516, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226931258890207021, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5649498459196668432, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       propertyPath: m_Layer
@@ -1124,7 +1140,7 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 
-  gizmoViewMode: 2
+  gizmoViewMode: 1
   showBehaviorDesignerGizmo: 1
 --- !u!54 &7738491898982084907
 Rigidbody:

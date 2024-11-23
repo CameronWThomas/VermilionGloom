@@ -149,7 +149,10 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
             {
 
                 brain.EnterConversation(playerMvmnt.transform);
-                playerMvmnt.SetTarget(hit.point);
+                if (playerController.garlicRunTarget == null)
+                {
+                    playerMvmnt.SetTarget(hit.point);
+                }
                 conversationTarget = brain;
             }
         }

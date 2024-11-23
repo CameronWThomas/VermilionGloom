@@ -268,16 +268,16 @@ public class NpcBrain : MonoBehaviour
         ReEvaluateTree();
     }
 
-    public void Crunch()
+    public bool Crunch()
     {
-        animator.SetTrigger("crunch");
         // a little tolerance for the player moving away further
         if(mvmntController.distanceToTarget <= crunchDistance + .3f)
         {
-            if(combatTarget == null)
+            animator.SetTrigger("crunch");
+            if (combatTarget == null)
             {
                 ReEvaluateTree();
-                return;
+                return true; ;
             }
             // if player 
             PlayerController pc = combatTarget.GetComponent<PlayerController>();
@@ -286,7 +286,7 @@ public class NpcBrain : MonoBehaviour
                 pc.Die();
                 combatTarget = null;
                 ReEvaluateTree();
-                return;
+                return true;
             }    
             // if npc
             NpcBrain targetBrain = combatTarget.GetComponent<NpcBrain>();
@@ -295,9 +295,10 @@ public class NpcBrain : MonoBehaviour
                 targetBrain.Die(true);
                 combatTarget = null;
                 ReEvaluateTree();
-                return;
+                return true;
             }
         }
+        return false;
     }
     // Triggers a re-calculation of current behaviour tree. 
     // Nice for when you expect some conditionals to change

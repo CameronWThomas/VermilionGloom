@@ -18,11 +18,11 @@ TagManager:
   - Character
   - Looker
   - RoomBox
-  - 
-  - 
-  - 
-  - 
-  - 
+  - CharacterVamp
+  - MirrorHidden
+  - OnlyMirror
+  - NonClickable
+  - OtherWall
   - 
   - 
   - 
