@@ -49,10 +49,10 @@ public class PerformSecretEventResponseAction : Action
         _timerStart = Time.time;
 
         if (murderSecret.IsJustified)
-            _brain.SecretEventResponse = SecretEventResponse.ThumbsUp;
+            _brain.SecretEventResponse = SecretEventResponse.Good;
         else
         {
-            _brain.SecretEventResponse = SecretEventResponse.Point;
+            _brain.SecretEventResponse = SecretEventResponse.Bad;
             _endDurationEvent = () => _brain.GetHostile(_brain.SecretFromLastProcessedSecretEvent.SecretTarget);
         }
     }
@@ -60,7 +60,7 @@ public class PerformSecretEventResponseAction : Action
     private void InitializeSecret(DragSecret dragSecret)
     {
         _timerStart = Time.time;
-        _brain.SecretEventResponse = SecretEventResponse.Point;
+        _brain.SecretEventResponse = SecretEventResponse.Bad;
         _endDurationEvent = () => _brain.GetHostile(_brain.SecretFromLastProcessedSecretEvent.SecretTarget);
     }
 }

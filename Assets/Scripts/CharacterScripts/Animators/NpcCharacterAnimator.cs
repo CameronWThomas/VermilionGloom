@@ -13,7 +13,7 @@ public class NpcCharacterAnimator : CharacterAnimator
     {
         base.Update();
 
-        Animator.SetBool("conversing", Brain.IsInConversation);
+        Animator.SetBool("conversing", Brain.IsInConversation && !Brain.IsHostile); // Want to make sure conversing animation is canceled if we get hostile
         Animator.SetBool("dragged", Brain.IsBeingDragged);
         Animator.SetBool("dead", Brain.IsDead);
         Animator.SetBool("choked", Brain.IsBeingStrangled);
@@ -37,5 +37,28 @@ public class NpcCharacterAnimator : CharacterAnimator
             _isStrangledTriggered = true;
             Animator.SetTrigger("chokeKill");
         }
+
+        HandleResponseState();
+    }
+
+    private void HandleResponseState()
+    {
+        var responseState = Brain.SecretEventResponse;
+        switch (responseState)
+        {
+            case SecretEventResponse.Good:
+                Animator.SetTrigger("good");
+                break;
+
+            case SecretEventResponse.Bad:
+                Animator.SetTrigger("bad");
+                break;
+
+            default:
+                Animator.ResetTrigger("good");
+                Animator.ResetTrigger("bad");
+                break;
+        }
+        
     }
 }

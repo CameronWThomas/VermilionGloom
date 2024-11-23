@@ -5,8 +5,8 @@ using UnityEngine;
 
 public enum SecretEventResponse
 {
-    ThumbsUp,
-    Point,
+    Bad,
+    Good,
     NA
 }
 

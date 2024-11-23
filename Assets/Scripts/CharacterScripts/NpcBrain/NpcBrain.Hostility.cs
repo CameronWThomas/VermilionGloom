@@ -102,7 +102,9 @@ public partial class NpcBrain
             return;
 
         var hostileTargetID = _hostileTowardsTarget.GetCharacterID();
-        if (CharacterInfoBB.Instance.GetCharacterInfo(hostileTargetID).Damage())
+        var characterInfo = CharacterInfoBB.Instance.GetCharacterInfo(hostileTargetID);
+
+        if (characterInfo.Damage())
         {
             // Target was killed. Create a secret and broadcast to the room
             var murderSecret = CreatePersonalMurderSecret(hostileTargetID, out var wasExistingSecret);
@@ -116,6 +118,9 @@ public partial class NpcBrain
             var secretEvent = new SecretEvent(SecretEventType.KilledSomeone, ID, hostileTargetID, SecretNoticability.Room, SecretDuration.Instant);
             NpcBehaviorBB.Instance.BroadcastSecretEvent(secretEvent);
         }
+
+        if (characterInfo.transform.IsPlayer())
+            characterInfo.GetComponent<PlayerController>().InterruptStrangling();
     }
 
     public void OnCrunchEnd(bool isInterrupt)

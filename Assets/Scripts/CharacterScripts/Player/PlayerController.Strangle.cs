@@ -7,7 +7,6 @@ public partial class PlayerController
     [Header("Strangle Stuff")]
     public NpcBrain StrangleTarget;
     [SerializeField] bool _isStrangling = false;
-    [SerializeField] float _strangleDist = 1f;
     [SerializeField] float _strangleTime = 5f;
 
     public bool IsStrangling => _isStrangling;
@@ -22,6 +21,20 @@ public partial class PlayerController
         mvmntController.GoToTarget(StrangleTarget.transform, BeginStranglingTarget);
     }
 
+    public void OnEndStrangle()
+    {
+        MouseReceiver.Instance.Activate();
+    }
+
+    public void InterruptStrangling()
+    {
+        if (_strangleCoroutine != null)
+        {
+            _strangleCoroutine.Stop();
+            _strangleCoroutine = null;
+        }
+    }
+
     private void BeginStranglingTarget()
     {
         if (_strangleCoroutine != null)
@@ -31,6 +44,8 @@ public partial class PlayerController
 
             _strangleCoroutine = null;
         }
+
+        MouseReceiver.Instance.Deactivate();
 
         _strangleCoroutine = new CoroutineContainer(this, StrangleCoroutine, StrangleSuccessful, StrangleInterrupted);
         _strangleCoroutine.Start();
@@ -58,6 +73,8 @@ public partial class PlayerController
 
     private void StrangleInterrupted()
     {
+        MouseReceiver.Instance.Activate();
+
         if (_strangleCoroutine != null)
             _strangleCoroutine.Stop();
         _strangleCoroutine = null;
