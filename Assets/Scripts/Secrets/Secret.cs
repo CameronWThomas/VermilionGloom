@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
-using static Secret;
 
+//TODO update to be serializable
 public abstract class Secret
 {
     string _description = null;
@@ -37,12 +37,22 @@ public abstract class Secret
 
     public virtual bool NoCharactersInvolved => !HasSecretTarget;
 
-    public abstract string CreateDescription();
+    protected abstract string CreateDescription();
     protected abstract Secret Copy();
+
+    protected void ResetDescription()
+    {
+        _description = CreateDescription();
+    }
 
     public bool IsSameSecret(Secret other)
     {
         return _secretID == other._secretID;
+    }
+
+    public void UpdateSecretLevel(SecretLevel newLevel)
+    {
+        Level = newLevel;
     }
 
     public void Reveal() => IsRevealed = true;

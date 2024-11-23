@@ -25,7 +25,7 @@ public class GenericSecret : Secret
 
     public override SecretIconIdentifier Identifier => SecretIconIdentifier.Generic;
 
-    public override string CreateDescription()
+    protected override string CreateDescription()
     {
         return _secretDescriptionIndex switch
         {

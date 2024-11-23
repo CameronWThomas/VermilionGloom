@@ -41,7 +41,7 @@ public partial class PlayerController
         _isStrangling = true;
         StrangleTarget.BeStrangled(gameObject);
 
-        _strangleSecretEvent = new SecretEvent(SecretEventType.StranglingSomeone, this.GetCharacterID(), StrangleTarget.GetCharacterID());
+        _strangleSecretEvent = new SecretEvent(SecretEventType.StranglingSomeone, this.GetCharacterID(), StrangleTarget.GetCharacterID(), SecretNoticability.Sight, SecretDuration.UntilCancel);
         NpcBehaviorBB.Instance.BroadcastSecretEvent(_strangleSecretEvent);
 
         var startStrangleTime = Time.time;
@@ -74,8 +74,7 @@ public partial class PlayerController
 
     private void StrangleSuccessful()
     {
-        StrangleTarget.IsStrangled = true;
-        StrangleTarget.Die();
+        StrangleTarget.StrangleDie();
         _isStrangling = false;
         StrangleTarget = null;
 

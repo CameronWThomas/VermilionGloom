@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.70710677, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 5}
-  m_LocalScale: {x: 14.00415, y: 10, z: 1}
+  m_LocalScale: {x: 14.00415, y: 10, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7405902691002235157}
@@ -584,7 +584,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e1f0133aa9f21048859b2b313a07a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharactersInSight: []
 --- !u!1001 &7011458378047250174
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1240,6 +1239,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isDead: 0
+  _name: 
+  _maxHealth: 3
+  _healthCooldownSec: 5
 --- !u!114 &3090967693701312830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1282,9 +1284,10 @@ MonoBehaviour:
   _conversationTarget: {fileID: 0}
   _currentRoom: 0
   _relationships: []
-  mvmntLatchTarget: {fileID: 0}
-  combatTarget: {fileID: 0}
-  crunchDistance: 2
+  _isHostile: 0
+  _isCrunching: 0
+  _hostileTowardsTarget: {fileID: 0}
+  _crunchDistance: 2
 --- !u!114 &8693017651451769672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1373,7 +1376,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _distance: 10
-  _angle: 70
+  _horizontalAngle: 70
+  _verticalAngle: 90
   _charactersInSight: []
 --- !u!136 &8943308718410859587
 CapsuleCollider:

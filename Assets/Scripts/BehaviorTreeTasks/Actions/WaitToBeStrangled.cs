@@ -12,10 +12,11 @@ public class WaitToBeStrangled : Action
 
     public override TaskStatus OnUpdate()
     {
-        if (NpcBehaviorBB.Instance.IsStrangled(_characterId))
+        if (NpcBehaviorBB.Instance.IsDead(_characterId))
             return TaskStatus.Success;
 
-        if (NpcBehaviorBB.Instance.IsBeingStrangled(_characterId))
+        if (NpcBehaviorBB.Instance.IsBeingStrangled(_characterId) ||
+            NpcBehaviorBB.Instance.IsStrangled(_characterId))
             return TaskStatus.Running;
 
         return TaskStatus.Failure;

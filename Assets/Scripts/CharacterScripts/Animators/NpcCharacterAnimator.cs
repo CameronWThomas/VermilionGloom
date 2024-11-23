@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class NpcCharacterAnimator : CharacterAnimator
@@ -18,9 +19,17 @@ public class NpcCharacterAnimator : CharacterAnimator
         Animator.SetBool("choked", Brain.IsBeingStrangled);
         Animator.SetBool("combat", Brain.IsHostile);
 
-        if (!_crunchTriggered && Brain.IsCrunching)
-            Animator.SetTrigger("crunch");
-        else if (!Brain.IsCrunching)
+        if (Brain.IsCrunching)
+        {
+            if (!_crunchTriggered)
+            {
+                _crunchTriggered = true;
+                Animator.SetTrigger("crunch");
+            }
+            else
+                Animator.ResetTrigger("crunch");
+        }
+        else
             _crunchTriggered = false;
 
         if (Brain.IsStrangled && !_isStrangledTriggered)

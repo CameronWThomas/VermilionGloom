@@ -15,10 +15,14 @@ public class GoToHostileTowardsTarget : Action
         _ourBrain = GetComponent<NpcBrain>();
         _lastRoom = RoomBB.Instance.GetCharacterRoomID(_ourBrain.ID);
 
-        if (!_ourBrain.SetHostileTowardsTarget())
+        if (_ourBrain.HostileTowardsTarget == null)
         {
-            _taskStatus = TaskStatus.Failure;
-            return;
+            // Try to set a hostile towards target
+            if (!_ourBrain.SetHostileTowardsTarget())
+            {
+                _taskStatus = TaskStatus.Failure;
+                return;
+            }
         }
 
         GetComponent<MvmntController>().GoToTarget(_ourBrain.HostileTowardsTarget, () => _taskStatus = TaskStatus.Success, () => _taskStatus = TaskStatus.Failure);
@@ -29,15 +33,20 @@ public class GoToHostileTowardsTarget : Action
         if (_taskStatus is TaskStatus.Failure)
             return _taskStatus;
 
-        // If they can't see the player after entering a room, failure
         var currentRoom = RoomBB.Instance.GetCharacterRoomID(_ourBrain.ID);
         if (RoomBB.Instance.GetCharacterRoomID(_ourBrain.ID) != _lastRoom)
         {
+            // NPC has entered a new room. Make sure we can still see the target
             _lastRoom = currentRoom;
-            if (!_ourBrain.CanSeeTarget(_ourBrain.HostileTowardsTarget.GetCharacterID()))
+
+            // We can still see them, keep chasing
+            if (_ourBrain.CanSeeTarget(_ourBrain.HostileTowardsTarget.GetCharacterID()))
+                return _taskStatus;
+
+            // Will either erase our hostile towards target, or find a new person to be hostile towards
+            if (!_ourBrain.SetHostileTowardsTarget())
                 return TaskStatus.Failure;
         }
-
 
         return _taskStatus;
     }

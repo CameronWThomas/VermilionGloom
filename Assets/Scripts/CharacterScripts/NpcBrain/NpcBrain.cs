@@ -21,7 +21,7 @@ public partial class NpcBrain : MonoBehaviour
 
     public GameObject Strangler { get; private set; } = null;
     public bool IsBeingStrangled => Strangler != null;
-    public bool IsStrangled { get; set; } = false;
+    public bool IsStrangled { get; private set; } = false;
 
 
     public bool IsInConversation => GetIsInConversation();
@@ -64,6 +64,7 @@ public partial class NpcBrain : MonoBehaviour
     void Update()
     {
         _currentRoom = RoomBB.Instance.GetCharacterRoomID(GetComponent<CharacterInfo>().ID);
+        HostilityUpdate();
     }
 
     public bool CanSeeTarget(CharacterID targetCharacter)
@@ -73,6 +74,35 @@ public partial class NpcBrain : MonoBehaviour
 
         return characters.Any(x => x.ID == targetCharacter);
     }
+
+    // STRANGLE
+    public void BeStrangled(GameObject killer)
+    {
+        Strangler = killer;
+    }
+
+    public void StopBeingStrangled()
+    {
+        BeStrangled(null);
+    }
+
+    public void StrangleDie(bool setAnimParam = true)
+    {
+        IsStrangled = true;
+        StopBeingStrangled();
+    }
+
+    // DRAG
+    public void BeDraged(GameObject dragger)
+    {
+        Dragger = dragger;
+    }
+
+    public void StopBeingDragged()
+    {
+        BeDraged(null);
+    }
+
 
     //TODO move to looker
     private bool FindCharactersInSight(out List<CharacterInfo> characters)
@@ -137,7 +167,7 @@ public partial class NpcBrain : MonoBehaviour
     /// Nice for when you expect some conditionals to change
     /// This could probably be written better, but it works.
     /// </summary>
-    public void ReEvaluateTree()
+    private void ReEvaluateTree()
     {
         behaviorTree.StopAllCoroutines();
         behaviorTree.StopAllTaskCoroutines();

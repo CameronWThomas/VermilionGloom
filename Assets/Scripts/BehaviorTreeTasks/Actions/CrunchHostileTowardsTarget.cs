@@ -10,20 +10,11 @@ public class CrunchHostileTowardsTarget : Action
 
     public override void OnStart()
     {
-        //mvmntController = GetComponent<MvmntController>();
-        //mvmntController.SetRunning(true);
-
         _taskStatus = TaskStatus.Running;
         _npcBrain = GetComponent<NpcBrain>();
-        
-        _npcBrain.Crunch(OnCrunchEnd);
 
+        _npcBrain.Crunch(() => _taskStatus = TaskStatus.Success, () => _taskStatus = TaskStatus.Failure);
     }
 
     public override TaskStatus OnUpdate() => _taskStatus;
-
-    public void OnCrunchEnd(bool successful)
-    {
-        _taskStatus = successful ? TaskStatus.Success : TaskStatus.Failure;
-    }
 }

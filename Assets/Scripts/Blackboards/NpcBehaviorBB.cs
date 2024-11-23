@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
 {
@@ -20,6 +17,10 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
         {
             brain.ReceiveBroadcast(_broadcastingSecretEvents);
         }
+
+        var instantSecretEvents = _broadcastingSecretEvents.Where(x => x.SecretDuration is SecretDuration.Instant).ToList();
+        foreach (var instantSecretEvent in instantSecretEvents)
+            _broadcastingSecretEvents.Remove(instantSecretEvent);
     }
 
     public void Register(NpcBrain brain)
@@ -48,8 +49,7 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
     public void StrangleDie(NPCHumanCharacterID characterId)
     {
         var brain = GetBrain(characterId);
-        brain.GetComponent<NPCHumanCharacterInfo>().Die();
-        brain.StopBeingStrangled();
+        brain.StrangleDie();
     }
 
     public bool TryStartingConversation(CharacterID id1, CharacterID id2)

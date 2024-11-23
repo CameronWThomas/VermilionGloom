@@ -12015,7 +12015,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3693034789244131386, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -848.2509
+      value: -847.7879
       objectReference: {fileID: 0}
     - target: {fileID: 5476941705730594965, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMax.y
@@ -24521,7 +24521,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isDead: 0
-  _name: 
+  _name: Det. J. R. McTaggart
+  _maxHealth: 3
+  _healthCooldownSec: 5
 --- !u!114 &1213709587
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class VampireSecret : Secret
 
     protected override Secret Copy() => new VampireSecret(this);
 
-    public override string CreateDescription() => $"{CurrentSecretOwner.Name} knows there is a vampire in the manor";
+    protected override string CreateDescription() => $"{CurrentSecretOwner.Name} knows there is a vampire in the manor";
 
     public class Builder : SecretTypeBuilder<VampireSecret>
     {

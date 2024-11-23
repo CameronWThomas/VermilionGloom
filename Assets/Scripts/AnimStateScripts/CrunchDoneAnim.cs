@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CrunchAnim : StateMachineBehaviour
+public class CrunchDoneAnim : StateMachineBehaviour
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -18,7 +18,7 @@ public class CrunchAnim : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         NpcBrain npcBrain = animator.gameObject.GetComponent<NpcBrain>();
-        npcBrain.OnCrunchEnd();
+        npcBrain.OnCrunchEnd(false);
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

@@ -16,7 +16,7 @@ public class NameSecret : Secret
 
     protected override Secret Copy() => new NameSecret(this);
 
-    public override string CreateDescription() => $"{SecretTarget.Name} has another name: {_name}";
+    protected override string CreateDescription() => $"{SecretTarget.Name} has another name: {_name}";
 
     public class Builder : SecretTypeBuilder<NameSecret>
     {

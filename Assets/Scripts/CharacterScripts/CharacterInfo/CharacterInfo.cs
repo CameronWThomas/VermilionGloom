@@ -6,8 +6,13 @@ public abstract class CharacterInfo : MonoBehaviour
 {
     [SerializeField] private bool _isDead;
     [SerializeField] private string _name;
+    [SerializeField] private int _maxHealth = 3;
+    [SerializeField] private float _healthCooldownSec = 5;
 
     private CharacterID _id = null;
+
+    private float? _lastDamageTime = null;
+    private int _currentHealth;
 
     public CharacterID ID => _id ??= CreateCharacterID();    
 
@@ -19,8 +24,18 @@ public abstract class CharacterInfo : MonoBehaviour
 
     protected virtual void Start()
     {
+        _currentHealth = _maxHealth;
         CharacterInfoBB.Instance.Register(this);
         CharacterPortraitContentBB.Instance.Register(ID);
+    }
+
+    protected virtual void Update()
+    {
+        if (!IsDead && _lastDamageTime.HasValue && Time.time - _lastDamageTime.Value >= _healthCooldownSec)
+        {
+            _currentHealth = _maxHealth;
+            _lastDamageTime = null;
+        }
     }
 
     public void CreateName()
@@ -31,6 +46,25 @@ public abstract class CharacterInfo : MonoBehaviour
     public void Die()
     {
         _isDead = true;
+    }
+
+    /// <summary>
+    /// Damages the target. Will return whether they are dead
+    /// </summary>
+    public virtual bool Damage()
+    {
+        if (IsDead)
+            return false;
+
+        _currentHealth--;
+        if (_currentHealth <= 0)
+        {
+            Die();
+            return true;
+        }
+
+        _lastDamageTime = Time.time;
+        return false;
     }
 
     protected abstract CharacterID CreateCharacterID();

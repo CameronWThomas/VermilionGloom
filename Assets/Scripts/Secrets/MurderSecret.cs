@@ -22,9 +22,16 @@ public class MurderSecret : Secret
 
     public override SecretIconIdentifier Identifier => SecretIconIdentifier.Murder;
 
+    public void UpdateJustificationOrAttempt(bool isJustified, bool isAttempt)
+    {
+        _isJustified = isJustified;
+        _isAttempt = isAttempt;
+        ResetDescription();
+    }
+
     protected override Secret Copy() => new MurderSecret(this);
 
-    public override string CreateDescription()
+    protected override string CreateDescription()
     {
         string killLine;
         if (_isAttempt)
@@ -32,7 +39,7 @@ public class MurderSecret : Secret
         else
             killLine = _isJustified ? "killed" : "murdered";
 
-        var murdererName = SecretTarget.Name;
+        var murdererName = GetMurdererName();
         var victimName = GetVictimName();
 
         return $"{murdererName} {killLine} {victimName}";
@@ -44,6 +51,14 @@ public class MurderSecret : Secret
             return "someone long ago...";
 
         return AdditionalCharacter.Name;
+    }
+
+    private string GetMurdererName()
+    {
+        if (!HasSecretTarget)
+            return "Someone";
+
+        return SecretTarget.Name;
     }
 
     public class Builder : SecretTypeBuilder<MurderSecret>
@@ -75,7 +90,6 @@ public class MurderSecret : Secret
         
         public override MurderSecret Build()
         {
-            ValidateNotNull(_murderer, nameof(_murderer));
             ValidateNotNull(_isJustified, nameof(_isJustified));
 
             var murderSecret = new MurderSecret(_isJustified.Value, _isAttempt.Value);

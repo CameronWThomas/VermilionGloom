@@ -17,7 +17,7 @@ public class RoomSecret : Secret
 
     protected override Secret Copy() => new RoomSecret(this);
 
-    public override string CreateDescription() => $"{CurrentSecretOwner.Name} knows about something secret in {_roomID.ToString()}";
+    protected override string CreateDescription() => $"{CurrentSecretOwner.Name} knows about something secret in {_roomID.ToString()}";
 
     public class Builder : SecretTypeBuilder<RoomSecret>
     {
