@@ -83,6 +83,18 @@ public class MvmntController : MonoBehaviour
         StartNewMovementAction(coroutine);
     }
 
+    public void GoToTarget(CharacterID targetCharacter, Action onSuccess = null, Action onFailure = null)
+    {
+        var characterInfo = CharacterInfoBB.Instance.GetCharacterInfo(targetCharacter);
+        if (characterInfo == null)
+        {
+            onFailure?.Invoke();
+            return;
+        }
+
+        GoToTarget(characterInfo.transform, onSuccess, onFailure);
+    }
+
     public void GoToTarget(Transform otherTransform, Action onSuccess = null, Action onFailure = null)
     {
         if (!otherTransform.TryGetComponent<MvmntController>(out var mvmntController))
@@ -152,7 +164,9 @@ public class MvmntController : MonoBehaviour
         AttemptedTarget = targetPos;
         targetPos.y = 0f;
 
-        agent.SetDestination(targetPos);
+        if (!agent.SetDestination(targetPos))
+            CancelMovementAction();
+
         agent.isStopped = false;
 
         while (true)
@@ -180,7 +194,10 @@ public class MvmntController : MonoBehaviour
         agent.isStopped = false;
 
         var destination = getDestination(other);
-        agent.SetDestination(destination);
+        
+        if (!agent.SetDestination(destination))
+            CancelMovementAction();
+
         AttemptedTarget = destination;
 
         var lastOtherPosition = other.transform.position;
@@ -192,7 +209,9 @@ public class MvmntController : MonoBehaviour
                 lastOtherPosition = other.transform.position;
 
                 destination = getDestination(other);
-                agent.SetDestination(destination);
+                if (!agent.SetDestination(destination))
+                    CancelMovementAction();
+                
                 AttemptedTarget = destination;
             }
 

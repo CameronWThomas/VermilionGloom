@@ -66,6 +66,33 @@ public partial class NpcBrain : MonoBehaviour
         _currentRoom = RoomBB.Instance.GetCharacterRoomID(GetComponent<CharacterInfo>().ID);
     }
 
+    public bool CanSeeTarget(CharacterID targetCharacter)
+    {
+        if (!FindCharactersInSight(out var characters))
+            return false;
+
+        return characters.Any(x => x.ID == targetCharacter);
+    }
+
+    //TODO move to looker
+    private bool FindCharactersInSight(out List<CharacterInfo> characters)
+    {
+        // Don't see anyoneRoomCheck
+        if (!looker.TryGetCharactersInSight(out characters))
+            return false;
+
+        // Make sure they are in the same room with us
+        // TODO may not always want this. May do that foot raycast thing
+        characters = characters.Where(x => RoomCheck(RoomBB.Instance.GetCharacterRoomID(x.ID))).ToList();
+
+        return characters.Any();
+    }
+
+    private bool RoomCheck(RoomID otherRoom)
+    {
+        return otherRoom == CurrentRoom || otherRoom is RoomID.Unknown;
+    }
+
     private bool GetIsInConversation()
     {
         if (ConversationTarget == null)

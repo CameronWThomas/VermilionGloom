@@ -34,7 +34,7 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
 
     public void BroadcastSecretEvent(SecretEvent secretEvent)
     {
-        if (_broadcastingSecretEvents.Contains(secretEvent)) return;
+        if (secretEvent == null || _broadcastingSecretEvents.Contains(secretEvent)) return;
 
         _broadcastingSecretEvents.Add(secretEvent);
     }

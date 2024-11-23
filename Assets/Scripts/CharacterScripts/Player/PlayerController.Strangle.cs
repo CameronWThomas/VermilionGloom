@@ -47,13 +47,24 @@ public partial class PlayerController
         var startStrangleTime = Time.time;
         while (Time.time - startStrangleTime <= _strangleTime)
         {
+            if (GetComponent<CharacterInfo>().IsDead)
+            {
+                StrangleInterrupted();
+            }
+
             yield return new WaitForSeconds(Time.deltaTime);
         }        
     }
 
     private void StrangleInterrupted()
     {
-        StrangleTarget.StopBeingStrangled();
+        if (_strangleCoroutine != null)
+            _strangleCoroutine.Stop();
+        _strangleCoroutine = null;
+
+        if (StrangleTarget != null)
+            StrangleTarget.StopBeingStrangled();
+
         _isStrangling = false;
         StrangleTarget = null;
 

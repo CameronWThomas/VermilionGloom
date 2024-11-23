@@ -10,7 +10,6 @@ public partial class NpcBrain
 
     [Header("Interpersonal")]
     public GameObject combatTarget;
-    public float crunchDistance = 2.0f;
 
     // Update is called once per frame
     //void OtherUpdate()
@@ -113,37 +112,4 @@ public partial class NpcBrain
         else
             Debug.Log(gameObject.name + " saw a dead body");
     }
-
-    public void Crunch()
-    {
-        //TODO set once you can get crunched again
-        //animator.SetTrigger("crunch");
-
-
-        // a little tolerance for the player moving away further
-        if(mvmntController.distanceToTarget <= crunchDistance + .3f)
-        {
-            if(combatTarget == null)
-            {
-                return;
-            }
-            // if player 
-            PlayerController pc = combatTarget.GetComponent<PlayerController>();
-            if(pc != null)
-            {
-                pc.Die();
-                combatTarget = null;
-                return;
-            }    
-            // if npc
-            NpcBrain targetBrain = combatTarget.GetComponent<NpcBrain>();
-            if(targetBrain != null)
-            {
-                targetBrain.Die(true);
-                combatTarget = null;
-                return;
-            }
-        }
-    }
-   
 }

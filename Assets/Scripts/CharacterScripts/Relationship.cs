@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 [Serializable]
 public class Relationship
@@ -27,17 +28,19 @@ public class Relationship
     public bool IsHostileTowards => _isHostileTowards;
     public bool IsDead => _isDead;
 
+    private List<Secret> RelevantSecrets => _secretKnowledge.Secrets.Where(IsRelevantSecret).ToList();
+
     public void Reevaluate()
     {
-        _isDead = _characterInfo.IsDead;
+        _isDead = RelevantSecrets.OfType<MurderSecret>().Any(x => !x.IsAttempt && x.AdditionalCharacter == RelationshipTarget);
         _isHostileTowards = GetIsHostileTowards();
     }
 
-    private List<Secret> RelevantSecrets
-        => _secretKnowledge.Secrets.Where(IsRelevantSecret).ToList();
-
     private bool GetIsHostileTowards()
     {
+        if (_isDead)
+            return false;
+
         if (RelevantSecrets.OfType<MurderSecret>().Any(x => !x.IsJustified))
             return true;
 
@@ -50,6 +53,10 @@ public class Relationship
             return true;
 
         if (secret.HasSecretTarget && secret.SecretTarget == _relationshipTarget)
+            return true;
+
+        // Check if we know this person was murdered
+        if (secret is MurderSecret && secret.AdditionalCharacter == RelationshipTarget)
             return true;
 
         return false;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Rendering;
 
 public partial class NpcBrain
 {
@@ -38,7 +39,25 @@ public partial class NpcBrain
         //            break;
         //    }
         //}
-    }    
+    }
+
+    public void AddPersonalMurderSecret(CharacterID victim)
+    {
+        if (!characterSecretKnowledge.TryGetMurderSecret(ID, victim, out var murderSecret))
+        {
+            murderSecret = new MurderSecret.Builder(ID, SecretLevel.Private)
+            .SetMurderer(ID)
+            .SetVictim(victim)
+            .IsJustified()
+            .WasSuccessfulMuder()
+            .Build();
+
+            characterSecretKnowledge.AddSecret(murderSecret);
+        }
+
+        var relationship = GetRelationship(victim);
+        relationship.Reevaluate();
+    }
 
     private void HandleStranglingEvent(SecretEvent secretEvent)
     {
@@ -70,24 +89,5 @@ public partial class NpcBrain
         var involvedCharacters = characters.Select(x => x.ID).Where(x => x == secretEvent.Target || x == secretEvent.Originator);
 
         return involvedCharacters.Any();
-    }
-
-    //TODO move to looker
-    private bool FindCharactersInSight(out List<CharacterInfo> characters)
-    {
-        // Don't see anyoneRoomCheck
-        if (!looker.TryGetCharactersInSight(out characters))
-            return false;
-
-        // Make sure they are in the same room with us
-        // TODO may not always want this. May do that foot raycast thing
-        characters = characters.Where(x => RoomCheck(RoomBB.Instance.GetCharacterRoomID(x.ID))).ToList();
-
-        return characters.Any();
-    }
-
-    private bool RoomCheck(RoomID otherRoom)
-    {
-        return otherRoom == CurrentRoom || otherRoom is RoomID.Unknown;
     }
 }
