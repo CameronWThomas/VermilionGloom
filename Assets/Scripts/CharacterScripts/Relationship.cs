@@ -32,8 +32,28 @@ public class Relationship
 
     public void Reevaluate()
     {
+        CheckIfAnyMurdersShouldBeJustified();
+
         _isDead = RelevantSecrets.OfType<MurderSecret>().Any(x => !x.IsAttempt && x.AdditionalCharacter == RelationshipTarget);
         _isHostileTowards = GetIsHostileTowards();
+    }
+
+    private void CheckIfAnyMurdersShouldBeJustified()
+    {
+        var murderSecrets = RelevantSecrets.OfType<MurderSecret>().ToList();
+        var draggedSecrets = RelevantSecrets.OfType<MurderSecret>().ToList();
+
+        var unjustifiedMurders = murderSecrets.Where(x => x.SecretTarget == RelationshipTarget && !x.IsJustified).ToList();
+
+        // Check if any unjustified murder comitted by the character was against someone who comitted an unjustified murder. They become justified if that is the case.
+        foreach (var unjustifiedMurder in unjustifiedMurders)
+        {
+            var murdererWasVictimOfUnjustifiedMurder = _secretKnowledge.Secrets.OfType<MurderSecret>().Any(x => x.IsAttempt && !x.IsJustified && x.AdditionalCharacter == unjustifiedMurder.SecretTarget);
+            if (!murdererWasVictimOfUnjustifiedMurder)
+                continue;
+
+            unjustifiedMurder.UpdateJustificationOrAttempt(true, unjustifiedMurder.IsAttempt);
+        }
     }
 
     private bool GetIsHostileTowards()
@@ -41,7 +61,10 @@ public class Relationship
         if (_isDead)
             return false;
 
-        if (RelevantSecrets.OfType<MurderSecret>().Any(x => !x.IsJustified))
+        var murderSecrets = RelevantSecrets.OfType<MurderSecret>().ToList();
+        var dragSecrets = RelevantSecrets.OfType<DragSecret>().ToList();
+
+        if (murderSecrets.Any(x => !x.IsJustified) || dragSecrets.Any(x => x.SecretTarget == RelationshipTarget))
             return true;
 
         return false;
@@ -56,7 +79,7 @@ public class Relationship
             return true;
 
         // Check if we know this person was murdered
-        if (secret is MurderSecret && secret.AdditionalCharacter == RelationshipTarget)
+        if (secret.HasAdditionalCharacter && secret.AdditionalCharacter == RelationshipTarget)
             return true;
 
         return false;

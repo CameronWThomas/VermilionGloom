@@ -25,20 +25,20 @@ public class SecretEvent
 {
     public SecretEvent(SecretEventType secretEventType,        
         CharacterID originator,
-        CharacterID target,
+        CharacterID additionalCharacter,
         SecretNoticability secretNoticability,
         SecretDuration secretDuration)
     {
         SecretEventType = secretEventType;        
         Originator = originator;
-        Target = target;
+        AdditionalCharacter = additionalCharacter;
         SecretNoticability = secretNoticability;
         SecretDuration = secretDuration;
     }
 
     public SecretEventType SecretEventType { get; }
     public CharacterID Originator { get; }
-    public CharacterID Target { get; }
+    public CharacterID AdditionalCharacter { get; }
 
     public SecretDuration SecretDuration { get; }
     public SecretNoticability SecretNoticability { get; }

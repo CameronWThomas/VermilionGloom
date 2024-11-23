@@ -20,6 +20,7 @@ public partial class NpcBrain
             {
                 SecretEventType.StranglingSomeone => HandleStranglingEvent,
                 SecretEventType.KilledSomeone => HandleKilledSomeoneEvent,
+                SecretEventType.DraggingABody => HandleDraggingABodyEvent,
                 _ => null
             };
 
@@ -47,11 +48,11 @@ public partial class NpcBrain
         //            break;
         //    }
         //}
-    }
+    }    
 
     private bool IsSecretEventNoticable(SecretEvent secretEvent)
     {
-        if (secretEvent.Target == ID)
+        if (secretEvent.AdditionalCharacter == ID)
             return true;
 
         var noticable = secretEvent.SecretNoticability switch
@@ -71,7 +72,7 @@ public partial class NpcBrain
         if (!FindCharactersInSight(out var characters))
             return false;
 
-        var involvedCharacters = characters.Select(x => x.ID).Where(x => x == secretEvent.Target || x == secretEvent.Originator);
+        var involvedCharacters = characters.Select(x => x.ID).Where(x => x == secretEvent.AdditionalCharacter || x == secretEvent.Originator);
 
         return involvedCharacters.Any();
     }
@@ -85,7 +86,7 @@ public partial class NpcBrain
         if (RoomBB.Instance.GetCharacterRoomID(secretEvent.Originator) == myRoom)
             return true;
 
-        return RoomBB.Instance.GetCharacterRoomID(secretEvent.Target) == myRoom;
+        return RoomBB.Instance.GetCharacterRoomID(secretEvent.AdditionalCharacter) == myRoom;
     }
 
     private MurderSecret CreatePersonalMurderSecret(CharacterID victim, out bool wasExistingSecret)
@@ -105,11 +106,11 @@ public partial class NpcBrain
 
     private void HandleStranglingEvent(SecretEvent secretEvent)
     {
-        if (!characterSecretKnowledge.TryGetMurderSecret(secretEvent.Originator, secretEvent.Target, out var murderSecret))
+        if (!characterSecretKnowledge.TryGetMurderSecret(secretEvent.Originator, secretEvent.AdditionalCharacter, out var murderSecret))
         {
             murderSecret = new MurderSecret.Builder(ID, SecretLevel.Public)
                 .SetMurderer(secretEvent.Originator)
-                .SetVictim(secretEvent.Target)
+                .SetVictim(secretEvent.AdditionalCharacter)
                 .IsNotJustified()
                 .WasAttempt()
                 .Build();
@@ -117,17 +118,20 @@ public partial class NpcBrain
             characterSecretKnowledge.AddSecret(murderSecret);
         }
 
-        var relationship = GetRelationship(secretEvent.Originator);
-        relationship.Reevaluate();
+        var relationshipWithStrangler = GetRelationship(secretEvent.Originator);
+        var relationshipWithStrangled = GetRelationship(secretEvent.AdditionalCharacter);
+        relationshipWithStrangler.Reevaluate();
+        relationshipWithStrangled.Reevaluate();
     }
 
     private void HandleKilledSomeoneEvent(SecretEvent secretEvent)
     {
         var relationshipWithKiller = GetRelationship(secretEvent.Originator);
+        var relationshipWithVictim = GetRelationship(secretEvent.AdditionalCharacter);
 
-        var isJustified = GetRelationship(secretEvent.Target).IsHostileTowards;
+        var isJustified = relationshipWithVictim.IsHostileTowards;
 
-        if (characterSecretKnowledge.TryGetMurderSecret(secretEvent.Originator, secretEvent.Target, out var murderSecret))
+        if (characterSecretKnowledge.TryGetMurderSecret(secretEvent.Originator, secretEvent.AdditionalCharacter, out var murderSecret))
         {
             murderSecret.UpdateJustificationOrAttempt(isJustified, false);
             murderSecret.UpdateSecretLevel(SecretLevel.Public);
@@ -136,7 +140,7 @@ public partial class NpcBrain
         {
             var murderSecretBuilder = new MurderSecret.Builder(secretEvent.Originator, SecretLevel.Public)
                 .SetMurderer(secretEvent.Originator)
-                .SetVictim(secretEvent.Target)
+                .SetVictim(secretEvent.AdditionalCharacter)
                 .WasSuccessfulMuder();
 
             if (isJustified)
@@ -149,5 +153,28 @@ public partial class NpcBrain
         }
 
         relationshipWithKiller.Reevaluate();
+        relationshipWithVictim.Reevaluate();
+    }
+
+    private void HandleDraggingABodyEvent(SecretEvent secretEvent)
+    {
+        var dragSecret = characterSecretKnowledge.GetSecrets(secretEvent.Originator, secretEvent.AdditionalCharacter)
+            .OfType<DragSecret>()
+            .FirstOrDefault();
+
+        if (dragSecret == null)
+        {
+            dragSecret = new DragSecret.Builder(ID, SecretLevel.Public)
+                .SetDragger(secretEvent.Originator)
+                .SetDragged(secretEvent.AdditionalCharacter)
+                .Build();
+
+            characterSecretKnowledge.AddSecret(dragSecret);
+        }
+
+        var draggerRelationship = GetRelationship(secretEvent.Originator);
+        var draggedRelationship = GetRelationship(secretEvent.AdditionalCharacter);
+        draggerRelationship.Reevaluate();
+        draggedRelationship.Reevaluate();
     }
 }

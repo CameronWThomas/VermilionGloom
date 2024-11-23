@@ -46,6 +46,9 @@ public abstract class CharacterInfo : MonoBehaviour
     public void Die()
     {
         _isDead = true;
+        
+        // will be updated next frame, but we need to force it now
+        GetComponent<CharacterAnimator>().HasDied();
     }
 
     /// <summary>

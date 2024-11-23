@@ -29,4 +29,11 @@ public class CharacterSecretKnowledge : MonoBehaviour
         murderSecret = Secrets.OfType<MurderSecret>().FirstOrDefault(x => x.SecretTarget == murderer && x.AdditionalCharacter == victim);
         return murderSecret != null;
     }
+
+    public List<Secret> GetSecrets(CharacterID target, CharacterID additionalCharacter)
+    {
+        return Secrets.Where(x => x.HasAdditionalCharacter && x.HasSecretTarget)
+            .Where(x => x.SecretTarget == target && x.AdditionalCharacter == additionalCharacter)
+            .ToList();
+    }
 }
