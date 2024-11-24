@@ -118,6 +118,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 
     private void HandleInteractableClick(SecretPassage secretPassage)
     {
+        Debug.Log("Secret Passage Clicked: " + secretPassage.name);
         playerMvmnt.GoToTarget(secretPassage.DestinationPoint, () => secretPassage.UsePassage(PlayerStats.Instance.transform));
     }
 

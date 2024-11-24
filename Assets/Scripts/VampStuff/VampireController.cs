@@ -8,7 +8,7 @@ public class VampireController : MonoBehaviour
     {
         
         animator = GetComponent<Animator>();
-        animator.SetBool("isVamp", true);
+        animator.SetFloat("vampyness", 1);
     }
 
     // Update is called once per frame

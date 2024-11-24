@@ -16,9 +16,11 @@ public class SecretPassage : MonoBehaviour
 
     public void UsePassage(Transform transportedTransform)
     {
+        Debug.Log("Using Passage: " + name);
         if (EndPoint == null)
             return;
-
+        Debug.Log("Endpoint: " + EndPoint.name);
+        Debug.Log("Transported Transform: " + transportedTransform.name);
         StartCoroutine(Transport(transportedTransform));
     }
 
