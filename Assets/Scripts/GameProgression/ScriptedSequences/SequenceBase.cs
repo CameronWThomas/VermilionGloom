@@ -1,30 +1,45 @@
-using BehaviorDesigner.Runtime.Tasks.Unity.UnityQuaternion;
-using System;
 using System.Collections;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public abstract class SequenceBase : MonoBehaviour
 {
-    public bool SequencePlayable = true;
+    [SerializeField] bool _sequencePlayable = true;
     public bool SequenceFinished = false;
+
+    protected VampireController _vampire;
+
 
     protected virtual void Start()
     {
+        _vampire = GameState.Instance.Vampire;
         SequenceFinished = false;
     }
 
-    protected virtual void SetInitialState(bool sequencePlayed)
+    protected void Update()
     {
-        SequencePlayable = !sequencePlayed;
+        if (!_sequencePlayable || !SequencePlayingCondition())
+            return;
+
+        PlaySequence();
+    }
+
+    protected abstract bool SequencePlayingCondition();    
+
+    protected virtual void OnInitializePlayable() { }
+
+    protected void SetInitialState(bool sequencePlayed)
+    {
+        _sequencePlayable = !sequencePlayed;
+        if (_sequencePlayable)
+            OnInitializePlayable();
     }
 
     protected void PlaySequence()
     {
-        if (!SequencePlayable)
+        if (!_sequencePlayable)
             return;
 
-        SequencePlayable = false;
+        _sequencePlayable = false;
 
         var sequenceRunner = GetSequenceRunner();
         OnSequenceStart();
@@ -44,6 +59,36 @@ public abstract class SequenceBase : MonoBehaviour
 
     protected abstract SequenceRunner GetSequenceRunner();
 
+    protected static IEnumerator GoToTarget(MvmntController mvmntController, Transform target)
+    {
+        var walkDone = false;
+        mvmntController.GoToTarget(target, () => walkDone = true, () => walkDone = true);
+
+        while (!walkDone)
+            yield return new WaitForEndOfFrame();
+    }
+
+    protected static IEnumerator FaceTarget(MvmntController mvmntController, Transform target)
+    {
+        yield return new WaitForEndOfFrame();
+        mvmntController.FaceTarget(target.position);
+        yield return new WaitForEndOfFrame();
+    }
+
+    protected static IEnumerator MoveCameraToTarget(Transform target, float duration)
+    {
+        var cameraTransform = Camera.main.transform;
+        var followCamera = cameraTransform.GetComponent<FollowCam>();
+        followCamera.enabled = false;
+
+        var offset = followCamera.InitialOffset;
+
+        var startingPosition = cameraTransform.position;
+        var endingPosition = target.position + offset;
+
+        yield return Slerp(cameraTransform, startingPosition, endingPosition, duration);
+    }
+
     protected static IEnumerator Slerp(Transform slerpedTransform,
         Vector3 startingPosition, Vector3 finalPosition,
         float duration)
@@ -59,6 +104,17 @@ public abstract class SequenceBase : MonoBehaviour
             start.position, start.rotation,
             end.position, end.rotation,
             duration);
+
+    protected static IEnumerator Slerp(Transform slerpedTransform, Transform endTransform, float duration)
+    {
+        var position = slerpedTransform.position;
+        var rotation = slerpedTransform.rotation;
+
+        yield return Slerp(slerpedTransform,
+            position, rotation,
+            endTransform.position, endTransform.rotation,
+            duration);
+    }
 
     protected static IEnumerator Slerp(Transform slerpedTransform,
         Vector3 startingPosition, Quaternion startingRotation,

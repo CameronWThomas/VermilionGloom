@@ -5,6 +5,8 @@ public class TriggerVolume : MonoBehaviour
 {
     [Header("Trigger Volume")]
     public bool IsPlayerPresent = false;
+    public bool IsNpcBodyPresent = false;
+
 
 
     [Header("Debug")]
@@ -29,11 +31,15 @@ public class TriggerVolume : MonoBehaviour
     {
         if (other.transform.IsPlayer())
             IsPlayerPresent = true;
+        else if (other.transform.IsNpc() && other.transform.GetComponent<CharacterInfo>().IsDead)
+            IsNpcBodyPresent = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.transform.IsPlayer())
             IsPlayerPresent = false;
+        else if (other.transform.IsNpc())
+            IsNpcBodyPresent = false;
     }
 }

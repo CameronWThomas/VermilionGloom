@@ -15,7 +15,6 @@ public class VampireDiscoverySequence : SequenceBase
     [Header("Camera Stuff")]
     [SerializeField] float _sequenceFOV = 10f;
 
-    private VampireController _vampire;
     private CoffinController _coffinController;
 
     private float _startingFOV;
@@ -27,28 +26,19 @@ public class VampireDiscoverySequence : SequenceBase
         base.Start();
         var gameState = GameState.Instance;
         
-        _vampire = gameState.Vampire;
         _coffinController = gameState.CoffinController;
 
         //TODO sequence should look to this. Not other wayu around
         SetInitialState(gameState.VampireLordVisited);
     }
 
-    private void Update()
+    protected override bool SequencePlayingCondition()
     {
-        if (!SequencePlayable || !GetComponent<TriggerVolume>().IsPlayerPresent)
-            return;
-
-        PlaySequence();
+        return GetComponent<TriggerVolume>().IsPlayerPresent;
     }
 
-    protected override void SetInitialState(bool sequencePlayed)
+    protected override void OnInitializePlayable()
     {
-        base.SetInitialState(sequencePlayed);
-
-        if (sequencePlayed)
-            return;
-
         // Turn off the vampire
         GameState.Instance.Vampire.gameObject.SetActive(false);
     }
@@ -62,10 +52,14 @@ public class VampireDiscoverySequence : SequenceBase
             .AddRoutine(() => _coffinController.OpenCoffin())
             .AddWait(1f)
             .AddRoutine(FloatAboveCoffin)
-            .AddWait(3f) // Talking time
-            .AddRoutine(() => _coffinController.CloseCoffin()) // Talking time
-            .AddWait(3f) // Talking time
-            .AddRoutine(FloatDownToNormalPosition)
+            .AddWait(1f)
+
+            .StartAddingParallelSequenceRoutines() // Talking. Eventually add some parallel routine for the talking
+            .AddParallelRoutines(() => _coffinController.CloseCoffin()) 
+            .AddParallelRoutines(12f)
+            .EndAddParallelRoutines()
+
+            .AddRoutine(VampireToDefaultPosition)
             .AddWait(1f)
             .AddRoutine(MoveCameraToPlayer);
     }
@@ -120,7 +114,7 @@ public class VampireDiscoverySequence : SequenceBase
 
     private IEnumerator MoveCameraToPlayer()
     {
-        yield return MoveCameraToTarget(PlayerStats.Instance.transform);
+        yield return MoveCameraToTarget(PlayerStats.Instance.transform, _moveCameraTime);
         yield return ZoomCamera(_sequenceFOV, _startingFOV);
 
         Camera.main.GetComponent<FollowCam>().enabled = true;
@@ -128,22 +122,8 @@ public class VampireDiscoverySequence : SequenceBase
 
     private IEnumerator MoveCameraToCoffin()
     {
-        yield return MoveCameraToTarget(UsefulTransforms.V_InCoffin);
-    }
-
-    private IEnumerator MoveCameraToTarget(Transform target)
-    {
-        var cameraTransform = Camera.main.transform;
-        var followCamera = cameraTransform.GetComponent<FollowCam>();
-        followCamera.enabled = false;
-
-        var offset = followCamera.InitialOffset;
-
-        var startingPosition = cameraTransform.position;
-        var endingPosition = target.position + offset;
-
-        yield return Slerp(cameraTransform, startingPosition, endingPosition, _moveCameraTime);
-    }
+        yield return MoveCameraToTarget(UsefulTransforms.V_InCoffin, _moveCameraTime);
+    }    
 
     private IEnumerator FloatAboveCoffin()
     {
@@ -156,14 +136,8 @@ public class VampireDiscoverySequence : SequenceBase
         yield return Slerp(_vampire.transform, UsefulTransforms.V_InCoffin, UsefulTransforms.V_FloatingAboveCoffin, _floatToAboveCoffinTime);
     }
 
-    private IEnumerator FloatDownToNormalPosition()
+    private IEnumerator VampireToDefaultPosition()
     {
-        var vampirePosition = _vampire.transform.position;
-        var vampireRotation = _vampire.transform.rotation;
-
-        yield return Slerp(_vampire.transform,
-            vampirePosition, vampireRotation,
-            UsefulTransforms.V_Default.position, UsefulTransforms.V_Default.rotation,
-            _vampireToDefaultPositionTime);
-    }    
+        yield return Slerp(_vampire.transform, UsefulTransforms.V_Default, _vampireToDefaultPositionTime);
+    } 
 }

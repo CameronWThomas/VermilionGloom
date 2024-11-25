@@ -50,9 +50,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VampireLordVisited: 0
+  _bodyDeliverCount: 0
+  _winGameBodyCount: 5
   Vampire: {fileID: 0}
   CoffinController: {fileID: 0}
-  DefaultVampireLordPosition: {fileID: 0}
 --- !u!114 &1646189131240597721
 MonoBehaviour:
   m_ObjectHideFlags: 0

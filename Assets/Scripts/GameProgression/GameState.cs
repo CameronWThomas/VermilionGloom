@@ -2,14 +2,18 @@ using UnityEngine;
 
 public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
 {
-    [Header("Protression")]
+    private const int MAX_BODIES = 10;
+
+    [Header("Progression")]
     public bool VampireLordVisited = false;
+    [SerializeField, Range(0, MAX_BODIES)] int _bodyDeliverCount = 0;
+
+    [Header("Progression Conditions")]
+    [SerializeField, Range(0, MAX_BODIES)] int _winGameBodyCount = 5;
 
     [Header("Needed to help run sequences")]
     public VampireController Vampire;
     public CoffinController CoffinController;
-
-    private VampireDiscoverySequence _vampireDiscoverySequence;
 
     protected override void Start()
     {

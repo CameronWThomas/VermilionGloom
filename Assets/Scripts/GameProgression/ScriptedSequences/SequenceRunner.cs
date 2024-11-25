@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SequenceRunner
@@ -8,6 +9,7 @@ public class SequenceRunner
     List<ISequencePart> _sequenceParts = new();
 
     private bool _hasBeenRun = false;
+    private ParallelSequenceParts _parallelRoutineSequencePart = null;
 
     public SequenceRunner AddRoutine(Func<IEnumerator> sequencePartRoutine, float maxDuration = 10f)
     {
@@ -20,6 +22,33 @@ public class SequenceRunner
         _sequenceParts.Add(new DurationSequencePart(duration));
         return this;
     }
+
+    public SequenceRunner StartAddingParallelSequenceRoutines(float maxDuration = 10f)
+    {
+        _parallelRoutineSequencePart = new ParallelSequenceParts(maxDuration);
+        return this;
+    }
+
+    public SequenceRunner AddParallelRoutines(params Func<IEnumerator>[] sequencePartRoutines)
+    {
+        foreach (var sequencePartRoutine in sequencePartRoutines)
+            _parallelRoutineSequencePart.SequenceParts.Add(new RoutineSequencePart(sequencePartRoutine, _parallelRoutineSequencePart.MaxDuration));
+
+        return this;
+    }
+
+    public SequenceRunner AddParallelRoutines(float waitTime)
+    {
+        _parallelRoutineSequencePart.SequenceParts.Add(new DurationSequencePart(waitTime));
+        return this;
+    }
+
+    public SequenceRunner EndAddParallelRoutines()
+    {
+        _sequenceParts.Add(_parallelRoutineSequencePart);
+        _parallelRoutineSequencePart = null;
+        return this;
+    }    
 
     public void Run(MonoBehaviour callingMonoBehaviour, Action onEndOfSequence)
     {
@@ -37,31 +66,52 @@ public class SequenceRunner
     {
         foreach (var sequencePart in _sequenceParts)
         {
-            if (sequencePart is RoutineSequencePart routineSequencePart)
-                yield return RoutineSequencePartRoutine(callingMonoBehaviour, routineSequencePart);
-            else if (sequencePart is DurationSequencePart durationSequencePart)
-                yield return DurationRoutine(durationSequencePart.Duration);
+            if (sequencePart is ParallelSequenceParts parallelSequencePart)
+                yield return ParallelSequencePartRoutine(callingMonoBehaviour, parallelSequencePart);
+            else
+                yield return RunNonParallelSequencePart(callingMonoBehaviour, sequencePart);
         }
 
         onEndOfSequence?.Invoke();
     }
 
-    private IEnumerator RoutineSequencePartRoutine(MonoBehaviour callingMonoBehaviour, RoutineSequencePart routineSequencePart)
+    private IEnumerator RunNonParallelSequencePart(MonoBehaviour callingMonoBehaviour, ISequencePart sequencePart, Action completeAction = null)
     {
-        var hasSequenceEnded = false;
-        var sequenceCoroutine = new CoroutineContainer(callingMonoBehaviour, routineSequencePart.SequencePartGetter, () => hasSequenceEnded = true);
-        var durationLimiterCoroutine = new CoroutineContainer(callingMonoBehaviour, () => DurationRoutine(routineSequencePart.MaxDuration), () => hasSequenceEnded = true);
+        if (sequencePart is RoutineSequencePart routineSequencePart)
+            yield return RoutineSequencePartRoutine(callingMonoBehaviour, routineSequencePart, completeAction);
+        else if (sequencePart is DurationSequencePart durationSequencePart)
+            yield return DurationRoutine(durationSequencePart.Duration, completeAction);
+    }
+
+    private IEnumerator RoutineSequencePartRoutine(MonoBehaviour callingMonoBehaviour, RoutineSequencePart routineSequencePart, Action completeAction)
+    {
+        var sequenceCoroutine = new CoroutineContainer(callingMonoBehaviour, routineSequencePart.SequencePartGetter);
+        var durationLimiterCoroutine = new CoroutineContainer(callingMonoBehaviour, () => DurationRoutine(routineSequencePart.MaxDuration, null));
 
         sequenceCoroutine.Start();
         durationLimiterCoroutine.Start();
 
-        while (!hasSequenceEnded)
-            yield return new WaitForSeconds(Time.deltaTime);
+        while (!sequenceCoroutine.HasEnded && !durationLimiterCoroutine.HasEnded)
+            yield return new WaitForNextFrameUnit();
+
+        completeAction?.Invoke();
     }
 
-    private IEnumerator DurationRoutine(float duration)
+    private IEnumerator DurationRoutine(float duration, Action completeAction)
     {
         yield return new WaitForSeconds(duration);
+        completeAction?.Invoke();
+    }
+
+    private IEnumerator ParallelSequencePartRoutine(MonoBehaviour callingMonoBehaviour, ParallelSequenceParts parallelSequencePart)
+    {
+        var endCount = 0;
+        var parallelSequenceCount = parallelSequencePart.SequenceParts.Count;
+        foreach (var sequencePart in parallelSequencePart.SequenceParts)
+            callingMonoBehaviour.StartCoroutine(RunNonParallelSequencePart(callingMonoBehaviour, sequencePart, () => endCount++));
+
+        while (endCount < parallelSequenceCount)
+            yield return new WaitForNextFrameUnit();
     }
 
     private interface ISequencePart { }
@@ -75,6 +125,17 @@ public class SequenceRunner
         }
 
         public Func<IEnumerator> SequencePartGetter { get; }
+        public float MaxDuration { get; }
+    }
+
+    private class ParallelSequenceParts : ISequencePart
+    {
+        public ParallelSequenceParts(float maxDuration)
+        {
+            MaxDuration = maxDuration;
+        }
+
+        public List<ISequencePart> SequenceParts { get; } = new();
         public float MaxDuration { get; }
     }
 
