@@ -7491,6 +7491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followTarget: {fileID: 1708196719}
   zoomLimits: {x: 5, y: 20}
+  smoothSpeed: 0.002
 --- !u!43 &345582969
 Mesh:
   m_ObjectHideFlags: 0
@@ -13906,8 +13907,8 @@ MonoBehaviour:
         byteData: 
         byteDataArray: 
       Version: 
-  gizmoViewMode: 2
-  showBehaviorDesignerGizmo: 1
+  gizmoViewMode: 0
+  showBehaviorDesignerGizmo: 0
 --- !u!43 &670699458
 Mesh:
   m_ObjectHideFlags: 0

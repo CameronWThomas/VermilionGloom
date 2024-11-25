@@ -2,39 +2,40 @@ using UnityEngine;
 
 public class FollowCam : MonoBehaviour
 {
-    /*
-     * 
-     * This implementation is really simple, feel free to modify
-     * 
-     * 
-     * In the future it would be good to lerp to its position, 
-     * and potentially move outwards a little towards the cursor
-     * 
-     */
+	public Transform player;
+	public float followSpeed = 1.25f;
+	public float mousePanLimit = 10f; 
+	public float panSpeed = 3f;
 
-    public Transform followTarget;
-    private Vector3 initialOffset;
+	private Vector3 initialoffset;
 
-    private Vector3 zoomDirection;
+	void Start()
+	{
+		// Set initial offset between camera and player
+		initialoffset = transform.position - player.position;
+	}
 
-    //TODO: implement
-    [Header("Zoom Settings")]
-    private float targetDistance;
-    public Vector2 zoomLimits = new Vector2(5, 20);
+	void Update()
+	{
+		FollowPlayerWithMousePan();
+	}
 
+	void FollowPlayerWithMousePan()
+	{
+		// Get mouse position relative to screen center
+		Vector3 mousePosition = Input.mousePosition;
+		Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
+		Vector3 mouseOffset = mousePosition - screenCenter;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        initialOffset = transform.position - followTarget.position;
-        zoomDirection = followTarget.position - transform.position;
-    }
+		// Normalize the offset and apply limit to control panning amount
+		Vector3 panMovement = new Vector3(mouseOffset.x / Screen.width, 0, mouseOffset.y / Screen.height) * panSpeed;
+		panMovement = Vector3.ClampMagnitude(panMovement, mousePanLimit);
 
-    // Update is called once per frame
-    void Update()
-    {
-        transform.position = followTarget.position + initialOffset;
-    }
+		// Target position for the camera based on player's position, initial offset, and pan movement
+		Vector3 targetPosition = player.position + initialoffset + panMovement;
 
-
+		// Smoothly interpolate camera's position to follow the player and apply panning
+		transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
+	}
 }
+
