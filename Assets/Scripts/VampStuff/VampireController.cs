@@ -8,9 +8,7 @@ public class VampireController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
-        animator = GetComponent<Animator>();
-        animator.SetFloat("vampyness", 1);
+        SetMaxVampyness();
     }
 
     // Update is called once per frame
@@ -31,5 +29,11 @@ public class VampireController : MonoBehaviour
     public void Bless()
     {
         animator.SetTrigger("v-bless");
+    }
+
+    public void SetMaxVampyness()
+    {
+        animator = GetComponent<Animator>();
+        animator.SetFloat("vampyness", 1);
     }
 }

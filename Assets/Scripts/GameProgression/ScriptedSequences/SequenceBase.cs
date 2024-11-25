@@ -49,6 +49,11 @@ public abstract class SequenceBase : MonoBehaviour
             OnInitializePlayable();
     }
 
+    protected void ReenableCutScene()
+    {
+        SetInitialState(true);
+    }
+
     protected void PlaySequence()
     {
         if (!_sequencePlayable)
@@ -65,12 +70,15 @@ public abstract class SequenceBase : MonoBehaviour
 
     protected virtual void OnSequenceStart()
     {
+        PlayerController.DisableInputForCutscene();
+
         MouseReceiver.Instance.Deactivate();
     }
 
     protected virtual void OnSequenceEnd()
     {
         MouseReceiver.Instance.Activate();
+        PlayerController.RenableInputAfterCutscene();
         SequenceFinished = true;        
     }
 

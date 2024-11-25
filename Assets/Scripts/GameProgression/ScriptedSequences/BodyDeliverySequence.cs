@@ -43,6 +43,9 @@ public class BodyDeliverySequence : SequenceBase
     {
         base.OnSequenceEnd();
         GameState.Instance.BodyDeliverCount++;
+
+        if (GetIsPlayable())
+            ReenableCutScene();
     }
 
     protected override void PopulateSequenceRunner(SequenceRunner sequenceRunner)
@@ -52,12 +55,11 @@ public class BodyDeliverySequence : SequenceBase
         sequenceRunner
             .AddRoutine(() => VampireToDefaultPosition(3f))
 
-            .StartAddingParallelSequenceRoutines()
             .AddRoutine(() => PlayerToTargets(UsefulTransforms.P_AddressingVampire))
-            .EndParallelRoutines()
+            .AddRoutine(() => PlayerFaceTarget(_vampire.transform))
 
             // Talking
-            .AddWait(12f) // Remove when we have talking
+            .AddWait(1f) // Remove when we have talking
 
             .AddRoutine(Bless)
 

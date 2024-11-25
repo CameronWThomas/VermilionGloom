@@ -52,7 +52,7 @@ public class VampireDiscoverySequence : SequenceBase
 
             .StartAddingParallelSequenceRoutines() // Talking. Eventually add some parallel routine for the talking
             .AddRoutine(() => _coffinController.CloseCoffin())
-            .AddWait(12f) // Remove when we have talking
+            .AddWait(1f) // Remove when we have talking
             .EndParallelRoutines()
 
             .AddRoutine(() => VampireToDefaultPosition(_vampireToDefaultPositionTime))
@@ -78,6 +78,11 @@ public class VampireDiscoverySequence : SequenceBase
         yield return new WaitForSeconds(Time.deltaTime);
 
         _vampire.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(Time.deltaTime);
+
+        _vampire.SetMaxVampyness();
+
 
         yield return Slerp(_vampire.transform, UsefulTransforms.V_InCoffin, UsefulTransforms.V_FloatingAboveCoffin, _floatToAboveCoffinTime);
     }    
