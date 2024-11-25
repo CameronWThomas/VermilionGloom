@@ -12,9 +12,6 @@ public enum SecretEventResponse
 
 public partial class NpcBrain
 {
-    [Header("Secret Processing")]
-    [SerializeField] float _processedSecretCleanupTime = 5f;
-
     public List<SecretEvent> NewSecretEvents { get; } = new();
     public List<SecretEvent> ProcessedSecretEvents { get; } = new();
 

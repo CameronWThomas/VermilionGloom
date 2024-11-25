@@ -7,9 +7,11 @@ public class RoomVisibilityManager : GlobalSingleInstanceMonoBehaviour<RoomVisib
     public Room[] rooms;
     public Room lastVisibleRoom;
 
-    private void Start()
+
+    protected override void Start()
     {
-        rooms = FindObjectsOfType<Room>();
+        base.Start();
+        rooms = FindObjectsByType<Room>(FindObjectsSortMode.InstanceID);
     }
 
     public void UpdateRoomVisibility(Room visibleRoom)

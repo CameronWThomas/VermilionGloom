@@ -9,11 +9,11 @@ public class WorldManager : GlobalSingleInstanceMonoBehaviour<WorldManager>
     public Vector2 lightVals = new Vector2(0f, 20f);
     public float exprpSteepness = 3;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        roomVisibilityManager = RoomVisibilityManager.Instance;
 
-        
+    protected override void Start()
+    {
+        base.Start();
+        roomVisibilityManager = RoomVisibilityManager.Instance;
     }
 
     // Update is called once per frame
