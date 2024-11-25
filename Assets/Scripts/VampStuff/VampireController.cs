@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class VampireController : MonoBehaviour
 {
@@ -15,6 +16,20 @@ public class VampireController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        var agent = GetComponent<NavMeshAgent>();
+        if (agent.enabled)
+            animator.SetFloat("speedPercent", agent.velocity.magnitude);
+        else
+            animator.SetFloat("speedPercent", 0f);
+    }
+
+    public void Suck(bool suckEm)
+    {
+        animator.SetBool("v-suck", suckEm);
+    }
+
+    public void Bless()
+    {
+        animator.SetTrigger("v-bless");
     }
 }

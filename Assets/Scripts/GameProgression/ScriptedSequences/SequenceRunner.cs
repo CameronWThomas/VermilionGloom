@@ -44,7 +44,7 @@ public class SequenceRunner
         _sequenceParts.Add(_parallelRoutineSequencePart);
         _parallelRoutineSequencePart = null;
         return this;
-    }    
+    }
 
     public void Run(MonoBehaviour callingMonoBehaviour, Action onEndOfSequence)
     {

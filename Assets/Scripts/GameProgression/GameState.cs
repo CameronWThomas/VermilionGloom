@@ -6,7 +6,7 @@ public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
 
     [Header("Progression")]
     public bool VampireLordVisited = false;
-    [SerializeField, Range(0, MAX_BODIES)] int _bodyDeliverCount = 0;
+    [Range(0, MAX_BODIES)]public int BodyDeliverCount = 0;
 
     [Header("Progression Conditions")]
     [SerializeField, Range(0, MAX_BODIES)] int _winGameBodyCount = 5;

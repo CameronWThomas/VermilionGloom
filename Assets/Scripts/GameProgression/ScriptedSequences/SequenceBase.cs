@@ -1,13 +1,19 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class SequenceBase : MonoBehaviour
 {
+    [Header("General Segment Stuff")]
     [SerializeField] bool _sequencePlayable = true;
+    [SerializeField] float _zoomCameraTime = 1f;
+    [SerializeField] float _sequenceFOV = 10f;
+
     public bool SequenceFinished = false;
 
     protected VampireController _vampire;
+    protected float _startingFOV;
 
     protected UsefulTransforms UsefulTransforms => UsefulTransforms.Instance;
 
@@ -15,6 +21,8 @@ public abstract class SequenceBase : MonoBehaviour
     protected virtual void Start()
     {
         _vampire = GameState.Instance.Vampire;
+        _startingFOV = Camera.main.fieldOfView;
+
         SequenceFinished = false;
     }
 
@@ -67,8 +75,30 @@ public abstract class SequenceBase : MonoBehaviour
         yield return Slerp(_vampire.transform, UsefulTransforms.V_Default, duration);
     }
 
+    protected IEnumerator StartSucking()
+    {
+        _vampire.Suck(true);
+        yield break;
+    }
+
+    protected IEnumerator StopSucking()
+    {
+        _vampire.Suck(false);
+        yield break;
+    }
+
+    protected IEnumerator Bless()
+    {
+        _vampire.Bless();        
+        yield return new WaitForSeconds(3f);
+    }
+
     protected static Transform PlayerTransform => PlayerStats.Instance.transform;
-    
+    protected static PlayerController PlayerController => PlayerTransform.GetComponent<PlayerController>();
+
+    protected IEnumerator ZoomCameraStartSequence() => ZoomCamera(_startingFOV, _sequenceFOV, _zoomCameraTime);
+    protected IEnumerator ZoomCameraEndSequence() => ZoomCamera(_sequenceFOV, _startingFOV, _zoomCameraTime);
+
     protected static IEnumerator ZoomCamera(float startFOV, float endFOV, float duration)
     {
         var startTime = Time.time;
@@ -84,10 +114,25 @@ public abstract class SequenceBase : MonoBehaviour
         Camera.main.fieldOfView = endFOV;
     }
 
-    protected static IEnumerator PlayerToTargets(params Transform[] targets) => GoToTargets(PlayerTransform.GetComponent<MvmntController>(), targets);
 
-    protected static IEnumerator GoToTargets(MvmntController mvmntController, params Transform[] targets)
+    protected IEnumerator VampireToTargets(params Transform[] targets)
     {
+        var navMeshAgent = _vampire.GetComponent<NavMeshAgent>();
+        var mvmntController = _vampire.GetComponent<MvmntController>();
+
+        navMeshAgent.enabled = true;
+        mvmntController.enabled = true;
+        yield return GoToTargets(_vampire.transform, targets);
+        navMeshAgent.enabled = false;
+        mvmntController.enabled = false;
+    }
+
+    protected static IEnumerator PlayerToTargets(params Transform[] targets) => GoToTargets(PlayerTransform, targets);    
+
+    protected static IEnumerator GoToTargets(Transform movingTransform, params Transform[] targets)
+    {
+        var mvmntController = movingTransform.GetComponent<MvmntController>();
+
         foreach (var target in targets)
         {
             var walkDone = false;
