@@ -13,33 +13,29 @@ public class SequenceRunner
 
     public SequenceRunner AddRoutine(Func<IEnumerator> sequencePartRoutine, float maxDuration = 10f)
     {
-        _sequenceParts.Add(new RoutineSequencePart(sequencePartRoutine, maxDuration));
+        var sequencePart = new RoutineSequencePart(sequencePartRoutine, maxDuration);
+        if (_parallelRoutineSequencePart == null)
+            _sequenceParts.Add(sequencePart);
+        else
+            _parallelRoutineSequencePart.SequenceParts.Add(sequencePart);
+
         return this;
     }
 
     public SequenceRunner AddWait(float duration)
     {
-        _sequenceParts.Add(new DurationSequencePart(duration));
+        var sequencePart = new DurationSequencePart(duration);
+        if (_parallelRoutineSequencePart == null)
+            _sequenceParts.Add(sequencePart);
+        else
+            _parallelRoutineSequencePart.SequenceParts.Add(sequencePart);
+
         return this;
     }
 
     public SequenceRunner StartAddingParallelSequenceRoutines(float maxDuration = 10f)
     {
         _parallelRoutineSequencePart = new ParallelSequenceParts(maxDuration);
-        return this;
-    }
-
-    public SequenceRunner AddParallelRoutines(params Func<IEnumerator>[] sequencePartRoutines)
-    {
-        foreach (var sequencePartRoutine in sequencePartRoutines)
-            _parallelRoutineSequencePart.SequenceParts.Add(new RoutineSequencePart(sequencePartRoutine, _parallelRoutineSequencePart.MaxDuration));
-
-        return this;
-    }
-
-    public SequenceRunner AddParallelRoutines(float waitTime)
-    {
-        _parallelRoutineSequencePart.SequenceParts.Add(new DurationSequencePart(waitTime));
         return this;
     }
 

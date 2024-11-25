@@ -1,5 +1,6 @@
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class VampireDiscoverySequence : SequenceBase
@@ -18,8 +19,6 @@ public class VampireDiscoverySequence : SequenceBase
     private CoffinController _coffinController;
 
     private float _startingFOV;
-
-    private UsefulTransforms UsefulTransforms => UsefulTransforms.Instance;
 
     protected override void Start()
     {
@@ -46,22 +45,29 @@ public class VampireDiscoverySequence : SequenceBase
     protected override SequenceRunner GetSequenceRunner()
     {
         return new SequenceRunner()
-            .AddWait(5f)
-            .AddRoutine(PlayerToCoffinAndLookingAtIt)
-            .AddRoutine(MoveCameraToCoffin)
+            .AddWait(5f) //TODO need a better way to detect that you are done with the secret passage. Maybe just don't trigger scene until thats done?
+
+            .StartAddingParallelSequenceRoutines()
+            .AddRoutine(() => PlayerToTargets(UsefulTransforms.P_PreAddressingVampire, UsefulTransforms.P_AddressingVampire))
+            .AddRoutine(() => ZoomCamera(_startingFOV, _sequenceFOV, _zoomCameraTime))
+            .EndAddParallelRoutines()
+
+            .AddRoutine(() => PlayerFaceTarget(_coffinController.transform)) // Face coffin
+            .AddRoutine(() => MoveCameraToTarget(UsefulTransforms.V_InCoffin, _moveCameraTime)) // Camera to coffin
             .AddRoutine(() => _coffinController.OpenCoffin())
             .AddWait(1f)
             .AddRoutine(FloatAboveCoffin)
             .AddWait(1f)
 
             .StartAddingParallelSequenceRoutines() // Talking. Eventually add some parallel routine for the talking
-            .AddParallelRoutines(() => _coffinController.CloseCoffin()) 
-            .AddParallelRoutines(12f)
+            .AddRoutine(() => _coffinController.CloseCoffin()) 
+            .AddWait(12f) // Remove when we have talking
             .EndAddParallelRoutines()
 
-            .AddRoutine(VampireToDefaultPosition)
+            .AddRoutine(() => VampireToDefaultPosition(_vampireToDefaultPositionTime))
             .AddWait(1f)
-            .AddRoutine(MoveCameraToPlayer);
+            .AddRoutine(() => MoveCameraToPlayer(_moveCameraTime))
+            .AddRoutine(() => ZoomCamera(_sequenceFOV, _startingFOV, _zoomCameraTime));
     }
 
     protected override void OnSequenceStart()
@@ -76,55 +82,6 @@ public class VampireDiscoverySequence : SequenceBase
         GameState.Instance.VampireLordVisited = true;
     }
 
-    private IEnumerator PlayerToCoffinAndLookingAtIt()
-    {
-        var playerTransform = PlayerStats.Instance.transform;
-        var mvmntController = playerTransform.GetComponent<MvmntController>();
-
-        var finishedLookingAtCoffin = false;
-        mvmntController.GoToTarget(UsefulTransforms.P_AddressingVampire, () => finishedLookingAtCoffin = true, () => finishedLookingAtCoffin = true);
-
-        var zoomCameraEnd = false;
-        var couroutine = new CoroutineContainer(this, () => ZoomCamera(_startingFOV, _sequenceFOV), () => zoomCameraEnd = true);
-        couroutine.Start();
-
-        while (!finishedLookingAtCoffin || !zoomCameraEnd)
-            yield return new WaitForEndOfFrame();
-
-        yield return new WaitForEndOfFrame();
-        mvmntController.FaceTarget(_coffinController.transform.position);
-        yield return new WaitForEndOfFrame();
-    }
-
-    private IEnumerator ZoomCamera(float startFOV, float endFOV)
-    {
-        var duration = _zoomCameraTime;
-        var startTime = Time.time;
-        while (Time.time - startTime <= duration)
-        {
-            var elapsedTime = Time.time - startTime;
-            var t = elapsedTime / duration;
-
-            Camera.main.fieldOfView = Mathf.SmoothStep(startFOV, endFOV, t);
-            yield return new WaitForNextFrameUnit();
-        }
-
-        Camera.main.fieldOfView = endFOV;
-    }
-
-    private IEnumerator MoveCameraToPlayer()
-    {
-        yield return MoveCameraToTarget(PlayerStats.Instance.transform, _moveCameraTime);
-        yield return ZoomCamera(_sequenceFOV, _startingFOV);
-
-        Camera.main.GetComponent<FollowCam>().enabled = true;
-    }
-
-    private IEnumerator MoveCameraToCoffin()
-    {
-        yield return MoveCameraToTarget(UsefulTransforms.V_InCoffin, _moveCameraTime);
-    }    
-
     private IEnumerator FloatAboveCoffin()
     {
         _vampire.transform.SetPositionAndRotation(UsefulTransforms.V_InCoffin.position, UsefulTransforms.V_InCoffin.rotation);
@@ -134,10 +91,5 @@ public class VampireDiscoverySequence : SequenceBase
         _vampire.gameObject.SetActive(true);
 
         yield return Slerp(_vampire.transform, UsefulTransforms.V_InCoffin, UsefulTransforms.V_FloatingAboveCoffin, _floatToAboveCoffinTime);
-    }
-
-    private IEnumerator VampireToDefaultPosition()
-    {
-        yield return Slerp(_vampire.transform, UsefulTransforms.V_Default, _vampireToDefaultPositionTime);
-    } 
+    }    
 }

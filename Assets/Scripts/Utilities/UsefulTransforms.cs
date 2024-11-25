@@ -8,5 +8,6 @@ public class UsefulTransforms : GlobalSingleInstanceMonoBehaviour<UsefulTransfor
     public Transform V_InCoffin;
 
     [Header("Player")]
+    public Transform P_PreAddressingVampire;
     public Transform P_AddressingVampire;
 }
