@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7358607298778120144}
+  - component: {fileID: 1600940359604264659}
   - component: {fileID: 1646189131240597721}
   - component: {fileID: 2163851358100889079}
   - component: {fileID: 2199456676119783336}
@@ -36,6 +37,22 @@ Transform:
   - {fileID: 3348620795184690882}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1600940359604264659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399926208339585065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c08b73830f1133478a3a6627b3dcad8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VampireLordVisited: 0
+  Vampire: {fileID: 0}
+  CoffinController: {fileID: 0}
+  DefaultVampireLordPosition: {fileID: 0}
 --- !u!114 &1646189131240597721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50,11 +67,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enterSecretPassageTime: 2
   _forcedConnections:
-  - Passage1: {fileID: 0}
-    Passage2: {fileID: 0}
-  _blacklistedConnections:
-  - Passage1: {fileID: 0}
-    Passage2: {fileID: 0}
   - Passage1: {fileID: 0}
     Passage2: {fileID: 0}
 --- !u!114 &2163851358100889079
@@ -100,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c67593f3384dd8643a208b548b597ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _npcHumanCharacterCount: 2
+  _npcHumanCharacterCount: 20
 --- !u!1 &3447189813391239004
 GameObject:
   m_ObjectHideFlags: 0
