@@ -9,7 +9,8 @@ public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
     [Range(0, MAX_BODIES)]public int BodyDeliverCount = 0;
 
     [Header("Progression Conditions")]
-    [SerializeField, Range(0, MAX_BODIES)] int _winGameBodyCount = 5;
+    [SerializeField, Range(0, MAX_BODIES)]public int WinGameBodyCount = 5;
+    [SerializeField, Range(0, MAX_BODIES)]public bool GameWon = false;
 
     [Header("Needed to help run sequences")]
     public VampireController Vampire;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,10 +8,10 @@ public abstract class SequenceBase : MonoBehaviour
 {
     [Header("General Segment Stuff")]
     [SerializeField] bool _sequencePlayable = true;
+    public bool SequenceFinished = false;
     [SerializeField] float _zoomCameraTime = 1f;
     [SerializeField] float _sequenceFOV = 10f;
 
-    public bool SequenceFinished = false;
 
     protected VampireController _vampire;
     protected float _startingFOV;
@@ -24,7 +25,10 @@ public abstract class SequenceBase : MonoBehaviour
         _startingFOV = Camera.main.fieldOfView;
 
         SequenceFinished = false;
+        SetInitialState(GetIsPlayable());
     }
+
+    protected abstract bool GetIsPlayable();
 
     protected void Update()
     {
@@ -38,9 +42,9 @@ public abstract class SequenceBase : MonoBehaviour
 
     protected virtual void OnInitializePlayable() { }
 
-    protected void SetInitialState(bool sequencePlayed)
+    private void SetInitialState(bool sequencePlayable)
     {
-        _sequencePlayable = !sequencePlayed;
+        _sequencePlayable = sequencePlayable;
         if (_sequencePlayable)
             OnInitializePlayable();
     }
@@ -52,7 +56,9 @@ public abstract class SequenceBase : MonoBehaviour
 
         _sequencePlayable = false;
 
-        var sequenceRunner = GetSequenceRunner();
+        var sequenceRunner = new SequenceRunner();
+        PopulateSequenceRunner(sequenceRunner);
+
         OnSequenceStart();
         sequenceRunner.Run(this, OnSequenceEnd);
     }
@@ -68,7 +74,7 @@ public abstract class SequenceBase : MonoBehaviour
         SequenceFinished = true;        
     }
 
-    protected abstract SequenceRunner GetSequenceRunner();
+    protected abstract void PopulateSequenceRunner(SequenceRunner sequenceRunner);
 
     protected IEnumerator VampireToDefaultPosition(float duration)
     {
@@ -90,7 +96,7 @@ public abstract class SequenceBase : MonoBehaviour
     protected IEnumerator Bless()
     {
         _vampire.Bless();        
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4.125f);
     }
 
     protected static Transform PlayerTransform => PlayerStats.Instance.transform;
@@ -143,10 +149,24 @@ public abstract class SequenceBase : MonoBehaviour
         }
     }
 
-    protected static IEnumerator PlayerFaceTarget(Transform target) => FaceTarget(PlayerTransform.GetComponent<MvmntController>(), target);
+    protected static IEnumerator PlayerFaceTarget(Transform target) => FaceTarget(PlayerTransform, target);
 
-    protected static IEnumerator FaceTarget(MvmntController mvmntController, Transform target)
+    protected IEnumerator VampireFaceTarget(Transform target)
     {
+        var navMeshAgent = _vampire.GetComponent<NavMeshAgent>();
+        var mvmntController = _vampire.GetComponent<MvmntController>();
+
+        navMeshAgent.enabled = true;
+        mvmntController.enabled = true;
+        yield return FaceTarget(_vampire.transform, target);
+        navMeshAgent.enabled = false;
+        mvmntController.enabled = false;
+    }
+
+    protected static IEnumerator FaceTarget(Transform facingTransform, Transform target)
+    {
+        var mvmntController = facingTransform.GetComponent<MvmntController>();
+
         yield return new WaitForEndOfFrame();
         mvmntController.FaceTarget(target.position);
         yield return new WaitForEndOfFrame();

@@ -14325,7 +14325,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.31453148, y: -0.38855296, z: 0.14307512, w: 0.8541816}
-  m_LocalPosition: {x: 8.605581, y: 26.9, z: 8.33699}
+  m_LocalPosition: {x: 21.855581, y: 26.9, z: -14.788008}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22168,7 +22168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3693034789244131386, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -846.9976
+      value: -848.0846
       objectReference: {fileID: 0}
     - target: {fileID: 5476941705730594965, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMax.y
@@ -25554,12 +25554,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 517276102}
     - target: {fileID: 1600940359604264659, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
+      propertyPath: BodyDeliverCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600940359604264659, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
       propertyPath: CoffinController
       value: 
       objectReference: {fileID: 5870245751733554703}
     - target: {fileID: 1600940359604264659, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
       propertyPath: VampireLordVisited
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1646189131240597721, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
       propertyPath: _forcedConnections.Array.data[0].Passage1
@@ -33352,6 +33356,7 @@ GameObject:
   - component: {fileID: 855210060}
   - component: {fileID: 855210064}
   - component: {fileID: 855210065}
+  - component: {fileID: 855210066}
   m_Layer: 13
   m_Name: VampireRoom
   m_TagString: Untagged
@@ -33477,9 +33482,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sequencePlayable: 1
+  SequenceFinished: 0
   _zoomCameraTime: 1
   _sequenceFOV: 10
-  SequenceFinished: 0
   _moveCameraTime: 3
   _floatToAboveCoffinTime: 3
   _vampireToDefaultPositionTime: 3
@@ -33496,9 +33501,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sequencePlayable: 1
+  SequenceFinished: 0
   _zoomCameraTime: 1
   _sequenceFOV: 10
+--- !u!114 &855210066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855210058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be129973cbe0a6e47a23cf49fdd27071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sequencePlayable: 1
   SequenceFinished: 0
+  _zoomCameraTime: 1
+  _sequenceFOV: 10
+  _blessingRepeats: 3
+  _maxVibrateDistance: 0.2
+  _playerVampireMeshes:
+  - {fileID: 4185842223853695222}
+  - {fileID: 4185842223853695221}
 --- !u!43 &858507627
 Mesh:
   m_ObjectHideFlags: 0
@@ -82313,7 +82339,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5255651853316900981, guid: 6b4e225689f68c248819151fbd6445e5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.304419
+      value: -0.054418564
       objectReference: {fileID: 0}
     - target: {fileID: 5255651853316900981, guid: 6b4e225689f68c248819151fbd6445e5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -82321,7 +82347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5255651853316900981, guid: 6b4e225689f68c248819151fbd6445e5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 27.659988
+      value: 4.5349894
       objectReference: {fileID: 0}
     - target: {fileID: 5255651853316900981, guid: 6b4e225689f68c248819151fbd6445e5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -82540,6 +82566,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b4e225689f68c248819151fbd6445e5, type: 3}
+--- !u!137 &4185842223853695221 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8316091750447634972, guid: 6b4e225689f68c248819151fbd6445e5, type: 3}
+  m_PrefabInstance: {fileID: 4185842223853695220}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &4185842223853695222 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4139965813307617513, guid: 6b4e225689f68c248819151fbd6445e5, type: 3}
+  m_PrefabInstance: {fileID: 4185842223853695220}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &4504489684231599413
 MeshRenderer:
   m_ObjectHideFlags: 0
