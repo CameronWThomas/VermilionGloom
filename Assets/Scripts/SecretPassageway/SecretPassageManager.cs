@@ -6,9 +6,7 @@ using UnityEngine;
 public class SecretPassageManager : GlobalSingleInstanceMonoBehaviour<SecretPassageManager>
 {
     [SerializeField] private float _enterSecretPassageTime = 2f;
-
     [SerializeField] private List<SecretPassageConnection> _forcedConnections;
-    [SerializeField] private List<SecretPassageConnection> _blacklistedConnections;
 
     private List<SecretPassage> _secretPassages = new();
 
@@ -47,39 +45,21 @@ public class SecretPassageManager : GlobalSingleInstanceMonoBehaviour<SecretPass
                 continue;
             }
 
-            passage1.EndPoint = passage2;
-            passage2.EndPoint = passage1;
+            SecretPassage.ExchangeEndPoints(passage1, passage2);
             
             secretPassages.Remove(passageConnection.Passage1);
             secretPassages.Remove(passageConnection.Passage2);
         }
 
-        // Make sure all blacklisted connections are enforced
-        foreach (var passageConnection in _blacklistedConnections)
+        // Make special passages only connect to normal ones
+        var secretPassagewaysOfSpecialType = secretPassages.Where(x => x.SecretPassageType != SecretPassageType.Normal).ToList();
+        foreach (var specialPassage in secretPassagewaysOfSpecialType)
         {
-            var passage1 = secretPassages.FirstOrDefault(x => x == passageConnection.Passage1);
+            var normalPassage = GetRandom(secretPassages.Where(x => x.SecretPassageType == SecretPassageType.Normal).ToList());
+            secretPassages.Remove(normalPassage);
+            secretPassages.Remove(specialPassage);
 
-            // Already had a forced connection or was used in handling an earlier blacklist, we can ignore.
-            if (passage1 == null)
-                continue;
-
-            var relevantBlacklistedConnections = _blacklistedConnections.Where(x => x.Passage1 == passage1 || x.Passage2 == passage1);
-            var acceptablePassages = secretPassages
-                .Where(x => relevantBlacklistedConnections.All(blackListedConnection => blackListedConnection.Passage1 != x && blackListedConnection.Passage2 != x))
-                .ToList();
-
-            if (!acceptablePassages.Any())
-            {
-                Debug.LogWarning($"No acceptable connections were found for {passage1.name} based on the blacklisted ones and ones remaining after handling forced connections");
-                continue;
-            }
-
-            var passage2 = GetRandom(acceptablePassages);
-            passage1.EndPoint = passage2;
-            passage2.EndPoint = passage1;
-
-            secretPassages.Remove(passage1);
-            secretPassages.Remove(passage2);
+            SecretPassage.ExchangeEndPoints(normalPassage, specialPassage);
         }
 
         // Handle rest of secret passages
@@ -99,8 +79,7 @@ public class SecretPassageManager : GlobalSingleInstanceMonoBehaviour<SecretPass
 
             secretPassages.Remove(passage2);
 
-            passage1.EndPoint = passage2;
-            passage2.EndPoint = passage1;
+            SecretPassage.ExchangeEndPoints(passage1, passage2);
         }
     }
 
@@ -108,12 +87,11 @@ public class SecretPassageManager : GlobalSingleInstanceMonoBehaviour<SecretPass
     {
         if (!secretPassages.Any())
             return null;
-
             
         var count = secretPassages.Count();
-        var random = new Unity.Mathematics.Random((uint)DateTime.UtcNow.Ticks);
+        var index = UnityEngine.Random.Range(0, count);
         
-        return secretPassages[random.NextInt(count - 1)];
+        return secretPassages[index];
     }
 
     [Serializable]

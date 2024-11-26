@@ -5,14 +5,30 @@ using UnityEngine.AI;
 
 //TODO these should probably utilize a navmesh link eventually if want the NPCs to be able to utilize secret passages
 
+public enum SecretPassageType
+{
+    Normal,
+    VampireChamber,
+    SecretChamber,
+}
+
 public class SecretPassage : MonoBehaviour
 {
     [SerializeField] private bool _reverseDirection = false;
-    [SerializeField, Range(0f, 10f)] private float _destinationDistance = 1f;    
+    [SerializeField, Range(0f, 10f)] private float _destinationDistance = 1f;
+    [SerializeField] SecretPassageType _secretPassageType = SecretPassageType.Normal;
 
-    public Vector3 DestinationPoint => GetDestinationPoint();   
+    [Header("Debug")]
+    [SerializeField] SecretPassage EndPoint;
 
-    public SecretPassage EndPoint { get; set; }
+    public Vector3 DestinationPoint => GetDestinationPoint();
+    public SecretPassageType SecretPassageType => _secretPassageType;
+
+    public static void ExchangeEndPoints(SecretPassage secretPassage1, SecretPassage secretPassage2)
+    {
+        secretPassage1.EndPoint = secretPassage2;
+        secretPassage2.EndPoint = secretPassage1;
+    }
 
     public void UsePassage(Transform transportedTransform)
     {

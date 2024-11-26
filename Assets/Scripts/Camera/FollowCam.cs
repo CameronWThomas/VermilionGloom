@@ -13,8 +13,6 @@ public class FollowCam : MonoBehaviour
      */
 
     public Transform followTarget;
-    private Vector3 initialOffset;
-
     private Vector3 zoomDirection;
 
     //TODO: implement
@@ -22,19 +20,18 @@ public class FollowCam : MonoBehaviour
     private float targetDistance;
     public Vector2 zoomLimits = new Vector2(5, 20);
 
+    public Vector3 InitialOffset { get; private set; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        initialOffset = transform.position - followTarget.position;
+        InitialOffset = transform.position - followTarget.position;
         zoomDirection = followTarget.position - transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = followTarget.position + initialOffset;
+        transform.position = followTarget.position + InitialOffset;
     }
-
-
 }

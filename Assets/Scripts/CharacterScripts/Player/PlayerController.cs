@@ -10,6 +10,7 @@ public partial class PlayerController : MonoBehaviour
 {
     public bool hostile = false;
     public bool sneaking = false;
+    [SerializeField] bool _cutsceneRunning = false;
 
     InputSystem_Actions inputActions;
     InputAction toggleCrouch;
@@ -80,9 +81,33 @@ public partial class PlayerController : MonoBehaviour
         inputActions.Disable();
     }
 
+    //TODO this is a quick way I could do this. Probably better to do what is done in OnEnable and OnDisable
+    public void DisableInputForCutscene()
+    {
+        _cutsceneRunning = false;
+
+        if (sneaking)
+            CrouchPerformed(new InputAction.CallbackContext());
+        if (hostile)
+            ToggleHostilePerformed(new InputAction.CallbackContext());
+        if (mvmntController.IsRunning())
+            ToggleRunPerformed(new InputAction.CallbackContext());
+
+        _cutsceneRunning = true;
+    }
+
+    public void RenableInputAfterCutscene()
+    {
+        _cutsceneRunning = false;
+    }    
+
+
     // Event handler for the crouch action
     private void CrouchPerformed(InputAction.CallbackContext context)
     {
+        if (_cutsceneRunning)
+            return;
+
         // Implement crouch logic here
         sneaking = !sneaking;
         mvmntController.SetCrouching(sneaking);
@@ -91,6 +116,9 @@ public partial class PlayerController : MonoBehaviour
     // Event handler for the toggleHostile action
     private void ToggleHostilePerformed(InputAction.CallbackContext context)
     {
+        if (_cutsceneRunning)
+            return;
+
         // Implement toggleHostile logic here
         hostile = !hostile;
         mvmntController.SetCombat(hostile);
@@ -98,6 +126,9 @@ public partial class PlayerController : MonoBehaviour
     }
     private void ToggleRunPerformed(InputAction.CallbackContext context)
     {
+        if (_cutsceneRunning)
+            return;
+
         Debug.Log("PLAYER TOGGLE RUN");
         // Implement toggleRun logic here
         mvmntController.SetRunning(!mvmntController.IsRunning());
