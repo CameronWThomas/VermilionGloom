@@ -7,6 +7,7 @@ public partial class NpcBrain
     [Header("Hostility")]
     [SerializeField] private bool _isHostile = false;
     [SerializeField] private bool _isCrunching = false;
+    [SerializeField] public bool RelationshipWithPlayerIsHostile = false;
     [SerializeField] private Transform _hostileTowardsTarget = null;
     [SerializeField] private float _crunchDistance = 2.0f;
     [SerializeField] float _crunchMaxDuration = 2f;
@@ -91,7 +92,11 @@ public partial class NpcBrain
         if (_hostileTowardsTarget != null)
         {
             // Let everyone whos sees you know that you are attacking someone
-            var secretEvent = new SecretEvent(SecretEventType.AttackingSomeone, this.GetCharacterID(), _hostileTowardsTarget.GetCharacterID(), SecretNoticability.Sight, SecretDuration.Instant);
+            var secretEvent = new MurderSecretEvent(ID,
+                _hostileTowardsTarget.GetCharacterID(),
+                MurderSecretEventType.AttackingSomeone.IsAttempt(),
+                SecretNoticability.Sight,
+                SecretDuration.Instant);
             NpcBehaviorBB.Instance.BroadcastSecretEvent(secretEvent);
         }
     }
@@ -106,16 +111,19 @@ public partial class NpcBrain
 
         if (characterInfo.Damage())
         {
-            // Target was killed. Create a secret and broadcast to the room
             var murderSecret = CreatePersonalMurderSecret(hostileTargetID, out var wasExistingSecret);
             if (wasExistingSecret)
-                murderSecret.UpdateJustificationOrAttempt(true, false);
+                murderSecret.UpdateIsAttempt(false);
             else
                 GetComponent<CharacterSecretKnowledge>().AddSecret(murderSecret);
 
             GetRelationship(hostileTargetID).Reevaluate();
 
-            var secretEvent = new SecretEvent(SecretEventType.KilledSomeone, ID, hostileTargetID, SecretNoticability.Room, SecretDuration.Instant);
+            var secretEvent = new MurderSecretEvent(ID,
+                _hostileTowardsTarget.GetCharacterID(),
+                MurderSecretEventType.KilledSomeone.IsAttempt(),
+                SecretNoticability.Sight,
+                SecretDuration.Instant);
             NpcBehaviorBB.Instance.BroadcastSecretEvent(secretEvent);
         }
 
@@ -141,6 +149,9 @@ public partial class NpcBrain
 
     private void HostilityUpdate()
     {
+        var playerRelationship = GetRelationship(CharacterInfoBB.Instance.GetPlayerCharacterInfo().ID);
+        RelationshipWithPlayerIsHostile = playerRelationship.IsHostileTowards;
+
         if (!_isCrunching)
             return;
 

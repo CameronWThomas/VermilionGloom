@@ -1,8 +1,8 @@
 using BehaviorDesigner.Runtime.Tasks;
 using System.Linq;
 
-[TaskCategory("Custom")]
-public class NewSecretNoticed : Conditional
+[TaskCategory("Custom/Secret Processing")]
+public class AnySecretEventsToProcess : Conditional
 {
     NpcBrain _brain;
 

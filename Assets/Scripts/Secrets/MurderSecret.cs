@@ -2,29 +2,24 @@ using System;
 
 public class MurderSecret : Secret
 {
-    private bool _isJustified;
     private bool _isAttempt;
 
-    private MurderSecret(bool isJustifier, bool isAttempt)
+    private MurderSecret(bool isAttempt)
     {
-        _isJustified = isJustifier;
         _isAttempt = isAttempt;
     }
 
     private MurderSecret(MurderSecret secret) : base(secret)
     {
-        _isJustified = secret._isJustified;
         _isAttempt = secret._isAttempt;
     }
 
-    public bool IsJustified => _isJustified;
     public bool IsAttempt => _isAttempt;
 
     public override SecretIconIdentifier Identifier => SecretIconIdentifier.Murder;
 
-    public void UpdateJustificationOrAttempt(bool isJustified, bool isAttempt)
+    public void UpdateIsAttempt(bool isAttempt)
     {
-        _isJustified = isJustified;
         _isAttempt = isAttempt;
         ResetDescription();
     }
@@ -33,11 +28,7 @@ public class MurderSecret : Secret
 
     protected override string CreateDescription()
     {
-        string killLine;
-        if (_isAttempt)
-            killLine = _isJustified ? "attacked" : "tried to murder";
-        else
-            killLine = _isJustified ? "killed" : "murdered";
+        var killLine = _isAttempt ? "attacked" : "murdered";
 
         var murdererName = GetMurdererName();
         var victimName = GetVictimName();
@@ -65,7 +56,6 @@ public class MurderSecret : Secret
     {
         private CharacterID _murderer = null;
         private CharacterID _victim = null;
-        private bool? _isJustified = null;
         private bool? _isAttempt = null;
 
         public Builder(CharacterID secretOwner, SecretLevel secretLevel) : base(secretOwner, secretLevel) { }
@@ -82,32 +72,20 @@ public class MurderSecret : Secret
             return this;
         }
 
-        public Builder IsJustified() => SetIsJustified(true);
-        public Builder IsNotJustified() => SetIsJustified(false);
-
         public Builder WasSuccessfulMuder() => SetIsAttempt(false);
         public Builder WasAttempt() => SetIsAttempt(true);
-        
-        public override MurderSecret Build()
-        {
-            ValidateNotNull(_isJustified, nameof(_isJustified));
-
-            var murderSecret = new MurderSecret(_isJustified.Value, _isAttempt.Value);
-            Init(murderSecret, _murderer, _victim);
-
-            return murderSecret;
-        }
-
-        private Builder SetIsJustified(bool isJusitified)
-        {
-            _isJustified = isJusitified;
-            return this;
-        }
-
-        private Builder SetIsAttempt(bool isAttempt)
+        public Builder SetIsAttempt(bool isAttempt)
         {
             _isAttempt = isAttempt;
             return this;
         }
+
+        public override MurderSecret Build()
+        {
+            var murderSecret = new MurderSecret(_isAttempt.Value);
+            Init(murderSecret, _murderer, _victim);
+
+            return murderSecret;
+        }        
     }
 }

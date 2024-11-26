@@ -1,11 +1,25 @@
+using System;
 using UnityEngine;
 
-public enum SecretEventType
+public enum MurderSecretEventType
 {
     StranglingSomeone,
     KilledSomeone,
     DraggingABody,
     AttackingSomeone,
+}
+
+public static class MurderSecretEventTypeExtensions
+{
+    public static bool IsAttempt(this MurderSecretEventType type)
+        => type switch
+        {
+            MurderSecretEventType.StranglingSomeone => true,
+            MurderSecretEventType.AttackingSomeone => true,
+            MurderSecretEventType.DraggingABody => false,
+            MurderSecretEventType.KilledSomeone => false,
+            _ => throw new NotImplementedException()
+        };
 }
 
 public enum SecretNoticability
@@ -21,32 +35,39 @@ public enum SecretDuration
     Instant
 }
 
-public class SecretEvent
+public abstract class SecretEvent
 {
-    public SecretEvent(SecretEventType secretEventType,        
-        CharacterID originator,
-        CharacterID additionalCharacter,
-        SecretNoticability secretNoticability,
-        SecretDuration secretDuration)
+    protected SecretEvent(SecretNoticability secretNoticability, SecretDuration secretDuration)
     {
-        SecretEventType = secretEventType;        
-        Originator = originator;
-        AdditionalCharacter = additionalCharacter;
         SecretNoticability = secretNoticability;
         SecretDuration = secretDuration;
     }
 
-    public SecretEventType SecretEventType { get; }
-    public CharacterID Originator { get; }
-    public CharacterID AdditionalCharacter { get; }
-
     public SecretDuration SecretDuration { get; }
     public SecretNoticability SecretNoticability { get; }
 
-    public bool Compare(SecretEvent other)
+    public abstract bool Compare(SecretEvent other);
+}
+
+public class MurderSecretEvent : SecretEvent
+{
+    public MurderSecretEvent(CharacterID murderer, CharacterID victim, bool isAttempt, SecretNoticability secretNoticability, SecretDuration secretDuration)
+        : base(secretNoticability, secretDuration)
     {
-        return Originator == other.Originator &&
-            AdditionalCharacter == other.AdditionalCharacter &&
-            SecretEventType == other.SecretEventType;
+        Murderer = murderer;
+        Victim = victim;
+        IsAttempt = isAttempt;
+    }
+
+    public CharacterID Murderer { get; }
+    public CharacterID Victim { get; }
+    public bool IsAttempt { get; }
+
+    public override bool Compare(SecretEvent other)
+    {
+        if (other is not MurderSecretEvent murderSecretEvent)
+            return false;
+
+        return Murderer == murderSecretEvent.Murderer && Victim == murderSecretEvent.Victim && IsAttempt == murderSecretEvent.IsAttempt;
     }
 }
