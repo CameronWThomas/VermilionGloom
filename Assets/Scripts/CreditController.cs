@@ -1,14 +1,10 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CreditController : GlobalSingleInstanceMonoBehaviour<CreditController>
 {
     [SerializeField] AudioClip _finalSong;
     [SerializeField] GameObject _titleCard;
-    [SerializeField] Image _fadeToBlack;
 
     AudioSource _audioSource;
     bool _creditsStarted = false;
@@ -18,7 +14,6 @@ public class CreditController : GlobalSingleInstanceMonoBehaviour<CreditControll
         base.Start();
         _audioSource = GetComponent<AudioSource>();
         _titleCard.gameObject.SetActive(false);
-        _fadeToBlack.gameObject.SetActive(false);
     }
 
     public void PlayFinalSong()
@@ -48,26 +43,6 @@ public class CreditController : GlobalSingleInstanceMonoBehaviour<CreditControll
 
         yield return new WaitForSeconds(180f);
 
-        yield return FadeToBlack(5f);
-    }
-
-    private IEnumerator FadeToBlack(float duration)
-    {
-        var color = Color.black;
-        color.a = 0f;
-
-        _fadeToBlack.color = color;
-        _fadeToBlack.gameObject.SetActive(true);
-
-        var startTime = Time.time;
-        while (Time.time - startTime < duration)
-        {
-            var t = (Time.time - startTime) / duration;
-
-            color.a = Mathf.Lerp(0f, 1f, t);
-            _fadeToBlack.color = color;
-
-            yield return new WaitForNextFrameUnit();
-        }
+        yield return FadeToBlackController.Instance.FadeToBlackRoutine(5f);
     }
 }
