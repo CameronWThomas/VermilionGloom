@@ -8,6 +8,8 @@ using UnityEngine;
 public class UI_SecretRevealScreen : MonoBehaviour
 {
     [SerializeField] private GameObject _miniGameZoneArea;
+    [SerializeField] private GameObject _discoverPrompt;
+    [SerializeField] private GameObject _implantPrompt;
     [SerializeField] private RectTransform _miniGameIndicator;
     [SerializeField, Range(0f, 1f)] private float _timeForIndicatorToCrossBar = 1f;
     [SerializeField, Range(0f, 1f)] private float _delayAfterGame = 1f;
@@ -33,7 +35,7 @@ public class UI_SecretRevealScreen : MonoBehaviour
         }
     }
 
-    public void Initialize(NPCHumanCharacterID characterID, Action<SecretLevel?, bool> onFinish)
+    public void Initialize(NPCHumanCharacterID characterID, Action<SecretLevel?, bool> onFinish, bool isDiscovering = true)
     {
         _onFinish = onFinish;
 
@@ -46,6 +48,16 @@ public class UI_SecretRevealScreen : MonoBehaviour
         _miniGamePlaying = false;
         _playerEndedMiniGame = false;
         _miniGameIndicator.gameObject.SetActive(false);
+        if (isDiscovering)
+        {
+            _discoverPrompt.SetActive(true);
+            _implantPrompt.SetActive(false);
+        }
+        else
+        {
+            _implantPrompt.SetActive(true);
+            _discoverPrompt.SetActive(false);
+        }
 
         var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(characterID);
         _unrevealedSecrets = secrets.Where(x => !x.IsRevealed).ToList();

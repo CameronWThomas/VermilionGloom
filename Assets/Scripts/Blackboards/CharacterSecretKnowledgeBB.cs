@@ -44,6 +44,14 @@ public class CharacterSecretKnowledgeBB : GlobalSingleInstanceMonoBehaviour<Char
 
         unlockedSecret?.Reveal();
     }
+    public void UnlockAllSecrets(NPCHumanCharacterID characterId)
+    {
+        var secretKnowledge = _secretKnowledgeDict[characterId];
+        foreach (var secret in secretKnowledge.Secrets)
+        {
+            secret.Reveal();
+        }
+    }
 
     public bool TrySpreadSecret(NPCHumanCharacterID spreader, NPCHumanCharacterID target)
     {

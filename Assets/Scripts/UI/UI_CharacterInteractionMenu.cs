@@ -180,9 +180,9 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         if (gamePlayed)
         {
             _characterId.CharacterInfo.TryUseDetectivePoint(1);
-
-            if (level.HasValue)
-                CharacterSecretKnowledgeBB.Instance.UnlockSecret(_characterId, level.Value);
+            CharacterSecretKnowledgeBB.Instance.UnlockAllSecrets(_characterId);
+            //if (level.HasValue)
+                //CharacterSecretKnowledgeBB.Instance.UnlockSecret(_characterId, level.Value);
         }
         else
             _characterId.CharacterInfo.TrySetPendingDetectivePoints(0);
