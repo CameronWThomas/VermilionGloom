@@ -11,7 +11,7 @@ public class Relationship
     private readonly CharacterSecretKnowledge _secretKnowledge;
     private readonly CharacterID _relationshipTarget;
 
-    [SerializeField] private CharacterInfo _characterInfo;
+    [SerializeReference] private CharacterInfo _characterInfo;
 
     [SerializeField] private bool _isDead = false;
     [SerializeField] private bool _isHostileTowards = false;

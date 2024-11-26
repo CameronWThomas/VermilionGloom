@@ -13,7 +13,7 @@ public partial class NpcBrain : MonoBehaviour
     [SerializeField] Transform _conversationTarget = null;
     [SerializeField] RoomID _currentRoom;
 
-    [SerializeField, Tooltip("pulbic for debugging purposes")] private List<Relationship> _relationships = new();
+    [SerializeField] private List<Relationship> _relationships = new();
 
     public bool IsDead => GetComponent<CharacterInfo>().IsDead;
     public GameObject Dragger { get; private set; } = null;
@@ -168,7 +168,7 @@ public partial class NpcBrain : MonoBehaviour
     /// Nice for when you expect some conditionals to change
     /// This could probably be written better, but it works.
     /// </summary>
-    private void ReEvaluateTree()
+    public void ReEvaluateTree()
     {
         behaviorTree.StopAllCoroutines();
         behaviorTree.StopAllTaskCoroutines();

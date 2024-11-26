@@ -9,7 +9,7 @@ public abstract class CharacterInfo : MonoBehaviour
     [SerializeField] private int _maxHealth = 3;
     [SerializeField] private float _healthCooldownSec = 5;
 
-    [SerializeField] private CharacterID _id = null;
+    [SerializeReference] private CharacterID _id = null;
 
     private float? _lastDamageTime = null;
     private int _currentHealth;
@@ -42,6 +42,11 @@ public abstract class CharacterInfo : MonoBehaviour
     {
         _name = NameHelper.GetRandomName();
     }
+
+    /// <summary>
+    /// Sound vampiry, but its actually for loading checkpoints...
+    /// </summary>
+    public virtual void ReturnToLife() { }
 
     public virtual void Die()
     {

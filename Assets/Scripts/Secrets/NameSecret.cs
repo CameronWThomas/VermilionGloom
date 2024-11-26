@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public class NameSecret : Secret
 {
     [SerializeField] private string _name;

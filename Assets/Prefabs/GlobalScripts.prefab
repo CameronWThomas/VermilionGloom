@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2163851358100889079}
   - component: {fileID: 2199456676119783336}
   - component: {fileID: 2895106601631318768}
+  - component: {fileID: 4130938967708801238}
   m_Layer: 0
   m_Name: GlobalScripts
   m_TagString: Untagged
@@ -115,7 +116,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c67593f3384dd8643a208b548b597ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _npcHumanCharacterCount: 20
+  _npcHumanCharacterCount: 30
+--- !u!114 &4130938967708801238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2399926208339585065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ed3dd1d955b7204290e16d416b8b471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3447189813391239004
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,4 +371,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _finalSong: {fileID: 8300000, guid: 249c34440e693184f867fb47e4a904b1, type: 3}
   _titleCard: {fileID: 0}
-  _fadeToBlack: {fileID: 0}

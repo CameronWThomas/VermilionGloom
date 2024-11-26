@@ -18,6 +18,8 @@ public abstract class SequenceBase : MonoBehaviour
 
     protected UsefulTransforms UsefulTransforms => UsefulTransforms.Instance;
 
+    protected virtual bool SaveGameOnFinish => true;
+
 
     protected virtual void Start()
     {
@@ -65,7 +67,7 @@ public abstract class SequenceBase : MonoBehaviour
         PopulateSequenceRunner(sequenceRunner);
 
         OnSequenceStart();
-        sequenceRunner.Run(this, OnSequenceEnd);
+        sequenceRunner.Run(this, OnSequenceEndPrivate);
     }
 
     protected virtual void OnSequenceStart()
@@ -73,6 +75,14 @@ public abstract class SequenceBase : MonoBehaviour
         PlayerController.DisableInputForCutscene();
 
         MouseReceiver.Instance.Deactivate();
+    }
+
+    private void OnSequenceEndPrivate()
+    {
+        OnSequenceEnd();
+
+        if (SaveGameOnFinish)
+            SceneStateController.Instance.SaveGame();
     }
 
     protected virtual void OnSequenceEnd()

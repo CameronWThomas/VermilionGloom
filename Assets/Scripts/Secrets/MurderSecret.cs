@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[Serializable]
 public class MurderSecret : Secret
 {
     [SerializeField]private bool _isAttempt;

@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(NPCHumanCharacterInfo))]
 public class CharacterSecretKnowledge : MonoBehaviour
 {
-    [SerializeField] private List<Secret> _secrets = new();
+    [SerializeReference] private List<Secret> _secrets = new();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

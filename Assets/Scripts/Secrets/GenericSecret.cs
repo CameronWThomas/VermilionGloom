@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Secret with nothing of value
 /// </summary>
+[Serializable]
 public class GenericSecret : Secret
 {   
     private const int SECRET_DESCRIPTION_COUNT = 4;

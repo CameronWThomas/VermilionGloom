@@ -1,13 +1,14 @@
 using System;
 using UnityEngine;
 
+[Serializable]
 public abstract class CharacterID : IEquatable<CharacterID>
 {
-    private readonly Guid _id;
+    [SerializeReference] private string _id;
 
-    public CharacterID()
+    protected CharacterID()
     {
-        _id = Guid.NewGuid();
+        _id = Guid.NewGuid().ToString();
     }
 
     public string Name => InternalCharacterInfo.Name;

@@ -4,13 +4,13 @@ using UnityEngine;
 [Serializable]
 public abstract class Secret
 {
-    [SerializeField] Guid _secretID;
-    [SerializeField] CharacterID _originalSecretOwner;
-    [SerializeField] CharacterID _currentSecretOwner;
-    [SerializeField] CharacterID _secretTarget;
-    [SerializeField] CharacterID _additionalCharacter;
+    [SerializeField] string _secretID;
+    [SerializeReference] CharacterID _originalSecretOwner;
+    [SerializeReference] CharacterID _currentSecretOwner;
+    [SerializeReference] CharacterID _secretTarget;
+    [SerializeReference] CharacterID _additionalCharacter;
     [SerializeField] SecretLevel _level;
-    [SerializeField] bool _isRevealed;
+    [SerializeField] bool _isRevealed = true;
 
     string _description = null;
 
@@ -23,6 +23,7 @@ public abstract class Secret
         _secretTarget = secret.SecretTarget;
         _additionalCharacter = secret.AdditionalCharacter;
         _secretID = secret._secretID;
+        _isRevealed = false;
     }
 
     public abstract SecretIconIdentifier Identifier { get; }
@@ -45,6 +46,7 @@ public abstract class Secret
     public virtual bool NoCharactersInvolved => !HasSecretTarget;
 
     protected abstract string CreateDescription();
+
     protected abstract Secret Copy();
 
     protected void ResetDescription()
@@ -71,7 +73,7 @@ public abstract class Secret
         CharacterID secretTarget = null,
         CharacterID additionalCharacter = null)
     {
-        _secretID = Guid.NewGuid();
+        _secretID = Guid.NewGuid().ToString();
         _level = level;
         _currentSecretOwner = secretOwner ?? throw new System.Exception($"{nameof(secretOwner)} must be assigned");
         _originalSecretOwner = secretOwner;

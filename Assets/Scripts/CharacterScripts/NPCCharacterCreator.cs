@@ -19,7 +19,7 @@ public class NPCCharacterCreator : MonoBehaviour
             .CreateGameObjects(npcHumanCount, _humanCharacterPrefab)
             .InitializeCharacterInfo(1)
             .CreateAndInitializeSecrets(3)
-            .SpreadSecrets(3)
+            .SpreadSecrets(1)
             .CreateUniqueModels()
             .InitializeRelationships()
             .PlaceCharacters()
