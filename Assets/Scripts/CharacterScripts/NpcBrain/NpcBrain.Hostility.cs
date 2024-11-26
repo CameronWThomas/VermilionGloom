@@ -84,6 +84,18 @@ public partial class NpcBrain
             return;
         }
 
+        // To handle the strangling animation not being exitable, they will just won't crunch but pretend like they did.
+        // If we make that exitable and prevent the NPC from dying, then we can remove this
+        if (_hostileTowardsTarget != null && _hostileTowardsTarget.transform.IsPlayer())
+        {
+            var playerController = _hostileTowardsTarget.transform.GetComponent<PlayerController>();
+            if (playerController.IsPlayingChokeKill)
+            {
+                onCrunchEnd?.Invoke();
+                return;
+            }
+        }
+
         _crunchStartTime = Time.time;
         _onCrunchEnd = onCrunchEnd;
         _onCrunchInterrupted = onCrunchInterrupted;

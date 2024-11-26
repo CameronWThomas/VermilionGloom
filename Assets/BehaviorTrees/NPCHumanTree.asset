@@ -28,8 +28,8 @@ MonoBehaviour:
         To Be Strangled","Instant":true},{"Type":"BehaviorDesigner.Runtime.Tasks.Idle","NodeData":{"Offset":"(121.875,124.375)"},"ID":11,"Name":"Idle","Instant":true}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(-1373.58984,178.965836)"},"ID":12,"Name":"Be
         Hostile","Instant":true,"AbortTypeabortType":"LowerPriority","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-10.0671425,114.317657)"},"ID":13,"Name":"Handle
         being hostile","Instant":true,"AbortTypeabortType":"LowerPriority","Children":[{"Type":"IsHostile","NodeData":{"Offset":"(-239.268127,122.682579)"},"ID":14,"Name":"Is
-        Hostile","Instant":true},{"Type":"SetIsRunning","NodeData":{"Offset":"(-104.756912,128.293381)"},"ID":15,"Name":"Stop
-        running","Instant":true,"SharedBoolIsRunning":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false}},{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(44.39028,129.024277)"},"ID":16,"Name":"Hostile
+        Hostile","Instant":true},{"Type":"SetIsRunning","NodeData":{"Offset":"(-104.756912,128.293381)"},"ID":15,"Name":"Start
+        running","Instant":true,"SharedBoolIsRunning":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true}},{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(44.39028,129.024277)"},"ID":16,"Name":"Hostile
         Handling","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-151.1064,125.709808)"},"ID":17,"Name":"Find
         and kill target","Instant":true,"AbortTypeabortType":"LowerPriority","Children":[{"Type":"SeesHostileTowardsTarget","NodeData":{"Offset":"(-115.71521,128.572235)"},"ID":18,"Name":"Sees
         Hostile Towards Target","Instant":true,"SharedPriorityTierVariablePriority":{"Type":"SharedPriorityTierVariable","Name":null,"PriorityTiermValue":"Tier3"}},{"Type":"BehaviorDesigner.Runtime.Tasks.UntilSuccess","NodeData":{"Offset":"(100,140)"},"ID":19,"Name":"Until
