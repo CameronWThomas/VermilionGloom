@@ -5,7 +5,8 @@ using UnityEngine;
 public class HostilityMarkerController : MonoBehaviour
 {
     [SerializeField] Material _willBeHostileToPlayer;
-    [SerializeField] Material _isHostileMat;
+    [SerializeField] Material _generalHostileMat;
+    [SerializeField] Material _hostileTowardsPlayerMat;
 
     [Header("debug")]
     [SerializeField] State _state = State.General;
@@ -25,7 +26,14 @@ public class HostilityMarkerController : MonoBehaviour
     {
         var newState = _state;
         if (_brain.IsHostile)
-            newState = State.Hostile;
+        {
+            if (_brain.HostileTowardsTarget == null)
+                newState = _state;
+            else if (_brain.HostileTowardsTarget.IsPlayer())
+                newState = State.HostileTowardsPlayer;
+            else
+                newState = State.GeneralHostile;
+        }
         else if (_brain.RelationshipWithPlayerIsHostile)
             newState = State.WillBeHostileToPlayer;
         else
@@ -41,7 +49,7 @@ public class HostilityMarkerController : MonoBehaviour
     private void OnStateChange()
     {
         var meshRenderersEnabled = false;
-        var meshRendererMaterial = _isHostileMat;
+        var meshRendererMaterial = _hostileTowardsPlayerMat;
 
         switch (_state)
         {
@@ -54,9 +62,14 @@ public class HostilityMarkerController : MonoBehaviour
                 meshRendererMaterial = _willBeHostileToPlayer;
                 break;
 
-            case State.Hostile:
+            case State.GeneralHostile:
                 meshRenderersEnabled = true;
-                meshRendererMaterial = _isHostileMat;
+                meshRendererMaterial = _generalHostileMat;
+                break;
+
+            case State.HostileTowardsPlayer:
+                meshRenderersEnabled = true;
+                meshRendererMaterial = _hostileTowardsPlayerMat;
                 break;
         }
 
@@ -72,6 +85,7 @@ public class HostilityMarkerController : MonoBehaviour
     {
         General,
         WillBeHostileToPlayer,
-        Hostile
+        GeneralHostile,
+        HostileTowardsPlayer,
     }
 }

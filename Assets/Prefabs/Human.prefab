@@ -133,7 +133,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _willBeHostileToPlayer: {fileID: 2100000, guid: ede44819126eed444859da03bd63aa40, type: 2}
-  _isHostileMat: {fileID: 2100000, guid: cd2d604b6311e2d43817110f7ff8d22d, type: 2}
+  _generalHostileMat: {fileID: 2100000, guid: 93f08f8fd0ead0048a1faf7124121478, type: 2}
+  _hostileTowardsPlayerMat: {fileID: 2100000, guid: cd2d604b6311e2d43817110f7ff8d22d, type: 2}
   _state: 0
 --- !u!1 &4920235555130396583
 GameObject:
@@ -165,8 +166,8 @@ Transform:
   m_GameObject: {fileID: 4920235555130396583}
   serializedVersion: 2
   m_LocalRotation: {x: -0.70710677, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 5}
-  m_LocalScale: {x: 14.00415, y: 10, z: 20}
+  m_LocalPosition: {x: 0, y: 0, z: 7.5}
+  m_LocalScale: {x: 21.006226, y: 15, z: 13.356861}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7405902691002235157}
@@ -1617,9 +1618,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdc0f1366e9d6bb4cbeeab2835250a16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _distance: 10
+  _distance: 15
   _horizontalAngle: 70
-  _verticalAngle: 90
+  _verticalAngle: 48
   _charactersInSight: []
 --- !u!136 &8943308718410859587
 CapsuleCollider:
