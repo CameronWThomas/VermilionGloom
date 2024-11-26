@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -21,8 +22,15 @@ public class FadeToBlackController : GlobalSingleInstanceMonoBehaviour<FadeToBla
         if (_firstUpdate)
         {
             _firstUpdate = false;
-            StartCoroutine(FadeFromBlackRoutine(3f));
+            StartCoroutine(StartUp());
         }
+    }
+
+    private IEnumerator StartUp()
+    {
+        MouseReceiver.Instance.Deactivate();
+        yield return FadeFromBlackRoutine(1f);
+        MouseReceiver.Instance.Activate();
     }
 
     public IEnumerator FadeToBlackRoutine(float duration) => FadeToColor(Color.black, duration);

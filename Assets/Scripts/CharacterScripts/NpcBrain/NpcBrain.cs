@@ -54,9 +54,6 @@ public partial class NpcBrain : MonoBehaviour
         var roomID = GetInitialRoomID();
         RoomBB.Instance.UpdateCharacterLocation(GetComponent<CharacterInfo>().ID, roomID);
 
-        // lazy solution (:
-        if (!TryGetComponent<CharacterSecretKnowledge>(out _))
-            transform.AddComponent<CharacterSecretKnowledge>();
         characterSecretKnowledge = GetComponent<CharacterSecretKnowledge>();
     }
 

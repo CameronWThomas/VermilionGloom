@@ -1,6 +1,8 @@
+using UnityEngine;
+
 public class NameSecret : Secret
 {
-    private readonly string _name;
+    [SerializeField] private string _name;
 
     private NameSecret(string name)
     {

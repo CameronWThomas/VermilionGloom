@@ -1366,6 +1366,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7738491898982084907}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7854722824541201024}
   m_SourcePrefab: {fileID: 100100000, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
 --- !u!137 &1112062325180524497 stripped
 SkinnedMeshRenderer:
@@ -1619,7 +1622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _distance: 15
-  _horizontalAngle: 70
+  _horizontalAngle: 120
   _verticalAngle: 48
   _charactersInSight: []
 --- !u!136 &8943308718410859587
@@ -1734,6 +1737,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7854722824541201024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7893928265322881967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 824e1354034125c4595c2866d7f94f7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!137 &8354816036452255955 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1351063208647464493, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}

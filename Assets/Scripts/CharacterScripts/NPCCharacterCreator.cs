@@ -78,7 +78,7 @@ public class NPCCharacterCreator : MonoBehaviour
                     .CreateGenericSecrets(3)
                     .BuildSecretList();
 
-                var secretKnowledge = characterInfo.gameObject.AddComponent<CharacterSecretKnowledge>();
+                var secretKnowledge = characterInfo.GetComponent<CharacterSecretKnowledge>();
                 secretKnowledge.AddSecrets(secrets);
             }
 
