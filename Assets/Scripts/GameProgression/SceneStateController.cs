@@ -77,16 +77,18 @@ public class SceneStateController : GlobalSingleInstanceMonoBehaviour<SceneState
 
         yield return FadeToBlackController.Instance.FadeToBlackRoutine(3f);
 
-        yield return new WaitForSeconds(.25f);
-
         if (load)
         {
             LoadGame();
+            yield return new WaitForSeconds(1f);
 
             yield return FadeToBlackController.Instance.FadeFromBlackRoutine(3f);
         }
         else
+        {
+            yield return new WaitForSeconds(1f);
             RestartGame();
+        }
 
         _gameHandlingDeath = false;
     }
