@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -30,6 +31,8 @@ public class FinalBodyDeliverySequence : BodyDeliverySequence
 
             .AddRoutine(() => PlayerFaceTarget(_vampire.transform))
 
+            .AddRoutine(PlayFinalSong)
+
             .StartAddingParallelSequenceRoutines()
             .AddRoutine(Bless, maxDuration: _blessTime + 5f, repeat: _blessingRepeats)
             .AddRoutine(RampPlayerVampyness, maxDuration: _blessTime + 5f)
@@ -42,7 +45,8 @@ public class FinalBodyDeliverySequence : BodyDeliverySequence
             .AddRoutine(() => MoveCameraToPlayer(3f))
             .AddRoutine(ZoomCameraEndSequence)
             ;
-    }    
+    }
+    
 
     protected override bool SequencePlayingCondition()
     {
@@ -114,6 +118,12 @@ public class FinalBodyDeliverySequence : BodyDeliverySequence
         foreach (var meshRenderer in _playerVampireMeshes)
             meshRenderer.enabled = true;
 
+        yield break;
+    }
+
+    private IEnumerator PlayFinalSong()
+    {
+        CreditController.Instance.PlayFinalSong();
         yield break;
     }
 }
