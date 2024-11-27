@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -65,12 +66,15 @@ public class UI_BottomBarController : GlobalSingleInstanceMonoBehaviour<UI_Botto
     {
         UpdateRunningButtons(PlayerController.IsRunning);
         UpdateHostileButtons(PlayerController.hostile);
+        
         UpdateButtonInteractability();
+
+        UpdateObjectiveText();
     }
 
     public void Default()
     {
-        _normalText.SetActive(false);
+        _normalText.SetActive(true);
         _interactingCharacter.SetActive(false);
     }
 
@@ -160,4 +164,9 @@ public class UI_BottomBarController : GlobalSingleInstanceMonoBehaviour<UI_Botto
             yield return new WaitForNextFrameUnit();
         }
     }
+
+    private void UpdateObjectiveText()
+    {
+        _generalDescriptionText.text = GameState.Instance.ObjectiveMessage;
+    }    
 }

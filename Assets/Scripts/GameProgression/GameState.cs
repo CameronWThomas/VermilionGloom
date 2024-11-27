@@ -1,4 +1,12 @@
+using System;
 using UnityEngine;
+
+public enum Objective
+{
+    GoToDen,
+    CollectBodies,
+    KillEveryone
+}
 
 public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
 {
@@ -15,6 +23,15 @@ public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
     [Header("Needed to help run sequences")]
     public VampireController Vampire;
     public CoffinController CoffinController;
+
+    public Objective CurrentObjective => GetCurrentObjective();
+    public string ObjectiveMessage => CurrentObjective switch
+    {
+        Objective.GoToDen => "Enter the secret passage in the Den",
+        Objective.CollectBodies => "Bring bodies to your Lord and Savior",
+        Objective.KillEveryone => "KILL",
+        _ => throw new NotImplementedException()
+    };    
 
     protected override void Start()
     {
@@ -34,5 +51,15 @@ public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
         var defaultVampireTransform = UsefulTransforms.Instance.V_Default;
         position = defaultVampireTransform.position;
         rotation = defaultVampireTransform.rotation;
+    }
+
+    private Objective GetCurrentObjective()
+    {
+        if (!VampireLordVisited)
+            return Objective.GoToDen;
+        else if (!GameWon)
+            return Objective.CollectBodies;
+        else
+            return Objective.KillEveryone;
     }
 }
