@@ -10,7 +10,7 @@ public abstract class Secret
     [SerializeReference] CharacterID _secretTarget;
     [SerializeReference] CharacterID _additionalCharacter;
     [SerializeField] SecretLevel _level;
-    [SerializeField] bool _isRevealed = true;
+    //[SerializeField] bool _isRevealed = true;
 
     string _description = null;
 
@@ -23,7 +23,7 @@ public abstract class Secret
         _secretTarget = secret.SecretTarget;
         _additionalCharacter = secret.AdditionalCharacter;
         _secretID = secret._secretID;
-        _isRevealed = false;
+        //_isRevealed = false;
     }
 
     public abstract SecretIconIdentifier Identifier { get; }
@@ -35,12 +35,13 @@ public abstract class Secret
 
     public SecretLevel Level => _level;
 
-    public bool IsRevealed => _isRevealed;
+    //public bool IsRevealed => _isRevealed;
 
     public string Description => _description ??= CreateDescription();
     public bool HasSecretTarget => SecretTarget != null;
     public bool HasAdditionalCharacter => AdditionalCharacter != null;
-    public Texture2D IconTexture => IsRevealed ? SecretResources.Instance.GetTexture(Identifier) : SecretResources.Instance.UnrevealedIconTexture;
+    //public Texture2D IconTexture => IsRevealed ? SecretResources.Instance.GetTexture(Identifier) : SecretResources.Instance.UnrevealedIconTexture;
+    public Texture2D IconTexture => SecretResources.Instance.GetTexture(Identifier);
     public bool IsASpreadSecret => CurrentSecretOwner != OriginalSecretOwner;
 
     public virtual bool NoCharactersInvolved => !HasSecretTarget;
@@ -59,7 +60,7 @@ public abstract class Secret
         return _secretID == other._secretID;
     }
 
-    public void Reveal() => _isRevealed = true;
+    //public void Reveal() => _isRevealed = true;
 
     public Secret CreateSpreadedCopy(CharacterID newSecretOwner)
     {

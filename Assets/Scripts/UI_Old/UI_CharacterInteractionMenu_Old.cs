@@ -107,12 +107,12 @@ public class UI_CharacterInteractionMenu_Old : GlobalSingleInstanceMonoBehaviour
 
     private void AddSecrets(IEnumerable<Secret> secrets)
     {
-        foreach (var secret in secrets.OrderBy(x => !x.IsRevealed))
-        {
-            var selectableTile = Instantiate(_selectableSecretTilePrefab, _secretsGrid).GetComponent<UI_SelectableSecretTile>();
-            selectableTile.Initialize(secret, OnSecretSelected, OnSecretRevealed);
-            _secretsTileList.Add(selectableTile);
-        }
+        //foreach (var secret in secrets.OrderBy(x => !x.IsRevealed))
+        //{
+        //    var selectableTile = Instantiate(_selectableSecretTilePrefab, _secretsGrid).GetComponent<UI_SelectableSecretTile>();
+        //    selectableTile.Initialize(secret, OnSecretSelected, OnSecretRevealed);
+        //    _secretsTileList.Add(selectableTile);
+        //}
 
         _secretsTileList.First().SelectInitial();
     }    
@@ -122,14 +122,14 @@ public class UI_CharacterInteractionMenu_Old : GlobalSingleInstanceMonoBehaviour
         _selectedSecret = secret;
 
         _selectedSecretImage.texture = secret.IconTexture;
-        if (!secret.IsRevealed)
-        {
-            _multiPartySelectedSecret.SetActive(false);
-            _singlePartySelectedSecret.SetActive(false);
+        //if (!secret.IsRevealed)
+        //{
+        //    _multiPartySelectedSecret.SetActive(false);
+        //    _singlePartySelectedSecret.SetActive(false);
 
-            _selectedSecretText.text = "???";
-            return;
-        }
+        //    _selectedSecretText.text = "???";
+        //    return;
+        //}
 
         //TODO need to do add something for this case
         if (secret.IsASpreadSecret)

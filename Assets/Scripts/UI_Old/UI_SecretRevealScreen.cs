@@ -48,7 +48,7 @@ public class UI_SecretRevealScreen : MonoBehaviour
         _miniGameIndicator.gameObject.SetActive(false);
 
         var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(characterID);
-        _unrevealedSecrets = secrets.Where(x => !x.IsRevealed).ToList();
+        //_unrevealedSecrets = secrets.Where(x => !x.IsRevealed).ToList();
 
         UpdateAllowableSecretLevel();
     }   

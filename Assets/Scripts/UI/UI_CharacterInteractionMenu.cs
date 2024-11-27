@@ -1,10 +1,10 @@
-using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_CharacterInteractionMenu>
@@ -13,6 +13,20 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
     [SerializeField] Button _exitButton;
     [SerializeField] Button _backButton;
 
+    [Header("Vampire power stuff")]
+    [SerializeField] RectTransform _vampPowerSection;
+    [SerializeField] Button _probeMind;
+    [SerializeField] Button _trance;
+    [SerializeField] Button _forget;
+
+    [Header("Spin transition stuff")]
+    [SerializeField] RectTransform _belaImage;
+    [SerializeField] GameObject _belaPrefab;
+    [SerializeField, Range(0f, 20f)] float _batTransitionSpinSpeed = 15f;
+    [SerializeField, Range(0f, 10f)] float _batTransitionDuration = 2f;
+    [SerializeField, Range(0f, 10f)] float _batTransitionScale = 5f;
+
+    [Header("Other")]
     [SerializeField] RectTransform _mainScreen;
     [SerializeField] RectTransform _miniGameScreen;
 
@@ -41,7 +55,13 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
     {
         base.Start();
         Deactivate();
-    }
+
+        _probeMind.onClick.AddListener(OnProbeMindClick);
+        _trance.onClick.AddListener(OnTranceClicked);
+        _forget.onClick.AddListener(OnForgetClicked);
+        _exitButton.onClick.AddListener(OnExitButtonClicked);
+        _backButton.onClick.AddListener(OnBackButtonClicked);
+    }    
 
     public void Activate(NPCHumanCharacterID characterID)
     {
@@ -65,6 +85,19 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         //_detectivePowerBar.Initialize(characterID);
 
         AddSecrets(secrets);
+
+        var characterInfo = CharacterInfoBB.Instance.GetCharacterInfo(characterID);
+        SetupBaseCharacterInteractionScreen(characterInfo.MindProbed);
+    }
+
+    private void SetupBaseCharacterInteractionScreen(bool mindProbed)
+    {
+        for (var i = 0; i < _vampPowerSection.parent.childCount; i++)
+            _vampPowerSection.parent.GetChild(i).gameObject.SetActive(mindProbed);
+
+        _vampPowerSection.gameObject.SetActive(true);
+        _trance.gameObject.SetActive(mindProbed);
+        _probeMind.gameObject.SetActive(!mindProbed);
     }
 
     public void Deactivate()
@@ -115,10 +148,10 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
 
     private void AddSecrets(IEnumerable<Secret> secrets)
     {
-        foreach (var secret in secrets.OrderBy(x => !x.IsRevealed))
+        foreach (var secret in secrets)
         {
             var selectableTile = Instantiate(_selectableSecretTilePrefab, _secretsGrid.transform).GetComponent<UI_SelectableSecretTile>();
-            selectableTile.Initialize(secret, OnSecretSelected, OnSecretRevealed);
+            selectableTile.Initialize(secret, OnSecretSelected, IsSecretSelected);
             _secretsTileList.Add(selectableTile);
         }
 
@@ -130,14 +163,14 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         _selectedSecret = secret;
 
         //_selectedSecretImage.texture = secret.IconTexture;
-        if (!secret.IsRevealed)
-        {
-            _multiPartySelectedSecret.SetActive(false);
-            _singlePartySelectedSecret.SetActive(false);
+        //if (!secret.IsRevealed)
+        //{
+        //    _multiPartySelectedSecret.SetActive(false);
+        //    _singlePartySelectedSecret.SetActive(false);
 
-            _selectedSecretText.text = "???";
-            return;
-        }
+        //    _selectedSecretText.text = "???";
+        //    return;
+        //}
 
         //TODO need to do add something for this case
         if (secret.IsASpreadSecret)
@@ -174,13 +207,9 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         _selectedSecretText.text = secret.Description;
     }
 
-    private void OnSecretRevealed(Secret secret)
+    private bool IsSecretSelected(Secret secret)
     {
-        if (_selectedSecret != secret)
-            return;
-
-        // Reselect to we can update the active secret screen
-        OnSecretSelected(secret);
+        return _selectedSecret == secret;
     }
 
     //private void OnRevealScreenFinish(SecretLevel? level, bool gamePlayed)
@@ -197,4 +226,96 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
 
     //    OnActionComplete();
     //}
+
+    private void OnForgetClicked()
+    {
+
+    }
+
+    private void OnTranceClicked()
+    {
+
+    }
+
+    private void OnProbeMindClick()
+    {
+        if (_characterId == null)
+            return;
+
+        var characterInfo = CharacterInfoBB.Instance.GetCharacterInfo(_characterId);
+        if (characterInfo.MindProbed)
+            return;
+
+        characterInfo.MindProbed = true;
+        StartCoroutine(ProbeMindRoutine());
+    }
+
+    private void OnExitButtonClicked() => Deactivate();
+
+    private void OnBackButtonClicked() { }
+
+    private IEnumerator ProbeMindRoutine()
+    {
+        _exitButton.interactable = false;
+
+        var newBela = Instantiate(_belaPrefab, _mainScreen);
+        var newBellaRectTransform = newBela.GetComponent<RectTransform>();
+
+        newBellaRectTransform.anchoredPosition = _belaImage.anchoredPosition + new Vector2(18f, -18f); // Add padding of the horizontal groups
+        newBellaRectTransform.sizeDelta = _belaImage.sizeDelta;
+
+        _belaImage.gameObject.SetActive(false);
+
+
+        var originalSizeDelta = newBellaRectTransform.sizeDelta;
+        var maxSizeDelta = newBellaRectTransform.sizeDelta * _batTransitionScale;
+        var startSizeDelta = originalSizeDelta;
+        var finalSizeDelta = maxSizeDelta;
+
+        StartCoroutine(SpinRectTransform(newBellaRectTransform, _batTransitionSpinSpeed, _batTransitionDuration));
+
+        var duration = _batTransitionDuration;
+        var originalStartTime = Time.time;
+        var startTime = Time.time;
+        while (Time.time - originalStartTime <= duration)
+        {
+            var t = (Time.time - startTime) / (duration / 2f);
+
+            if (t > 1f)
+            {
+                SetupBaseCharacterInteractionScreen(true);
+                _belaImage.gameObject.SetActive(true);
+
+                t = 0f;
+                startTime = Time.time;
+                finalSizeDelta = Vector2.zero;
+                startSizeDelta = newBellaRectTransform.sizeDelta;
+            }
+
+            newBellaRectTransform.sizeDelta = Vector2.Lerp(startSizeDelta, finalSizeDelta, t);
+
+            yield return new WaitForNextFrameUnit();
+        }        
+
+        Destroy(newBela);
+        _exitButton.interactable = true;
+    }
+
+    private static IEnumerator SpinRectTransform(RectTransform rectTransform, float maxSpeed, float duration)
+    {
+        var startTime = Time.time;
+        while (Time.time - startTime <= duration)
+        {
+            if (rectTransform.gameObject.IsDestroyed())
+                yield break;
+
+            var t = .2f + (Time.time - startTime) / (duration * .5f );
+            var speed = Mathf.Lerp(0f, maxSpeed, Mathf.Clamp(t, 0f, 1f));
+
+            var lastRotation = rectTransform.rotation;
+            rectTransform.rotation = Quaternion.Euler(lastRotation.eulerAngles + speed * Vector3.forward);
+
+            yield return new WaitForNextFrameUnit();
+        }
+    }
 }
