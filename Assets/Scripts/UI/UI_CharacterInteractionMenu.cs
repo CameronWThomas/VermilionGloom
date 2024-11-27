@@ -60,10 +60,7 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
 
         var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(characterID);
 
-        //_characterName.text = characterID.Name;
-        //_selectedCharacterPortrait.SetContent(characterID.PortraitContent);
-        //_selectedCharacterPortrait.SetContent(characterID.PortraitColor);
-
+        UI_BottomBarController.Instance.SetInteractingCharacter(characterID);
 
         //_detectivePowerBar.Initialize(characterID);
 
@@ -82,6 +79,7 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         //}
 
         //_screenState = ScreenState.Off;
+        UI_BottomBarController.Instance.Off();
 
         MouseReceiver.Instance.Activate();
         _characterInteractionContent.SetActive(false);
