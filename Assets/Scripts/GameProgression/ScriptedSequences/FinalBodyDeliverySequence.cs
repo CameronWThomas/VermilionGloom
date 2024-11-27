@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -12,6 +11,8 @@ public class FinalBodyDeliverySequence : BodyDeliverySequence
     [SerializeField] List<SkinnedMeshRenderer> _playerVampireMeshes = new();
 
     float _blessTime = 0f;
+
+    protected override bool SaveGameOnFinish => false;
 
     protected override bool GetIsPlayable()
     {

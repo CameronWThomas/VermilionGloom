@@ -12,6 +12,7 @@ public class CharacterInfoBB : GlobalSingleInstanceMonoBehaviour<CharacterInfoBB
     }
 
     public CharacterInfo GetCharacterInfo(CharacterID id) => _characterInfos.First(x => x.ID == id);
+    public PlayerCharacterInfo GetPlayerCharacterInfo() => _characterInfos.OfType<PlayerCharacterInfo>().First();
 
     public NPCHumanCharacterInfo GetCharacterInfo(NPCHumanCharacterID id)
         => _characterInfos.OfType<NPCHumanCharacterInfo>().First(x => x.NPCHumanCharacterID == id);

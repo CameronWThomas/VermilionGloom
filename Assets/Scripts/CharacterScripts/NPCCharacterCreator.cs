@@ -19,7 +19,7 @@ public class NPCCharacterCreator : MonoBehaviour
             .CreateGameObjects(npcHumanCount, _humanCharacterPrefab)
             .InitializeCharacterInfo(1)
             .CreateAndInitializeSecrets(3)
-            .SpreadSecrets(3)
+            .SpreadSecrets(1)
             .CreateUniqueModels()
             .InitializeRelationships()
             .PlaceCharacters()
@@ -78,7 +78,7 @@ public class NPCCharacterCreator : MonoBehaviour
                     .CreateGenericSecrets(3)
                     .BuildSecretList();
 
-                var secretKnowledge = characterInfo.gameObject.AddComponent<CharacterSecretKnowledge>();
+                var secretKnowledge = characterInfo.GetComponent<CharacterSecretKnowledge>();
                 secretKnowledge.AddSecrets(secrets);
             }
 

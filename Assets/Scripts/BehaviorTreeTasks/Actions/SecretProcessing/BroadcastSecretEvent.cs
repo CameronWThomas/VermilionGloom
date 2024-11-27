@@ -6,10 +6,10 @@ public class BroadcastSecretEvent : Action
 {
     public override TaskStatus OnUpdate()
     {
-        var brain = GetComponent<NpcBrain>();
+        var secretEvent = GetComponent<NpcBrain>().LastSecretEventResponse?.NewSecretEvent;
 
-        if (brain.SecretEventToBroadcast != null)
-            NpcBehaviorBB.Instance.BroadcastSecretEvent(brain.SecretEventToBroadcast);
+        if (secretEvent != null)
+            NpcBehaviorBB.Instance.BroadcastSecretEvent(secretEvent);
 
         return TaskStatus.Success;
  

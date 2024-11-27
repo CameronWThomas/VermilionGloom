@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[Serializable]
 public class NPCHumanCharacterID : CharacterID
 {
     public NPCHumanCharacterInfo CharacterInfo => InternalCharacterInfo as NPCHumanCharacterInfo;

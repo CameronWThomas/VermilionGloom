@@ -52,7 +52,6 @@ public static class SecretBuilder
 
         helper.Secrets.Add(new MurderSecret.Builder(helper.ID, level)
             .SetMurderer(helper.ID)
-            .IsJustified()
             .WasSuccessfulMuder()
             .Build());
 

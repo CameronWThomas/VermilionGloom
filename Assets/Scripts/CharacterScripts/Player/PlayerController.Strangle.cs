@@ -9,7 +9,10 @@ public partial class PlayerController
     [SerializeField] bool _isStrangling = false;
     [SerializeField] float _strangleTime = 5f;
 
+    private bool _isPlayingChokeKilling;
+
     public bool IsStrangling => _isStrangling;
+    public bool IsPlayingChokeKill => !_isStrangling && _isPlayingChokeKilling;
 
     CoroutineContainer _strangleCoroutine;
 
@@ -23,6 +26,7 @@ public partial class PlayerController
 
     public void OnEndStrangle()
     {
+        _isPlayingChokeKilling = false;
         MouseReceiver.Instance.Activate();
     }
 
@@ -56,7 +60,11 @@ public partial class PlayerController
         _isStrangling = true;
         StrangleTarget.BeStrangled(gameObject);
 
-        _strangleSecretEvent = new SecretEvent(SecretEventType.StranglingSomeone, this.GetCharacterID(), StrangleTarget.GetCharacterID(), SecretNoticability.Sight, SecretDuration.UntilCancel);
+        _strangleSecretEvent = new MurderSecretEvent(this.GetCharacterID(),
+                StrangleTarget.GetCharacterID(),
+                MurderSecretEventType.StranglingSomeone.IsAttempt(),
+                SecretNoticability.Sight,
+                SecretDuration.UntilCancel);
         NpcBehaviorBB.Instance.BroadcastSecretEvent(_strangleSecretEvent);
 
         var startStrangleTime = Time.time;
@@ -94,6 +102,7 @@ public partial class PlayerController
         StrangleTarget.StrangleDie();
         _isStrangling = false;
         StrangleTarget = null;
+        _isPlayingChokeKilling = true;
 
         NpcBehaviorBB.Instance.EndSecretEventBroadcast(_strangleSecretEvent);
         _strangleSecretEvent = null;

@@ -14,6 +14,10 @@ public class ProcessSecretEvent : Action
     public override TaskStatus OnUpdate()
     {
         _brain.ProcessSecretEvent();
+
+        if (_brain.LastSecretEventResponse == null)
+            return TaskStatus.Failure;
+
         return TaskStatus.Success;
     }
 }
