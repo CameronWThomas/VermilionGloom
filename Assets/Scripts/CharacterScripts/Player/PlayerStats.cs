@@ -3,8 +3,9 @@ using UnityEngine;
 public class PlayerStats : GlobalSingleInstanceMonoBehaviour<PlayerStats>
 {
     [SerializeField] private int _maxVampirePoints = 10;
+    [SerializeField] private int _currentVampirePoints;
 
-    public int CurrentVampirePoints { get; private set; }
+    public int CurrentVampirePoints => _currentVampirePoints;
     public int MaxVampirePoints => _maxVampirePoints;
     public int PendingUseVampirePoints { get; private set; }
 
@@ -12,7 +13,7 @@ public class PlayerStats : GlobalSingleInstanceMonoBehaviour<PlayerStats>
     protected override void Start()
     {
         base.Start();
-        CurrentVampirePoints = _maxVampirePoints;
+        _currentVampirePoints = _maxVampirePoints;
     }
 
     public bool TrySetPendingVampirePoints(int pendingUseVampirePoints)
@@ -30,7 +31,7 @@ public class PlayerStats : GlobalSingleInstanceMonoBehaviour<PlayerStats>
             return false;
 
         PendingUseVampirePoints = 0;
-        CurrentVampirePoints -= vampirePoints;
+        _currentVampirePoints -= vampirePoints;
         return true;
     }
 }
