@@ -75,6 +75,7 @@ public abstract class SequenceBase : MonoBehaviour
         PlayerController.DisableInputForCutscene();
 
         MouseReceiver.Instance.Deactivate();
+        UI_BottomBarController.Instance.SetHidden(true);
     }
 
     private void OnSequenceEndPrivate()
@@ -88,6 +89,8 @@ public abstract class SequenceBase : MonoBehaviour
     protected virtual void OnSequenceEnd()
     {
         MouseReceiver.Instance.Activate();
+        UI_BottomBarController.Instance.SetHidden(false);
+
         PlayerController.RenableInputAfterCutscene();
         SequenceFinished = true;        
     }

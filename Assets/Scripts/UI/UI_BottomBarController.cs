@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -26,6 +27,10 @@ public class UI_BottomBarController : GlobalSingleInstanceMonoBehaviour<UI_Botto
     private Sprite _selectedSprite;
     private SpriteState _selectedSpriteState;
 
+    private RectMask2D _mask;
+    private bool _isHidden = false;
+    private float _defaultTopPadding;
+
     protected override void Start()
     {
         base.Start();
@@ -46,24 +51,27 @@ public class UI_BottomBarController : GlobalSingleInstanceMonoBehaviour<UI_Botto
             disabledSprite = _hostile.spriteState.disabledSprite
         };
 
+        _mask = GetComponent<RectMask2D>();
+        _isHidden = false;
+        _defaultTopPadding = _mask.padding.w;
 
         UpdateRunningButtons(false);
         UpdateHostileButtons(false);
 
-        Off();
-    }    
+        Default();
+    }
 
     private void Update()
     {
         UpdateRunningButtons(PlayerController.IsRunning);
         UpdateHostileButtons(PlayerController.hostile);
-    }    
+        UpdateButtonInteractability();
+    }
 
-    public void Off()
+    public void Default()
     {
         _normalText.SetActive(false);
         _interactingCharacter.SetActive(false);
-        SetButtonStates(true);
     }
 
     public void SetInteractingCharacter(CharacterID characterID)
@@ -71,14 +79,14 @@ public class UI_BottomBarController : GlobalSingleInstanceMonoBehaviour<UI_Botto
         _normalText.SetActive(false);
         _interactingCharacter.SetActive(true);
 
-        SetButtonStates(false);
-
         //_characterPortrait.SetContent(characterID.PortraitContent);
         _characterPortrait.SetContent(characterID.PortraitColor);
         _characterName.text = characterID.Name;
 
         _characterTalking.text = "...";
     }
+
+    public void SetHidden(bool hidden) => StartCoroutine(HideRoutine(hidden));
 
     private void UpdateHostileButtons(bool isHostile)
     {
@@ -118,5 +126,38 @@ public class UI_BottomBarController : GlobalSingleInstanceMonoBehaviour<UI_Botto
         _hostile.interactable = enabled;
         _interacting.interactable = enabled;
         _running.interactable = enabled;
+    }
+
+    private void UpdateButtonInteractability()
+    {
+        var enabled = MouseReceiver.Instance.IsActivated;
+
+        _hostile.interactable = enabled;
+        _interacting.interactable = enabled;
+        _running.interactable = enabled;
+    }
+
+    private IEnumerator HideRoutine(bool hide)
+    {
+        if (_isHidden == hide)
+            yield break;
+
+        _isHidden = hide;
+
+        var padding = _mask.padding;
+        var start = hide ? _defaultTopPadding : _defaultTopPadding * -1;
+        var end = start * -1;
+
+        var duration = 3f;
+        var startTime = Time.time;
+        while (Time.time - startTime <= duration)
+        {
+            var t = (Time.time - startTime) / duration;
+
+            padding.w = Mathf.Lerp(start, end, t);
+            _mask.padding = padding;
+
+            yield return new WaitForNextFrameUnit();
+        }
     }
 }

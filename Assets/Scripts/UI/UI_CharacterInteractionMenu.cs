@@ -79,7 +79,7 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         //}
 
         //_screenState = ScreenState.Off;
-        UI_BottomBarController.Instance.Off();
+        UI_BottomBarController.Instance.Default();
 
         MouseReceiver.Instance.Activate();
         _characterInteractionContent.SetActive(false);
