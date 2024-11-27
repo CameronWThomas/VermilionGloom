@@ -12,10 +12,9 @@ public class FaceLastSecretEventTarget : Action
 
     public override TaskStatus OnUpdate()
     {
-        if (_brain.SecretFromLastProcessedSecretEvent.HasSecretTarget)
+        if (_brain.LastSecretEventResponse != null)
         {
-            var characterId = _brain.SecretFromLastProcessedSecretEvent.SecretTarget;
-            var characterTransform = CharacterInfoBB.Instance.GetCharacterInfo(characterId).transform;
+            var characterTransform = _brain.LastSecretEventResponse.SecretResponseTarget;
             GetComponent<MvmntController>().FaceTarget(characterTransform.position);
         }
 

@@ -30,6 +30,12 @@ public class GoToHostileTowardsTarget : Action
 
     public override TaskStatus OnUpdate()
     {
+        if (!_ourBrain.IsHostile)
+        {
+            GetComponent<MvmntController>().CancelMovementAction();
+            return TaskStatus.Failure;
+        }
+
         if (_taskStatus is TaskStatus.Failure)
             return _taskStatus;
 

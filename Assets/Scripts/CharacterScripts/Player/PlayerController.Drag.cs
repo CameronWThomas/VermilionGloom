@@ -40,7 +40,11 @@ public partial class PlayerController
         _isDragging = true;
         DragTarget.BeDraged(gameObject);
 
-        _dragSecretEvent = new SecretEvent(SecretEventType.DraggingABody, this.GetCharacterID(), DragTarget.GetCharacterID(), SecretNoticability.Sight, SecretDuration.UntilCancel);
+        _dragSecretEvent = new MurderSecretEvent(this.GetCharacterID(),
+                DragTarget.GetCharacterID(),
+                MurderSecretEventType.DraggingABody.IsAttempt(),
+                SecretNoticability.Sight,
+                SecretDuration.UntilCancel);
         NpcBehaviorBB.Instance.BroadcastSecretEvent(_dragSecretEvent);
     }
 }

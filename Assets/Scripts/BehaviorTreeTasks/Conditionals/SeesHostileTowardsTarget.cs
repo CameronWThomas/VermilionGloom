@@ -14,7 +14,7 @@ public class SeesHostileTowardsTarget : Conditional
 
     public override TaskStatus OnUpdate()
     {
-        if (_ourBrain.SeesAHostileTowardsTarget(out _))
+        if (_ourBrain.SeesAHostileTowardsTarget(out var hostileTarget))
             return TaskStatus.Success;
 
         return TaskStatus.Failure;

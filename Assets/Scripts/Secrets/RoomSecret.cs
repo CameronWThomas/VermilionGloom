@@ -1,7 +1,10 @@
+using System;
+using UnityEngine;
+
+[Serializable]
 public class RoomSecret : Secret
 {
-    private SecretLevel _level;
-    private RoomID _roomID;
+    [SerializeField] private RoomID _roomID;
 
     public RoomSecret(RoomID roomID)
     {

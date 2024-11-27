@@ -11,10 +11,11 @@ public class Relationship
     private readonly CharacterSecretKnowledge _secretKnowledge;
     private readonly CharacterID _relationshipTarget;
 
-    [SerializeField] private CharacterInfo _characterInfo;
+    [SerializeReference] private CharacterInfo _characterInfo;
 
     [SerializeField] private bool _isDead = false;
     [SerializeField] private bool _isHostileTowards = false;
+    [SerializeField, Range(0, 10)] private int _opinionTowards = 5;
 
     public Relationship(CharacterSecretKnowledge ownerSecretKnowledge, CharacterID relationshipTarget)
     {
@@ -27,47 +28,25 @@ public class Relationship
     public CharacterID RelationshipTarget => _relationshipTarget;
     public bool IsHostileTowards => _isHostileTowards;
     public bool IsDead => _isDead;
+    public bool HasHostileOpinionOf => _opinionTowards <= 0;
 
     private List<Secret> RelevantSecrets => _secretKnowledge.Secrets.Where(IsRelevantSecret).ToList();
 
     public void Reevaluate()
     {
-        CheckIfAnyMurdersShouldBeJustified();
-
         _isDead = RelevantSecrets.OfType<MurderSecret>().Any(x => !x.IsAttempt && x.AdditionalCharacter == RelationshipTarget);
-        _isHostileTowards = GetIsHostileTowards();
+        _opinionTowards = EvaluateOptionToward();
+        _isHostileTowards = !_isDead && HasHostileOpinionOf;
     }
 
-    private void CheckIfAnyMurdersShouldBeJustified()
+
+    private int EvaluateOptionToward()
     {
         var murderSecrets = RelevantSecrets.OfType<MurderSecret>().ToList();
-        var draggedSecrets = RelevantSecrets.OfType<MurderSecret>().ToList();
+        if (murderSecrets.Any(x => x.SecretTarget == RelationshipTarget))
+            return 0;
 
-        var unjustifiedMurders = murderSecrets.Where(x => x.SecretTarget == RelationshipTarget && !x.IsJustified).ToList();
-
-        // Check if any unjustified murder comitted by the character was against someone who comitted an unjustified murder. They become justified if that is the case.
-        foreach (var unjustifiedMurder in unjustifiedMurders)
-        {
-            var murdererWasVictimOfUnjustifiedMurder = _secretKnowledge.Secrets.OfType<MurderSecret>().Any(x => x.IsAttempt && !x.IsJustified && x.AdditionalCharacter == unjustifiedMurder.SecretTarget);
-            if (!murdererWasVictimOfUnjustifiedMurder)
-                continue;
-
-            unjustifiedMurder.UpdateJustificationOrAttempt(true, unjustifiedMurder.IsAttempt);
-        }
-    }
-
-    private bool GetIsHostileTowards()
-    {
-        if (_isDead)
-            return false;
-
-        var murderSecrets = RelevantSecrets.OfType<MurderSecret>().ToList();
-        var dragSecrets = RelevantSecrets.OfType<DragSecret>().ToList();
-
-        if (murderSecrets.Any(x => !x.IsJustified && x.SecretTarget == RelationshipTarget) || dragSecrets.Any(x => x.SecretTarget == RelationshipTarget))
-            return true;
-
-        return false;
+        return _opinionTowards;
     }
 
     private bool IsRelevantSecret(Secret secret)

@@ -1,33 +1,41 @@
 using System;
 using UnityEngine;
 
-//TODO update to be serializable
+[Serializable]
 public abstract class Secret
 {
+    [SerializeField] string _secretID;
+    [SerializeReference] CharacterID _originalSecretOwner;
+    [SerializeReference] CharacterID _currentSecretOwner;
+    [SerializeReference] CharacterID _secretTarget;
+    [SerializeReference] CharacterID _additionalCharacter;
+    [SerializeField] SecretLevel _level;
+    [SerializeField] bool _isRevealed = true;
+
     string _description = null;
-    Guid _secretID;
 
     protected Secret() { }
 
     protected Secret(Secret secret)
     {
-        Level = secret.Level;
-        OriginalSecretOwner = secret.OriginalSecretOwner;
-        SecretTarget = secret.SecretTarget;
-        AdditionalCharacter = secret.AdditionalCharacter;
+        _level = secret.Level;
+        _originalSecretOwner = secret.OriginalSecretOwner;
+        _secretTarget = secret.SecretTarget;
+        _additionalCharacter = secret.AdditionalCharacter;
         _secretID = secret._secretID;
+        _isRevealed = false;
     }
 
     public abstract SecretIconIdentifier Identifier { get; }
 
-    public CharacterID OriginalSecretOwner { get; private set; }
-    public CharacterID CurrentSecretOwner { get; private set; }
-    public CharacterID SecretTarget { get; private set; }
-    public CharacterID AdditionalCharacter { get; private set; }
+    public CharacterID OriginalSecretOwner => _originalSecretOwner;
+    public CharacterID CurrentSecretOwner => _currentSecretOwner;
+    public CharacterID SecretTarget => _secretTarget;
+    public CharacterID AdditionalCharacter => _additionalCharacter;
 
-    public SecretLevel Level { get; private set; }
+    public SecretLevel Level => _level;
 
-    public bool IsRevealed { get; private set; }
+    public bool IsRevealed => _isRevealed;
 
     public string Description => _description ??= CreateDescription();
     public bool HasSecretTarget => SecretTarget != null;
@@ -38,6 +46,7 @@ public abstract class Secret
     public virtual bool NoCharactersInvolved => !HasSecretTarget;
 
     protected abstract string CreateDescription();
+
     protected abstract Secret Copy();
 
     protected void ResetDescription()
@@ -50,32 +59,26 @@ public abstract class Secret
         return _secretID == other._secretID;
     }
 
-    public void UpdateSecretLevel(SecretLevel newLevel)
-    {
-        Level = newLevel;
-    }
-
-    public void Reveal() => IsRevealed = true;
+    public void Reveal() => _isRevealed = true;
 
     public Secret CreateSpreadedCopy(CharacterID newSecretOwner)
     {
         var secret = Copy();
-        secret.CurrentSecretOwner = newSecretOwner;
+        secret._currentSecretOwner = newSecretOwner;
         return secret;
     }
-
 
     protected void InitializeNew(SecretLevel level,
         CharacterID secretOwner,
         CharacterID secretTarget = null,
         CharacterID additionalCharacter = null)
     {
-        _secretID = Guid.NewGuid();
-        Level = level;
-        CurrentSecretOwner = secretOwner ?? throw new System.Exception($"{nameof(secretOwner)} must be assigned");
-        OriginalSecretOwner = secretOwner;
-        SecretTarget = secretTarget;
-        AdditionalCharacter = additionalCharacter;
+        _secretID = Guid.NewGuid().ToString();
+        _level = level;
+        _currentSecretOwner = secretOwner ?? throw new System.Exception($"{nameof(secretOwner)} must be assigned");
+        _originalSecretOwner = secretOwner;
+        _secretTarget = secretTarget;
+        _additionalCharacter = additionalCharacter;
     }
 
 

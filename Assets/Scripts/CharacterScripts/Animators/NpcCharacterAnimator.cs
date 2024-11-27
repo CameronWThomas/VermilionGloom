@@ -37,27 +37,26 @@ public class NpcCharacterAnimator : CharacterAnimator
             _isStrangledTriggered = true;
             Animator.SetTrigger("chokeKill");
         }
-
-        HandleResponseState();
     }
 
-    private void HandleResponseState()
+    public bool TryPlayAnimationForReponseType(NpcBrain.SecretEventResponseType responseType, out float animationDuration)
     {
-        var responseState = Brain.SecretEventResponse;
-        switch (responseState)
-        {
-            case SecretEventResponse.Good:
-                Animator.SetTrigger("good");
-                break;
+        animationDuration = 2f;
 
-            case SecretEventResponse.Bad:
+        switch (responseType)
+        {
+            case NpcBrain.SecretEventResponseType.Good:
+                Animator.SetTrigger("good");
+                return true;
+
+            case NpcBrain.SecretEventResponseType.Bad:
                 Animator.SetTrigger("bad");
-                break;
+                return true;
 
             default:
                 Animator.ResetTrigger("good");
                 Animator.ResetTrigger("bad");
-                break;
+                return false;
         }
         
     }

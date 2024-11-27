@@ -77,7 +77,10 @@ public class MvmntController : MonoBehaviour
     public void GoToTarget(Vector3 targetPos, Action onSuccess = null, Action onFailure = null)
     {
         if (!CanReachTarget(targetPos))
+        {
+            onFailure?.Invoke();
             return;
+        }
 
         var coroutine = new CoroutineContainer(this, () => GoToTargetPositionCoroutine(targetPos), onSuccess, onFailure);
         StartNewMovementAction(coroutine);
@@ -104,7 +107,10 @@ public class MvmntController : MonoBehaviour
         }
 
         if (!CanReachTarget(otherTransform.position))
+        {
+            onFailure?.Invoke();
             return;
+        }
 
         var coroutine = new CoroutineContainer(this, () => GoToMvmntControllerCoroutine(mvmntController), onSuccess, onFailure);
         StartNewMovementAction(coroutine);
