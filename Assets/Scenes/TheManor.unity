@@ -22657,7 +22657,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8764173204101458748}
+      - m_Target: {fileID: 8761770689089068693}
         m_TargetAssemblyTypeName: UI_CharacterInteractionMenu, Assembly-CSharp
         m_MethodName: Deactivate
         m_Mode: 1
@@ -32805,8 +32805,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 213.66473, y: -227.46729}
-  m_SizeDelta: {x: 407.32947, y: 0}
+  m_AnchoredPosition: {x: 213.41272, y: -227.08676}
+  m_SizeDelta: {x: 406.82544, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &812188847
 MonoBehaviour:
@@ -35100,6 +35100,17 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!114 &849343313 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6938321592764281298, guid: 7f2041418ec463a46a63837ad4b22277, type: 3}
+  m_PrefabInstance: {fileID: 372421810}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab2e9af0b1d42d41a44a7eca51e9646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &851954605
 GameObject:
   m_ObjectHideFlags: 0
@@ -35793,6 +35804,17 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &862166644 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6938321592764281298, guid: 7f2041418ec463a46a63837ad4b22277, type: 3}
+  m_PrefabInstance: {fileID: 793611341}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab2e9af0b1d42d41a44a7eca51e9646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &871262404
 Mesh:
   m_ObjectHideFlags: 0
@@ -72105,6 +72127,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2918924400654732788, guid: 7f2041418ec463a46a63837ad4b22277, type: 3}
   m_PrefabInstance: {fileID: 1820520667}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1820520671 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6938321592764281298, guid: 7f2041418ec463a46a63837ad4b22277, type: 3}
+  m_PrefabInstance: {fileID: 1820520667}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab2e9af0b1d42d41a44a7eca51e9646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1823189676
 GameObject:
   m_ObjectHideFlags: 0
@@ -94948,10 +94981,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7925944330504181898}
+  - component: {fileID: 8761770689089068693}
+  - component: {fileID: 2244912354342035477}
   - component: {fileID: 7401428402858184158}
   - component: {fileID: 8761770689089068692}
   - component: {fileID: 6307115527218500820}
-  - component: {fileID: 2244912354342035477}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -97372,6 +97406,31 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!114 &8761770689089068693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6666919524299056105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1738dc9b0d76718449e7775ae1ef1257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterInteractionContent: {fileID: 2088018565}
+  _exitButton: {fileID: 493370270}
+  _backButton: {fileID: 557875726}
+  _mainScreen: {fileID: 1759613421}
+  _miniGameScreen: {fileID: 1938848543}
+  _selectableSecretTilePrefab: {fileID: 4170089577482854676, guid: 4421b66976a536447b203649d697740b, type: 3}
+  _secretsGrid: {fileID: 5909024543331668628}
+  _selectedSecretText: {fileID: 282260972848388404}
+  _singlePartySelectedSecret: {fileID: 1886613206}
+  _multiPartySelectedSecret: {fileID: 1831515361}
+  _singlePartyPortrait: {fileID: 849343313}
+  _multiPartyPortrait1: {fileID: 1820520671}
+  _multiPartyPortrait2: {fileID: 862166644}
 --- !u!114 &8764173204101458748
 MonoBehaviour:
   m_ObjectHideFlags: 0

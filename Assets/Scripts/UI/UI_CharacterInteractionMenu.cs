@@ -9,25 +9,27 @@ using UnityEngine.UI;
 
 public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_CharacterInteractionMenu>
 {
-    [SerializeField] private GameObject _selectableSecretTilePrefab;
-    [SerializeField] private UI_PowerBar _detectivePowerBar;
-    [SerializeField] private RectTransform _secretsGrid;
-    [SerializeField] private RawImage _selectedSecretImage;
-    [SerializeField] private TMP_Text _selectedSecretText;
-    [SerializeField] private GameObject _singlePartySelectedSecret;
-    [SerializeField] private GameObject _multiPartySelectedSecret;
-    [SerializeField] private TMP_Text _characterName;
+    [SerializeField] GameObject _characterInteractionContent;
+    [SerializeField] Button _exitButton;
+    [SerializeField] Button _backButton;
 
-    [SerializeField] private UI_Portrait _selectedCharacterPortrait;
-    [SerializeField] private UI_Portrait _singlePartyPortrait;
-    [SerializeField] private UI_Portrait _multiPartyPortrait1;
-    [SerializeField] private UI_Portrait _multiPartyPortrait2;
+    [SerializeField] RectTransform _mainScreen;
+    [SerializeField] RectTransform _miniGameScreen;
 
-    [SerializeField] private List<GameObject> _hideObjectsDuringAction = new();
-    [SerializeField] private UI_SecretRevealScreen _secretRevealScreen;
+    [SerializeField] GameObject _selectableSecretTilePrefab;
+    [SerializeField] GridLayoutGroup _secretsGrid;
 
-    private enum ScreenState { Off, Normal, RevealingSecrets }
-    private ScreenState _screenState = ScreenState.Off;
+    [SerializeField] TMP_Text _selectedSecretText;
+    [SerializeField] GameObject _singlePartySelectedSecret;
+    [SerializeField] GameObject _multiPartySelectedSecret;
+    //[SerializeField] TMP_Text _characterName;
+
+    //[SerializeField] UI_Portrait _selectedCharacterPortrait;
+    [SerializeField] UI_Portrait _singlePartyPortrait;
+    [SerializeField] UI_Portrait _multiPartyPortrait1;
+    [SerializeField] UI_Portrait _multiPartyPortrait2;
+
+    //[SerializeField] private List<GameObject> _hideObjectsDuringAction = new();
 
     private NPCHumanCharacterID _characterId;
 
@@ -35,93 +37,101 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
 
     private List<UI_SelectableSecretTile> _secretsTileList = new();
 
+    protected override void Start()
+    {
+        base.Start();
+        Deactivate();
+    }
+
     public void Activate(NPCHumanCharacterID characterID)
     {
         _characterId = characterID;
 
         NpcBehaviorBB.Instance.EnterConversationWithPlayer(_characterId);
-
-        _screenState = ScreenState.Normal;
-
         MouseReceiver.Instance.Deactivate();
 
-        gameObject.SetActive(true);
-        _detectivePowerBar.gameObject.SetActive(true);
-        _hideObjectsDuringAction.ForEach(x => x.SetActive(true));
-        _secretRevealScreen.gameObject.SetActive(false);
+        _characterInteractionContent.SetActive(true);
+
+        _mainScreen.gameObject.SetActive(true);
+        _exitButton.gameObject.SetActive(true);
+
+        _miniGameScreen.gameObject.SetActive(false);
+        _backButton.gameObject.SetActive(false);
 
         var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(characterID);
-        _characterName.text = characterID.Name;
+
+        //_characterName.text = characterID.Name;
         //_selectedCharacterPortrait.SetContent(characterID.PortraitContent);
-        _selectedCharacterPortrait.SetContent(characterID.PortraitColor);
+        //_selectedCharacterPortrait.SetContent(characterID.PortraitColor);
 
 
-        _detectivePowerBar.Initialize(characterID);
+        //_detectivePowerBar.Initialize(characterID);
 
         AddSecrets(secrets);
-    }    
+    }
 
     public void Deactivate()
     {
-        NpcBehaviorBB.Instance.EndConversationWithPlayer(_characterId);
+        if (_characterId != null)
+            NpcBehaviorBB.Instance.EndConversationWithPlayer(_characterId);
 
-        if (_screenState == ScreenState.RevealingSecrets)
-        {
-            OnRevealScreenFinish(null, false);
-            PlayerStats.Instance.TrySetPendingVampirePoints(0);
-        }
+        //if (_screenState == ScreenState.RevealingSecrets)
+        //{
+        //    OnRevealScreenFinish(null, false);
+        //    PlayerStats.Instance.TrySetPendingVampirePoints(0);
+        //}
 
-        _screenState = ScreenState.Off;
+        //_screenState = ScreenState.Off;
 
         MouseReceiver.Instance.Activate();
-        gameObject.SetActive(false);
-        _detectivePowerBar.gameObject.SetActive(false);
+        _characterInteractionContent.SetActive(false);
+        //_detectivePowerBar.gameObject.SetActive(false);
 
         _secretsTileList.ForEach(x => Destroy(x.gameObject));
         _secretsTileList.Clear();
     }
 
-    public void OnRevealSecretsPressed()
-    {
-        if (_screenState != ScreenState.Normal)
-            return;
+    //public void OnRevealSecretsPressed()
+    //{
+    //    if (_screenState != ScreenState.Normal)
+    //        return;
 
-        if (!_characterId.CharacterInfo.TrySetPendingDetectivePoints(1))
-            return;
+    //    if (!_characterId.CharacterInfo.TrySetPendingDetectivePoints(1))
+    //        return;
 
-        _screenState = ScreenState.RevealingSecrets;
+    //    _screenState = ScreenState.RevealingSecrets;
 
-        _hideObjectsDuringAction.ForEach(x => x.SetActive(false));
-        _secretRevealScreen.gameObject.SetActive(true);
-        _secretRevealScreen.Initialize(_characterId, OnRevealScreenFinish);
-        
-    }    
+    //    _hideObjectsDuringAction.ForEach(x => x.SetActive(false));
+    //    _secretRevealScreen.gameObject.SetActive(true);
+    //    _secretRevealScreen.Initialize(_characterId, OnRevealScreenFinish);
 
-    public void OnActionComplete()
-    {
-        _screenState = ScreenState.Normal;
+    //}
 
-        _hideObjectsDuringAction.ForEach(x => x.SetActive(true));
-        _secretRevealScreen.gameObject.SetActive(false);
-    }
+    //public void OnActionComplete()
+    //{
+    //    _screenState = ScreenState.Normal;
+
+    //    _hideObjectsDuringAction.ForEach(x => x.SetActive(true));
+    //    _secretRevealScreen.gameObject.SetActive(false);
+    //}
 
     private void AddSecrets(IEnumerable<Secret> secrets)
     {
         foreach (var secret in secrets.OrderBy(x => !x.IsRevealed))
         {
-            var selectableTile = Instantiate(_selectableSecretTilePrefab, _secretsGrid).GetComponent<UI_SelectableSecretTile>();
+            var selectableTile = Instantiate(_selectableSecretTilePrefab, _secretsGrid.transform).GetComponent<UI_SelectableSecretTile>();
             selectableTile.Initialize(secret, OnSecretSelected, OnSecretRevealed);
             _secretsTileList.Add(selectableTile);
         }
 
         _secretsTileList.First().SelectInitial();
-    }    
+    }
 
     private void OnSecretSelected(Secret secret)
     {
         _selectedSecret = secret;
 
-        _selectedSecretImage.texture = secret.IconTexture;
+        //_selectedSecretImage.texture = secret.IconTexture;
         if (!secret.IsRevealed)
         {
             _multiPartySelectedSecret.SetActive(false);
@@ -140,10 +150,10 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
             _multiPartySelectedSecret.SetActive(false);
             _singlePartySelectedSecret.SetActive(false);
         }
-        else 
+        else
         {
             if (secret.HasAdditionalCharacter && secret.HasSecretTarget)
-            { 
+            {
                 _multiPartySelectedSecret.SetActive(true);
                 _singlePartySelectedSecret.SetActive(false);
 
@@ -175,18 +185,18 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         OnSecretSelected(secret);
     }
 
-    private void OnRevealScreenFinish(SecretLevel? level, bool gamePlayed)
-    {
-        if (gamePlayed)
-        {
-            _characterId.CharacterInfo.TryUseDetectivePoint(1);
+    //private void OnRevealScreenFinish(SecretLevel? level, bool gamePlayed)
+    //{
+    //    if (gamePlayed)
+    //    {
+    //        _characterId.CharacterInfo.TryUseDetectivePoint(1);
 
-            if (level.HasValue)
-                CharacterSecretKnowledgeBB.Instance.UnlockSecret(_characterId, level.Value);
-        }
-        else
-            _characterId.CharacterInfo.TrySetPendingDetectivePoints(0);
+    //        if (level.HasValue)
+    //            CharacterSecretKnowledgeBB.Instance.UnlockSecret(_characterId, level.Value);
+    //    }
+    //    else
+    //        _characterId.CharacterInfo.TrySetPendingDetectivePoints(0);
 
-        OnActionComplete();
-    }
+    //    OnActionComplete();
+    //}
 }
