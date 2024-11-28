@@ -52,6 +52,7 @@ public class Room : MonoBehaviour
     public Material blackedOut;
 
     public List<MeshRenderer> meshesToHide = new List<MeshRenderer>();
+    public List<SkinnedMeshRenderer> skinnedMeshesToShow = new List<SkinnedMeshRenderer>();
     public List<MeshRenderer> meshesToShow = new List<MeshRenderer>();
 
     public Camera mirrorCam;
@@ -135,6 +136,13 @@ public class Room : MonoBehaviour
                     wall.enabled = true;
                 }
             }
+            if(skinnedMeshesToShow != null)
+            {
+                foreach (SkinnedMeshRenderer wall in skinnedMeshesToShow)
+                {
+                    wall.enabled = true;
+                }
+            }
             meshRenderer.enabled = false;
 
             // camera
@@ -157,6 +165,13 @@ public class Room : MonoBehaviour
             if (meshesToShow != null)
             {
                 foreach (MeshRenderer wall in meshesToShow)
+                {
+                    wall.enabled = false;
+                }
+            }
+            if (skinnedMeshesToShow != null)
+            {
+                foreach (SkinnedMeshRenderer wall in skinnedMeshesToShow)
                 {
                     wall.enabled = false;
                 }
