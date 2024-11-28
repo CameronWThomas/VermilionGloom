@@ -79,7 +79,7 @@ public class Room : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public bool PointIsInRoom(Vector3 point)
     {
@@ -121,13 +121,13 @@ public class Room : MonoBehaviour
         isVisible = visible;
         if(isVisible)
         {
-            if (meshesToHide != null)
-            {
-                foreach (MeshRenderer wall in meshesToHide)
-                {
-                    wall.enabled = false;
-                }
-            }
+            //if (meshesToHide != null)
+            //{
+            //    foreach (MeshRenderer wall in meshesToHide)
+            //    {
+            //        wall.enabled = false;
+            //    }
+            //}
             if(meshesToShow != null)
             {
                 foreach (MeshRenderer wall in meshesToShow)
@@ -147,13 +147,13 @@ public class Room : MonoBehaviour
         }
         else
         {
-            if(meshesToHide != null)
-            {
-                foreach (MeshRenderer wall in meshesToHide)
-                {
-                    wall.enabled = true;
-                }
-            }
+            //if(meshesToHide != null)
+            //{
+            //    foreach (MeshRenderer wall in meshesToHide)
+            //    {
+            //        wall.enabled = true;
+            //    }
+            //}
             if (meshesToShow != null)
             {
                 foreach (MeshRenderer wall in meshesToShow)
