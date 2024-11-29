@@ -13,18 +13,10 @@ public class UI_Portrait : MonoBehaviour
         _characterID = characterId;
 
         SetContent(characterId.PortraitContent);
-        //SetContent(characterId.PortraitColor);
     }
 
-    // TODO use eventually
-    public void SetContent(Texture2D contentTexture)
+    private void SetContent(Texture2D contentTexture)
     {
         _content.texture = contentTexture;
-    }
-
-    //TODO remove eventually
-    public void SetContent(Color contentColor)
-    {
-        _content.color = contentColor;
     }
 }

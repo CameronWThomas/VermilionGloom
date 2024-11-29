@@ -13,7 +13,6 @@ public abstract class CharacterID : IEquatable<CharacterID>
 
     public string Name => InternalCharacterInfo.Name;
     public Texture2D PortraitContent => CharacterPortraitContentBB.Instance.GetPortrait(this);
-    public Color PortraitColor => CharacterPortraitContentBB.Instance.GetPortraitColor(this);    
 
     protected CharacterInfo InternalCharacterInfo => CharacterInfoBB.Instance.GetCharacterInfo(this);
 

@@ -10,7 +10,6 @@ public abstract class CharacterInfo : MonoBehaviour
     [SerializeField] private float _healthCooldownSec = 5;
 
     [SerializeReference] private CharacterID _id = null;
-    [SerializeField] Texture2D _portrait = null;
 
     private float? _lastDamageTime = null;
     private int _currentHealth;
@@ -27,7 +26,6 @@ public abstract class CharacterInfo : MonoBehaviour
     {
         _currentHealth = _maxHealth;
         CharacterInfoBB.Instance.Register(this);
-        CharacterPortraitContentBB.Instance.Register(ID);
     }
 
     protected virtual void Update()

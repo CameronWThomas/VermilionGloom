@@ -83,8 +83,7 @@ public class UI_BottomBarController : GlobalSingleInstanceMonoBehaviour<UI_Botto
         _normalText.SetActive(false);
         _interactingCharacter.SetActive(true);
 
-        //_characterPortrait.SetContent(characterID.PortraitContent);
-        _characterPortrait.SetContent(characterID.PortraitColor);
+        _characterPortrait.SetCharacter(characterID);
         _characterName.text = characterID.Name;
 
         _characterTalking.text = "...";

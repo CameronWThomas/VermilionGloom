@@ -52,8 +52,7 @@ public class UI_CharacterInteractionMenu_Old : GlobalSingleInstanceMonoBehaviour
 
         var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(characterID);
         _characterName.text = characterID.Name;
-        //_selectedCharacterPortrait.SetContent(characterID.PortraitContent);
-        _selectedCharacterPortrait.SetContent(characterID.PortraitColor);
+        _selectedCharacterPortrait.SetCharacter(characterID);
 
 
         _detectivePowerBar.Initialize(characterID);
@@ -147,19 +146,15 @@ public class UI_CharacterInteractionMenu_Old : GlobalSingleInstanceMonoBehaviour
                 _multiPartySelectedSecret.SetActive(true);
                 _singlePartySelectedSecret.SetActive(false);
 
-                //_multiPartyPortrait1.SetContent(secret.SecretOwner.PortraitContent);
-                _multiPartyPortrait1.SetContent(secret.SecretTarget.PortraitColor);
-
-                //_multiPartyPortrait2.SetContent(secret.AdditionalCharacter.PortraitContent);
-                _multiPartyPortrait2.SetContent(secret.AdditionalCharacter.PortraitColor);
+                _multiPartyPortrait1.SetCharacter(secret.SecretTarget);
+                _multiPartyPortrait1.SetCharacter(secret.AdditionalCharacter);
             }
             else
             {
                 _multiPartySelectedSecret.SetActive(false);
                 _singlePartySelectedSecret.SetActive(true);
 
-                //_singlePartyPortrait.SetContent(secret.SecretOwner.PortraitContent);
-                _singlePartyPortrait.SetContent(secret.SecretTarget.PortraitColor);
+                _singlePartyPortrait.SetCharacter(secret.SecretTarget);
             }
         }
 
