@@ -1,38 +1,30 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
+
+public enum CharacterInteractingState
+{
+    NA,
+    Default,
+    Unprobed,
+    Trance
+}
 
 public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_CharacterInteractionMenu>
 {
     [SerializeField] GameObject _characterInteractionContent;
     [SerializeField] Button _exitButton;
-    [SerializeField] Button _backButton;
-
-    [Header("Trance")]
-    [SerializeField] RectTransform _murderSectionAdder;
-    [SerializeField] Button _beginTrance;
-    [SerializeField] GridLayoutGroup _portraitPlace;
-    [SerializeField] GameObject _portraitButtonPrefab;
-
-    [Header("Other")]
     [SerializeField] RectTransform _mainScreen;
     [SerializeField] RectTransform _miniGameScreen;
-    [SerializeField] RectTransform _secretExaminingArea;
 
-    //[SerializeField] private List<GameObject> _hideObjectsDuringAction = new();
-
-    private NPCHumanCharacterID _characterId;
+    private NPCHumanCharacterID _characterID;
+    CharacterInteractingState _state = CharacterInteractingState.NA;
+    private bool _isTransitioning = false;
 
     private UI_SecretsArea SecretsArea => GetComponent<UI_SecretsArea>();
     private UI_ScreenTransistion ScreenTransistion => GetComponent<UI_ScreenTransistion>();
     private UI_VampirePowers VampirePowers => GetComponent<UI_VampirePowers>();
     private UI_CharacterInfoArea CharacterInfo => GetComponent<UI_CharacterInfoArea>();
+    private UI_TranceMenu TranceMenu => GetComponent<UI_TranceMenu>();
 
     protected override void Start()
     {
@@ -40,46 +32,37 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         Deactivate();
 
         _exitButton.onClick.AddListener(OnExitButtonClicked);
-        _backButton.onClick.AddListener(OnBackButtonClicked);
 
         ScreenTransistion.Initialize(_mainScreen);
-        VampirePowers.Initialize(OnProbeMindClicked, OnTranceClicked);
     }    
 
     public void Activate(NPCHumanCharacterID characterID)
     {
-        _characterId = characterID;
+        _characterID = characterID;
 
-        NpcBehaviorBB.Instance.EnterConversationWithPlayer(_characterId);
+        NpcBehaviorBB.Instance.EnterConversationWithPlayer(_characterID);
         MouseReceiver.Instance.Deactivate();
 
         _characterInteractionContent.SetActive(true);
-
         _mainScreen.gameObject.SetActive(true);
-        _exitButton.gameObject.SetActive(true);
 
+        //TODO make new class for
         _miniGameScreen.gameObject.SetActive(false);
-        _backButton.gameObject.SetActive(false);
 
-        //_detectivePowerBar.Initialize(characterID);
+        var characterInfo = CharacterInfoBB.Instance.GetCharacterInfo(characterID);
+        _state = characterInfo.MindProbed ? CharacterInteractingState.Default : CharacterInteractingState.Unprobed;
 
-        SecretsArea.InitializeForNewCharacter(characterID);
-        VampirePowers.InitializeForNewCharacter(characterID);
-        CharacterInfo.InitializeForNewCharacter(characterID);
+        SecretsArea.InitializeForNewCharacter(characterID, () => _state);
+        VampirePowers.InitializeForNewCharacter(characterID, () => _state);
+        CharacterInfo.InitializeForNewCharacter(characterID, () => _state);
+        TranceMenu.InitializeForNewCharacter(characterID, () => _state);
     }
 
     public void Deactivate()
     {
-        if (_characterId != null)
-            NpcBehaviorBB.Instance.EndConversationWithPlayer(_characterId);
+        if (_characterID != null)
+            NpcBehaviorBB.Instance.EndConversationWithPlayer(_characterID);
 
-        //if (_screenState == ScreenState.RevealingSecrets)
-        //{
-        //    OnRevealScreenFinish(null, false);
-        //    PlayerStats.Instance.TrySetPendingVampirePoints(0);
-        //}
-
-        //_screenState = ScreenState.Off;
         UI_BottomBarController.Instance.Default();
 
         MouseReceiver.Instance.Activate();
@@ -88,9 +71,44 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         SecretsArea.Deactivate();
         VampirePowers.Deactivate();
         CharacterInfo.Deactivate();
+        TranceMenu.Deactivate();
+    }    
 
-        //_detectivePowerBar.gameObject.SetActive(false);
+    private void OnForgetClicked()
+    {
+
     }
+
+    public void TransitionState(CharacterInteractingState newState, UI_ScreenTransistion.TransitionType transition = UI_ScreenTransistion.TransitionType.FromCenter)
+    {
+        if (_isTransitioning)
+            return;
+
+        _isTransitioning = true;
+        ScreenTransistion.Transition(transition, () => _state = newState, () => _isTransitioning = false);
+    }
+    private void OnExitButtonClicked()
+    {
+        Deactivate();
+
+        // TODO add transition (:
+        //if (_isTransitioning)
+        //    return;
+
+        //_isTransitioning = true;
+        //_exitButton.interactable = false;
+
+        //ScreenTransistion.Transition(UI_ScreenTransistion.TransitionType.FromCenter,
+        //    () => Deactivate(),
+        //    () => 
+        //    {
+        //        _exitButton.interactable = true;
+        //        _isTransitioning = false;
+        //    });
+    }
+
+
+
 
     //public void OnRevealSecretsPressed()
     //{
@@ -130,37 +148,4 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
 
     //    OnActionComplete();
     //}
-
-    private void OnForgetClicked()
-    {
-
-    }
-
-    private void OnTranceClicked()
-    {
-        //SetActiveForAllChildren(_murderSectionAdder, false);
-
-        //_murderSectionAdder.gameObject.SetActive(true);
-        //_trance.gameObject.SetActive(false);
-        //_probeMind.gameObject.SetActive(false);
-    }
-
-    private void OnProbeMindClicked()
-    {
-        if (_characterId == null)
-            return;
-
-        var characterInfo = CharacterInfoBB.Instance.GetCharacterInfo(_characterId);
-        if (characterInfo.MindProbed)
-            return;
-
-        _exitButton.interactable = false;
-
-        ScreenTransistion.Transition(UI_ScreenTransistion.TransitionType.FromBelaImage,
-            () => characterInfo.MindProbed = true,
-            () => _exitButton.interactable = true);
-    }
-    private void OnExitButtonClicked() => Deactivate();
-
-    private void OnBackButtonClicked() { }
 }

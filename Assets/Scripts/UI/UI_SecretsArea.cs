@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -24,13 +25,13 @@ public class UI_SecretsArea : UI_SectionBase
     [SerializeField] UI_Portrait _multiPartyPortrait2;
 
     private List<UI_SelectableSecretTile> _secretsTileList = new();
-    
+
     public Secret SelectedSecret { get; private set; }
 
 
-    public override void InitializeForNewCharacter(NPCHumanCharacterID characterId)
+    public override void InitializeForNewCharacter(NPCHumanCharacterID characterId, Func<CharacterInteractingState> getState)
     {
-        base.InitializeForNewCharacter(characterId);
+        base.InitializeForNewCharacter(characterId, getState);
         
         ClearSecretTiles();
         var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(characterId);
@@ -48,9 +49,9 @@ public class UI_SecretsArea : UI_SectionBase
         _secretsSection.gameObject.SetActive(!hide);
     }
 
-    protected override void OnProbeMindChange(bool mindProbed)
+    protected override void OnStateChanged(CharacterInteractingState state)
     {
-        if (mindProbed)
+        if (state is CharacterInteractingState.Default)
             Unhide();
         else
             Hide();

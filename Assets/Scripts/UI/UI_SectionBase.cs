@@ -1,31 +1,38 @@
-using System.Diagnostics;
+using System;
 using UnityEngine;
 
 public class UI_SectionBase : MonoBehaviour
 {
     protected NPCHumanCharacterID _characterID;
     protected NPCHumanCharacterInfo _characterInfo;
-    bool _lastMindProbed = false;
+
+    private Func<CharacterInteractingState> _getState;
+    private CharacterInteractingState _lastState;
+
+    protected UI_CharacterInteractionMenu CharacterInteractionMenu => GetComponent<UI_CharacterInteractionMenu>();
 
     private void Update()
     {
-        if (_characterInfo == null)
+        if (_getState == null)
             return;
 
-        if (_characterInfo.MindProbed == _lastMindProbed)
+        var newState = _getState();
+        if (newState == _lastState)
             return;
 
-        _lastMindProbed = _characterInfo.MindProbed;
-
-        OnProbeMindChange(_lastMindProbed);
+        _lastState = newState;
+        OnStateChanged(_lastState);
     }
 
-    public virtual void InitializeForNewCharacter(NPCHumanCharacterID characterId)
+    public virtual void InitializeForNewCharacter(NPCHumanCharacterID characterId, Func<CharacterInteractingState> getState)
     {
         _characterID = characterId;
+        _getState = getState;
+
         _characterInfo = CharacterInfoBB.Instance.GetCharacterInfo(characterId);
-        _lastMindProbed = _characterInfo.MindProbed;
-        OnProbeMindChange(_lastMindProbed);
+        _lastState = getState();
+
+        OnStateChanged(_lastState);
     }
 
     public void Hide() => UpdateHidden(true);
@@ -35,8 +42,9 @@ public class UI_SectionBase : MonoBehaviour
     {
         _characterID = null;
         _characterInfo = null;
+        _lastState = CharacterInteractingState.NA;
     }
 
     protected virtual void UpdateHidden(bool hide) { }
-    protected virtual void OnProbeMindChange(bool mindProbed) { }    
+    protected virtual void OnStateChanged(CharacterInteractingState state) { }    
 }

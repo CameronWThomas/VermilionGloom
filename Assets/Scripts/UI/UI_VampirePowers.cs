@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,29 +11,42 @@ public class UI_VampirePowers : UI_SectionBase
 
     private void Start()
     {
-        //_forget.onClick.AddListener(OnForgetClicked);
+        _trance.onClick.AddListener(() => CharacterInteractionMenu.TransitionState(CharacterInteractingState.Trance));
+        _probeMind.onClick.AddListener(() => OnProbeMindClicked());
+
     }
 
-    public void Initialize(Action onProbeMindClicked, Action onTranceClicked)
+    protected override void OnStateChanged(CharacterInteractingState state)
     {
-        _probeMind.onClick.AddListener(() => onProbeMindClicked());
-        _trance.onClick.AddListener(() => onTranceClicked());
-    }
-
-    public override void InitializeForNewCharacter(NPCHumanCharacterID characterId)
-    {
-        base.InitializeForNewCharacter(characterId);
         Unhide();
-    }
 
-    protected override void OnProbeMindChange(bool mindProbed)
-    {
-        _trance.gameObject.SetActive(mindProbed);
-        _probeMind.gameObject.SetActive(!mindProbed);
+        if (state is CharacterInteractingState.Unprobed)
+        {
+            _trance.gameObject.SetActive(false);
+            _probeMind.gameObject.SetActive(true);
+        }
+        else if (state is CharacterInteractingState.Default)
+        {
+            _trance.gameObject.SetActive(true);
+            _trance.interactable = true;
+            _probeMind.gameObject.SetActive(false);
+        }
+        else
+        {
+            _trance.gameObject.SetActive(true);
+            _trance.interactable = false;
+            _probeMind.gameObject.SetActive(false);
+        }
     }
 
     protected override void UpdateHidden(bool hide)
     {
         _vampPowerSection.gameObject.SetActive(!hide);
+    }
+
+    private void OnProbeMindClicked()
+    {
+        _characterInfo.MindProbed = true;
+        CharacterInteractionMenu.TransitionState(CharacterInteractingState.Default, UI_ScreenTransistion.TransitionType.FromBelaImage);
     }
 }

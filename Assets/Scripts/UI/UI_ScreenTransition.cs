@@ -25,7 +25,7 @@ public class UI_ScreenTransistion : MonoBehaviour
         _mainScreen = mainScreen;
     }
 
-    public void Transition(TransitionType transitionType, Action onMidTransition, Action onEndTransition)
+    public void Transition(TransitionType transitionType, Action onMidTransition = null, Action onEndTransition = null)
     {
         StartCoroutine(ProbeMindRoutine(transitionType, onMidTransition, onEndTransition));
     }
