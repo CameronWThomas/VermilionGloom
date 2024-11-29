@@ -10,6 +10,7 @@ public abstract class CharacterInfo : MonoBehaviour
     [SerializeField] private float _healthCooldownSec = 5;
 
     [SerializeReference] private CharacterID _id = null;
+    [SerializeField] Texture2D _portrait = null;
 
     private float? _lastDamageTime = null;
     private int _currentHealth;

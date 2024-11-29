@@ -11,9 +11,9 @@ public class UI_Portrait : MonoBehaviour
     public void SetCharacter(CharacterID characterId)
     {
         _characterID = characterId;
-        
-        //SetContent(characterId.PortraitContent);
-        SetContent(characterId.PortraitColor);
+
+        SetContent(characterId.PortraitContent);
+        //SetContent(characterId.PortraitColor);
     }
 
     // TODO use eventually

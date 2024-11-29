@@ -21,6 +21,7 @@ public class NPCCharacterCreator : MonoBehaviour
             .CreateAndInitializeSecrets(3)
             .SpreadSecrets(1)
             .CreateUniqueModels()
+            .TakePortraits()
             .InitializeRelationships()
             .PlaceCharacters()
             .RegisterCharacters()
@@ -101,6 +102,18 @@ public class NPCCharacterCreator : MonoBehaviour
         {
             foreach (var characterCustomizer in GetCharacterComponent<CharacterCustomizer>())
                 characterCustomizer.DressRandomly();
+
+            return this;
+        }
+
+        public CharacterCreatorTool TakePortraits()
+        {
+
+
+            foreach (var characterCustomizer in GetCharacterComponent<PortraitTaker>())
+            {
+
+            }
 
             return this;
         }
