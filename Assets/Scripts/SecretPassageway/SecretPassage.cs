@@ -53,8 +53,6 @@ public class SecretPassage : MonoBehaviour
 
         try
         {
-            if(animator != null)
-                animator.SetBool("open", true);
             yield return UsePassage(this, transportedTransform, true);
             yield return UsePassage(EndPoint, transportedTransform, false);
 
@@ -63,8 +61,8 @@ public class SecretPassage : MonoBehaviour
         finally
         {
             ReactivateNavigation(transportedTransform);
-            if (animator != null)
-                animator.SetBool("open", false);
+            //if (animator != null)
+            //    animator.SetBool("open", false);
         }
     }
 
@@ -94,6 +92,11 @@ public class SecretPassage : MonoBehaviour
 
     private static IEnumerator UsePassage(SecretPassage passage, Transform transportedTransform, bool isEntering, Animator anim = null)
     {
+        Debug.Log("Using passage: " + passage.name + " isEntering: " + isEntering);
+        Animator passageAnim = passage.GetComponent<Animator>();
+        if (passageAnim != null)
+            passageAnim.SetBool("open", true);
+
         var destinationFromPassage = passage.GetDestinationFromPassage();
         var doorAtTransformHeight = passage.transform.position;
         doorAtTransformHeight.y = transportedTransform.position.y;
@@ -124,6 +127,10 @@ public class SecretPassage : MonoBehaviour
 
             yield return new WaitForSeconds(stepTime);
         }
+        Debug.Log("Finished using passage: " + passage.name + " isEntering: " + isEntering);
+
+        if (passageAnim != null)
+            passageAnim.SetBool("open", false);
     }
 
     private Vector3 GetDestinationPoint()

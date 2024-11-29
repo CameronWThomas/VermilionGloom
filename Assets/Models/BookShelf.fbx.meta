@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bcffd72f890d4dc4db73284617d58103
+guid: e0ba63ec53cb3cb40a4de4c39c14852a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Books
-    second: {fileID: 2100000, guid: 90b989aa799a152469163b1c7357cc8a, type: 2}
+    second: {fileID: 2100000, guid: 8cb56af39f1568d48bfd99d9faf9b791, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

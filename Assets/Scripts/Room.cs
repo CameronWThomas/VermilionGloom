@@ -47,9 +47,11 @@ public class Room : MonoBehaviour
 
     BoxCollider boxCollider;
     MeshRenderer meshRenderer;
+    MeshRenderer[] childMeshRenderers;
 
 
     public Material blackedOut;
+    public Material mirrorTexture;
 
     public List<MeshRenderer> meshesToHide = new List<MeshRenderer>();
     public List<SkinnedMeshRenderer> skinnedMeshesToShow = new List<SkinnedMeshRenderer>();
@@ -71,8 +73,14 @@ public class Room : MonoBehaviour
         RoomBB.Instance.Register(this);
 
         meshRenderer = gameObject.GetComponent<MeshRenderer>();
+        childMeshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
         meshRenderer.material = blackedOut;
         meshRenderer.enabled = false;
+        foreach (MeshRenderer child in childMeshRenderers)
+        {
+            child.material = blackedOut;
+            child.enabled = false;
+        }
         SetVisible(false);
     }
 
@@ -144,6 +152,10 @@ public class Room : MonoBehaviour
                 }
             }
             meshRenderer.enabled = false;
+            foreach (MeshRenderer child in childMeshRenderers)
+            {
+                child.enabled = false;
+            }
 
             // camera
             if(mirror != null && mirrorCam != null)
@@ -151,6 +163,11 @@ public class Room : MonoBehaviour
                 mirrorCam.transform.parent = mirror.transform;
                 mirrorCam.transform.localPosition = mirrorCamPos;
                 mirrorCam.transform.localEulerAngles = mirrorCamRot;
+                MeshRenderer mirrorMesh = mirror.GetComponent<MeshRenderer>();
+                if (mirrorMesh != null)
+                {
+                    mirrorMesh.materials[0] = mirrorTexture;
+                }
             }
         }
         else
@@ -178,7 +195,18 @@ public class Room : MonoBehaviour
             }
 
             meshRenderer.enabled = true;
-            
+            foreach (MeshRenderer child in childMeshRenderers)
+            {
+                child.enabled = true;
+            }
+            if(mirror != null)
+            {
+                MeshRenderer mirrorMesh = mirror.GetComponent<MeshRenderer>();
+                if (mirrorMesh != null)
+                {
+                    mirrorMesh.materials[0] = blackedOut;
+                }
+            }
         }
 
     }
@@ -188,6 +216,7 @@ public class Room : MonoBehaviour
         //Debug.Log(other.name + "... Entered room: " + ID);
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Player entered room: " + ID);
             //meshRenderer.enabled = true;
             PlayerController player = other.GetComponent<PlayerController>();
             if (player != null)

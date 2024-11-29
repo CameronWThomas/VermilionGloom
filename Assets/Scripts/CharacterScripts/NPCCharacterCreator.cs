@@ -113,7 +113,8 @@ public class NPCCharacterCreator : MonoBehaviour
 
         public CharacterCreatorTool PlaceCharacters()
         {
-            var allRooms = FindObjectsByType<Room>(FindObjectsSortMode.None);
+            Room[] unfilteredRooms = FindObjectsByType<Room>(FindObjectsSortMode.None);
+            Room[] allRooms = unfilteredRooms.Where(el => el.ID != RoomID.Unknown).ToArray();
             var roomsByQuantity = allRooms.ToDictionary(x => x, x => 0);
 
             foreach (var characterTransform in GetCharacterComponent<Transform>())
