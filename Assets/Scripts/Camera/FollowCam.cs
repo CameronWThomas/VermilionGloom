@@ -34,12 +34,12 @@ public class FollowCam : MonoBehaviour
 		Vector3 targetPosition = followTarget.position + InitialOffset;
 		transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
 
-		// Mouse Panning Logic
+		// Mouse Panning Logic with Deadzone
 		Vector3 mousePosition = Input.mousePosition;
 		Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
 		Vector3 mouseOffset = mousePosition - screenCenter;
 
-		if (mouseOffset.magnitude > panningThreshold)
+		if (Mathf.Abs(mouseOffset.x) > panningThreshold || Mathf.Abs(mouseOffset.y) > panningThreshold)
 		{
 			// Calculate the amount to pan based on the mouse offset
 			Vector3 panDirection = new Vector3(mouseOffset.x / Screen.width, 0, mouseOffset.y / Screen.height);
