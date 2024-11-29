@@ -7,13 +7,11 @@ public class UI_VampirePowers : UI_SectionBase
     [SerializeField] RectTransform _vampPowerSection;
     [SerializeField] Button _probeMind;
     [SerializeField] Button _trance;
-    [SerializeField] Button _forget;
 
     private void Start()
     {
         _trance.onClick.AddListener(() => CharacterInteractionMenu.TransitionState(CharacterInteractingState.Trance));
         _probeMind.onClick.AddListener(() => OnProbeMindClicked());
-
     }
 
     protected override void OnStateChanged(CharacterInteractingState state)
@@ -47,6 +45,6 @@ public class UI_VampirePowers : UI_SectionBase
     private void OnProbeMindClicked()
     {
         _characterInfo.MindProbed = true;
-        CharacterInteractionMenu.TransitionState(CharacterInteractingState.Default, UI_ScreenTransistion.TransitionType.FromBelaImage);
+        CharacterInteractionMenu.TransitionState(CharacterInteractingState.Default, UI_ScreenTransition.TransitionType.FromBelaImage);
     }
 }

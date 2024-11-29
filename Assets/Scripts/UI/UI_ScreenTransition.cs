@@ -3,7 +3,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class UI_ScreenTransistion : MonoBehaviour
+public class UI_ScreenTransition : MonoBehaviour
 {
     public enum TransitionType
     {

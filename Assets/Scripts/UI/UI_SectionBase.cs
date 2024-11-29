@@ -5,6 +5,8 @@ public class UI_SectionBase : MonoBehaviour
 {
     protected NPCHumanCharacterID _characterID;
     protected NPCHumanCharacterInfo _characterInfo;
+    protected CharacterSecretKnowledge _characterSecretKnowledge;
+
 
     private Func<CharacterInteractingState> _getState;
     private CharacterInteractingState _lastState;
@@ -30,6 +32,8 @@ public class UI_SectionBase : MonoBehaviour
         _getState = getState;
 
         _characterInfo = CharacterInfoBB.Instance.GetCharacterInfo(characterId);
+        _characterSecretKnowledge = _characterInfo.GetComponent<CharacterSecretKnowledge>();
+
         _lastState = getState();
 
         OnStateChanged(_lastState);
@@ -42,6 +46,7 @@ public class UI_SectionBase : MonoBehaviour
     {
         _characterID = null;
         _characterInfo = null;
+        _getState = null;
         _lastState = CharacterInteractingState.NA;
     }
 

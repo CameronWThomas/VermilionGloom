@@ -13,7 +13,6 @@ public class UI_TranceMenu : UI_SectionBase
     [SerializeField] GridLayoutGroup _portraitPlace;
     [SerializeField] GameObject _portraitButtonPrefab;
 
-    private CharacterSecretKnowledge _characterSecretKnowledge;
     private NpcBrain _brain;
 
     private List<UI_PortraitButton> _portraitButtons = new();
@@ -29,7 +28,6 @@ public class UI_TranceMenu : UI_SectionBase
     {
         base.InitializeForNewCharacter(characterId, getState);
 
-        _characterSecretKnowledge = _characterInfo.GetComponent<CharacterSecretKnowledge>();
         _brain = _characterInfo.GetComponent<NpcBrain>();
         _selectedCharacter = null;
         _beginTrance.interactable = false;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -30,5 +31,15 @@ public class CharacterSecretKnowledge : MonoBehaviour
         return Secrets.Where(x => x.HasAdditionalCharacter && x.HasSecretTarget)
             .Where(x => x.SecretTarget == target && x.AdditionalCharacter == additionalCharacter)
             .ToList();
+    }
+
+    public void RemoveSecret(Secret selectedSecret)
+    {
+        if (_secrets.Contains(selectedSecret))
+        {
+            _secrets.Remove(selectedSecret);
+            if (selectedSecret.HasSecretTarget)
+                GetComponent<NpcBrain>().ReevaluateRelationship(selectedSecret.SecretTarget);
+        }
     }
 }

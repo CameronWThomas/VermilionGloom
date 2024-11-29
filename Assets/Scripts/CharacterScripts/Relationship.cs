@@ -46,6 +46,9 @@ public class Relationship
         if (murderSecrets.Any(x => x.SecretTarget == RelationshipTarget))
             return 0;
 
+        if (_opinionTowards == 0)
+            _opinionTowards++;
+
         return _opinionTowards;
     }
 

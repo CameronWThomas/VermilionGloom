@@ -21,7 +21,7 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
     private bool _isTransitioning = false;
 
     private UI_SecretsArea SecretsArea => GetComponent<UI_SecretsArea>();
-    private UI_ScreenTransistion ScreenTransistion => GetComponent<UI_ScreenTransistion>();
+    private UI_ScreenTransition ScreenTransistion => GetComponent<UI_ScreenTransition>();
     private UI_VampirePowers VampirePowers => GetComponent<UI_VampirePowers>();
     private UI_CharacterInfoArea CharacterInfo => GetComponent<UI_CharacterInfoArea>();
     private UI_TranceMenu TranceMenu => GetComponent<UI_TranceMenu>();
@@ -74,12 +74,7 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         TranceMenu.Deactivate();
     }    
 
-    private void OnForgetClicked()
-    {
-
-    }
-
-    public void TransitionState(CharacterInteractingState newState, UI_ScreenTransistion.TransitionType transition = UI_ScreenTransistion.TransitionType.FromCenter)
+    public void TransitionState(CharacterInteractingState newState, UI_ScreenTransition.TransitionType transition = UI_ScreenTransition.TransitionType.FromCenter)
     {
         if (_isTransitioning)
             return;

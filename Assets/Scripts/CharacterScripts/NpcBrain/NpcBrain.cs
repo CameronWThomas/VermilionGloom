@@ -78,6 +78,9 @@ public partial class NpcBrain : MonoBehaviour
 
     public void ReevaluateRelationship(CharacterID characterID)
     {
+        if (characterID == ID)
+            return;
+
         GetRelationship(characterID).Reevaluate();
     }
 

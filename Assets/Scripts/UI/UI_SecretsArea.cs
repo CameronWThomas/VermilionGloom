@@ -15,6 +15,7 @@ public class UI_SecretsArea : UI_SectionBase
     [SerializeField] GridLayoutGroup _secretsGrid;
 
     [Header("Selected Secret")]
+    [SerializeField] Button _forget;
     [SerializeField] TMP_Text _selectedSecretText;
     [SerializeField] GameObject _singlePartySelectedSecret;
     [SerializeField] GameObject _multiPartySelectedSecret;
@@ -26,9 +27,16 @@ public class UI_SecretsArea : UI_SectionBase
     [SerializeField] UI_Portrait _multiPartyPortrait2;
 
     private List<UI_SelectableSecretTile> _secretsTileList = new();
+    private bool _isForgetting = false;
 
     public Secret SelectedSecret { get; private set; }
 
+    private UI_ScreenTransition ScreenTransition => GetComponent<UI_ScreenTransition>();
+
+    private void Start()
+    {
+        _forget.onClick.AddListener(() => OnForgetClicked());
+    }    
 
     public override void InitializeForNewCharacter(NPCHumanCharacterID characterId, Func<CharacterInteractingState> getState)
     {
@@ -136,5 +144,24 @@ public class UI_SecretsArea : UI_SectionBase
     private bool IsSecretSelected(Secret secret)
     {
         return SelectedSecret == secret;
+    }
+
+    private void OnForgetClicked()
+    {
+        if (_isForgetting || SelectedSecret == null)
+            return;
+
+        _isForgetting = true;
+
+        _characterSecretKnowledge.RemoveSecret(SelectedSecret);
+
+        ScreenTransition.Transition(UI_ScreenTransition.TransitionType.FromCenter,
+            () =>
+            {
+                ClearSecretTiles();
+                var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(_characterID);
+                AddSecrets(secrets);
+            },
+            () => _isForgetting = false);
     }
 }

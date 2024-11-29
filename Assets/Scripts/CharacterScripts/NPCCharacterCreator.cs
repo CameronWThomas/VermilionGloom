@@ -75,7 +75,7 @@ public class NPCCharacterCreator : MonoBehaviour
                     .TryCreateVampreSecrets()
                     .TryCreateMurderSecrets()
                     .TryCreateRoomSecrets()
-                    .CreateGenericSecrets(3)
+                    .CreateGenericSecrets(genericSecretCount)
                     .BuildSecretList();
 
                 var secretKnowledge = characterInfo.GetComponent<CharacterSecretKnowledge>();
@@ -188,7 +188,7 @@ public class NPCCharacterCreator : MonoBehaviour
                 .Where(x => x.Key != characterId)
                 .Select(x => x.Value.GetComponent<CharacterSecretKnowledge>())
                 .SelectMany(x => x.Secrets)
-                .Where(x => x.OriginalSecretOwner != characterId)
+                .Where(x => x is not VampireSecret && x.OriginalSecretOwner != characterId)
                 .Randomize()
                 .ToList();
 
