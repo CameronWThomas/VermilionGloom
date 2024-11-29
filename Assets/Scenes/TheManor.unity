@@ -1759,13 +1759,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1578558131}
+      addedObject: {fileID: 1578558134}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &42558475 stripped
 Transform:
@@ -5783,35 +5787,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (24)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 109725712}
+      addedObject: {fileID: 109725715}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &109725709 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 109725708}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &109725712
-NavMeshObstacle:
+--- !u!65 &109725715
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 33571213}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779936, y: 0.009655735, z: 0.029773427}
+  m_Center: {x: 2.4262352e-12, y: 0.000053832384, z: 0.0039537493}
 --- !u!1 &112629407 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
@@ -13518,13 +13531,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1684690709}
+      addedObject: {fileID: 1684690712}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &259294326 stripped
 Transform:
@@ -14156,13 +14173,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (32)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1744050849}
+      addedObject: {fileID: 1744050852}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &288682893 stripped
 Transform:
@@ -15322,13 +15343,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (25)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 730771283}
+      addedObject: {fileID: 730771286}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &311471225 stripped
 Transform:
@@ -15387,13 +15412,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1154735966}
+      addedObject: {fileID: 1154735969}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &318454887 stripped
 Transform:
@@ -15796,13 +15825,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (35)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1875145125}
+      addedObject: {fileID: 1875145128}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &326744385 stripped
 Transform:
@@ -15983,6 +16016,7 @@ MonoBehaviour:
   zoomLimits: {x: 5, y: 20}
   followSpeed: 5
   panningThreshold: 5
+  panningIntensity: 3
   panningSpeed: 3
 --- !u!114 &330585551
 MonoBehaviour:
@@ -16054,13 +16088,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (39)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1642768722}
+      addedObject: {fileID: 1642768725}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &330698161 stripped
 Transform:
@@ -18617,35 +18655,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (18)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 374313725}
+      addedObject: {fileID: 374313728}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &374313722 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 374313721}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &374313725
-NavMeshObstacle:
+--- !u!65 &374313728
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 112629407}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779936, y: 0.0096557345, z: 0.029773418}
+  m_Center: {x: 2.6465635e-13, y: 0.00005382478, z: 0.003953748}
 --- !u!1 &383142361
 GameObject:
   m_ObjectHideFlags: 0
@@ -20578,13 +20625,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (17)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1760750206}
+      addedObject: {fileID: 1760750209}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &409087459 stripped
 Transform:
@@ -21251,13 +21302,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1897325201}
+      addedObject: {fileID: 1897325204}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &418429506 stripped
 Transform:
@@ -22856,13 +22911,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (24)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1414539627}
+      addedObject: {fileID: 1414539630}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &462724854 stripped
 Transform:
@@ -25029,19 +25088,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2602733602789703722, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2602733602789703722, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2602733602789703722, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 2602733602789703722, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2602733602789703722, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_LocalPosition.y
@@ -25049,11 +25108,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2602733602789703722, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 2602733602789703722, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3693034789244131386, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMax.y
@@ -25081,23 +25140,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3693034789244131386, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -746.04974
+      value: -745.5761
       objectReference: {fileID: 0}
     - target: {fileID: 5476941705730594965, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5476941705730594965, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5476941705730594965, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5476941705730594965, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 797.6261
       objectReference: {fileID: 0}
     - target: {fileID: 5476941705730594965, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25105,27 +25164,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5476941705730594965, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 77.5
       objectReference: {fileID: 0}
     - target: {fileID: 5476941705730594965, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -398.81305
       objectReference: {fileID: 0}
     - target: {fileID: 5674716055692187819, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5674716055692187819, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5674716055692187819, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 5674716055692187819, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5674716055692187819, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_LocalPosition.y
@@ -25133,11 +25192,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5674716055692187819, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 5674716055692187819, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -795.1261
       objectReference: {fileID: 0}
     - target: {fileID: 5717190964594657813, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMax.y
@@ -25169,27 +25228,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5844239958333216805, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5844239958333216805, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5844239958333216805, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 5844239958333216805, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 797.6261
       objectReference: {fileID: 0}
     - target: {fileID: 5844239958333216805, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5844239958333216805, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -398.81305
       objectReference: {fileID: 0}
     - target: {fileID: 6666919524596704221, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_Name
@@ -25225,27 +25284,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7214026047857847238, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7214026047857847238, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7214026047857847238, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 7214026047857847238, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 787.6261
       objectReference: {fileID: 0}
     - target: {fileID: 7214026047857847238, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 7214026047857847238, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -398.81305
       objectReference: {fileID: 0}
     - target: {fileID: 7925944330743503038, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_Pivot.x
@@ -25329,19 +25388,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8748374694878284274, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8748374694878284274, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8748374694878284274, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8748374694878284274, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 797.6261
       objectReference: {fileID: 0}
     - target: {fileID: 8748374694878284274, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_LocalPosition.x
@@ -25349,11 +25408,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8748374694878284274, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8748374694878284274, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -398.81305
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -26812,13 +26871,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (33)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1740033075}
+      addedObject: {fileID: 1740033078}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &538907134 stripped
 Transform:
@@ -31703,35 +31766,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 679626934}
+      addedObject: {fileID: 679626937}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &679626931 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 679626930}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &679626934
-NavMeshObstacle:
+--- !u!65 &679626937
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 444404040}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1001 &684947938
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31816,6 +31888,7 @@ GameObject:
   - component: {fileID: 688358104}
   - component: {fileID: 688358103}
   - component: {fileID: 688358102}
+  - component: {fileID: 688358105}
   m_Layer: 12
   m_Name: Camera-Hidden-Roof
   m_TagString: Untagged
@@ -31830,7 +31903,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 688358100}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -31891,6 +31964,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &688358105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688358100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c0c9a4da4a8ec34b8c454d6f875a34a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
 --- !u!1 &689178512
 GameObject:
   m_ObjectHideFlags: 0
@@ -33808,35 +33894,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (30)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 710578382}
+      addedObject: {fileID: 710578385}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &710578379 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 710578378}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &710578382
-NavMeshObstacle:
+--- !u!65 &710578385
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 600713643}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1001 &722271223
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33889,13 +33984,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1886801582}
+      addedObject: {fileID: 1886801585}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &722271224 stripped
 Transform:
@@ -34340,22 +34439,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 311471224}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &730771283
-NavMeshObstacle:
+--- !u!65 &730771286
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 730771280}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1 &735555929
 GameObject:
   m_ObjectHideFlags: 0
@@ -39670,35 +39774,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 863476120}
+      addedObject: {fileID: 863476123}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &863476117 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 863476116}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &863476120
-NavMeshObstacle:
+--- !u!65 &863476123
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16919224}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1 &864548505
 GameObject:
   m_ObjectHideFlags: 0
@@ -41417,13 +41530,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1324869638}
+      addedObject: {fileID: 1324869641}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &901563159 stripped
 Transform:
@@ -41843,13 +41960,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1249281015}
+      addedObject: {fileID: 1249281018}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &930352359 stripped
 Transform:
@@ -42371,35 +42492,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 955546421}
+      addedObject: {fileID: 955546424}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &955546418 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 955546417}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &955546421
-NavMeshObstacle:
+--- !u!65 &955546424
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 739467115}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1 &956373077
 GameObject:
   m_ObjectHideFlags: 0
@@ -43587,13 +43717,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (26)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1171830427}
+      addedObject: {fileID: 1171830430}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &976041443 stripped
 Transform:
@@ -45803,13 +45937,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1662192172}
+      addedObject: {fileID: 1662192175}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1006110276 stripped
 Transform:
@@ -45868,35 +46006,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (40)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1008768660}
+      addedObject: {fileID: 1008768663}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1008768657 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1008768656}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1008768660
-NavMeshObstacle:
+--- !u!65 &1008768663
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 61919332}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1001 &1012665130
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46810,35 +46957,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (17)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1038633775}
+      addedObject: {fileID: 1038633778}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1038633772 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1038633771}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1038633775
-NavMeshObstacle:
+--- !u!65 &1038633778
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 283585060}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779936, y: 0.0096557345, z: 0.029773418}
+  m_Center: {x: 2.6465635e-13, y: 0.00005382478, z: 0.003953748}
 --- !u!1001 &1045996015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48564,13 +48720,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1627832196}
+      addedObject: {fileID: 1627832199}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1080533628 stripped
 Transform:
@@ -48670,35 +48830,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (25)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1089160035}
+      addedObject: {fileID: 1089160038}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1089160032 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1089160031}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1089160035
-NavMeshObstacle:
+--- !u!65 &1089160038
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 337377506}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779936, y: 0.009655735, z: 0.029773427}
+  m_Center: {x: 2.4262352e-12, y: 0.000053824933, z: 0.0039537493}
 --- !u!1 &1091865855
 GameObject:
   m_ObjectHideFlags: 0
@@ -49095,13 +49264,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1111894549}
+      addedObject: {fileID: 1111894552}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1094607220 stripped
 Transform:
@@ -49665,22 +49838,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1094607219}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1111894549
-NavMeshObstacle:
+--- !u!65 &1111894552
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1111894546}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779936, y: 0.0096557345, z: 0.029773418}
+  m_Center: {x: 2.6465635e-13, y: 0.00005382478, z: 0.003953748}
 --- !u!1 &1112066632
 GameObject:
   m_ObjectHideFlags: 0
@@ -50956,35 +51134,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (27)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1141846381}
+      addedObject: {fileID: 1141846384}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1141846378 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1141846377}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1141846381
-NavMeshObstacle:
+--- !u!65 &1141846384
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386483875}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!43 &1145059952
 Mesh:
   m_ObjectHideFlags: 0
@@ -51546,35 +51733,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (28)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1150081500}
+      addedObject: {fileID: 1150081503}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1150081497 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1150081496}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1150081500
-NavMeshObstacle:
+--- !u!65 &1150081503
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 900686467}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1 &1152152506
 GameObject:
   m_ObjectHideFlags: 0
@@ -51683,22 +51879,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 318454886}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1154735966
-NavMeshObstacle:
+--- !u!65 &1154735969
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1154735963}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779936, y: 0.0096557345, z: 0.029773418}
+  m_Center: {x: -0.000000029802058, y: 0.00005382478, z: 0.003953748}
 --- !u!43 &1160817449
 Mesh:
   m_ObjectHideFlags: 0
@@ -51955,22 +52156,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 976041442}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1171830427
-NavMeshObstacle:
+--- !u!65 &1171830430
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171830424}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1 &1173700984
 GameObject:
   m_ObjectHideFlags: 0
@@ -55097,35 +55303,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (22)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1229116473}
+      addedObject: {fileID: 1229116476}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1229116470 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1229116469}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1229116473
-NavMeshObstacle:
+--- !u!65 &1229116476
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 191146747}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1 &1231531251
 GameObject:
   m_ObjectHideFlags: 0
@@ -56240,35 +56455,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1242943998}
+      addedObject: {fileID: 1242944001}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1242943995 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1242943994}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1242943998
-NavMeshObstacle:
+--- !u!65 &1242944001
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1086413864}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779936, y: 0.009655735, z: 0.029773427}
+  m_Center: {x: 2.4262352e-12, y: 0.000053824933, z: 0.0039537493}
 --- !u!43 &1243734075
 Mesh:
   m_ObjectHideFlags: 0
@@ -56603,22 +56827,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 930352358}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1249281015
-NavMeshObstacle:
+--- !u!65 &1249281018
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1249281012}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779947, y: 0.00965574, z: 0.029773425}
+  m_Center: {x: 0, y: 0.00005382416, z: 0.003953749}
 --- !u!43 &1249915840
 Mesh:
   m_ObjectHideFlags: 0
@@ -58038,35 +58267,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1269666564}
+      addedObject: {fileID: 1269666567}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1269666561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1269666560}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1269666564
-NavMeshObstacle:
+--- !u!65 &1269666567
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 23953995}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779947, y: 0.00965574, z: 0.029773425}
+  m_Center: {x: 0, y: 0.00005382416, z: 0.003953749}
 --- !u!43 &1283929679
 Mesh:
   m_ObjectHideFlags: 0
@@ -58621,35 +58859,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (34)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1287992426}
+      addedObject: {fileID: 1287992429}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1287992423 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1287992422}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1287992426
-NavMeshObstacle:
+--- !u!65 &1287992429
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1104752083}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1001 &1291634265
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58702,35 +58949,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (18)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1291634269}
+      addedObject: {fileID: 1291634272}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1291634266 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1291634265}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1291634269
-NavMeshObstacle:
+--- !u!65 &1291634272
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 98590550}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1001 &1298509797
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59514,13 +59770,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1437366193}
+      addedObject: {fileID: 1437366196}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1316913660 stripped
 Transform:
@@ -60575,22 +60835,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 901563158}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1324869638
-NavMeshObstacle:
+--- !u!65 &1324869641
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1324869635}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779947, y: 0.00965574, z: 0.029773425}
+  m_Center: {x: 0, y: 0.00005382416, z: 0.003953749}
 --- !u!43 &1329162036
 Mesh:
   m_ObjectHideFlags: 0
@@ -61152,35 +61417,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (31)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1339681623}
+      addedObject: {fileID: 1339681626}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1339681620 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1339681619}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1339681623
-NavMeshObstacle:
+--- !u!65 &1339681626
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 728837795}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1 &1341109229
 GameObject:
   m_ObjectHideFlags: 0
@@ -62265,7 +62539,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1367553101
 Transform:
   m_ObjectHideFlags: 0
@@ -63782,35 +64056,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1383334077}
+      addedObject: {fileID: 1383334080}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1383334074 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1383334073}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1383334077
-NavMeshObstacle:
+--- !u!65 &1383334080
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1027232304}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!4 &1384901142 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3011331608581784129, guid: 664ec4ac8c67ca7408c39f61dd6706c8, type: 3}
@@ -65063,22 +65346,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 462724853}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1414539627
-NavMeshObstacle:
+--- !u!65 &1414539630
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1414539624}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!43 &1415769420
 Mesh:
   m_ObjectHideFlags: 0
@@ -65296,13 +65584,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (21)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1508506766}
+      addedObject: {fileID: 1508506769}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1422023855 stripped
 Transform:
@@ -65801,13 +66093,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1687081769}
+      addedObject: {fileID: 1687081772}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1428832560 stripped
 Transform:
@@ -66544,22 +66840,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1316913659}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1437366193
-NavMeshObstacle:
+--- !u!65 &1437366196
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1437366190}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1001 &1438583762
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -66612,35 +66913,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1438583766}
+      addedObject: {fileID: 1438583769}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1438583763 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1438583762}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1438583766
-NavMeshObstacle:
+--- !u!65 &1438583769
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1257946910}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779947, y: 0.00965574, z: 0.029773425}
+  m_Center: {x: 0, y: 0.00005382416, z: 0.003953749}
 --- !u!43 &1441970605
 Mesh:
   m_ObjectHideFlags: 0
@@ -70264,22 +70574,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1422023854}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1508506766
-NavMeshObstacle:
+--- !u!65 &1508506769
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1508506763}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779936, y: 0.009655735, z: 0.029773427}
+  m_Center: {x: -0.000000029799896, y: 0.000053824933, z: 0.0039537493}
 --- !u!43 &1519840243
 Mesh:
   m_ObjectHideFlags: 0
@@ -70497,13 +70812,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1950966504}
+      addedObject: {fileID: 1950966507}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1520359720 stripped
 Transform:
@@ -72862,22 +73181,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 42558474}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1578558131
-NavMeshObstacle:
+--- !u!65 &1578558134
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1578558128}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1001 &1579565577
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72930,35 +73254,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (37)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1579565581}
+      addedObject: {fileID: 1579565584}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1579565578 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1579565577}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1579565581
-NavMeshObstacle:
+--- !u!65 &1579565584
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1431204072}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1 &1584057557
 GameObject:
   m_ObjectHideFlags: 0
@@ -73876,13 +74209,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (21)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1913783630}
+      addedObject: {fileID: 1913783633}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1606291703 stripped
 Transform:
@@ -74794,35 +75131,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1624632026}
+      addedObject: {fileID: 1624632029}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1624632023 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1624632022}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1624632026
-NavMeshObstacle:
+--- !u!65 &1624632029
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1122921157}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1001 &1625506299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -75023,22 +75369,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1080533627}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1627832196
-NavMeshObstacle:
+--- !u!65 &1627832199
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1627832193}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1 &1631347005
 GameObject:
   m_ObjectHideFlags: 0
@@ -75902,22 +76253,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 330698160}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1642768722
-NavMeshObstacle:
+--- !u!65 &1642768725
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1642768719}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1001 &1643777038
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -75970,35 +76326,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (36)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1643777042}
+      addedObject: {fileID: 1643777045}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1643777039 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1643777038}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1643777042
-NavMeshObstacle:
+--- !u!65 &1643777045
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6208}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1 &1647726288
 GameObject:
   m_ObjectHideFlags: 0
@@ -76856,22 +77221,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1006110275}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1662192172
-NavMeshObstacle:
+--- !u!65 &1662192175
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1662192169}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1 &1666240089
 GameObject:
   m_ObjectHideFlags: 0
@@ -78066,22 +78436,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 259294325}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1684690709
-NavMeshObstacle:
+--- !u!65 &1684690712
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1684690706}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779947, y: 0.00965574, z: 0.029773425}
+  m_Center: {x: 0, y: 0.00005382416, z: 0.003953749}
 --- !u!43 &1685409538
 Mesh:
   m_ObjectHideFlags: 0
@@ -78252,22 +78627,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1428832559}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1687081769
-NavMeshObstacle:
+--- !u!65 &1687081772
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687081766}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1 &1687678291
 GameObject:
   m_ObjectHideFlags: 0
@@ -80474,43 +80854,53 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 538907133}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1740033075
-NavMeshObstacle:
+--- !u!65 &1740033078
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1740033072}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1 &1744050846 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 288682892}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1744050849
-NavMeshObstacle:
+--- !u!65 &1744050852
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1744050846}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!43 &1751444780
 Mesh:
   m_ObjectHideFlags: 0
@@ -80681,22 +81071,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 409087458}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1760750206
-NavMeshObstacle:
+--- !u!65 &1760750209
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1760750203}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!43 &1761073816
 Mesh:
   m_ObjectHideFlags: 0
@@ -83760,35 +84155,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1824856839}
+      addedObject: {fileID: 1824856842}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1824856836 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1824856835}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1824856839
-NavMeshObstacle:
+--- !u!65 &1824856842
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1880003}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779947, y: 0.00965574, z: 0.029773425}
+  m_Center: {x: 0, y: 0.00005382416, z: 0.003953749}
 --- !u!1 &1825661845
 GameObject:
   m_ObjectHideFlags: 0
@@ -84185,35 +84589,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1829162509}
+      addedObject: {fileID: 1829162512}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1829162506 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1829162505}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1829162509
-NavMeshObstacle:
+--- !u!65 &1829162512
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1639455877}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1 &1834546952
 GameObject:
   m_ObjectHideFlags: 0
@@ -87122,22 +87535,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 326744384}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1875145125
-NavMeshObstacle:
+--- !u!65 &1875145128
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1875145122}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!43 &1883200770
 Mesh:
   m_ObjectHideFlags: 0
@@ -87308,22 +87726,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 722271223}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1886801582
-NavMeshObstacle:
+--- !u!65 &1886801585
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1886801579}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779936, y: 0.009655735, z: 0.029773427}
+  m_Center: {x: -0.000000029799896, y: 0.000053817483, z: 0.0039537493}
 --- !u!1001 &1893268829
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -87376,35 +87799,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1893268833}
+      addedObject: {fileID: 1893268836}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1893268830 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1893268829}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1893268833
-NavMeshObstacle:
+--- !u!65 &1893268836
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 694433755}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779936, y: 0.0096557345, z: 0.029773418}
+  m_Center: {x: 2.6465635e-13, y: 0.00005382478, z: 0.003953748}
 --- !u!43 &1894785479
 Mesh:
   m_ObjectHideFlags: 0
@@ -88084,22 +88516,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 418429505}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1897325201
-NavMeshObstacle:
+--- !u!65 &1897325204
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1897325198}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1 &1906608449
 GameObject:
   m_ObjectHideFlags: 0
@@ -88373,22 +88810,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1606291702}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1913783630
-NavMeshObstacle:
+--- !u!65 &1913783633
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1913783627}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1001 &1913846917
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -88441,13 +88883,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (29)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1925756593}
+      addedObject: {fileID: 1925756596}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1913846918 stripped
 Transform:
@@ -89468,22 +89914,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1913846917}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1925756593
-NavMeshObstacle:
+--- !u!65 &1925756596
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1925756590}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!43 &1927715212
 Mesh:
   m_ObjectHideFlags: 0
@@ -90238,22 +90689,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1520359719}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1950966504
-NavMeshObstacle:
+--- !u!65 &1950966507
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1950966501}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!224 &1953894054 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7925944330743503038, guid: 5b9771ead60df52479ae55b65afb9337, type: 3}
@@ -92118,35 +92574,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1983600896}
+      addedObject: {fileID: 1983600899}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &1983600893 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 1983600892}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1983600896
-NavMeshObstacle:
+--- !u!65 &1983600899
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1242826340}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779936, y: 0.0096557345, z: 0.029773418}
+  m_Center: {x: 2.6465635e-13, y: 0.00005382478, z: 0.003953748}
 --- !u!43 &1984622410
 Mesh:
   m_ObjectHideFlags: 0
@@ -93475,7 +93940,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.06666667
+  m_VoxelSize: 0.1
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 602b732559eea0246a368127f7f4b75c, type: 2}
   m_BuildHeightMesh: 0
@@ -93606,35 +94071,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (22)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2014450294}
+      addedObject: {fileID: 2014450297}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &2014450291 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 2014450290}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &2014450294
-NavMeshObstacle:
+--- !u!65 &2014450297
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 866449140}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779936, y: 0.009655735, z: 0.029773427}
+  m_Center: {x: -0.000000029799896, y: 0.000053824933, z: 0.0039537493}
 --- !u!43 &2018642715
 Mesh:
   m_ObjectHideFlags: 0
@@ -98621,35 +99095,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: BookShelf (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2103328964}
+      addedObject: {fileID: 2103328967}
   m_SourcePrefab: {fileID: 100100000, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
 --- !u!4 &2103328961 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0ba63ec53cb3cb40a4de4c39c14852a, type: 3}
   m_PrefabInstance: {fileID: 2103328960}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &2103328964
-NavMeshObstacle:
+--- !u!65 &2103328967
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013439216}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.010000001, y: 0.0050000004, z: 0.015000001}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0.004}
-  m_TimeToStationary: 0.5
+  m_Size: {x: 0.020779938, y: 0.009655734, z: 0.029773418}
+  m_Center: {x: 0, y: 0.000053824737, z: 0.003953748}
 --- !u!1 &2110472564
 GameObject:
   m_ObjectHideFlags: 0

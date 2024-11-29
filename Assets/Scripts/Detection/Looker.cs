@@ -18,6 +18,17 @@ public class Looker : MonoBehaviour
 
     LookerCollider _lookerCollider;
 
+
+    [SerializeField]
+    RaycastFrom castFrom;
+    [SerializeField]
+    LayerMask lookLayerMask;
+
+    [Header("Debug")]
+    private bool debug = false;
+    Vector3 debugRayStart;
+    Vector3 debugRayEnd;
+
     private void Start()
     {
         _myBrain = GetComponentInParent<NpcBrain>();
@@ -27,15 +38,44 @@ public class Looker : MonoBehaviour
     private void Update()
     {
         UpdateSize();
+
         _charactersInSight = _lookerCollider.CharactersInSight;
     }
 
+    private List<Transform> FilterCharactersByRaycastViewable(List<Transform> charactersInSight)
+    {
+        Vector3 start = castFrom.transform.position;
+        debugRayStart = start;
+        List<Transform> filteredCharsInSight = new List<Transform>();
+        foreach(Transform ch in charactersInSight)
+        {
+            Vector3 end = ch.transform.position;
+            debugRayEnd = end;
+            end = new Vector3(end.x, start.y , end.z);
+            RaycastHit hit;
+            if (Physics.Raycast(start, end - start, out hit, Mathf.Infinity, lookLayerMask))
+            {
+                if (hit.transform == ch.transform)
+                {
+                    filteredCharsInSight.Add(ch);
+                }
+                debugRayEnd = hit.point;
+            }
+        }
+        return filteredCharsInSight;
+    }
     public bool TryGetCharactersInSight(out List<CharacterInfo> charactersInSight)
     {
-        charactersInSight = _charactersInSight
+
+        Debug.Log("TryGetCharactersInSight");
+
+        var filteredChars = FilterCharactersByRaycastViewable(_charactersInSight);
+        charactersInSight = filteredChars
             .Select(x => x.transform.GetComponent<CharacterInfo>())
             .Where(x => x != null && x != _myBrain.GetComponent<CharacterInfo>())
             .ToList();
+
+        //charactersInSight = FilterCharactersByRaycastViewable(charactersInSight);
 
         return charactersInSight.Any();
     }
@@ -57,5 +97,15 @@ public class Looker : MonoBehaviour
         _lookerCollider.transform.localPosition = new Vector3(0f, 0f, zDistance);
         _lookerCollider.transform.localScale = new Vector3(xScale, yScale, zScale);
 
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!debug)
+            return;
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(debugRayStart, debugRayEnd);
+        Gizmos.DrawSphere(debugRayEnd, 0.1f);
+        Gizmos.DrawSphere(debugRayStart, 0.1f);
     }
 }
