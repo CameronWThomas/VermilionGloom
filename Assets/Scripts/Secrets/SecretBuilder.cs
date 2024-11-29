@@ -45,6 +45,8 @@ public static class SecretBuilder
 
     public static SecretBuilderHelper TryCreateMurderSecrets(this SecretBuilderHelper helper)
     {
+        return helper;
+
         if (!RandomChance(MurderChance))
             return helper;
 
