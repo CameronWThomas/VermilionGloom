@@ -29,12 +29,12 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
     protected override void Start()
     {
         base.Start();
-        Deactivate();
 
         _exitButton.onClick.AddListener(OnExitButtonClicked);
 
         ScreenTransistion.Initialize(_mainScreen);
-    }    
+        Deactivate();
+    }
 
     public void Activate(NPCHumanCharacterID characterID)
     {

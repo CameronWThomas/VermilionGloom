@@ -18,6 +18,8 @@ public class UI_CharacterInfoArea : UI_SectionBase
     public override void Deactivate()
     {
         base.Deactivate();
-        _bottomBarController.Default();
+
+        if (_bottomBarController != null)
+            _bottomBarController.Default();
     }
 }

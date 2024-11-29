@@ -145,12 +145,12 @@ GameObject:
   - component: {fileID: 8953608347694444369}
   - component: {fileID: 2792669346819360873}
   m_Layer: 5
-  m_Name: Text
+  m_Name: ObjectiveText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3301891576531555388
 RectTransform:
   m_ObjectHideFlags: 0
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: This is where you will get some cool text
+  m_text: ...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3680469e864c3e542887c9935fc14ad4, type: 2}
   m_sharedMaterial: {fileID: -3229330028951882470, guid: 3680469e864c3e542887c9935fc14ad4, type: 2}
@@ -225,8 +225,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22.8
-  m_fontSizeBase: 22.8
+  m_fontSize: 38
+  m_fontSizeBase: 38
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1262,7 +1262,7 @@ MonoBehaviour:
   _normalText: {fileID: 981614960881269959}
   _generalDescriptionText: {fileID: 2792669346819360873}
   _interactingCharacter: {fileID: 5600636881057875948}
-  _characterPortrait: {fileID: 4300741443119450065}
+  _characterPortrait: {fileID: 6264749385759328177}
   _characterName: {fileID: 4234582599423236019}
   _characterTalking: {fileID: 528127032336781734}
 --- !u!114 &1608971665799324219
@@ -2267,15 +2267,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f2041418ec463a46a63837ad4b22277, type: 3}
---- !u!114 &4300741443119450065 stripped
+--- !u!114 &6264749385759328177 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6938321592764281298, guid: 7f2041418ec463a46a63837ad4b22277, type: 3}
+  m_CorrespondingSourceObject: {fileID: 943028496731779506, guid: 7f2041418ec463a46a63837ad4b22277, type: 3}
   m_PrefabInstance: {fileID: 6622142154477975043}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ab2e9af0b1d42d41a44a7eca51e9646, type: 3}
+  m_Script: {fileID: 11500000, guid: cc845db28777df04c8b05196559431cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &8314921938156944375 stripped
