@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class UI_SecretsArea : UI_SectionBase
@@ -52,9 +53,22 @@ public class UI_SecretsArea : UI_SectionBase
     protected override void OnStateChanged(CharacterInteractingState state)
     {
         if (state is CharacterInteractingState.Default)
+        {
+            HandleNewSecrets();
             Unhide();
+        }
         else
             Hide();
+    }
+
+    private void HandleNewSecrets()
+    {
+        var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(_characterID);
+        if (_secretsTileList.Count == secrets.Count)
+            return;
+
+        ClearSecretTiles();
+        AddSecrets(secrets);
     }
 
     private void ClearSecretTiles()

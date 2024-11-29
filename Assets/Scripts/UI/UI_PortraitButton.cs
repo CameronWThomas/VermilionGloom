@@ -1,14 +1,17 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_SelectableSecretTile : MonoBehaviour
+public class UI_PortraitButton : MonoBehaviour
 {
-    [SerializeField] private RawImage _secretIcon;
+    [SerializeField] UI_Portrait _portrait;
+    [SerializeField] TMP_Text _characterNameText;
 
-    private Secret _secret;
-    private Action<Secret> _onSecretSelected;
-    private Func<Secret, bool> _isSelected;
+    private CharacterID _characterID;
+
+    private Action<CharacterID> _onSelected;
+    private Func<CharacterID, bool> _isSelected;
 
     private ColorBlock _normalColors;
     private ColorBlock _selectedColors;
@@ -16,17 +19,20 @@ public class UI_SelectableSecretTile : MonoBehaviour
 
     private void Update()
     {
-        if (_isSelected(_secret))
+        if (_isSelected(_characterID))
             _button.colors = _selectedColors;
         else
             _button.colors = _normalColors;
     }
 
-    public void Initialize(Secret secret, Action<Secret> onSecretSelected, Func<Secret, bool> isSelected)
+    public void Initialize(CharacterID characterID, Action<CharacterID> onSelected, Func<CharacterID, bool> isSelected)
     {
-        _secret = secret;
-        _onSecretSelected = onSecretSelected;
+        _characterID = characterID;
+        _onSelected = onSelected;
         _isSelected = isSelected;
+
+        _portrait.SetCharacter(characterID);
+        _characterNameText.text = _characterID.Name;
 
         _button = GetComponent<Button>();
         _button.onClick.AddListener(() => OnSelect());
@@ -37,23 +43,16 @@ public class UI_SelectableSecretTile : MonoBehaviour
         _selectedColors.normalColor = selectedColor;
         _selectedColors.highlightedColor = selectedColor;
         _selectedColors.pressedColor = selectedColor;
-        
-        SetSecretTexture();
     }
 
-    private void OnSelect()
+    public void OnSelect()
     {
-        _onSecretSelected(_secret);
+        _onSelected(_characterID);
     }
 
     public void SelectInitial()
     {
         _button.Select();
         OnSelect();
-    }
-
-    private void SetSecretTexture()
-    {
-        _secretIcon.texture = _secret.IconTexture;
     }
 }

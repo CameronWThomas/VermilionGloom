@@ -76,6 +76,11 @@ public partial class NpcBrain : MonoBehaviour
         return characters.Any(x => x.ID == targetCharacter);
     }
 
+    public void ReevaluateRelationship(CharacterID characterID)
+    {
+        GetRelationship(characterID).Reevaluate();
+    }
+
     // STRANGLE
     public void BeStrangled(GameObject killer)
     {
