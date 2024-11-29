@@ -1,15 +1,11 @@
-using NUnit.Framework;
 using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.Video;
 
 public class PlayerCharacterInfo : CharacterInfo
 {
-    [SerializeReference] List<NPCHumanCharacterID> _probedCharacters = new();
+    [SerializeReference] List<NPCHumanCharacterID> _knownCharacters = new();
 
     public override void Die()
     {
@@ -40,13 +36,26 @@ public class PlayerCharacterInfo : CharacterInfo
 
     public override CharacterType CharacterType => CharacterType.Player;
 
-    public void AddProbedCharacter(NPCHumanCharacterID character)
+    public void AddProbedCharacter(NPCHumanCharacterID probedCharacter)
     {
-        if (_probedCharacters == null)
-            _probedCharacters = new();
+        if (_knownCharacters == null)
+            _knownCharacters = new();
 
-        if (!_probedCharacters.Contains(character))
-            _probedCharacters.Add(character);
+        if (!_knownCharacters.Contains(probedCharacter))
+            _knownCharacters.Add(probedCharacter);
+
+        var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(probedCharacter);
+        var secretTargets = secrets.Where(x => x.HasSecretTarget).Select(x => x.SecretTarget);
+        var additionalCharacters = secrets.Where(x => x.HasAdditionalCharacter).Select(x => x.AdditionalCharacter);
+
+        foreach (var character in secretTargets.Concat(additionalCharacters).OfType<NPCHumanCharacterID>())
+            AddKnownCharacter(character);
+    }
+
+    public void AddKnownCharacter(NPCHumanCharacterID knownCharacter)
+    {
+        if (!_knownCharacters.Contains(knownCharacter))
+            _knownCharacters.Add(knownCharacter);
     }
 
     public IEnumerable<CharacterID> GetKnownCharacters(bool includePlayerID)
@@ -54,34 +63,8 @@ public class PlayerCharacterInfo : CharacterInfo
         if (includePlayerID)
             yield return ID;
 
-        if (_probedCharacters == null)
-            yield break;
-
-        // Look through the characters secret that we have probed. Take all characters we know about from the secrets
-        var returnedCharacters = new List<CharacterID> { ID };
-        foreach (var probedCharacter in _probedCharacters)
-        {
-            if (!returnedCharacters.Contains(probedCharacter))
-            {
-                yield return probedCharacter;
-                returnedCharacters.Add(probedCharacter);
-            }
-
-            var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(probedCharacter);
-
-            var secretTargets = secrets.Where(x => x.HasSecretTarget).Select(x => x.SecretTarget);
-            var additionalCharacters = secrets.Where(x => x.HasAdditionalCharacter).Select(x => x.AdditionalCharacter);
-            var characters = secretTargets.Concat(additionalCharacters).ToList();
-
-            foreach (var character in characters)
-            {
-                if (!returnedCharacters.Contains(character))
-                {
-                    yield return character;
-                    returnedCharacters.Add(character);
-                }
-            }
-        }
+        foreach (var character in _knownCharacters)
+            yield return character;
     }
 
     protected override CharacterID CreateCharacterID() => new PlayerCharacterID();
