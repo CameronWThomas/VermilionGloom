@@ -23,6 +23,7 @@ public class CreditController : GlobalSingleInstanceMonoBehaviour<CreditControll
         _creditsStarted = true;
 
         _audioSource.PlayOneShot(_finalSong);
+        _audioSource.loop = false;
 
         StartCoroutine(CreditsCoroutine());
         // 36s show title card

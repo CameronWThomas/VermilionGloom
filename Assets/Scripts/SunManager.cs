@@ -5,6 +5,7 @@ public class SunManager : GlobalSingleInstanceMonoBehaviour<SunManager>
     public RoomVisibilityManager roomVisibilityManager;
     [Range(0, 1)]
     public float brightness = 0.2f;
+    private float targetBrightness = 0.2f;  
     public Light mainLight;
     public Vector2 lightVals = new Vector2(0f, 20f);
     public float exprpSteepness = 3;
@@ -33,6 +34,8 @@ public class SunManager : GlobalSingleInstanceMonoBehaviour<SunManager>
     // Update is called once per frame
     void Update()
     {
+        brightness = Mathf.Lerp(brightness, targetBrightness, Time.deltaTime);
+
         //mainLight.intensity= Mathf.Lerp(lightVals.x, lightVals.y, brightness);
         mainLight.intensity = Exprp(lightVals.x, lightVals.y, brightness);
 
@@ -46,13 +49,13 @@ public class SunManager : GlobalSingleInstanceMonoBehaviour<SunManager>
             {
                 newPeriodTime = Random.Range(highLightPeriodRange.x, highLightPeriodRange.y);
                 highLightPeriod = true;
-                brightness = Random.Range(highLightVals.x, highLightVals.y);
+                targetBrightness = Random.Range(highLightVals.x, highLightVals.y);
             }
             else
             {
                 newPeriodTime = Random.Range(lowLightPeriodRange.x, lowLightPeriodRange.y);
                 highLightPeriod = false;
-                brightness = Random.Range(lowLightVals.x, lowLightVals.y);
+                targetBrightness = Random.Range(lowLightVals.x, lowLightVals.y);
             }
         }
 

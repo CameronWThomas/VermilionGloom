@@ -210,7 +210,8 @@ public class Room : MonoBehaviour
         }
 
     }
-    private void OnTriggerEnter(Collider other)
+
+    public void TriggerEntered(Collider other)
     {
 
         //Debug.Log(other.name + "... Entered room: " + ID);
@@ -225,6 +226,10 @@ public class Room : MonoBehaviour
 
         if (other.transform.TryGetComponent<CharacterInfo>(out var characterInfo))
             RoomBB.Instance.UpdateCharacterLocation(characterInfo.ID, ID);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        TriggerEntered(other);
     }
 
 
