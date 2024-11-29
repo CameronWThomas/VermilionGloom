@@ -33,7 +33,7 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         _exitButton.onClick.AddListener(OnExitButtonClicked);
 
         ScreenTransistion.Initialize(_mainScreen);
-        Deactivate();
+        DeactivateInternal();
     }
 
     public void Activate(NPCHumanCharacterID characterID)
@@ -61,6 +61,21 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
     public void Deactivate()
     {
         if (_characterID != null)
+            DeactivateInternal();
+    }    
+
+    public void TransitionState(CharacterInteractingState newState, UI_ScreenTransition.TransitionType transition = UI_ScreenTransition.TransitionType.FromCenter)
+    {
+        if (_isTransitioning)
+            return;
+
+        _isTransitioning = true;
+        ScreenTransistion.Transition(transition, () => _state = newState, () => _isTransitioning = false);
+    }
+    
+    private void DeactivateInternal()
+    {
+        if (_characterID != null)
             NpcBehaviorBB.Instance.EndConversationWithPlayer(_characterID);
 
         UI_BottomBarController.Instance.Default();
@@ -72,19 +87,11 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         VampirePowers.Deactivate();
         CharacterInfo.Deactivate();
         TranceMenu.Deactivate();
-    }    
-
-    public void TransitionState(CharacterInteractingState newState, UI_ScreenTransition.TransitionType transition = UI_ScreenTransition.TransitionType.FromCenter)
-    {
-        if (_isTransitioning)
-            return;
-
-        _isTransitioning = true;
-        ScreenTransistion.Transition(transition, () => _state = newState, () => _isTransitioning = false);
     }
+
     private void OnExitButtonClicked()
     {
-        Deactivate();
+        DeactivateInternal();
 
         // TODO add transition (:
         //if (_isTransitioning)

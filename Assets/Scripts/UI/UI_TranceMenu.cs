@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ public class UI_TranceMenu : UI_SectionBase
     [SerializeField] Button _beginTrance;
     [SerializeField] GridLayoutGroup _portraitPlace;
     [SerializeField] GameObject _portraitButtonPrefab;
+    [SerializeField] TMP_Text _noCharacterText;
 
     private NpcBrain _brain;
 
@@ -30,10 +32,7 @@ public class UI_TranceMenu : UI_SectionBase
 
         _brain = _characterInfo.GetComponent<NpcBrain>();
         _selectedCharacter = null;
-        _beginTrance.interactable = false;
-
-        ClearPortraitButtons();
-        AddPortraitButtons();
+        _beginTrance.interactable = false;        
     }
 
     public override void Deactivate()
@@ -50,7 +49,12 @@ public class UI_TranceMenu : UI_SectionBase
     protected override void OnStateChanged(CharacterInteractingState state)
     {
         if (state is CharacterInteractingState.Trance)
+        {
+            _noCharacterText.gameObject.SetActive(false);
+            ClearPortraitButtons();
+            AddPortraitButtons();
             Unhide();
+        }
         else
             Hide();
     }
@@ -68,17 +72,20 @@ public class UI_TranceMenu : UI_SectionBase
 
     private void AddPortraitButtons()
     {
-        var characterInfos = CharacterInfoBB.Instance.GetAll();
-        var characterIDs = characterInfos.Select(x => x.ID).ToList();
-
         var existingMurderSecrets = _characterSecretKnowledge.Secrets.OfType<MurderSecret>();
 
-        // Characters that aren't us and we don't already have a murder secret with
-        characterIDs = characterIDs
+        // Characters we know about that aren't this NPC us and we don't already have a murder secret with
+        var knownCharacters = CharacterInfoBB.Instance.GetPlayerCharacterInfo().GetKnownCharacters(true)
             .Where(x => x != _characterID && existingMurderSecrets.All(murderSecret => murderSecret.SecretTarget != x))
             .ToList();
 
-        foreach (var characterID in characterIDs)
+        if (!knownCharacters.Any())
+        {
+            _noCharacterText.gameObject.SetActive(true);
+            return;
+        }
+
+        foreach (var characterID in knownCharacters)
         {
             var portraitButton = Instantiate(_portraitButtonPrefab, _portraitPlace.transform).GetComponent<UI_PortraitButton>();
             _portraitButtons.Add(portraitButton);

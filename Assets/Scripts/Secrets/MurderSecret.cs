@@ -41,7 +41,7 @@ public class MurderSecret : Secret
     private string GetVictimName()
     {
         if (!HasAdditionalCharacter)
-            return "someone long ago...";
+            return "someone";
 
         return AdditionalCharacter.Name;
     }

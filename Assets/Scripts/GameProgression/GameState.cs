@@ -16,6 +16,9 @@ public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
     public bool VampireLordVisited = false;
     [Range(0, MAX_BODIES)]public int BodyDeliverCount = 0;
 
+    [Header("Player Abilities")]
+    public bool LongRangeInteracting = false;
+
     [Header("Progression Conditions")]
     [SerializeField, Range(0, MAX_BODIES)]public int WinGameBodyCount = 5;
     [SerializeField, Range(0, MAX_BODIES)]public bool GameWon = false;

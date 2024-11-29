@@ -45,6 +45,9 @@ public class UI_VampirePowers : UI_SectionBase
     private void OnProbeMindClicked()
     {
         _characterInfo.MindProbed = true;
+
+        CharacterInfoBB.Instance.GetPlayerCharacterInfo().AddProbedCharacter(_characterID);
+
         CharacterInteractionMenu.TransitionState(CharacterInteractingState.Default, UI_ScreenTransition.TransitionType.FromBelaImage);
     }
 }
