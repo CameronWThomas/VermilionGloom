@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PortraitTaker : MonoBehaviour
@@ -8,6 +10,7 @@ public class PortraitTaker : MonoBehaviour
     [SerializeField] MeshRenderer _background;
     [SerializeField, Range(0f, 179f)] float _cameraFOV = 24f;
     [SerializeField] Camera _portraitCamera;
+    [SerializeField] List<Texture2D> _backgroundTextures = new();
 
     public Texture2D TakePicture(CharacterInfo characterInfo)
     {
@@ -19,6 +22,9 @@ public class PortraitTaker : MonoBehaviour
 
         var portraitColor = new Color(RandomColorComponent(), RandomColorComponent(), RandomColorComponent());
         _background.material.color = portraitColor;
+
+        var backgroundTexture = _backgroundTextures.Randomize().First();
+        _background.material.mainTexture = backgroundTexture;
 
 
         _portraitCamera.transform.position = _cameraPosition.position;

@@ -176,6 +176,13 @@ MonoBehaviour:
   _background: {fileID: 8381491569966606437}
   _cameraFOV: 24
   _portraitCamera: {fileID: 8174561657858308949}
+  _backgroundTextures:
+  - {fileID: 2800000, guid: 4eb38bdaf2ab2194e8773164a4e298d2, type: 3}
+  - {fileID: 2800000, guid: 990e7593aebfc7a41a7157bc250b234a, type: 3}
+  - {fileID: 2800000, guid: e3ad18fe69c3c7840aeaf8187c3db123, type: 3}
+  - {fileID: 2800000, guid: 5c7d198b553827046bddbe06293c4e9e, type: 3}
+  - {fileID: 2800000, guid: 9d2ee91baafab2f46820a2a6a261fd2f, type: 3}
+  - {fileID: 2800000, guid: c7e0afb87b5c6eb408229ae021758a9f, type: 3}
 --- !u!1 &763244745786641530
 GameObject:
   m_ObjectHideFlags: 0
