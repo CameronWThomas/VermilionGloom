@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 970378999284823908}
   - component: {fileID: 6972451960364161420}
-  - component: {fileID: 3577172052193451795}
+  - component: {fileID: 8295650167399207182}
   m_Layer: 5
   m_Name: EmptyZone
   m_TagString: Untagged
@@ -57,7 +57,7 @@ MonoBehaviour:
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &3577172052193451795
+--- !u!114 &8295650167399207182
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,6 +66,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1855650215885925362}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1d944f5bc67a8040b420e6fa8e2420b, type: 3}
+  m_Script: {fileID: 11500000, guid: 6eff0c5fbfc300a43ab5e0c8159c8654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _level: 0

@@ -7,6 +7,8 @@ public class NPCHumanCharacterInfo : CharacterInfo
 {
     public const int MAX_DETECTIVE_POINTS = 10;
 
+    [SerializeField] public bool MindProbed = false;
+
     private bool _isInitialized = false;
     private CharacterType _characterType = CharacterType.Generic;
 

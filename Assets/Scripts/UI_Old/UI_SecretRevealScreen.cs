@@ -16,7 +16,7 @@ public class UI_SecretRevealScreen : MonoBehaviour
 
     private int _usedVPoints = 0;
 
-    private Dictionary<SecretLevel, List<UI_MiniGameZone>> _zones = null;
+    private Dictionary<SecretLevel, List<UI_MiniGameZone_Old>> _zones = null;
 
     private List<Secret> _unrevealedSecrets = new();
     private SecretLevel _allowableSecretLevel = SecretLevel.Public;
@@ -60,7 +60,7 @@ public class UI_SecretRevealScreen : MonoBehaviour
         }
 
         var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(characterID);
-        _unrevealedSecrets = secrets.Where(x => !x.IsRevealed).ToList();
+        //_unrevealedSecrets = secrets.Where(x => !x.IsRevealed).ToList();
 
         UpdateAllowableSecretLevel();
     }   
@@ -184,9 +184,9 @@ public class UI_SecretRevealScreen : MonoBehaviour
         return true;
     }
 
-    private Dictionary<SecretLevel, List<UI_MiniGameZone>> InitializeMiniGameZoneDict()
+    private Dictionary<SecretLevel, List<UI_MiniGameZone_Old>> InitializeMiniGameZoneDict()
     {
-        return _miniGameZoneArea.GetComponentsInChildren<UI_MiniGameZone>(true)
+        return _miniGameZoneArea.GetComponentsInChildren<UI_MiniGameZone_Old>(true)
             .Where(x => !x.IsEmpty)
             .GroupBy(x => x.Level)
             .ToDictionary(x => x.Key, x => x.ToList());
@@ -205,7 +205,7 @@ public class UI_SecretRevealScreen : MonoBehaviour
                 lastAllowedSecretLevel = secretLevel;
 
             if (lastAllowedSecretLevel.HasValue)
-                zones.ForEach(x => x.SetSecretLevel(lastAllowedSecretLevel.Value));
+                zones.ForEach(x => x.SetLevel(lastAllowedSecretLevel.Value));
             else
                 zones.ForEach(x => x.SetEmpty());
         }

@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class NPCCharacterCreator : MonoBehaviour
 {
     [SerializeField] private GameObject _humanCharacterPrefab = null;
+    [SerializeField] private GameObject _portraitTakerPrefab = null;
 
     public void Start()
     {
@@ -21,6 +22,7 @@ public class NPCCharacterCreator : MonoBehaviour
             .CreateAndInitializeSecrets(3)
             .SpreadSecrets(1)
             .CreateUniqueModels()
+            .TakePortraits(_portraitTakerPrefab)
             .InitializeRelationships()
             .PlaceCharacters()
             .RegisterCharacters()
@@ -75,7 +77,7 @@ public class NPCCharacterCreator : MonoBehaviour
                     .TryCreateVampreSecrets()
                     .TryCreateMurderSecrets()
                     .TryCreateRoomSecrets()
-                    .CreateGenericSecrets(3)
+                    .CreateGenericSecrets(genericSecretCount)
                     .BuildSecretList();
 
                 var secretKnowledge = characterInfo.GetComponent<CharacterSecretKnowledge>();
@@ -101,6 +103,38 @@ public class NPCCharacterCreator : MonoBehaviour
         {
             foreach (var characterCustomizer in GetCharacterComponent<CharacterCustomizer>())
                 characterCustomizer.DressRandomly();
+
+            return this;
+        }
+
+        public CharacterCreatorTool TakePortraits(GameObject portraitTakerPrefab)
+        {
+            var portraitTakerInstance = Instantiate(portraitTakerPrefab);
+            portraitTakerInstance.transform.position = new Vector3(0f, -100f, 0f);
+
+            var portraitTaker = portraitTakerInstance.GetComponent<PortraitTaker>();
+
+            var characterInfos = GetCharacterComponent<CharacterInfo>();
+            //characterInfos.ForEach(x => x.gameObject.SetActive(false));
+
+            foreach (var characterInfo in GetCharacterComponent<CharacterInfo>())
+            {
+                //characterInfo.gameObject.SetActive(true);
+
+                var portrait = portraitTaker.TakePicture(characterInfo);
+                CharacterPortraitContentBB.Instance.AddPortrait(characterInfo.ID, portrait);
+
+                //characterInfo.gameObject.SetActive(false);
+            }
+
+            var player = FindAnyObjectByType<PlayerCharacterInfo>();
+
+            var playerPortrait = portraitTaker.TakePicture(player);
+            CharacterPortraitContentBB.Instance.AddPortrait(player.ID, playerPortrait);
+
+            Destroy(portraitTakerInstance);
+
+            //characterInfos.ForEach(x => x.gameObject.SetActive(true));
 
             return this;
         }
@@ -189,7 +223,7 @@ public class NPCCharacterCreator : MonoBehaviour
                 .Where(x => x.Key != characterId)
                 .Select(x => x.Value.GetComponent<CharacterSecretKnowledge>())
                 .SelectMany(x => x.Secrets)
-                .Where(x => x.OriginalSecretOwner != characterId)
+                .Where(x => x is not VampireSecret && x.OriginalSecretOwner != characterId)
                 .Randomize()
                 .ToList();
 

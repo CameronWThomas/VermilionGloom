@@ -8,38 +8,48 @@ public class UI_SelectableSecretTile : MonoBehaviour
 
     private Secret _secret;
     private Action<Secret> _onSecretSelected;
-    private Action<Secret> _onSecretRevealed;
-    private bool _isSecretRevealed;
+    private Func<Secret, bool> _isSelected;
+
+    private ColorBlock _normalColors;
+    private ColorBlock _selectedColors;
+    private Button _button;
 
     private void Update()
     {
-        if (_secret != null && _isSecretRevealed != _secret.IsRevealed)
-        {
-            _isSecretRevealed = _secret.IsRevealed;
-            SetSecretTexture();
-            _onSecretRevealed(_secret);
-        }
+        if (_isSelected(_secret))
+            _button.colors = _selectedColors;
+        else
+            _button.colors = _normalColors;
     }
 
-    public void Initialize(Secret secret, Action<Secret> onSecretSelected, Action<Secret> onSecretRevealed)
+    public void Initialize(Secret secret, Action<Secret> onSecretSelected, Func<Secret, bool> isSelected)
     {
         _secret = secret;
         _onSecretSelected = onSecretSelected;
-        _onSecretRevealed = onSecretRevealed;
+        _isSelected = isSelected;
 
-        _isSecretRevealed = secret.IsRevealed;
+        _button = GetComponent<Button>();
+        _button.onClick.AddListener(() => OnSelect());
+        _normalColors = _button.colors;
+
+        _selectedColors = _button.colors;
+        var selectedColor = _button.colors.selectedColor;
+        _selectedColors.normalColor = selectedColor;
+        _selectedColors.highlightedColor = selectedColor;
+        _selectedColors.pressedColor = selectedColor;
+        
         SetSecretTexture();
-    }    
+    }
 
-    public void Select()
+    private void OnSelect()
     {
         _onSecretSelected(_secret);
     }
 
     public void SelectInitial()
     {
-        GetComponent<Button>().Select();
-        Select();
+        _button.Select();
+        OnSelect();
     }
 
     private void SetSecretTexture()

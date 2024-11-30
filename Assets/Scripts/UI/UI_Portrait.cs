@@ -1,3 +1,4 @@
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,15 +6,17 @@ public class UI_Portrait : MonoBehaviour
 {
     [SerializeField] private RawImage _content;
 
-    // TODO use eventually
-    public void SetContent(Texture2D contentTexture)
+    private CharacterID _characterID;
+
+    public void SetCharacter(CharacterID characterId)
     {
-        _content.texture = contentTexture;
+        _characterID = characterId;
+
+        SetContent(characterId.PortraitContent);
     }
 
-    //TODO remove eventually
-    public void SetContent(Color contentColor)
+    private void SetContent(Texture2D contentTexture)
     {
-        _content.color = contentColor;
+        _content.texture = contentTexture;
     }
 }

@@ -1,43 +1,28 @@
-using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_MiniGameZone : MonoBehaviour
 {
-    [SerializeField]
-    List<SecretLevelZoneColor> zoneColors = new()
+    public const int MAX_LEVEL = 4;
+
+    private static Color Green = new(0f, 1f, 0f, 0.1764706f);
+    private static Color Clear = new(0f, 0f, 0f, 0f);
+
+    [SerializeField, Range(0, MAX_LEVEL)] private int _level;
+
+    public int Level => _level;
+    public bool IsEmpty => _level <= 0;
+
+    public void SetLevel(int level)
     {
-        new SecretLevelZoneColor(SecretLevel.Public, new Color(1f, 0.04746876f, 0f, 0.1764706f)),
-        new SecretLevelZoneColor(SecretLevel.Private, new Color(1f, 0.6135118f, 0f, 0.1764706f)),
-        new SecretLevelZoneColor(SecretLevel.Confidential, new Color(0.9917831f, 1f, 0f, 0.1764706f)),
-        new SecretLevelZoneColor(SecretLevel.Vampiric, new Color(0f, 1f, 0f, 0.1764706f)),
-    };
-
-    [SerializeField] private SecretLevel _level;
-    [SerializeField] private bool _isEmpty = false;
-
-    public SecretLevel Level => _level;
-    public bool IsEmpty => _isEmpty;
-
-    public void SetSecretLevel(SecretLevel level)
-    {
-        _isEmpty = false;
         _level = level;
 
-        var color = zoneColors.First(x => x.Level == level).Color;
+        var color = level <= 0 ? Clear : Green;
         SetColor(color);
     }
 
-    public void SetEmpty()
-    {
-        _isEmpty = true;
-
-        var color = new Color(0f, 0f, 0f, 0f);
-        SetColor(color);
-    }
+    public void SetEmpty() => SetLevel(0);
 
     public bool IsPointInZone(float x)
     {
@@ -51,21 +36,20 @@ public class UI_MiniGameZone : MonoBehaviour
     {
         GetComponentInChildren<Image>(true).color = color;
     }
-    
 
     [Serializable]
     private class SecretLevelZoneColor
     {
-        [SerializeField] SecretLevel _level;
+        [SerializeField] int _level;
         [SerializeField] Color _color;
 
-        public SecretLevelZoneColor(SecretLevel level, Color color)
+        public SecretLevelZoneColor(int level, Color color)
         {
             _level = level;
             _color = color;
         }
 
-        public SecretLevel Level => _level;
+        public int Level => _level;
         public Color Color => _color;
     }
 }

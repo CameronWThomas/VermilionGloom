@@ -24,33 +24,25 @@ public class CharacterSecretKnowledgeBB : GlobalSingleInstanceMonoBehaviour<Char
     /// </summary>
     public void UnlockSecret(NPCHumanCharacterID characterId, SecretLevel level)
     {
-        var secretKnowledge = _secretKnowledgeDict[characterId];
+        //    var secretKnowledge = _secretKnowledgeDict[characterId];
 
-        // If we are revealing a secret for the owner, the first needs to be the room secret no matter what
-        if (characterId.CharacterInfo.CharacterType is CharacterType.Owner)
-        {
-            var roomSecret = secretKnowledge.Secrets.OfType<RoomSecret>().First();
-            if (!roomSecret.IsRevealed)
-            {
-                roomSecret.Reveal();
-                return;
-            }
-        }
+        //    //// If we are revealing a secret for the owner, the first needs to be the room secret no matter what
+        //    //if (characterId.CharacterInfo.CharacterType is CharacterType.Owner)
+        //    //{
+        //    //    var roomSecret = secretKnowledge.Secrets.OfType<RoomSecret>().First();
+        //    //    if (!roomSecret.IsRevealed)
+        //    //    {
+        //    //        roomSecret.Reveal();
+        //    //        return;
+        //    //    }
+        //    //}
 
-        var unlockedSecret = secretKnowledge.Secrets
-            .Where(x => x.Level == level)
-            .Randomize()
-            .FirstOrDefault();
+        //    var unlockedSecret = secretKnowledge.Secrets
+        //        .Where(x => x.Level == level)
+        //        .Randomize()
+        //        .FirstOrDefault();
 
-        unlockedSecret?.Reveal();
-    }
-    public void UnlockAllSecrets(NPCHumanCharacterID characterId)
-    {
-        var secretKnowledge = _secretKnowledgeDict[characterId];
-        foreach (var secret in secretKnowledge.Secrets)
-        {
-            secret.Reveal();
-        }
+        //    unlockedSecret?.Reveal();
     }
 
     public bool TrySpreadSecret(NPCHumanCharacterID spreader, NPCHumanCharacterID target)

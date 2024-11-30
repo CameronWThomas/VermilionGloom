@@ -1,12 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.TextCore.Text;
 
 public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 {
     public MvmntController playerMvmnt;
     PlayerController playerController;
-    public NpcBrain conversationTarget;
     public bool hostile = false;
 
     private int _deactivatedCounter = 0;
@@ -41,6 +41,11 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
     private void MouseInteraction()
     {
         //Debug.Log("Mouse Clicked");
+
+        // Checks if UI was clicked
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         // Debug draw the ray
@@ -84,16 +89,6 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 
     private bool ClickCancelActions(RaycastHit hit)
     {
-        // Exit any ongoing conversation if clicking elsewhere
-        //TODO: reassess this when we implement an interaction screen for npcs
-        if (hit.transform != null && conversationTarget != null)
-        {
-            if (hit.transform.name != conversationTarget.name)
-            {
-                //conversationTarget.ExitConversation(PlayerStats.Instance.transform);
-                conversationTarget = null;
-            }
-        }
 
 
         // End dragging if clicking on player or the drag target
@@ -146,28 +141,8 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
             }
             else
             {
-                playerMvmnt.GoToTarget(brain.transform, () => EnterConversationWithNpc(brain));
-                conversationTarget = brain;
+                playerController.TryInteractingWithCharacter(brain);
             }
         }
-    }
-
-    private void EnterConversationWithNpc(NpcBrain brain)
-    {
-        playerMvmnt.FaceTarget(brain.transform.position);
-
-        //Everyone say hi please
-        VoiceBox mine = playerMvmnt.GetComponent<VoiceBox>();
-        if(mine != null)
-        {
-            mine.PlayConvoStarter();
-        }
-        VoiceBox theirs = brain.GetComponent<VoiceBox>();
-        if (theirs != null)
-        {
-            theirs.PlayConvoStarter();
-        }
-
-        UI_CharacterInteractionMenu.Instance.Activate(brain.GetNPCHumanCharacterID());
     }
 }

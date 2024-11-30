@@ -99,7 +99,7 @@ public class CamsNpcBrain : MonoBehaviour
         convoTarget = target;
         ReEvaluateTree();
 
-        UI_CharacterInteractionMenu.Instance.Activate(GetComponent<NPCHumanCharacterInfo>().NPCHumanCharacterID);
+        UI_CharacterInteractionMenu_Old.Instance.Activate(GetComponent<NPCHumanCharacterInfo>().NPCHumanCharacterID);
     }
     public void ExitConversation()
     {

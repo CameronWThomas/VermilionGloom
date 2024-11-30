@@ -28,7 +28,6 @@ public abstract class CharacterInfo : MonoBehaviour
         voiceBox = GetComponent<VoiceBox>();
         _currentHealth = _maxHealth;
         CharacterInfoBB.Instance.Register(this);
-        CharacterPortraitContentBB.Instance.Register(ID);
     }
 
     protected virtual void Update()

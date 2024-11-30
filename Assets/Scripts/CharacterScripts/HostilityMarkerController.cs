@@ -25,7 +25,9 @@ public class HostilityMarkerController : MonoBehaviour
     private void Update()
     {
         var newState = _state;
-        if (_brain.IsHostile)
+        if (_brain.IsDead)
+            newState = State.General;
+        else if (_brain.IsHostile)
         {
             if (_brain.HostileTowardsTarget == null)
                 newState = _state;

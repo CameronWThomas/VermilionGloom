@@ -10,5 +10,5 @@ public class IsInConversationWithPlayer : Conditional
             : TaskStatus.Failure; ;
     }
 
-    public override float GetPriority() => PriorityTier.Tier1.Priority();
+    public override float GetPriority() => PriorityTier.Max.Priority();
 }

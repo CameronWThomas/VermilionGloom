@@ -35,6 +35,8 @@ public partial class PlayerController : MonoBehaviour
     private float garlicRunPosRadius = 5f;
     private bool preGarlicRun = false;
 
+    public bool IsRunning => mvmntController.IsRunning();
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -94,6 +96,22 @@ public partial class PlayerController : MonoBehaviour
             ToggleRunPerformed(new InputAction.CallbackContext());
 
         _cutsceneRunning = true;
+    }
+
+    public void Run(bool isRunning)
+    {
+        if (isRunning == mvmntController.IsRunning())
+            return;
+
+        ToggleRunPerformed(new InputAction.CallbackContext());
+    }
+
+    public void GetHostile(bool getHostile)
+    {
+        if (getHostile == hostile)
+            return;
+
+        ToggleHostilePerformed(new InputAction.CallbackContext());
     }
 
     public void RenableInputAfterCutscene()
