@@ -64,12 +64,17 @@ public class PlayerCharacterInfo : CharacterInfo
 
         foreach (var character in secretTargets.Concat(additionalCharacters).OfType<NPCHumanCharacterID>())
             AddKnownCharacter(character);
+
+
+        UpdateNameplates();
     }
 
     public void AddKnownCharacter(NPCHumanCharacterID knownCharacter)
     {
         if (!_knownCharacters.Contains(knownCharacter))
             _knownCharacters.Add(knownCharacter);
+
+        UpdateNameplates();
     }
 
     public IEnumerable<CharacterID> GetKnownCharacters(bool includePlayerID)
@@ -79,6 +84,18 @@ public class PlayerCharacterInfo : CharacterInfo
 
         foreach (var character in _knownCharacters)
             yield return character;
+
+        UpdateNameplates();
+    }
+
+    private void UpdateNameplates()
+    {
+        foreach (var character in _knownCharacters)
+        {
+            var characterInfo = CharacterInfoBB.Instance.GetCharacterInfo(character);
+            if (characterInfo != null)
+                characterInfo.nameplate.text = characterInfo.Name;
+        }
     }
 
     protected override CharacterID CreateCharacterID() => new PlayerCharacterID();

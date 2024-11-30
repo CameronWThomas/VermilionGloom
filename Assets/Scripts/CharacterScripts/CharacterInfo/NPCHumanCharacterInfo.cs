@@ -1,5 +1,6 @@
 using BehaviorDesigner.Runtime;
 using System;
+using TMPro;
 using UnityEngine;
 
 
@@ -17,7 +18,9 @@ public class NPCHumanCharacterInfo : CharacterInfo
     public NPCHumanCharacterID NPCHumanCharacterID => ID as NPCHumanCharacterID;
     public int RemainingDetectivePoints { get; private set; }
     public int PendingDetectivePoints { get; private set; }
-    
+
+    public TextMeshPro nameplate;
+
     protected override void Start()
     {
         RemainingDetectivePoints = MAX_DETECTIVE_POINTS;
