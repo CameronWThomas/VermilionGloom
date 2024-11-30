@@ -1,13 +1,10 @@
 using System;
 using System.Collections;
-using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class CarriageBounce : MonoBehaviour
 {
-    [SerializeField, Range(0f, 10f)] float _bounceTime = 2.5f;
-
     [Header("Bouncing")]
     [SerializeField] bool _enablePositionBounce = true;
     [SerializeField, Range(0f, 10f)] float _bounceRange = .05f;

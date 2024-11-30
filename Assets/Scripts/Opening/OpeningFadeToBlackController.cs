@@ -8,8 +8,6 @@ public class OpeningFadeToBlackController : GlobalSingleInstanceMonoBehaviour<Op
 {
     [SerializeField] Image _image;
 
-    bool _firstUpdate = true;
-
     protected override void Start()
     {
         base.Start();

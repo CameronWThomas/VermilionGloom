@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class OpeningSequenceRunner : MonoBehaviour
 {
@@ -14,6 +15,12 @@ public class OpeningSequenceRunner : MonoBehaviour
     [SerializeField] Button _nextButton;
     [SerializeField] CarriageBounce _carriageBounce;
     [SerializeField] MovingEnvironment _movingEnvironment;
+
+    [Header("Video stuff")]
+    [SerializeField] VideoPlayer _videoPlayer;
+    [SerializeField] VideoClip _authors;
+    [SerializeField] VideoClip _quote;
+    [SerializeField] VideoClip _titleCard;
 
     [Header("Manor Light")]
     [SerializeField] Light _manorLight;
@@ -69,6 +76,25 @@ public class OpeningSequenceRunner : MonoBehaviour
     {
         // TODO Play opening credit stuff
 
+        yield return new WaitForSeconds(2f);
+
+        _videoPlayer.clip = _authors;
+        _videoPlayer.Play();
+
+        yield return new WaitForSeconds(1f); // time to let the video start playing
+        while (_videoPlayer.isPlaying)
+            yield return new WaitForNextFrameUnit();
+
+        _videoPlayer.clip = _quote;
+        _videoPlayer.Play();
+
+        yield return new WaitForSeconds(1f); // time to let the video start playing
+        while (_videoPlayer.isPlaying)
+            yield return new WaitForNextFrameUnit();
+
+        _videoPlayer.gameObject.SetActive(false);
+
+
         yield return new WaitForSeconds(3f);
 
         yield return OpeningFadeToBlackController.Instance.FadeFromBlackRoutine(5f);
@@ -120,6 +146,15 @@ public class OpeningSequenceRunner : MonoBehaviour
         _carriageBounce.StopMoving();
 
         yield return new WaitForSeconds(5f);
+
+        _videoPlayer.gameObject.SetActive(true);
+
+        _videoPlayer.clip = _titleCard;
+        _videoPlayer.Play();
+
+        yield return new WaitForSeconds(1f); // time to let the video start playing
+        while (_videoPlayer.isPlaying)
+            yield return new WaitForNextFrameUnit();
 
         SceneManager.LoadScene("TheManor");
     }
