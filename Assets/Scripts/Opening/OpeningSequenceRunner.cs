@@ -24,12 +24,13 @@ public class OpeningSequenceRunner : MonoBehaviour
 
     [Header("Audio stuff")]
     [SerializeField] AudioSource _thunderAudio;
+    [SerializeField] AudioSource _rumble;
 
     [Header("Manor Light")]
     [SerializeField] Light _manorLight;
 
     [Header("debug")]
-    public bool SkipVideos = false;
+    public bool SkipFirstVideos = false;
 
 
     bool _nextButtonPressed = false;
@@ -83,7 +84,7 @@ public class OpeningSequenceRunner : MonoBehaviour
     {
         // TODO Play opening credit stuff
 
-        if (!SkipVideos)
+        if (!SkipFirstVideos)
         {
             yield return new WaitForSeconds(2f);
 
@@ -174,6 +175,7 @@ public class OpeningSequenceRunner : MonoBehaviour
         _videoPlayer.Play();
 
         _thunderAudio.Stop();
+        _rumble.Play();
 
         yield return new WaitForSeconds(1f); // time to let the video start playing
         while (_videoPlayer.isPlaying)
