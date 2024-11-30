@@ -22,8 +22,15 @@ public class OpeningSequenceRunner : MonoBehaviour
     [SerializeField] VideoClip _quote;
     [SerializeField] VideoClip _titleCard;
 
+    [Header("Audio stuff")]
+    [SerializeField] AudioSource _thunderAudio;
+
     [Header("Manor Light")]
     [SerializeField] Light _manorLight;
+
+    [Header("debug")]
+    public bool SkipVideos = false;
+
 
     bool _nextButtonPressed = false;
 
@@ -76,26 +83,32 @@ public class OpeningSequenceRunner : MonoBehaviour
     {
         // TODO Play opening credit stuff
 
-        yield return new WaitForSeconds(2f);
+        if (!SkipVideos)
+        {
+            yield return new WaitForSeconds(2f);
 
-        _videoPlayer.clip = _authors;
-        _videoPlayer.Play();
+            _videoPlayer.clip = _authors;
+            _videoPlayer.Play();
 
-        yield return new WaitForSeconds(1f); // time to let the video start playing
-        while (_videoPlayer.isPlaying)
-            yield return new WaitForNextFrameUnit();
+            yield return new WaitForSeconds(1f); // time to let the video start playing
+            while (_videoPlayer.isPlaying)
+                yield return new WaitForNextFrameUnit();
 
-        _videoPlayer.clip = _quote;
-        _videoPlayer.Play();
+            _videoPlayer.clip = _quote;
+            _videoPlayer.Play();
 
-        yield return new WaitForSeconds(1f); // time to let the video start playing
-        while (_videoPlayer.isPlaying)
-            yield return new WaitForNextFrameUnit();
+            yield return new WaitForSeconds(1f); // time to let the video start playing
+            while (_videoPlayer.isPlaying)
+                yield return new WaitForNextFrameUnit();
 
-        _videoPlayer.gameObject.SetActive(false);
+            _videoPlayer.gameObject.SetActive(false);
 
-
-        yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(3f);
+        }
+        else
+        {
+            _videoPlayer.gameObject.SetActive(false);
+        }
 
         yield return OpeningFadeToBlackController.Instance.FadeFromBlackRoutine(5f);
 
@@ -139,8 +152,16 @@ public class OpeningSequenceRunner : MonoBehaviour
 
         _movingEnvironment.AttachTransform(_manorLight.transform);
 
+        var nearStop = false;
         while (_manorLight.transform.position.x > 0f)
+        {
+            if (!nearStop && _manorLight.transform.position.x < .2f)
+            {
+                nearStop = true;
+                _carriageBounce.NearingStop();
+            }
             yield return new WaitForNextFrameUnit();
+        }
 
         _movingEnvironment.StopMoving();
         _carriageBounce.StopMoving();
@@ -151,6 +172,8 @@ public class OpeningSequenceRunner : MonoBehaviour
 
         _videoPlayer.clip = _titleCard;
         _videoPlayer.Play();
+
+        _thunderAudio.Stop();
 
         yield return new WaitForSeconds(1f); // time to let the video start playing
         while (_videoPlayer.isPlaying)

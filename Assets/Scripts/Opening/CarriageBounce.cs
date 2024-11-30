@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class CarriageBounce : MonoBehaviour
 {
+    [SerializeField] AudioSource _horseCarriage;
+    [SerializeField] AudioClip _horseNeigh;
+
     [Header("Bouncing")]
     [SerializeField] bool _enablePositionBounce = true;
     [SerializeField, Range(0f, 10f)] float _bounceRange = .05f;
@@ -39,6 +42,28 @@ public class CarriageBounce : MonoBehaviour
     public void StopMoving()
     {
         _isTraveling = false;
+        _horseCarriage.Stop();
+    }
+
+    public void NearingStop()
+    {
+        _horseCarriage.PlayOneShot(_horseNeigh, 1f);
+
+        StartCoroutine(LowerHorseCarriageVolume());
+    }
+
+    private IEnumerator LowerHorseCarriageVolume()
+    {
+        var start = _horseCarriage.volume;
+
+        var startTime = Time.time;
+        var duration = 2f;
+        while (Time.time - startTime < duration)
+        {
+            var t = (Time.time - startTime) / duration;
+            _horseCarriage.volume = Mathf.Lerp(start, 0f, t);
+            yield return new WaitForNextFrameUnit();
+        }
     }
 
     private IEnumerator RockingRoutine()
