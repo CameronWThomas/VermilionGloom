@@ -63,13 +63,13 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
             DeactivateInternal();
     }    
 
-    public void TransitionState(CharacterInteractingState newState, UI_ScreenTransition.TransitionType transition = UI_ScreenTransition.TransitionType.FromCenter)
+    public void TransitionState(CharacterInteractingState newState, UI_ScreenTransition.TransitionType transition = UI_ScreenTransition.TransitionType.FromCenter, float? transitionSpeed = null, float? transitionDuration = null) 
     {
         if (_isTransitioning)
             return;
 
         _isTransitioning = true;
-        ScreenTransistion.Transition(transition, () => _state = newState, () => _isTransitioning = false);
+        ScreenTransistion.Transition(transition, () => _state = newState, () => _isTransitioning = false, transitionSpeed ,transitionDuration);
     }
     
     private void DeactivateInternal()

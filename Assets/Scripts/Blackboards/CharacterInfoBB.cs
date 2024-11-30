@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterInfoBB : GlobalSingleInstanceMonoBehaviour<CharacterInfoBB>
 {
+    [SerializeField]
     private List<CharacterInfo> _characterInfos = new();
 
     public void Register(CharacterInfo characterInfo)

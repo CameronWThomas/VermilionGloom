@@ -44,6 +44,20 @@ public class PlayerCharacterInfo : CharacterInfo
         if (!_knownCharacters.Contains(probedCharacter))
             _knownCharacters.Add(probedCharacter);
 
+        // get all characters in the same room as the probed character
+
+        List<CharacterID> inRoom = RoomBB.Instance.GetCharactersInMyRoom(probedCharacter).ToList();
+        foreach (CharacterID character in inRoom)
+        {
+            if(character is NPCHumanCharacterID)
+            {
+                NPCHumanCharacterID npc = character as NPCHumanCharacterID;
+                if (!_knownCharacters.Contains(npc))
+                    _knownCharacters.Add(npc);
+            }
+        }
+
+
         var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(probedCharacter);
         var secretTargets = secrets.Where(x => x.HasSecretTarget).Select(x => x.SecretTarget);
         var additionalCharacters = secrets.Where(x => x.HasAdditionalCharacter).Select(x => x.AdditionalCharacter);
