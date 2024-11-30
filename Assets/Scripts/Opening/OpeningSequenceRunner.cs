@@ -25,6 +25,7 @@ public class OpeningSequenceRunner : MonoBehaviour
     [Header("Audio stuff")]
     [SerializeField] AudioSource _thunderAudio;
     [SerializeField] AudioSource _rumble;
+    [SerializeField] AudioSource _fiveShillings;
 
     [Header("Manor Light")]
     [SerializeField] Light _manorLight;
@@ -160,6 +161,7 @@ public class OpeningSequenceRunner : MonoBehaviour
             {
                 nearStop = true;
                 _carriageBounce.NearingStop();
+                _fiveShillings.Play();
             }
             yield return new WaitForNextFrameUnit();
         }
@@ -167,7 +169,8 @@ public class OpeningSequenceRunner : MonoBehaviour
         _movingEnvironment.StopMoving();
         _carriageBounce.StopMoving();
 
-        yield return new WaitForSeconds(5f);
+        while (_fiveShillings.isPlaying)
+            yield return new WaitForNextFrameUnit();
 
         _videoPlayer.gameObject.SetActive(true);
 

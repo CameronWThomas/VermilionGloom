@@ -41,8 +41,7 @@ public class CarriageBounce : MonoBehaviour
 
     public void StopMoving()
     {
-        _isTraveling = false;
-        _horseCarriage.Stop();
+        _isTraveling = false;        
     }
 
     public void NearingStop()
@@ -55,6 +54,8 @@ public class CarriageBounce : MonoBehaviour
     private IEnumerator LowerHorseCarriageVolume()
     {
         var start = _horseCarriage.volume;
+
+        yield return new WaitForSeconds(1f);
 
         var startTime = Time.time;
         var duration = 2f;
