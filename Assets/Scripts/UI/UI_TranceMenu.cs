@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
 
 public class UI_TranceMenu : UI_SectionBase
@@ -110,6 +112,23 @@ public class UI_TranceMenu : UI_SectionBase
         if (_selectedCharacter == null)
             return;
 
+        MiniGameSection.GetNextMiniGameEnd(OnGameEnd);
+
+        CharacterInteractionMenu.TransitionState(CharacterInteractingState.MiniGame);
+
+
+        
+    }
+
+    private void OnGameEnd(bool? gameResults)
+    {
+        if (!gameResults.HasValue || !gameResults.Value)
+        {
+            CharacterInteractionMenu.TransitionState(CharacterInteractingState.Trance);
+            return;
+        }
+
+        // Create and add a murder secret
         var murderSecret = new MurderSecret.Builder(_characterID, SecretLevel.Private)
             .SetMurderer(_selectedCharacter)
             .WasSuccessfulMuder()

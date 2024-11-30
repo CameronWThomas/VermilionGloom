@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_MiniGameZone : MonoBehaviour
+public class UI_MiniGameZone_Old : MonoBehaviour
 {
     [SerializeField]
     List<SecretLevelZoneColor> zoneColors = new()
@@ -22,7 +22,7 @@ public class UI_MiniGameZone : MonoBehaviour
     public SecretLevel Level => _level;
     public bool IsEmpty => _isEmpty;
 
-    public void SetSecretLevel(SecretLevel level)
+    public void SetLevel(SecretLevel level)
     {
         _isEmpty = false;
         _level = level;

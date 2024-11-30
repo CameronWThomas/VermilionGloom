@@ -12,6 +12,7 @@ public class UI_SectionBase : MonoBehaviour
     private CharacterInteractingState _lastState;
 
     protected UI_CharacterInteractionMenu CharacterInteractionMenu => GetComponent<UI_CharacterInteractionMenu>();
+    protected UI_MiniGameSection MiniGameSection => GetComponent<UI_MiniGameSection>();
 
     private void Update()
     {

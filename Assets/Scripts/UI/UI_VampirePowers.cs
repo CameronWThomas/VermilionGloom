@@ -16,6 +16,12 @@ public class UI_VampirePowers : UI_SectionBase
 
     protected override void OnStateChanged(CharacterInteractingState state)
     {
+        if (state is CharacterInteractingState.MiniGame)
+        {
+            Hide();
+            return;
+        }
+
         Unhide();
 
         if (state is CharacterInteractingState.Unprobed)

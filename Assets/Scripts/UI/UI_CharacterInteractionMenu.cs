@@ -6,7 +6,8 @@ public enum CharacterInteractingState
     NA,
     Default,
     Unprobed,
-    Trance
+    Trance,
+    MiniGame
 }
 
 public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_CharacterInteractionMenu>
@@ -14,7 +15,6 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
     [SerializeField] GameObject _characterInteractionContent;
     [SerializeField] Button _exitButton;
     [SerializeField] RectTransform _mainScreen;
-    [SerializeField] RectTransform _miniGameScreen;
 
     private NPCHumanCharacterID _characterID;
     CharacterInteractingState _state = CharacterInteractingState.NA;
@@ -25,6 +25,7 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
     private UI_VampirePowers VampirePowers => GetComponent<UI_VampirePowers>();
     private UI_CharacterInfoArea CharacterInfo => GetComponent<UI_CharacterInfoArea>();
     private UI_TranceMenu TranceMenu => GetComponent<UI_TranceMenu>();
+    private UI_MiniGameSection MiniGameSection => GetComponent<UI_MiniGameSection>();
 
     protected override void Start()
     {
@@ -46,9 +47,6 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         _characterInteractionContent.SetActive(true);
         _mainScreen.gameObject.SetActive(true);
 
-        //TODO make new class for
-        _miniGameScreen.gameObject.SetActive(false);
-
         var characterInfo = CharacterInfoBB.Instance.GetCharacterInfo(characterID);
         _state = characterInfo.MindProbed ? CharacterInteractingState.Default : CharacterInteractingState.Unprobed;
 
@@ -56,6 +54,7 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         VampirePowers.InitializeForNewCharacter(characterID, () => _state);
         CharacterInfo.InitializeForNewCharacter(characterID, () => _state);
         TranceMenu.InitializeForNewCharacter(characterID, () => _state);
+        MiniGameSection.InitializeForNewCharacter(_characterID, () => _state);
     }
 
     public void Deactivate()
