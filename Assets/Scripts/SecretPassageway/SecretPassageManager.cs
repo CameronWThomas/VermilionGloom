@@ -120,8 +120,11 @@ public class SecretPassageManager : GlobalSingleInstanceMonoBehaviour<SecretPass
         var targetPassage = secretPassages[index];
         if (forbidden != null && forbidden.Contains(targetPassage))
         {
+            var newSecretPassages = new List<T>(secretPassages);
+            newSecretPassages.Remove(targetPassage);
+
             // if this stack overflows ill eat my hat
-            return GetRandom(secretPassages, forbidden);
+            return GetRandom(newSecretPassages, forbidden);
         }
         return targetPassage;
         

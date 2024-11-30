@@ -351,7 +351,7 @@ public class CamsPlayerController : MonoBehaviour
         hostile = !hostile;
         mvmntController.SetCombat(hostile);
         animator.SetBool("combat", hostile);
-        mouseReceiver.hostile = hostile;
+        
     }
     private void ToggleRunPerformed(InputAction.CallbackContext context)
     {

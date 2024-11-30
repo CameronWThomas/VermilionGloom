@@ -53,6 +53,15 @@ public abstract class CharacterInfo : MonoBehaviour
     {
         _isDead = true;
         
+        CapsuleCollider cc = GetComponent<CapsuleCollider>();
+        if(cc != null)
+        {
+            // direction = z axis
+            cc.direction = 2;
+            //cc.center = new Vector3(0, 0.5f, 0);
+            cc.center = new Vector3(0, -0.8f, -0.6f);
+            cc.height = 2.62f;
+        }
         // will be updated next frame, but we need to force it now
         GetComponent<CharacterAnimator>().HasDied();
         GetComponent<MvmntController>().CancelMovementAction();
