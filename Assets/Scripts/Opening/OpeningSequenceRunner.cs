@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class OpeningSequenceRunner : MonoBehaviour
@@ -12,6 +13,10 @@ public class OpeningSequenceRunner : MonoBehaviour
     [SerializeField] Transform _bloodyNote;
     [SerializeField] Button _nextButton;
     [SerializeField] CarriageBounce _carriageBounce;
+    [SerializeField] MovingEnvironment _movingEnvironment;
+
+    [Header("Manor Light")]
+    [SerializeField] Light _manorLight;
 
     bool _nextButtonPressed = false;
 
@@ -27,6 +32,7 @@ public class OpeningSequenceRunner : MonoBehaviour
         _assignmentNote.gameObject.SetActive(false);
         _bloodyNote.gameObject.SetActive(false);
         _nextButton.gameObject.SetActive(false);
+        _manorLight.gameObject.SetActive(false);
 
         _nextButton.onClick.AddListener(() =>
         {
@@ -39,6 +45,18 @@ public class OpeningSequenceRunner : MonoBehaviour
 
     private void Update()
     {
+        //if (Input.GetKeyDown(KeyCode.K))
+        //{
+        //    _manorLight.gameObject.SetActive(true);
+        //    _movingEnvironment.AttachTransform(_manorLight.transform);
+        //}
+
+        //if (_manorLight.transform.position.x <= 0f)
+        //{
+        //    _movingEnvironment.StopMoving();
+        //    _carriageBounce.StopMoving();
+        //}
+
         //if (Input.GetKeyDown(KeyCode.F))
         //    StartCoroutine(OpeningFadeToBlackController.Instance.FadeFromBlackRoutine(5f));
         //else if (Input.GetKeyDown(KeyCode.N))
@@ -91,7 +109,19 @@ public class OpeningSequenceRunner : MonoBehaviour
 
         yield return FlipNote(_bloodyNote, false);
 
-        _carriageBounce.StopCarriageRide();
+        _manorLight.gameObject.SetActive(true);
+
+        _movingEnvironment.AttachTransform(_manorLight.transform);
+
+        while (_manorLight.transform.position.x > 0f)
+            yield return new WaitForNextFrameUnit();
+
+        _movingEnvironment.StopMoving();
+        _carriageBounce.StopMoving();
+
+        yield return new WaitForSeconds(5f);
+
+        SceneManager.LoadScene("TheManor");
     }
 
     private IEnumerator FlipUpNote(Transform note)

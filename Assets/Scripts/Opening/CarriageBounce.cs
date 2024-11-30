@@ -16,7 +16,8 @@ public class CarriageBounce : MonoBehaviour
     [Header("Rocking")]
     [SerializeField] bool _enableRocking = true;
     [SerializeField, Range(0f, 90f)] float _rockingRange = .5f;
-    [SerializeField, Range(0f, 90f)] float _maxRockingAcceleration = 20f;
+    [SerializeField, Range(0f, 90f)] float _maxRockingAcceleration = 20f;    
+
 
     bool _isTraveling = true;
 
@@ -38,9 +39,9 @@ public class CarriageBounce : MonoBehaviour
         _frameRotationEulerDiff = Vector3.zero;
     }
 
-    internal void StopCarriageRide()
+    public void StopMoving()
     {
-        //throw new NotImplementedException();
+        _isTraveling = false;
     }
 
     private IEnumerator RockingRoutine()
@@ -48,21 +49,34 @@ public class CarriageBounce : MonoBehaviour
         var startingRotationX = transform.rotation.eulerAngles.x;
 
         var velocity = 0f;
-        while (_isTraveling)
+        float? desiredPosition = null;
+        while (true)
         {
+            if (!_isTraveling && !_enableRocking)
+                break;
+
+            var currentXAngle = transform.rotation.eulerAngles.x;
+            var correctedCurrentXAngle = currentXAngle > 180f ? currentXAngle - 360f : currentXAngle;
+
+            if (!_isTraveling)
+            {
+                if (Mathf.Abs(correctedCurrentXAngle - startingRotationX) < 0.001)
+                    break;
+
+                desiredPosition = startingRotationX;
+            }
+
             var minXAngle = startingRotationX - (_rockingRange / 2f);
             var maxXAngle = startingRotationX + (_rockingRange / 2f);
 
             if (_enableRocking)
             {
-                var currentXAngle = transform.rotation.eulerAngles.x;
-                var correctedCurrentXAngle = currentXAngle > 180f ? currentXAngle - 360f : currentXAngle;
-
                 var xAngleDiff = GetAccelerationLimitedValueDiff(
                     minXAngle, maxXAngle,
                     correctedCurrentXAngle,
                     ref velocity,
-                    _maxRockingAcceleration);
+                    _maxRockingAcceleration,
+                    desiredPosition);
 
                 _frameRotationEulerDiff += new Vector3(xAngleDiff, 0f, 0f);
             }
@@ -71,6 +85,8 @@ public class CarriageBounce : MonoBehaviour
 
             yield return new WaitForNextFrameUnit();
         }
+
+
     }   
 
     private IEnumerator BouncePositionRoutine()
@@ -78,11 +94,22 @@ public class CarriageBounce : MonoBehaviour
         var startingPosition = transform.position;
         var minYPosition = transform.position.y;
 
+        float? desiredPosition = null;
         var velocity = 0f;
-        while (_isTraveling)
+        while (true)
         {
-            var maxYPosition = minYPosition + _bounceRange;
+            if (!_isTraveling && !_enablePositionBounce)
+                break;
 
+            if (!_isTraveling)
+            {
+                if (Mathf.Abs(transform.position.y - minYPosition) < 0.001)
+                    break;
+
+                desiredPosition = minYPosition;
+            }
+
+            var maxYPosition = minYPosition + _bounceRange;
 
             if (_enablePositionBounce)
             {
@@ -90,7 +117,8 @@ public class CarriageBounce : MonoBehaviour
                     minYPosition, maxYPosition,
                     transform.position.y,
                     ref velocity,
-                    _maxBounceAcceleration);
+                    _maxBounceAcceleration,
+                    desiredPosition);
 
                 _framePositionDiff += positionDiff * Vector3.up;
             }
@@ -104,10 +132,11 @@ public class CarriageBounce : MonoBehaviour
     private static float GetAccelerationLimitedValueDiff(float minValue, float maxValue,
         float currentValue,
         ref float velocity,
-        float maxAcceleration)
+        float maxAcceleration, 
+        float? desiredPosition)
     {
-        var desiredPosition = UnityEngine.Random.Range(minValue, maxValue);
-        var newVelocity = (desiredPosition - currentValue) / Time.deltaTime;
+        desiredPosition ??= UnityEngine.Random.Range(minValue, maxValue);
+        var newVelocity = (desiredPosition.Value - currentValue) / Time.deltaTime;
 
         var acceleration = (newVelocity - velocity) / Time.deltaTime;
 
@@ -120,6 +149,6 @@ public class CarriageBounce : MonoBehaviour
 
         velocity = newVelocity;
 
-        return desiredPosition - currentValue;
+        return desiredPosition.Value - currentValue;
     }    
 }

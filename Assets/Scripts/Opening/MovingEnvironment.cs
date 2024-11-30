@@ -14,9 +14,24 @@ public class MovingEnvironment : MonoBehaviour
     [SerializeField] Transform _environmentPrefab;
     [SerializeField] float _environmentSize = 50f;
 
+    Transform _additionalMoveTransform = null;
+
+    float? _deceleration = null;
+
     private void Start()
     {
         StartCoroutine(MoveEnvironmentRoutine());
+    }
+
+    public void AttachTransform(Transform targetTransform)
+    {
+        _additionalMoveTransform = targetTransform;
+        _deceleration = -(_speed * _speed) / (2f * targetTransform.position.x);
+    }
+
+    public void StopMoving()
+    {
+        StopAllCoroutines();
     }
 
     private IEnumerator MoveEnvironmentRoutine()
@@ -33,6 +48,12 @@ public class MovingEnvironment : MonoBehaviour
 
         while (true)
         {
+            if (_deceleration.HasValue)
+            {
+                _speed += _deceleration.Value * Time.deltaTime;
+                _speed = Mathf.Clamp(_speed, 0.01f, 100f);
+            }
+
             var distanceDiff = _speed * Time.deltaTime;
 
             Transform resetEnvironment = null;
@@ -43,6 +64,9 @@ public class MovingEnvironment : MonoBehaviour
                 if (HasEnvironmentReachedEnd(environment))
                     resetEnvironment = environment;
             }
+
+            if (_additionalMoveTransform != null)
+                _additionalMoveTransform.position += GetMovingDirection() * distanceDiff;
 
             if (resetEnvironment != null)
             {
