@@ -11,9 +11,16 @@ public class AttemptToEngageInConversation : Action
     {
         var ourId = GetComponent<CharacterInfo>().ID;
         var theirId = ConversationAttemptTarget.Value.GetComponent<CharacterInfo>().ID;
-        
+
         if (NpcBehaviorBB.Instance.TryStartingConversation(ourId, theirId))
+        {
+            VoiceBox voiceBox = GetComponent<VoiceBox>();
+            if(voiceBox != null)
+            {
+                voiceBox.PlayConvoStarter();
+            }
             return TaskStatus.Success;
+        }
 
         return TaskStatus.Failure;
     }

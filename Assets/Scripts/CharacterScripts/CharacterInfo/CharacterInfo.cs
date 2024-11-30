@@ -20,10 +20,12 @@ public abstract class CharacterInfo : MonoBehaviour
     public string Name => _name;
     public bool IsDead => _isDead;
 
+    VoiceBox voiceBox;
 
 
     protected virtual void Start()
     {
+        voiceBox = GetComponent<VoiceBox>();
         _currentHealth = _maxHealth;
         CharacterInfoBB.Instance.Register(this);
     }
@@ -51,6 +53,15 @@ public abstract class CharacterInfo : MonoBehaviour
     {
         _isDead = true;
         
+        CapsuleCollider cc = GetComponent<CapsuleCollider>();
+        if(cc != null)
+        {
+            // direction = z axis
+            cc.direction = 2;
+            //cc.center = new Vector3(0, 0.5f, 0);
+            cc.center = new Vector3(0, -0.8f, -0.6f);
+            cc.height = 2.62f;
+        }
         // will be updated next frame, but we need to force it now
         GetComponent<CharacterAnimator>().HasDied();
         GetComponent<MvmntController>().CancelMovementAction();
@@ -63,6 +74,11 @@ public abstract class CharacterInfo : MonoBehaviour
     {
         if (IsDead)
             return false;
+
+        if (voiceBox != null)
+        {
+            voiceBox.PlayHurt();
+        }
 
         _currentHealth--;
         if (_currentHealth <= 0)

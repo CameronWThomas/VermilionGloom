@@ -7,7 +7,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 {
     public MvmntController playerMvmnt;
     PlayerController playerController;
-    public bool hostile = false;
+    //public bool hostile = false;
 
     private int _deactivatedCounter = 0;
     public bool IsActivated => _deactivatedCounter == 0;
@@ -135,7 +135,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
                 //drag that mofo
                 playerController.Drag(brain);
             }
-            else if (hostile)
+            else if (playerController.hostile)
             {
                 playerController.Strangle(brain);
             }

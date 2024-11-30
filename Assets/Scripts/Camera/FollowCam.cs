@@ -17,13 +17,22 @@ public class FollowCam : MonoBehaviour
 
 	// Mouse panning settings
 	[Header("Mouse Panning Settings")]
-	public float panningThreshold = 5f; // How far the mouse must be from the player to start panning
+	[SerializeField]
+	Vector3 mouseOffsetPct;
+	[SerializeField]
+	Vector2 panMultiplier = new Vector2(1, 1.25f);
+	[SerializeField]
+	Vector3 camFwd;
+	public bool enablePanning = true;
+	//public float panningThreshold = 5f; // How far the mouse must be from the player to start panning
+	public Vector2 panningThreshold = new Vector2(0.5f, 0.2f); // How far the mouse must be from the player to start panning
 	public float panningIntensity = 3f;     // Speed at which the camera pans
-	public float panningSpeed = 3f;     // Speed at which the camera pans
+	public float panningSpeed = 1f;     // Speed at which the camera pans
 
     // Start is called before the first frame update
     void Start()
 	{
+		camFwd = transform.forward;
 		InitialOffset = transform.position - followTarget.position;
 		zoomDirection = followTarget.position - transform.position;
 	}
@@ -33,19 +42,32 @@ public class FollowCam : MonoBehaviour
 	{
 		// Linear Interpolation for Smooth Camera Follow
 		Vector3 targetPosition = followTarget.position + InitialOffset;
+		if (!enablePanning)
+        {
+            transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
+			return;
+        }
+
 		//transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
 
 		// Mouse Panning Logic with Deadzone
 		Vector3 mousePosition = Input.mousePosition;
 		Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
 		Vector3 mouseOffset = mousePosition - screenCenter;
+		mouseOffsetPct = new Vector3(mouseOffset.x / (Screen.width / 2), mouseOffset.y / (Screen.height / 2), 0f);
 
-		if (Mathf.Abs(mouseOffset.x) > panningThreshold || Mathf.Abs(mouseOffset.y) > panningThreshold)
+		if (Mathf.Abs(mouseOffsetPct.x) > panningThreshold.x || Mathf.Abs(mouseOffsetPct.y) > panningThreshold.y)
 		{
 			// Calculate the amount to pan based on the mouse offset
-			Vector3 panDirection = new Vector3(mouseOffset.x / Screen.width, 0, mouseOffset.y / Screen.height);
-			//transform.position += panDirection * panningSpeed * Time.deltaTime;
-            targetPosition = targetPosition + (panDirection * panningIntensity);
+			Vector3 panDirection = new Vector3(
+				(mouseOffset.x * panMultiplier.x) / Screen.width,
+                (mouseOffset.y * panMultiplier.y) / Screen.height,
+				0f
+                );
+
+            Vector3 camTranslatedDir = transform.TransformDirection(panDirection);
+            //transform.position += panDirection * panningSpeed * Time.deltaTime;
+            targetPosition = targetPosition + (camTranslatedDir * panningIntensity);
 
         }
 

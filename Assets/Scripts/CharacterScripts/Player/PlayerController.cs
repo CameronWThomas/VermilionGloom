@@ -140,7 +140,7 @@ public partial class PlayerController : MonoBehaviour
         // Implement toggleHostile logic here
         hostile = !hostile;
         mvmntController.SetCombat(hostile);
-        mouseReceiver.hostile = hostile;
+        //hostile = hostile;
     }
     private void ToggleRunPerformed(InputAction.CallbackContext context)
     {

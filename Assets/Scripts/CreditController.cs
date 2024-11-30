@@ -21,7 +21,7 @@ public class CreditController : GlobalSingleInstanceMonoBehaviour<CreditControll
         if (_creditsStarted)
             return;
         _creditsStarted = true;
-
+        _audioSource.Stop();
         _audioSource.PlayOneShot(_finalSong);
         _audioSource.loop = false;
 

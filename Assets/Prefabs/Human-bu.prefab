@@ -252,10 +252,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdc0f1366e9d6bb4cbeeab2835250a16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _distance: 5
+  _horizontalAngle: 70
+  _verticalAngle: 70
+  _charactersInSight: []
+  castFrom: {fileID: 0}
   lookLayerMask:
     serializedVersion: 2
     m_Bits: 1271
-  debug: 1
 --- !u!54 &566118983134556662
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -573,7 +577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       propertyPath: m_Name
-      value: Human
+      value: Human-bu
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       propertyPath: m_Layer
@@ -834,6 +838,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7738491898982084907}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8932186768292310164}
   m_SourcePrefab: {fileID: 100100000, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
 --- !u!137 &1112062325180524497 stripped
 SkinnedMeshRenderer:
@@ -947,6 +954,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e837f8ce09a500a4095e45ea122b42d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isDead: 0
+  _name: 
+  _maxHealth: 3
+  _healthCooldownSec: 5
+  _id:
+    rid: -2
+  MindProbed: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!114 &3090967693701312830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -959,9 +978,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616d019dd280ac1409acd92e3cae4f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPos: {x: 0, y: 0, z: 0}
+  _checkDestinationInterval: 0.25
   distanceToTarget: 0
   reachedTargetThreshold: 0.1
+  _approachRadius: 2
   dead: 0
   isRunning: 0
   isCrouching: 0
@@ -1169,6 +1189,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8932186768292310164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7893928265322881967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3e64fcad927fa48b1bfaaa22b4c4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraPosition: {fileID: 0}
+  _playerPosition: {fileID: 0}
+  _background: {fileID: 0}
+  _cameraFOV: 24
+  _portraitCamera: {fileID: 0}
+  _backgroundTextures: []
 --- !u!137 &8354816036452255955 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1351063208647464493, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
