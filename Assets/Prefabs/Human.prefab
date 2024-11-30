@@ -1874,6 +1874,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e5b16d73aa13cd94ebc050916c1fa4d0, type: 3}
   - {fileID: 8300000, guid: cf543708424db744689de1df1b036f73, type: 3}
   - {fileID: 8300000, guid: ca36503c122e1834996b76699e44fca2, type: 3}
+  crunchSuccess:
+  - {fileID: 8300000, guid: f207a785c1caf054c96e24f67a533c51, type: 3}
+  - {fileID: 8300000, guid: 7568241e21490df4cbca02e8bb159d30, type: 3}
+  crunchFail:
+  - {fileID: 8300000, guid: 08ac37f56e0a44244b77d4ade95df542, type: 3}
+  death:
+  - {fileID: 8300000, guid: fb0201242da01ae418bdc8479bd097a8, type: 3}
+  - {fileID: 8300000, guid: 774d30a18855c944da39b24df7e65c42, type: 3}
+  - {fileID: 8300000, guid: 101e2df23251fb449bdc494a78a10565, type: 3}
+  - {fileID: 8300000, guid: b166a1cb1c2289340acae60c729d2204, type: 3}
 --- !u!82 &4335238958808221662
 AudioSource:
   m_ObjectHideFlags: 0

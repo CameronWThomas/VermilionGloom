@@ -34,7 +34,7 @@ public enum SecretDuration
     UntilCancel,
     Instant
 }
-
+[Serializable]
 public abstract class SecretEvent
 {
     protected SecretEvent(SecretNoticability secretNoticability, SecretDuration secretDuration)

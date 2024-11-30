@@ -56,6 +56,8 @@ public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
         {
             PauseOnInteract = true;
         }
+        PlayerController pc  = FindObjectOfType<PlayerController>();
+        pc.ModifyVampynessBasedOnGameState();
     }
     public void PutVampireLordInDefaultPosition()
     {

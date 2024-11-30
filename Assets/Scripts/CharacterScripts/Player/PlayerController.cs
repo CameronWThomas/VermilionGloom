@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
 public partial class PlayerController : MonoBehaviour
 {
@@ -24,15 +21,26 @@ public partial class PlayerController : MonoBehaviour
     VoiceBox voiceBox;
 
     [Header("VampShit")]
+    public Vector2 minMaxRunSpeed = new Vector2(3.5f, 7f);
+    public Vector2 minMaxWalkSpeed = new Vector2(1.75f, 3.2f);
     // sun
     public Vector2 minMaxDieInSunTime = new Vector2(2f, 6f);
-    public float maxAnimVampyness = 0.5f;
-    bool shouldBleh = false;
-    float blehCounter = 0f;
-    float blehTime = 5f;
     public float dieInSunTime = 5f;
     public float dieInSunCounter = 0f;
     public bool inSun = false;
+    //anim
+    public float maxAnimVampyness = 0.5f;
+    //bleh
+    bool shouldBleh = false;
+    float blehCounter = 0f;
+    float blehTime = 5f;
+    // strangle speed
+    private Vector2 minMaxStrangleTime = new Vector2(1f,5f);
+    //layer 
+    public LayerMask vamp_layer;
+
+
+
     public List<SkinnedMeshRenderer> lit_vertex_shaders;
     public string BURNABLE_SHADER = "Shader Graphs/Lit_VertexShader";
     // garlic
@@ -102,7 +110,17 @@ public partial class PlayerController : MonoBehaviour
         {
             shouldBleh = true;
         }
-        
+
+        //agent.speed = Mathf.Lerp(minMaxRunSpeed.x, minMaxRunSpeed.y, pct);
+        mvmntController.walkSpeed = Mathf.Lerp(minMaxWalkSpeed.x, minMaxWalkSpeed.y, pct);
+        mvmntController.runSpeed = Mathf.Lerp(minMaxRunSpeed.x, minMaxRunSpeed.y, pct);
+        //agent.speed = mvmntController.IsRunning() ? mvmntController.runSpeed : mvmntController.walkSpeed;
+        mvmntController.SetRunning(mvmntController.IsRunning());
+
+        _strangleTime = Mathf.Lerp(minMaxStrangleTime.y, minMaxStrangleTime.x, pct);
+
+        gameObject.layer = vamp_layer;
+
     }
 
     //TODO this is a quick way I could do this. Probably better to do what is done in OnEnable and OnDisable
@@ -215,6 +233,15 @@ public partial class PlayerController : MonoBehaviour
         GarlicStuff();
         SunStuff();
         BlehAtRandom();
+        //HackyQuickStrangleFix();
+    }
+    private void HackyQuickStrangleFix()
+    {
+        strangleCounter += Time.deltaTime;
+        if(strangleCounter > _strangleTime && _isPlayingChokeKilling)
+        {
+            StrangleInterrupted();
+        }
     }
 
     private void BlehAtRandom()

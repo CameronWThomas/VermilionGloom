@@ -39,6 +39,7 @@ public partial class NpcBrain : MonoBehaviour
     CapsuleCollider capsuleCollider;
     NavMeshAgent navMeshAgent;
     Looker looker;
+    VoiceBox voiceBox;
     CharacterSecretKnowledge characterSecretKnowledge;
 
     private void Start()
@@ -50,6 +51,7 @@ public partial class NpcBrain : MonoBehaviour
         capsuleCollider = GetComponent<CapsuleCollider>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         looker = GetComponentInChildren<Looker>();
+        voiceBox = GetComponent<VoiceBox>();
 
         var roomID = GetInitialRoomID();
         RoomBB.Instance.UpdateCharacterLocation(GetComponent<CharacterInfo>().ID, roomID);

@@ -642,9 +642,16 @@ MonoBehaviour:
   hostile: 0
   sneaking: 0
   _cutsceneRunning: 0
+  minMaxRunSpeed: {x: 3.5, y: 7}
+  minMaxWalkSpeed: {x: 1.75, y: 3.2}
+  minMaxDieInSunTime: {x: 2, y: 6}
   dieInSunTime: 5
   dieInSunCounter: 0
   inSun: 0
+  maxAnimVampyness: 0.5
+  vamp_layer:
+    serializedVersion: 2
+    m_Bits: 1024
   lit_vertex_shaders: []
   BURNABLE_SHADER: Shader Graphs/Lit_VertexShader
   garlic: {fileID: 0}
@@ -693,6 +700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxVampirePoints: 10
+  _currentVampirePoints: 0
 --- !u!114 &6506784242774973121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -723,6 +731,7 @@ MonoBehaviour:
   _healthCooldownSec: 5
   _id:
     rid: -2
+  _knownCharacters: []
   references:
     version: 2
     RefIds:
@@ -878,6 +887,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e5b16d73aa13cd94ebc050916c1fa4d0, type: 3}
   - {fileID: 8300000, guid: cf543708424db744689de1df1b036f73, type: 3}
   - {fileID: 8300000, guid: ca36503c122e1834996b76699e44fca2, type: 3}
+  crunchSuccess:
+  - {fileID: 8300000, guid: f207a785c1caf054c96e24f67a533c51, type: 3}
+  - {fileID: 8300000, guid: 7568241e21490df4cbca02e8bb159d30, type: 3}
+  crunchFail:
+  - {fileID: 8300000, guid: 08ac37f56e0a44244b77d4ade95df542, type: 3}
+  death:
+  - {fileID: 8300000, guid: fb0201242da01ae418bdc8479bd097a8, type: 3}
+  - {fileID: 8300000, guid: 774d30a18855c944da39b24df7e65c42, type: 3}
+  - {fileID: 8300000, guid: 101e2df23251fb449bdc494a78a10565, type: 3}
+  - {fileID: 8300000, guid: b166a1cb1c2289340acae60c729d2204, type: 3}
 --- !u!81 &366200930634148339
 AudioListener:
   m_ObjectHideFlags: 0

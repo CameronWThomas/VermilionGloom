@@ -84,6 +84,7 @@ public abstract class CharacterInfo : MonoBehaviour
         if (_currentHealth <= 0)
         {
             Die();
+            voiceBox.PlayDeath();
             return true;
         }
 

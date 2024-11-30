@@ -8,6 +8,7 @@ public partial class PlayerController
     public NpcBrain StrangleTarget;
     [SerializeField] bool _isStrangling = false;
     [SerializeField] float _strangleTime = 5f;
+    float strangleCounter = 0;
 
     private bool _isPlayingChokeKilling;
 
@@ -68,6 +69,7 @@ public partial class PlayerController
         NpcBehaviorBB.Instance.BroadcastSecretEvent(_strangleSecretEvent);
 
         var startStrangleTime = Time.time;
+        strangleCounter = 0;
         while (Time.time - startStrangleTime <= _strangleTime)
         {
             if (GetComponent<CharacterInfo>().IsDead)
@@ -76,7 +78,7 @@ public partial class PlayerController
             }
 
             yield return new WaitForSeconds(Time.deltaTime);
-        }        
+        }
     }
 
     private void StrangleInterrupted()
@@ -106,5 +108,6 @@ public partial class PlayerController
 
         NpcBehaviorBB.Instance.EndSecretEventBroadcast(_strangleSecretEvent);
         _strangleSecretEvent = null;
+
     }
 }

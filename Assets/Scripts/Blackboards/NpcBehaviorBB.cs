@@ -6,6 +6,7 @@ public class NpcBehaviorBB : GlobalSingleInstanceMonoBehaviour<NpcBehaviorBB>
 {
     private Dictionary<NPCHumanCharacterID, NpcBrain> _npcBrains = new();
 
+    [SerializeField]
     List<SecretEvent> _broadcastingSecretEvents = new();
 
     private void Update()

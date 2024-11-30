@@ -116,7 +116,12 @@ public partial class NpcBrain
     public void OnCrunchDamagePoint()
     {
         if (!IsSuccessfulCrunch())
+        {
+            voiceBox.PlayCrunchMiss();
             return;
+        }
+
+        voiceBox.PlayCrunchHit();
 
         var hostileTargetID = _hostileTowardsTarget.GetCharacterID();
         var characterInfo = CharacterInfoBB.Instance.GetCharacterInfo(hostileTargetID);
