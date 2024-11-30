@@ -14,8 +14,8 @@ public class UI_ScreenTransition : MonoBehaviour
     [Header("Spin transition stuff")]
     [SerializeField] RectTransform _belaImage;
     [SerializeField] GameObject _belaPrefab;
-    [SerializeField, Range(0f, 20f)] float _batTransitionSpinSpeed = 15f;
-    [SerializeField, Range(0f, 10f)] float _batTransitionDuration = 0.5f;
+    [SerializeField, Range(0f, 20f)] float _batTransitionSpinSpeed = 20f;
+    [SerializeField, Range(0f, 10f)] float _batTransitionDuration = 0.7f;
     [SerializeField, Range(0f, 10f)] float _batTransitionScale = 5f;
 
     RectTransform _mainScreen;
