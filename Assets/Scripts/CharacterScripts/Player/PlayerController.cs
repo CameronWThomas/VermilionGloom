@@ -20,10 +20,16 @@ public partial class PlayerController : MonoBehaviour
     MvmntController mvmntController;
     MouseReceiver mouseReceiver;
     NavMeshAgent agent;
-
+    Animator animator;
+    VoiceBox voiceBox;
 
     [Header("VampShit")]
     // sun
+    public Vector2 minMaxDieInSunTime = new Vector2(2f, 6f);
+    public float maxAnimVampyness = 0.5f;
+    bool shouldBleh = false;
+    float blehCounter = 0f;
+    float blehTime = 5f;
     public float dieInSunTime = 5f;
     public float dieInSunCounter = 0f;
     public bool inSun = false;
@@ -44,7 +50,10 @@ public partial class PlayerController : MonoBehaviour
         mvmntController = GetComponent<MvmntController>();
         mouseReceiver = MouseReceiver.Instance;
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        voiceBox = GetComponent<VoiceBox>();
     }
+
     void Start()
     {
         // Subscribe to the crouch and toggleHostile events
@@ -81,6 +90,19 @@ public partial class PlayerController : MonoBehaviour
         toggleHostile.Disable();
         toggleRun.Disable();
         inputActions.Disable();
+    }
+    public void ModifyVampynessBasedOnGameState()
+    {
+        int bodyCount = GameState.Instance.BodyDeliverCount;
+        float pct = (float)bodyCount / GameState.Instance.WinGameBodyCount;
+        dieInSunTime = Mathf.Lerp(minMaxDieInSunTime.y, minMaxDieInSunTime.x, pct);
+        float targetVampyness = Mathf.Lerp(0, maxAnimVampyness, pct);
+        animator.SetFloat("vampyness", targetVampyness);
+        if(targetVampyness >= 0.2)
+        {
+            shouldBleh = true;
+        }
+        
     }
 
     //TODO this is a quick way I could do this. Probably better to do what is done in OnEnable and OnDisable
@@ -192,8 +214,22 @@ public partial class PlayerController : MonoBehaviour
     {
         GarlicStuff();
         SunStuff();
+        BlehAtRandom();
     }
 
+    private void BlehAtRandom()
+    {
+        if(shouldBleh)
+        {
+            blehCounter += Time.deltaTime;
+            if(blehCounter >= blehTime)
+            {
+                voiceBox.PlayBleh();
+                blehCounter = 0;
+                blehTime = UnityEngine.Random.Range(5f, 20f);
+            }
+        }
+    }
     public void SetGarlic(GameObject garlic)
     {
         this.garlic = garlic;

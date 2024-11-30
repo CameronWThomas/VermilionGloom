@@ -18,6 +18,7 @@ public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
 
     [Header("Player Abilities")]
     public bool LongRangeInteracting = false;
+    public bool PauseOnInteract = false;
 
     [Header("Progression Conditions")]
     [SerializeField, Range(0, MAX_BODIES)]public int WinGameBodyCount = 5;
@@ -43,6 +44,19 @@ public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
         PutVampireLordInDefaultPosition();        
     }
 
+    public void Progress()
+    {
+        BodyDeliverCount++;
+
+        if (BodyDeliverCount >= 2)
+        {
+            LongRangeInteracting = true;
+        }
+        if(BodyDeliverCount >= 3)
+        {
+            PauseOnInteract = true;
+        }
+    }
     public void PutVampireLordInDefaultPosition()
     {
         GetVampireLordDefaultPositionAndRotation(out var position, out var rotation);

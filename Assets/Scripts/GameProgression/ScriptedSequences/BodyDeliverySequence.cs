@@ -42,7 +42,7 @@ public class BodyDeliverySequence : SequenceBase
     protected override void OnSequenceEnd()
     {
         base.OnSequenceEnd();
-        GameState.Instance.BodyDeliverCount++;
+        GameState.Instance.Progress();
 
         if (GetIsPlayable())
             ReenableCutScene();

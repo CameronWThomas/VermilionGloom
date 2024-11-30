@@ -87,7 +87,21 @@ public class UI_TranceMenu : UI_SectionBase
             return;
         }
 
-        foreach (var characterID in knownCharacters)
+        //sort known characters by distance to selected character
+        CharacterInfo selected = CharacterInfoBB.Instance.GetCharacterInfo(CharacterInfoBB.Instance.GetPlayerCharacterInfo().ID);
+        Dictionary<CharacterID, float> sortedList = new Dictionary<CharacterID, float>();
+        foreach(var character in knownCharacters)
+        {
+            Debug.Log("trying to find character: "+ character.Name);
+            CharacterInfo known = CharacterInfoBB.Instance.GetCharacterInfo(character);
+            float dist = Vector3.Distance(selected.gameObject.transform.position, known.gameObject.transform.position);
+            sortedList.Add(character, dist);
+        }
+        sortedList = sortedList.OrderBy(entry => entry.Value).ToDictionary(entry => entry.Key, entry => entry.Value);
+        var sortedKnownCharacters = sortedList.Keys.ToList();
+
+
+        foreach (var characterID in sortedKnownCharacters)
         {
             var portraitButton = Instantiate(_portraitButtonPrefab, _portraitPlace.transform).GetComponent<UI_PortraitButton>();
             _portraitButtons.Add(portraitButton);
