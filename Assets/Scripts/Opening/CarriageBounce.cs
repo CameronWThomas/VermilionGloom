@@ -38,6 +38,11 @@ public class CarriageBounce : MonoBehaviour
         _frameRotationEulerDiff = Vector3.zero;
     }
 
+    internal void StopCarriageRide()
+    {
+        //throw new NotImplementedException();
+    }
+
     private IEnumerator RockingRoutine()
     {
         var startingRotationX = transform.rotation.eulerAngles.x;
@@ -116,5 +121,5 @@ public class CarriageBounce : MonoBehaviour
         velocity = newVelocity;
 
         return desiredPosition - currentValue;
-    }
+    }    
 }
