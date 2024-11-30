@@ -27,7 +27,6 @@ public class UI_SecretsArea : UI_SectionBase
     [SerializeField] UI_Portrait _multiPartyPortrait2;
 
     private List<UI_SelectableSecretTile> _secretsTileList = new();
-    private bool _isForgetting = false;
 
     public Secret SelectedSecret { get; private set; }
 
@@ -148,20 +147,24 @@ public class UI_SecretsArea : UI_SectionBase
 
     private void OnForgetClicked()
     {
-        if (_isForgetting || SelectedSecret == null)
+        if (SelectedSecret == null)
             return;
 
-        _isForgetting = true;
+        MiniGameSection.GetNextMiniGameEnd(OnGameEnd);
+        CharacterInteractionMenu.TransitionState(CharacterInteractingState.MiniGame);
+    }
 
-        _characterSecretKnowledge.RemoveSecret(SelectedSecret);
+    private void OnGameEnd(bool? results)
+    {
+        if (results.HasValue && results.Value)
+        {
+            _characterSecretKnowledge.RemoveSecret(SelectedSecret);
 
-        ScreenTransition.Transition(UI_ScreenTransition.TransitionType.FromCenter,
-            () =>
-            {
-                ClearSecretTiles();
-                var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(_characterID);
-                AddSecrets(secrets);
-            },
-            () => _isForgetting = false);
+            ClearSecretTiles();
+            var secrets = CharacterSecretKnowledgeBB.Instance.GetSecrets(_characterID);
+            AddSecrets(secrets);
+        }
+
+        CharacterInteractionMenu.TransitionState(CharacterInteractingState.Default);
     }
 }

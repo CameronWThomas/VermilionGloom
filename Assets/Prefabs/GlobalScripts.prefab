@@ -53,6 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   VampireLordVisited: 0
   BodyDeliverCount: 0
+  LongRangeInteracting: 0
   WinGameBodyCount: 5
   GameWon: 0
   Vampire: {fileID: 0}
@@ -104,6 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _humanCharacterPrefab: {fileID: 7893928265322881967, guid: a80badf4b8f541e46813c945f0e0c081, type: 3}
+  _portraitTakerPrefab: {fileID: 465932626164506042, guid: a39ca0192a915a044997320daa2d9d16, type: 3}
 --- !u!114 &2895106601631318768
 MonoBehaviour:
   m_ObjectHideFlags: 0
