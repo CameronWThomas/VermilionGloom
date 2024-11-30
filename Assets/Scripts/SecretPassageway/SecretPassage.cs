@@ -21,9 +21,16 @@ public class SecretPassage : MonoBehaviour
     [Header("Debug")]
     [SerializeField] SecretPassage EndPoint;
 
+
+    Animator animator;
+
     public Vector3 DestinationPoint => GetDestinationPoint();
     public SecretPassageType SecretPassageType => _secretPassageType;
 
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     public static void ExchangeEndPoints(SecretPassage secretPassage1, SecretPassage secretPassage2)
     {
         secretPassage1.EndPoint = secretPassage2;
@@ -48,10 +55,14 @@ public class SecretPassage : MonoBehaviour
         {
             yield return UsePassage(this, transportedTransform, true);
             yield return UsePassage(EndPoint, transportedTransform, false);
+
+
         }
         finally
         {
             ReactivateNavigation(transportedTransform);
+            //if (animator != null)
+            //    animator.SetBool("open", false);
         }
     }
 
@@ -79,8 +90,13 @@ public class SecretPassage : MonoBehaviour
             navMeshAgent.enabled = true;
     }
 
-    private static IEnumerator UsePassage(SecretPassage passage, Transform transportedTransform, bool isEntering)
+    private static IEnumerator UsePassage(SecretPassage passage, Transform transportedTransform, bool isEntering, Animator anim = null)
     {
+        Debug.Log("Using passage: " + passage.name + " isEntering: " + isEntering);
+        Animator passageAnim = passage.GetComponent<Animator>();
+        if (passageAnim != null)
+            passageAnim.SetBool("open", true);
+
         var destinationFromPassage = passage.GetDestinationFromPassage();
         var doorAtTransformHeight = passage.transform.position;
         doorAtTransformHeight.y = transportedTransform.position.y;
@@ -111,6 +127,10 @@ public class SecretPassage : MonoBehaviour
 
             yield return new WaitForSeconds(stepTime);
         }
+        Debug.Log("Finished using passage: " + passage.name + " isEntering: " + isEntering);
+
+        if (passageAnim != null)
+            passageAnim.SetBool("open", false);
     }
 
     private Vector3 GetDestinationPoint()

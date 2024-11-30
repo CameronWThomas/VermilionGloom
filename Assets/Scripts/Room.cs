@@ -47,11 +47,14 @@ public class Room : MonoBehaviour
 
     BoxCollider boxCollider;
     MeshRenderer meshRenderer;
+    MeshRenderer[] childMeshRenderers;
 
 
     public Material blackedOut;
+    public Material mirrorTexture;
 
     public List<MeshRenderer> meshesToHide = new List<MeshRenderer>();
+    public List<SkinnedMeshRenderer> skinnedMeshesToShow = new List<SkinnedMeshRenderer>();
     public List<MeshRenderer> meshesToShow = new List<MeshRenderer>();
 
     public Camera mirrorCam;
@@ -70,8 +73,14 @@ public class Room : MonoBehaviour
         RoomBB.Instance.Register(this);
 
         meshRenderer = gameObject.GetComponent<MeshRenderer>();
+        childMeshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
         meshRenderer.material = blackedOut;
         meshRenderer.enabled = false;
+        foreach (MeshRenderer child in childMeshRenderers)
+        {
+            child.material = blackedOut;
+            child.enabled = false;
+        }
         SetVisible(false);
     }
 
@@ -79,7 +88,7 @@ public class Room : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public bool PointIsInRoom(Vector3 point)
     {
@@ -121,13 +130,13 @@ public class Room : MonoBehaviour
         isVisible = visible;
         if(isVisible)
         {
-            if (meshesToHide != null)
-            {
-                foreach (MeshRenderer wall in meshesToHide)
-                {
-                    wall.enabled = false;
-                }
-            }
+            //if (meshesToHide != null)
+            //{
+            //    foreach (MeshRenderer wall in meshesToHide)
+            //    {
+            //        wall.enabled = false;
+            //    }
+            //}
             if(meshesToShow != null)
             {
                 foreach (MeshRenderer wall in meshesToShow)
@@ -135,7 +144,18 @@ public class Room : MonoBehaviour
                     wall.enabled = true;
                 }
             }
+            if(skinnedMeshesToShow != null)
+            {
+                foreach (SkinnedMeshRenderer wall in skinnedMeshesToShow)
+                {
+                    wall.enabled = true;
+                }
+            }
             meshRenderer.enabled = false;
+            foreach (MeshRenderer child in childMeshRenderers)
+            {
+                child.enabled = false;
+            }
 
             // camera
             if(mirror != null && mirrorCam != null)
@@ -143,17 +163,22 @@ public class Room : MonoBehaviour
                 mirrorCam.transform.parent = mirror.transform;
                 mirrorCam.transform.localPosition = mirrorCamPos;
                 mirrorCam.transform.localEulerAngles = mirrorCamRot;
+                MeshRenderer mirrorMesh = mirror.GetComponent<MeshRenderer>();
+                if (mirrorMesh != null)
+                {
+                    mirrorMesh.materials[0] = mirrorTexture;
+                }
             }
         }
         else
         {
-            if(meshesToHide != null)
-            {
-                foreach (MeshRenderer wall in meshesToHide)
-                {
-                    wall.enabled = true;
-                }
-            }
+            //if(meshesToHide != null)
+            //{
+            //    foreach (MeshRenderer wall in meshesToHide)
+            //    {
+            //        wall.enabled = true;
+            //    }
+            //}
             if (meshesToShow != null)
             {
                 foreach (MeshRenderer wall in meshesToShow)
@@ -161,18 +186,38 @@ public class Room : MonoBehaviour
                     wall.enabled = false;
                 }
             }
+            if (skinnedMeshesToShow != null)
+            {
+                foreach (SkinnedMeshRenderer wall in skinnedMeshesToShow)
+                {
+                    wall.enabled = false;
+                }
+            }
 
             meshRenderer.enabled = true;
-            
+            foreach (MeshRenderer child in childMeshRenderers)
+            {
+                child.enabled = true;
+            }
+            if(mirror != null)
+            {
+                MeshRenderer mirrorMesh = mirror.GetComponent<MeshRenderer>();
+                if (mirrorMesh != null)
+                {
+                    mirrorMesh.materials[0] = blackedOut;
+                }
+            }
         }
 
     }
-    private void OnTriggerEnter(Collider other)
+
+    public void TriggerEntered(Collider other)
     {
 
         //Debug.Log(other.name + "... Entered room: " + ID);
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Player entered room: " + ID);
             //meshRenderer.enabled = true;
             PlayerController player = other.GetComponent<PlayerController>();
             if (player != null)
@@ -181,6 +226,10 @@ public class Room : MonoBehaviour
 
         if (other.transform.TryGetComponent<CharacterInfo>(out var characterInfo))
             RoomBB.Instance.UpdateCharacterLocation(characterInfo.ID, ID);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        TriggerEntered(other);
     }
 
 
