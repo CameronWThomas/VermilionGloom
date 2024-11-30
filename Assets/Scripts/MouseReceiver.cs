@@ -155,6 +155,19 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
     private void EnterConversationWithNpc(NpcBrain brain)
     {
         playerMvmnt.FaceTarget(brain.transform.position);
+
+        //Everyone say hi please
+        VoiceBox mine = playerMvmnt.GetComponent<VoiceBox>();
+        if(mine != null)
+        {
+            mine.PlayConvoStarter();
+        }
+        VoiceBox theirs = brain.GetComponent<VoiceBox>();
+        if (theirs != null)
+        {
+            theirs.PlayConvoStarter();
+        }
+
         UI_CharacterInteractionMenu.Instance.Activate(brain.GetNPCHumanCharacterID());
     }
 }

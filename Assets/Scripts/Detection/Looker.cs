@@ -66,9 +66,6 @@ public class Looker : MonoBehaviour
     }
     public bool TryGetCharactersInSight(out List<CharacterInfo> charactersInSight)
     {
-
-        Debug.Log("TryGetCharactersInSight");
-
         var filteredChars = FilterCharactersByRaycastViewable(_charactersInSight);
         charactersInSight = filteredChars
             .Select(x => x.transform.GetComponent<CharacterInfo>())

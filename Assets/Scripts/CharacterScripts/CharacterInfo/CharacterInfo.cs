@@ -20,10 +20,12 @@ public abstract class CharacterInfo : MonoBehaviour
     public string Name => _name;
     public bool IsDead => _isDead;
 
+    VoiceBox voiceBox;
 
 
     protected virtual void Start()
     {
+        voiceBox = GetComponent<VoiceBox>();
         _currentHealth = _maxHealth;
         CharacterInfoBB.Instance.Register(this);
         CharacterPortraitContentBB.Instance.Register(ID);
@@ -64,6 +66,11 @@ public abstract class CharacterInfo : MonoBehaviour
     {
         if (IsDead)
             return false;
+
+        if (voiceBox != null)
+        {
+            voiceBox.PlayHurt();
+        }
 
         _currentHealth--;
         if (_currentHealth <= 0)
