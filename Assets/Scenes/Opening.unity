@@ -5629,8 +5629,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bounceTime: 2.5
   _enablePositionBounce: 1
-  _maxBounceAcceleration: 2
   _bounceRange: 0.05
+  _maxBounceAcceleration: 2
+  _enableRocking: 1
+  _rockingRange: 0.5
+  _maxRockingAcceleration: 20
   _enableRotationBounce: 0
   _bounceZRotate: 4
 --- !u!1 &1599071793

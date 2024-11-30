@@ -8,18 +8,17 @@ public class CarriageBounce : MonoBehaviour
 {
     [SerializeField, Range(0f, 10f)] float _bounceTime = 2.5f;
 
-    [Header("Position Bouncing")]
+    [Header("Bouncing")]
     [SerializeField] bool _enablePositionBounce = true;
-    [SerializeField, Range(0f, 20f)] float _maxBounceAcceleration = 1f;
-    [SerializeField, Range(0f, 10f)] float _bounceRange = .25f;
+    [SerializeField, Range(0f, 10f)] float _bounceRange = .05f;
+    [SerializeField, Range(0f, 20f)] float _maxBounceAcceleration = 2f;
 
-    [Header("Rotation Bouncing")]
-    [SerializeField] bool _enableRotationBounce = true;
-    [SerializeField, Range(0f, 45f)] float _bounceZRotate = 4f;
+    [Header("Rocking")]
+    [SerializeField] bool _enableRocking = true;
+    [SerializeField, Range(0f, 90f)] float _rockingRange = .5f;
+    [SerializeField, Range(0f, 90f)] float _maxRockingAcceleration = 20f;
 
-    //TODO x rotation
-
-    bool _keepBouncing = true;
+    bool _isTraveling = true;
 
     Vector3 _framePositionDiff = Vector3.zero;
     Vector3 _frameRotationEulerDiff = Vector3.zero;
@@ -27,6 +26,7 @@ public class CarriageBounce : MonoBehaviour
     private void Start()
     {
         StartCoroutine(BouncePositionRoutine());
+        StartCoroutine(RockingRoutine());
     }
 
     private void Update()
@@ -38,118 +38,83 @@ public class CarriageBounce : MonoBehaviour
         _frameRotationEulerDiff = Vector3.zero;
     }
 
+    private IEnumerator RockingRoutine()
+    {
+        var startingRotationX = transform.rotation.eulerAngles.x;
+
+        var velocity = 0f;
+        while (_isTraveling)
+        {
+            var minXAngle = startingRotationX - (_rockingRange / 2f);
+            var maxXAngle = startingRotationX + (_rockingRange / 2f);
+
+            if (_enableRocking)
+            {
+                var currentXAngle = transform.rotation.eulerAngles.x;
+                var correctedCurrentXAngle = currentXAngle > 180f ? currentXAngle - 360f : currentXAngle;
+
+                var xAngleDiff = GetAccelerationLimitedValueDiff(
+                    minXAngle, maxXAngle,
+                    correctedCurrentXAngle,
+                    ref velocity,
+                    _maxRockingAcceleration);
+
+                _frameRotationEulerDiff += new Vector3(xAngleDiff, 0f, 0f);
+            }
+            else
+                velocity = 0f;
+
+            yield return new WaitForNextFrameUnit();
+        }
+    }   
+
     private IEnumerator BouncePositionRoutine()
     {
         var startingPosition = transform.position;
         var minYPosition = transform.position.y;
 
-        var lastVelocity = 0f;
-        while (_keepBouncing)
+        var velocity = 0f;
+        while (_isTraveling)
         {
-            if (!_enablePositionBounce)
-            {
-                yield return new WaitForNextFrameUnit();
-                continue;
-            }
-
             var maxYPosition = minYPosition + _bounceRange;
 
-            var desiredYPosition = UnityEngine.Random.Range(minYPosition, maxYPosition);
-            var newVelocity = (desiredYPosition - transform.position.y) / Time.deltaTime;
 
-            var acceleration = (newVelocity - lastVelocity) / Time.deltaTime;
-
-            if (Mathf.Abs(acceleration) > _maxBounceAcceleration)
+            if (_enablePositionBounce)
             {
-                var sign = acceleration > 0 ? 1 : -1;
-                newVelocity = sign * _maxBounceAcceleration * Time.deltaTime + lastVelocity;
-                desiredYPosition = newVelocity * Time.deltaTime + transform.position.y;
+                var positionDiff = GetAccelerationLimitedValueDiff(
+                    minYPosition, maxYPosition,
+                    transform.position.y,
+                    ref velocity,
+                    _maxBounceAcceleration);
+
+                _framePositionDiff += positionDiff * Vector3.up;
             }
-
-            lastVelocity = newVelocity;
-
-            var positionDiff = desiredYPosition - transform.position.y;
-            _framePositionDiff += positionDiff * Vector3.up;
+            else
+                velocity = 0f;
 
             yield return new WaitForNextFrameUnit();
         }
     }
 
-    private IEnumerator BounceRoutine_Old()
+    private static float GetAccelerationLimitedValueDiff(float minValue, float maxValue,
+        float currentValue,
+        ref float velocity,
+        float maxAcceleration)
     {
-        while (_keepBouncing)
+        var desiredPosition = UnityEngine.Random.Range(minValue, maxValue);
+        var newVelocity = (desiredPosition - currentValue) / Time.deltaTime;
+
+        var acceleration = (newVelocity - velocity) / Time.deltaTime;
+
+        if (Mathf.Abs(acceleration) > maxAcceleration)
         {
-            var startTime = Time.time;
-            var duration = _bounceTime;
-
-            var enablePositionBounce = _enablePositionBounce;
-            var enableRotationBounce = _enableRotationBounce;
-
-            var positionAcceleration = GetAcceleration(_bounceTime, _bounceRange);
-            var rotationAcceleration = GetAcceleration(_bounceTime, _bounceZRotate);
-
-            var positionSpeed = 0f;
-            var rotationSpeed = 0f;
-
-            while (Time.time - startTime <= duration)
-            {
-                var elapsedTime = Time.time - startTime;
-                var t = elapsedTime / duration;
-                
-                if (enablePositionBounce)
-                    _framePositionDiff += GetBouncePositionDiff(ref positionSpeed, positionAcceleration, t);
-                if (enableRotationBounce)
-                    _frameRotationEulerDiff += GetBounceRotationEulerDiff(ref rotationSpeed, rotationAcceleration, t);
-
-                yield return new WaitForNextFrameUnit();
-            }
-        }
-    }
-
-    private Vector3 GetBouncePositionDiff(ref float speed, float acceleration, float t)
-    {
-        var diff = GetStepDiff(ref speed, acceleration, t);
-        if (float.IsNaN(diff))
-            return Vector3.zero;
-
-        var positionDiff = diff * Vector3.down;
-        //return transform.position + positionDiff;
-        return positionDiff;
-    }
-
-    private Vector3 GetBounceRotationEulerDiff(ref float speed, float acceleration, float t)
-    {
-        var diff = GetStepDiff(ref speed, acceleration, t);
-        if (float.IsNaN(diff))
-            return Vector3.zero;
-
-        var rotationEuler = transform.rotation.eulerAngles;
-
-        //return Quaternion.Euler(rotationEuler + new Vector3(0f, 0f, -diff));
-        return new Vector3(0f, 0f, -diff);
-    }
-
-    private float GetStepDiff(ref float speed, float acceleration, float t)
-    {
-        if (t >= 1f)
-            return float.NaN;
-
-        var modifier = 1f;
-        if (t < .5f)
-            speed += acceleration * Time.deltaTime;
-        else
-        {
-            modifier = -1f;
-            speed += -acceleration * Time.deltaTime;
+            var sign = acceleration > 0 ? 1 : -1;
+            newVelocity = sign * maxAcceleration * Time.deltaTime + velocity;
+            desiredPosition = newVelocity * Time.deltaTime + currentValue;
         }
 
-        return modifier * speed * Time.deltaTime;
-    }
+        velocity = newVelocity;
 
-    private static float GetAcceleration(float bounceTime, float range)
-    {
-        var halfBounceTime = bounceTime / 2f;
-        var maxSpeed = (range * 2f) / halfBounceTime;
-        return maxSpeed / halfBounceTime;
+        return desiredPosition - currentValue;
     }
 }
