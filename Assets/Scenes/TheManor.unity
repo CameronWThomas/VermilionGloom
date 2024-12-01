@@ -11505,9 +11505,85 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1268299078851861499, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268299078851861499, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268299078851861499, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 260
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268299078851861499, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268299078851861499, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268299078851861499, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268299078851861499, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -212.09364
+      objectReference: {fileID: 0}
     - target: {fileID: 1913784183558077790, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
       propertyPath: m_Name
       value: PauseManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000759888182711156, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000759888182711156, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000759888182711156, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 260
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000759888182711156, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000759888182711156, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000759888182711156, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -342.09363
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752271401003820420, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752271401003820420, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752271401003820420, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752271401003820420, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 83.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752271401003820420, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 4752271401003820420, guid: 5e094604c01a8ea40bd1c76fb0defc57, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -95.13864
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -104060,6 +104136,7 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 630190743}
+  - {fileID: 210836776}
   - {fileID: 1417442885}
   - {fileID: 723823013}
   - {fileID: 2013245438}
@@ -104080,4 +104157,3 @@ SceneRoots:
   - {fileID: 737599896}
   - {fileID: 543450652121787960}
   - {fileID: 688358104}
-  - {fileID: 210836776}

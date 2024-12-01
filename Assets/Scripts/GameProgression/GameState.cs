@@ -43,7 +43,7 @@ public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
     public CoffinController CoffinController;
 
     [Header("Tutorial")]
-    public List<Tutorial> CompletedTutorialStages = new();
+    private List<Tutorial> _completedTutorialStages = new();
 
     public Objective CurrentObjective => GetCurrentObjective();
     public string ObjectiveMessage => CurrentObjective switch
@@ -69,6 +69,33 @@ public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
         VampireLordVisited = true;
         PlayerController pc = FindObjectOfType<PlayerController>();
         pc.vampTurned = true;
+    }
+
+    public void AddCompletedTutorial(Tutorial completedTutorial)
+    {
+        if (_completedTutorialStages == null)
+            _completedTutorialStages = new();
+
+        if (_completedTutorialStages.Contains(completedTutorial))
+            return;
+
+        _completedTutorialStages.Add(completedTutorial);
+    }
+
+    public bool IsTutorialCompleted(Tutorial tutorial)
+    {
+        if (_completedTutorialStages == null)
+            _completedTutorialStages = new();
+
+        return _completedTutorialStages.Contains(tutorial);
+    }
+
+    public void ClearTutorials()
+    {
+        if (_completedTutorialStages == null)
+            _completedTutorialStages = new();
+
+        _completedTutorialStages.Clear();
     }
 
     public void Progress()
@@ -100,7 +127,7 @@ public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
         Tutorial.FirstStrangle => "Be careful! If you get spotted strangling someone, they won't forget it. Or can they...",
         Tutorial.BaseMenu => "When you interact with someone, you may probe their mind to read their thoughts. These thoughts influence their behaviour.",
         Tutorial.Forget => "The 'Forget' button lets you to erase the selected thought",
-        Tutorial.Trance => "The 'Trance' button lets you create new thoughts",
+        Tutorial.Trance => "The 'Trance' button lets you create new thoughts that incite the character to murder",
         Tutorial.LongRangeAbility => "Your mind probe has been enhanced. It can be performed from a distance and while the character is hostile.",
         Tutorial.PauseOnInteract => "Your mind probe has been enhanced. Time will freeze during a probing sesh.",
         _ => string.Empty,

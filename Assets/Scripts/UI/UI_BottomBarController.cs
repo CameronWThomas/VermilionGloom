@@ -98,15 +98,15 @@ public class UI_BottomBarController : GlobalSingleInstanceMonoBehaviour<UI_Botto
 
     public void DisplayTutorialAndUpdateTutorialList(params Tutorial[] tutorials)
     {
-        var tutorialsNotDisplayed = tutorials.Where(x => !GameState.Instance.CompletedTutorialStages.Contains(x)).ToList();
+        var tutorialsNotDisplayed = tutorials.Where(x => !GameState.Instance.IsTutorialCompleted(x)).ToList();
 
         if (_isDisplayingTutorial || !tutorialsNotDisplayed.Any())
             return;
         
         _isDisplayingTutorial = true;
 
-        foreach (var stage in tutorialsNotDisplayed)
-            GameState.Instance.CompletedTutorialStages.Add(stage);
+        foreach (var tutorial in tutorialsNotDisplayed)
+            GameState.Instance.AddCompletedTutorial(tutorial);
 
         StartCoroutine(DisplayTutorialsRoutine(tutorialsNotDisplayed));
     }    
