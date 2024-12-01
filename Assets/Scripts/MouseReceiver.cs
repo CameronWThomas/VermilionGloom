@@ -43,7 +43,7 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
         //Debug.Log("Mouse Clicked");
 
         // Checks if UI was clicked
-        if (EventSystem.current.IsPointerOverGameObject())
+        if (!GameState.Instance.GameWon && EventSystem.current.IsPointerOverGameObject())
             return;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
