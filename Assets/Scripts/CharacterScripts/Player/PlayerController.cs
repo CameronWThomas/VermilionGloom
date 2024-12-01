@@ -196,11 +196,12 @@ public partial class PlayerController : MonoBehaviour
 
     public void Die()
     {
-        GetComponent<CharacterInfo>().Die();
+        var characterInfo = GetComponent<CharacterInfo>();
+        characterInfo.Die();
+        if (!characterInfo.IsDead)
+            return;
 
-        mvmntController.GoToTarget(transform.position);
-        mvmntController.enabled = false;
-        if(StrangleTarget != null)
+        if (StrangleTarget != null)
         {
             NpcBrain targetBrain = StrangleTarget.GetComponent<NpcBrain>();
             if(targetBrain != null)
@@ -216,7 +217,6 @@ public partial class PlayerController : MonoBehaviour
                 targetBrain.StopBeingDragged();
             }
         }
-        agent.enabled = false;
     }
 
     //TODO: move this somwhere else

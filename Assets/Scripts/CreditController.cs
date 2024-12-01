@@ -45,5 +45,12 @@ public class CreditController : GlobalSingleInstanceMonoBehaviour<CreditControll
         yield return new WaitForSeconds(180f);
 
         yield return FadeToBlackController.Instance.FadeToBlackRoutine(5f);
+
+        Debug.Log("Quitting game..."); // This will be seen in the editor
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; // Stop playing the game in the editor
+#else
+		Application.Quit(); // Quit the game when built
+#endif
     }
 }
