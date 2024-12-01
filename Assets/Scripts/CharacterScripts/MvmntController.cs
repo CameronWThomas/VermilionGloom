@@ -295,34 +295,34 @@ public class MvmntController : MonoBehaviour
         transform.rotation = rotation;
 
     }
-    private void OnDrawGizmos()
-    {
-        if (!debug)
-            return;
+    //private void OnDrawGizmos()
+    //{
+    //    if (!debug)
+    //        return;
 
 
-        // draw agent path
-        if (agent != null)
-        {
-            if (agent.path != null)
-            {
-                Vector3[] corners = agent.path.corners;
-                for (int i = 0; i < corners.Length - 1; i++)
-                {
-                    Debug.DrawLine(corners[i], corners[i + 1], Color.red);
-                }
-            }
-        }
+    //    // draw agent path
+    //    if (agent != null)
+    //    {
+    //        if (agent.path != null)
+    //        {
+    //            Vector3[] corners = agent.path.corners;
+    //            for (int i = 0; i < corners.Length - 1; i++)
+    //            {
+    //                Debug.DrawLine(corners[i], corners[i + 1], Color.red);
+    //            }
+    //        }
+    //    }
 
-        // draw attempted target
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(AttemptedTarget, 0.1f);
+    //    // draw attempted target
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawSphere(AttemptedTarget, 0.1f);
 
 
-        // Draw _approachDistance
-        Handles.color = Color.magenta;
-        var center = transform.position;
-        center.y = 0f;
-        Handles.DrawWireArc(center, Vector3.up, Vector3.right, 360f, _approachRadius);
-    }
+    //    // Draw _approachDistance
+    //    Handles.color = Color.magenta;
+    //    var center = transform.position;
+    //    center.y = 0f;
+    //    Handles.DrawWireArc(center, Vector3.up, Vector3.right, 360f, _approachRadius);
+    //}
 }

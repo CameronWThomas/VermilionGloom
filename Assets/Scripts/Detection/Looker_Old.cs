@@ -166,67 +166,67 @@ public class Looker_Old : MonoBehaviour
 
         //}
     }
-    private void OnDrawGizmos()
-    {
-        if(debug && debugCounter < debugShowTime)
-        {
-            Gizmos.color = Color.white;
-            if(debug_sawTarget)
-            {
-                Gizmos.color = Color.green;
-            }
-            else
-            {
-                Gizmos.color = Color.red;
-            }
-            Gizmos.DrawRay(debugStart,debugEnd - debugStart);
-            Gizmos.DrawWireSphere(debugEnd, 0.1f);
-            Gizmos.DrawWireSphere(debugStart, 0.1f);
+    //private void OnDrawGizmos()
+    //{
+    //    if(debug && debugCounter < debugShowTime)
+    //    {
+    //        Gizmos.color = Color.white;
+    //        if(debug_sawTarget)
+    //        {
+    //            Gizmos.color = Color.green;
+    //        }
+    //        else
+    //        {
+    //            Gizmos.color = Color.red;
+    //        }
+    //        Gizmos.DrawRay(debugStart,debugEnd - debugStart);
+    //        Gizmos.DrawWireSphere(debugEnd, 0.1f);
+    //        Gizmos.DrawWireSphere(debugStart, 0.1f);
 
-            foreach (BoxCollider col in FOV)
-            {
-                if (col == null) return;
+    //        foreach (BoxCollider col in FOV)
+    //        {
+    //            if (col == null) return;
 
-                // Set the color to a semi-transparent version of the current color
-                Gizmos.color = new Color(Gizmos.color.r, Gizmos.color.g, Gizmos.color.b, 0.2f);
+    //            // Set the color to a semi-transparent version of the current color
+    //            Gizmos.color = new Color(Gizmos.color.r, Gizmos.color.g, Gizmos.color.b, 0.2f);
 
-                Transform boxTransform = col.transform;
-                // Calculate the same parameters as in your CheckHit method
-                Vector3 scaledSize = new Vector3(
-                    col.size.x * boxTransform.lossyScale.x,
-                    col.size.y * boxTransform.lossyScale.y,
-                    col.size.z * boxTransform.lossyScale.z);
+    //            Transform boxTransform = col.transform;
+    //            // Calculate the same parameters as in your CheckHit method
+    //            Vector3 scaledSize = new Vector3(
+    //                col.size.x * boxTransform.lossyScale.x,
+    //                col.size.y * boxTransform.lossyScale.y,
+    //                col.size.z * boxTransform.lossyScale.z);
 
-                float distance = scaledSize.y - m_thickness;
-                Vector3 direction = boxTransform.up;
-                Vector3 center = boxTransform.TransformPoint(col.center);
-                Vector3 start = center - direction * (distance / 2);
-                Vector3 halfExtents = new Vector3(scaledSize.x, m_thickness, scaledSize.z) / 2;
-                Quaternion orientation = boxTransform.rotation;
+    //            float distance = scaledSize.y - m_thickness;
+    //            Vector3 direction = boxTransform.up;
+    //            Vector3 center = boxTransform.TransformPoint(col.center);
+    //            Vector3 start = center - direction * (distance / 2);
+    //            Vector3 halfExtents = new Vector3(scaledSize.x, m_thickness, scaledSize.z) / 2;
+    //            Quaternion orientation = boxTransform.rotation;
 
-                // Draw the starting box
-                Matrix4x4 rotationMatrixStart = Matrix4x4.TRS(start, orientation, boxTransform.lossyScale);
-                Gizmos.matrix = rotationMatrixStart;
-                //Gizmos.color = new Color(1, 0, 0, 0.5f); // Semi-transparent red
-                Gizmos.DrawCube(Vector3.zero, new Vector3(halfExtents.x * 2, halfExtents.y * 2, halfExtents.z * 2));
+    //            // Draw the starting box
+    //            Matrix4x4 rotationMatrixStart = Matrix4x4.TRS(start, orientation, boxTransform.lossyScale);
+    //            Gizmos.matrix = rotationMatrixStart;
+    //            //Gizmos.color = new Color(1, 0, 0, 0.5f); // Semi-transparent red
+    //            Gizmos.DrawCube(Vector3.zero, new Vector3(halfExtents.x * 2, halfExtents.y * 2, halfExtents.z * 2));
 
-                // Calculate the end position of the box cast
-                Vector3 end = start + direction * distance;
+    //            // Calculate the end position of the box cast
+    //            Vector3 end = start + direction * distance;
 
-                // Draw the ending box
-                Matrix4x4 rotationMatrixEnd = Matrix4x4.TRS(end, orientation, boxTransform.lossyScale);
-                Gizmos.matrix = rotationMatrixEnd;
-                //Gizmos.color = new Color(0, 1, 0, 0.5f); // Semi-transparent green
-                Gizmos.DrawCube(Vector3.zero, new Vector3(halfExtents.x * 2, halfExtents.y * 2, halfExtents.z * 2));
+    //            // Draw the ending box
+    //            Matrix4x4 rotationMatrixEnd = Matrix4x4.TRS(end, orientation, boxTransform.lossyScale);
+    //            Gizmos.matrix = rotationMatrixEnd;
+    //            //Gizmos.color = new Color(0, 1, 0, 0.5f); // Semi-transparent green
+    //            Gizmos.DrawCube(Vector3.zero, new Vector3(halfExtents.x * 2, halfExtents.y * 2, halfExtents.z * 2));
 
-                // Reset Gizmos matrix to default
-                Gizmos.matrix = Matrix4x4.identity;
+    //            // Reset Gizmos matrix to default
+    //            Gizmos.matrix = Matrix4x4.identity;
 
-                // Optionally, draw a line between the start and end points for clarity
-                //Gizmos.color = Color.yellow; // Yellow color for the line
-                Gizmos.DrawLine(start, end);
-            }
+    //            // Optionally, draw a line between the start and end points for clarity
+    //            //Gizmos.color = Color.yellow; // Yellow color for the line
+    //            Gizmos.DrawLine(start, end);
+    //        }
 
-        }
-    }
+    //    }
+    //}
 }

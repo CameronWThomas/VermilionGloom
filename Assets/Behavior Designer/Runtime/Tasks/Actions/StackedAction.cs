@@ -253,19 +253,19 @@ namespace BehaviorDesigner.Runtime.Tasks
             return text;
         }
 
-        public override void OnDrawGizmos()
-        {
-            if (actions == null) {
-                return;
-            }
+        //public override void OnDrawGizmos()
+        //{
+        //    if (actions == null) {
+        //        return;
+        //    }
 
-            for (int i = 0; i < actions.Length; ++i) {
-                if (actions[i] == null) {
-                    continue;
-                }
-                actions[i].OnDrawGizmos();
-            }
-        }
+        //    for (int i = 0; i < actions.Length; ++i) {
+        //        if (actions[i] == null) {
+        //            continue;
+        //        }
+        //        actions[i].OnDrawGizmos();
+        //    }
+        //}
 
         public override void OnReset()
         {

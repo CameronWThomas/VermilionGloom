@@ -96,13 +96,13 @@ public class Looker : MonoBehaviour
 
     }
 
-    private void OnDrawGizmos()
-    {
-        if (!debug)
-            return;
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(debugRayStart, debugRayEnd);
-        Gizmos.DrawSphere(debugRayEnd, 0.1f);
-        Gizmos.DrawSphere(debugRayStart, 0.1f);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    if (!debug)
+    //        return;
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawLine(debugRayStart, debugRayEnd);
+    //    Gizmos.DrawSphere(debugRayEnd, 0.1f);
+    //    Gizmos.DrawSphere(debugRayStart, 0.1f);
+    //}
 }

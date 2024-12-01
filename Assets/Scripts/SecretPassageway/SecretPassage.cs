@@ -145,11 +145,11 @@ public class SecretPassage : MonoBehaviour
         return transform.forward * modifier;
     }
 
-    private void OnDrawGizmos()
-    {
-        var destination = GetDestinationPoint();
+    //private void OnDrawGizmos()
+    //{
+    //    var destination = GetDestinationPoint();
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(destination, .1f);
-    }
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawSphere(destination, .1f);
+    //}
 }
