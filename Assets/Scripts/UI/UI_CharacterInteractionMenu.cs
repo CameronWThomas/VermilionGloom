@@ -44,6 +44,8 @@ public class UI_CharacterInteractionMenu : GlobalSingleInstanceMonoBehaviour<UI_
         NpcBehaviorBB.Instance.EnterConversationWithPlayer(_characterID);
         MouseReceiver.Instance.Deactivate();
 
+        UI_BottomBarController.Instance.DisplayTutorialAndUpdateTutorialList(Tutorial.BaseMenu, Tutorial.Forget, Tutorial.Trance);
+
         _characterInteractionContent.SetActive(true);
         _mainScreen.gameObject.SetActive(true);
 

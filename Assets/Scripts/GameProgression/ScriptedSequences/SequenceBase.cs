@@ -76,6 +76,10 @@ public abstract class SequenceBase : MonoBehaviour
 
         MouseReceiver.Instance.Deactivate();
         UI_BottomBarController.Instance.SetHidden(true);
+
+        var cameraTransform = Camera.main.transform;
+        var followCamera = cameraTransform.GetComponent<FollowCam>();
+        followCamera.OffsetModifier = Vector3.up * 2f;
     }
 
     private void OnSequenceEndPrivate()
@@ -90,6 +94,10 @@ public abstract class SequenceBase : MonoBehaviour
     {
         MouseReceiver.Instance.Activate();
         UI_BottomBarController.Instance.SetHidden(false);
+
+        var cameraTransform = Camera.main.transform;
+        var followCamera = cameraTransform.GetComponent<FollowCam>();
+        followCamera.OffsetModifier = Vector3.zero;
 
         PlayerController.RenableInputAfterCutscene();
         SequenceFinished = true;        
@@ -207,7 +215,7 @@ public abstract class SequenceBase : MonoBehaviour
         var followCamera = cameraTransform.GetComponent<FollowCam>();
         followCamera.enabled = false;
 
-        var offset = followCamera.InitialOffset;
+        var offset = followCamera.InitialOffset + followCamera.OffsetModifier;
 
         var startingPosition = cameraTransform.position;
         var endingPosition = target.position + offset;
