@@ -31,8 +31,8 @@ public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
     public Objective CurrentObjective => GetCurrentObjective();
     public string ObjectiveMessage => CurrentObjective switch
     {
-        Objective.GoToDen => "An unnatural urge compells you to look in the fireplace, in the northwest corner of the foyer...",
-        Objective.CollectBodies => "You feel empowered by the vampires blessing, bring " + (5 - BodyDeliverCount) + " bodies to him...",
+        Objective.GoToDen => "The strange note told me to look in the fireplace...",
+        Objective.CollectBodies => "You feel empowered by the creature's blessing, bring " + (5 - BodyDeliverCount) + " bodies to him...",
         Objective.KillEveryone => "KILL",
         _ => throw new NotImplementedException()
     };    

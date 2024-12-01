@@ -21,6 +21,7 @@ public partial class PlayerController : MonoBehaviour
     VoiceBox voiceBox;
 
     [Header("VampShit")]
+    public bool vampTurned = false;
     public Vector2 minMaxRunSpeed = new Vector2(3.5f, 7f);
     public Vector2 minMaxWalkSpeed = new Vector2(1.75f, 3.2f);
     // sun
@@ -100,7 +101,8 @@ public partial class PlayerController : MonoBehaviour
         inputActions.Disable();
     }
     public void ModifyVampynessBasedOnGameState()
-    {
+    { 
+        vampTurned = true;
         int bodyCount = GameState.Instance.BodyDeliverCount;
         float pct = (float)bodyCount / GameState.Instance.WinGameBodyCount;
         dieInSunTime = Mathf.Lerp(minMaxDieInSunTime.y, minMaxDieInSunTime.x, pct);
@@ -302,7 +304,8 @@ public partial class PlayerController : MonoBehaviour
 
     private void SunStuff()
     {
-
+        if (!vampTurned)
+            return;
         if (inSun)
         {
             if (dieInSunCounter >= dieInSunTime)

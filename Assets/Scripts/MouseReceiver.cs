@@ -119,7 +119,10 @@ public class MouseReceiver : GlobalSingleInstanceMonoBehaviour<MouseReceiver>
 
     private void HandleNpcClick(RaycastHit hit)
     {
-        Debug.Log("Npc Clicked: " + hit.transform.name);
+        if (!playerController.vampTurned)
+        {
+            return;
+        }
 
         NpcBrain brain = hit.transform.GetComponent<NpcBrain>();
         if (brain == null)

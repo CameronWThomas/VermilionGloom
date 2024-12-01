@@ -69,6 +69,8 @@ public class VampireDiscoverySequence : SequenceBase
     {
         base.OnSequenceEnd();
         GameState.Instance.VampireLordVisited = true;
+        PlayerController pc = FindObjectOfType<PlayerController>();
+        pc.vampTurned = true;
     }
 
     private IEnumerator FloatAboveCoffin()

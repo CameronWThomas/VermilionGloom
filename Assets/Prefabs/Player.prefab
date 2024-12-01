@@ -208,6 +208,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3492967147362393046, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -2725569089812607965, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -284,6 +288,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 403259979095893480, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 741808593568725213, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -340,6 +348,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 2745094058361743224, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2967312105769081073, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -353,6 +365,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3516126975394029106, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3792303820206465393, guid: a64dc364d2366d344b5a8385dba626e0, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -726,7 +742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isDead: 0
-  _name: 
+  _name: J.T. Winslow
   _maxHealth: 3
   _healthCooldownSec: 5
   _id:

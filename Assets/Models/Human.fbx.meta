@@ -17,6 +17,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: JTW_Jacket
+    second: {fileID: 2100000, guid: 9a95ce96e32c0f048ac849e032494608, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Leather
     second: {fileID: 2100000, guid: 5fa6b4fb5f3d03f41bf5b21c99bed7cd, type: 2}
   - first:
