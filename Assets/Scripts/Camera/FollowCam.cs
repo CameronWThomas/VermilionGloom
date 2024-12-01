@@ -10,6 +10,7 @@ public class FollowCam : MonoBehaviour
 	public Vector2 zoomLimits = new Vector2(5, 20);
 
 	public Vector3 InitialOffset { get; private set; }
+	public Vector3 OffsetModifier { get; set; } = Vector3.zero;
 
 	// Lerp settings for smooth follow
 	[Header("Follow Settings")]
@@ -41,7 +42,7 @@ public class FollowCam : MonoBehaviour
 	void Update()
 	{
 		// Linear Interpolation for Smooth Camera Follow
-		Vector3 targetPosition = followTarget.position + InitialOffset;
+		Vector3 targetPosition = followTarget.position + InitialOffset + OffsetModifier;
 		if (!enablePanning)
         {
             transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
