@@ -29353,10 +29353,6 @@ PrefabInstance:
       propertyPath: CoffinController
       value: 
       objectReference: {fileID: 5870245751733554703}
-    - target: {fileID: 1600940359604264659, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
-      propertyPath: VampireLordVisited
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1646189131240597721, guid: f85d4dd543a5a1742888d52d000d1348, type: 3}
       propertyPath: _forbiddenConnections.Array.size
       value: 3
