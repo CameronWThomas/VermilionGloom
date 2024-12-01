@@ -52,6 +52,8 @@ public partial class PlayerController
 
         MouseReceiver.Instance.Deactivate();
 
+        UI_BottomBarController.Instance.DisplayTutorialAndUpdateTutorialList(Tutorial.FirstStrangle);
+
         _strangleCoroutine = new CoroutineContainer(this, StrangleCoroutine, StrangleSuccessful, StrangleInterrupted);
         _strangleCoroutine.Start();
     }    

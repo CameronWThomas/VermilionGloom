@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum Objective
@@ -6,6 +7,19 @@ public enum Objective
     GoToDen,
     CollectBodies,
     KillEveryone
+}
+
+public enum Tutorial
+{
+    FButton,
+    HostileMode,
+    InteractingMode,
+    FirstStrangle,
+    BaseMenu,
+    Forget,
+    Trance,
+    LongRangeAbility,
+    PauseOnInteract
 }
 
 public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
@@ -27,6 +41,9 @@ public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
     [Header("Needed to help run sequences")]
     public VampireController Vampire;
     public CoffinController CoffinController;
+
+    [Header("Tutorial")]
+    public List<Tutorial> CompletedTutorialStages = new();
 
     public Objective CurrentObjective => GetCurrentObjective();
     public string ObjectiveMessage => CurrentObjective switch
@@ -74,6 +91,20 @@ public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
         GetVampireLordDefaultPositionAndRotation(out var position, out var rotation);
         Vampire.transform.SetPositionAndRotation(position, rotation);
     }
+
+    public string TutorialMessage(Tutorial stage) => stage switch
+    {
+        Tutorial.FButton => "Press 'F' or click the icons to switch between hostile mode and interacting mode",
+        Tutorial.HostileMode => "If you click on a character while in hostile mode, you will attack them",
+        Tutorial.InteractingMode => "Interacting mode will only work if the character is not hostile",
+        Tutorial.FirstStrangle => "Be careful! If you get spotted strangling someone, they won't forget it. Or can they...",
+        Tutorial.BaseMenu => "When you interact with someone, you may probe their mind to read their thoughts. These thoughts influence their behaviour.",
+        Tutorial.Forget => "The 'Forget' button lets you to erase the selected thought",
+        Tutorial.Trance => "The 'Trance' button lets you create new thoughts",
+        Tutorial.LongRangeAbility => "Your mind probe has been enhanced. It can be performed from a distance and while the character is hostile.",
+        Tutorial.PauseOnInteract => "Your mind probe has been enhanced. Time will freeze during a probing sesh.",
+        _ => string.Empty,
+    };
 
     public void GetVampireLordDefaultPositionAndRotation(out Vector3 position, out Quaternion rotation)
     {

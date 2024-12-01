@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -20,6 +21,11 @@ public class UI_BottomBarController : GlobalSingleInstanceMonoBehaviour<UI_Botto
     [SerializeField] TMP_Text _characterName;
     [SerializeField] TMP_Text _characterTalking;
 
+    [Header("Tutorial and unlocked stuff")]
+    [SerializeField] GameObject _fButtonZone;
+    [SerializeField] TMP_Text _tutorialText;
+    [SerializeField] float _tutorialDisplayTime = 5f;
+
     protected static PlayerController PlayerController => PlayerStats.Instance.GetComponent<PlayerController>();
 
     private Sprite _unselectedSprite;
@@ -31,6 +37,15 @@ public class UI_BottomBarController : GlobalSingleInstanceMonoBehaviour<UI_Botto
     private RectMask2D _mask;
     private bool _isHidden = false;
     private float _defaultTopPadding;
+    private CharacterID _interactingCharacterID = null;
+
+    private enum BottomBarState
+    {
+        Default,
+        CharacterInteracting,
+    }
+    private BottomBarState _state = BottomBarState.Default;
+    private bool _isDisplayingTutorial = false;
 
     protected override void Start()
     {
@@ -64,6 +79,15 @@ public class UI_BottomBarController : GlobalSingleInstanceMonoBehaviour<UI_Botto
 
     private void Update()
     {
+        _fButtonZone.gameObject.SetActive(GameState.Instance.VampireLordVisited);
+
+        if (GameState.Instance.VampireLordVisited)
+            DisplayTutorialAndUpdateTutorialList(Tutorial.FButton, Tutorial.HostileMode, Tutorial.InteractingMode);
+        if (GameState.Instance.LongRangeInteracting)
+            DisplayTutorialAndUpdateTutorialList(Tutorial.LongRangeAbility);
+        if (GameState.Instance.PauseOnInteract)
+            DisplayTutorialAndUpdateTutorialList(Tutorial.PauseOnInteract);
+
         UpdateRunningButtons(PlayerController.IsRunning);
         UpdateHostileButtons(PlayerController.hostile);
         
@@ -72,19 +96,50 @@ public class UI_BottomBarController : GlobalSingleInstanceMonoBehaviour<UI_Botto
         UpdateObjectiveText();
     }
 
+    public void DisplayTutorialAndUpdateTutorialList(params Tutorial[] tutorials)
+    {
+        var tutorialsNotDisplayed = tutorials.Where(x => !GameState.Instance.CompletedTutorialStages.Contains(x)).ToList();
+
+        if (_isDisplayingTutorial || !tutorialsNotDisplayed.Any())
+            return;
+        
+        _isDisplayingTutorial = true;
+
+        foreach (var stage in tutorialsNotDisplayed)
+            GameState.Instance.CompletedTutorialStages.Add(stage);
+
+        StartCoroutine(DisplayTutorialsRoutine(tutorialsNotDisplayed));
+    }    
+
     public void Default()
     {
+        _state = BottomBarState.Default;
+
+        if (_isDisplayingTutorial)
+            return;
+
+        _tutorialText.gameObject.SetActive(false);
         _normalText.SetActive(true);
         _interactingCharacter.SetActive(false);
     }
 
     public void SetInteractingCharacter(CharacterID characterID)
     {
+        if (characterID == null)
+            return;
+
+        _state = BottomBarState.CharacterInteracting;        
+        _interactingCharacterID = characterID;
+
+        if (_isDisplayingTutorial)
+            return;
+
+        _tutorialText.gameObject.SetActive(false);
         _normalText.SetActive(false);
         _interactingCharacter.SetActive(true);
 
-        _characterPortrait.SetCharacter(characterID);
-        _characterName.text = characterID.Name;
+        _characterPortrait.SetCharacter(_interactingCharacterID);
+        _characterName.text = _interactingCharacterID.Name;
 
         _characterTalking.text = "...";
     }
@@ -167,5 +222,27 @@ public class UI_BottomBarController : GlobalSingleInstanceMonoBehaviour<UI_Botto
     private void UpdateObjectiveText()
     {
         _generalDescriptionText.text = GameState.Instance.ObjectiveMessage;
-    }    
+    }
+
+    private IEnumerator DisplayTutorialsRoutine(List<Tutorial> tutorials)
+    {
+        _isDisplayingTutorial = true;
+
+        _tutorialText.gameObject.SetActive(true);
+        _normalText.SetActive(false);
+        _interactingCharacter.SetActive(false);
+
+        foreach (var tutorial in tutorials)
+        {
+            _tutorialText.text = GameState.Instance.TutorialMessage(tutorial);
+            yield return new WaitForSeconds(_tutorialDisplayTime);
+        }
+
+        _isDisplayingTutorial = false;
+
+        if (_state is BottomBarState.Default)
+            Default();
+        else if (_state is BottomBarState.CharacterInteracting)
+            SetInteractingCharacter(_interactingCharacterID);
+    }
 }
