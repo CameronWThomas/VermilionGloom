@@ -40,8 +40,18 @@ public class GameState : GlobalSingleInstanceMonoBehaviour<GameState>
     protected override void Start()
     {
         base.Start();
-     
+
+        if (VampireLordVisited)
+            VampireLordHasBeenVisited();
+
         PutVampireLordInDefaultPosition();        
+    }
+
+    public void VampireLordHasBeenVisited()
+    {
+        VampireLordVisited = true;
+        PlayerController pc = FindObjectOfType<PlayerController>();
+        pc.vampTurned = true;
     }
 
     public void Progress()

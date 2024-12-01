@@ -68,9 +68,7 @@ public class VampireDiscoverySequence : SequenceBase
     protected override void OnSequenceEnd()
     {
         base.OnSequenceEnd();
-        GameState.Instance.VampireLordVisited = true;
-        PlayerController pc = FindObjectOfType<PlayerController>();
-        pc.vampTurned = true;
+        GameState.Instance.VampireLordHasBeenVisited();
     }
 
     private IEnumerator FloatAboveCoffin()
